@@ -1,14 +1,43 @@
-# Claude Code OS — Kit Ratos de IA
+# CLAUDE.md
 
-Este repositório é o kit de boas-vindas do curso Claude Code OS.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Se você acabou de clonar esse repositório:
-1. Rode `/setup` pra configurar o sistema pro seu negócio (uns 5 minutos)
-2. Depois rode `/mapear` pra criar skills personalizadas pro que você faz no dia a dia
+# Criativvo — Claude Code OS
+
+## O que é esse workspace
+Workspace operacional da Criativvo — agência 360 de marketing digital e automação com IA. Aqui é onde o Matheus e o time produzem, automatizam e gerenciam entregas para os clientes.
+
+**Estrutura de pastas:**
+- `clientes/` — uma pasta por cliente com briefing, proposta e materiais
+- `propostas/` — propostas avulsas em HTML prontas pra compartilhar
+- `conteudo/` — produção de conteúdo (carrosseis, roteiros, posts)
+- `automacoes/` — scripts e flows de automação da operação
+- `dados/` — arquivos de entrada pra análise (relatórios, planilhas)
+- `tarefas.md` — lista de pendências e próximos passos
+- `templates/skills/` — templates de skills prontos pra personalizar com /mapear
+- `templates/ferramentas/catalogo.md` — APIs e ferramentas disponíveis pra usar em skills
+
+## Sobre o negócio
+Criativvo é uma agência de marketing digital e automação com IA focada em concessionárias e lojas de veículos. Atua como 360: redes sociais, sites Shopify, branding, tráfego pago e automações em uma única solução. Case principal: Gilson Car — maior faturamento da história da empresa + 2 novas unidades após 2 meses de trabalho.
+
+## O que mais fazemos aqui
+- Gestão de redes sociais e estratégias de conteúdo para clientes
+- Criação de propostas comerciais em HTML
+- Desenvolvimento e atualização de sites Shopify
+- Gestão de tráfego pago (Meta Ads, Google Ads)
+- Automação de onboarding, publicação de posts, relatórios e follow-ups
+- Produção de imagens e vídeos com IA
+
+## Clientes e contexto
+Atende clientes externos. Nicho principal: concessionárias e lojas de veículos. Equipe: Matheus (fundador/CMO), Victor (sócio/comercial), Alisson (tráfego/dados) + contratação de social media/designer em andamento.
+
+## Tom de voz
+Direto, objetivo, humano e persuasivo. Focado em resultados e ROI. Sem travessão (—), sem adjetivos em excesso, sem textos genéricos, sem "cara de IA". Linguagem clara, fundamentada e com aplicação prática.
+
+## Ferramentas conectadas
+Shopify, Mlabs, Notion, Canva, Instagram, Facebook. MCPs instalados: *(atualizar conforme instalação)*
 
 ---
-
-<!-- Este arquivo será atualizado pelo /setup com o contexto do seu negócio. -->
 
 ## Contexto do negócio
 
@@ -80,7 +109,7 @@ Mostrar o que vai mudar antes de salvar. Não reformatar o arquivo inteiro, só 
 - Perguntas simples ou conversas sem ação
 - Mudanças que já foram salvas pelo bloco "Aprender com correções"
 
-**Dica:** se não sabe se algo mudou, rode `/atualizar` pra uma varredura completa.
+**Dica:** se o usuário não sabe se algo mudou, rodar `/atualizar` faz uma varredura completa.
 
 ---
 
