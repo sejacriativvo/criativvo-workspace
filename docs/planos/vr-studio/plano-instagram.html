@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plano de Ação Instagram — VR STUDIO × Criativvo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=Syne:wght@400;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    /* ─── LIQUID GLASS FOUNDATION — Smoke (Dark) ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-demo: #0a0a0c;
+      --glass-surface: rgba(255, 255, 255, 0.055);
+      --glass-border: rgba(255, 255, 255, 0.11);
+      --glass-border-outer: rgba(0, 0, 0, 0.45);
+      --glass-glow: rgba(255, 255, 255, 0.07);
+      --text-primary: rgba(242, 242, 250, 0.95);
+      --text-secondary: rgba(175, 175, 195, 0.62);
+      --accent: rgba(255, 255, 255, 0.9);
+      --green: rgba(134, 239, 172, 1);
+      --red: rgba(252, 129, 129, 1);
+
+      --blur-glass: 28px;
+      --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-liquid: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-dissolve: cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: 180ms var(--ease-dissolve);
+      --transition-med: 350ms var(--ease-liquid);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-brand: 'Great Vibes', cursive;
+    }
+
+    body {
+      background: transparent;
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── BACKGROUND ─── */
+    .demo-bg {
+      position: fixed; inset: 0; z-index: -2;
+      background: var(--bg-demo);
+    }
+    .demo-bg::before {
+      content: '';
+      position: absolute;
+      width: 80vw; height: 80vw; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.032) 0%, transparent 70%);
+      top: -25%; left: -20%;
+      filter: blur(120px);
+      animation: light-drift 22s ease-in-out infinite alternate;
+    }
+    .demo-bg::after {
+      content: '';
+      position: absolute;
+      width: 60vw; height: 60vw; border-radius: 50%;
+      background: radial-gradient(circle, rgba(230,230,250,0.025) 0%, transparent 70%);
+      bottom: -20%; right: -10%;
+      filter: blur(140px);
+      animation: light-drift 28s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes light-drift {
+      0%   { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(4vw, 3vh) scale(1.06); }
+      100% { transform: translate(-3vw, 5vh) scale(0.95); }
+    }
+
+    /* ─── GLASS BASE ─── */
+    .glass {
+      background: var(--glass-surface);
+      backdrop-filter: blur(var(--blur-glass)) saturate(150%);
+      -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(150%);
+      border: 1px solid var(--glass-border);
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.45),
+        0 2px 8px rgba(0,0,0,0.30),
+        inset 0 1px 0 rgba(255,255,255,0.09),
+        inset 0 -1px 0 rgba(0,0,0,0.20);
+      transition: var(--transition-med);
+    }
+    .glass:hover {
+      box-shadow:
+        0 16px 48px rgba(0,0,0,0.55),
+        0 4px 16px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.14),
+        0 0 40px var(--glass-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Glass card with shimmer */
+    .glass-card {
+      border-radius: 20px;
+      padding: 28px 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 55%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04) 50%, transparent);
+      transform: skewX(-20deg);
+      transition: left 700ms var(--ease-liquid);
+      pointer-events: none;
+    }
+    .glass-card:hover::before { left: 160%; }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 980px; margin: 0 auto; padding: 0 28px; }
+    .section-wrap { padding: 90px 0; }
+
+    /* ─── PROGRESS BAR ─── */
+    #progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.6));
+      z-index: 9999; transition: width 0.06s linear;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 18px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      border-radius: 50px;
+      padding: 11px 26px;
+      display: flex; align-items: center; gap: 18px;
+      white-space: nowrap;
+    }
+    .nav-brand { font-family: var(--font-brand); font-size: 1.35rem; color: var(--text-primary); }
+    .nav-sep { width: 1px; height: 18px; background: rgba(255,255,255,0.13); }
+    .nav-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-secondary); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 130px 28px 100px;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1.1fr 0.9fr;
+      gap: 70px; align-items: center;
+      max-width: 980px; margin: 0 auto; width: 100%;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      border-radius: 50px; padding: 6px 16px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-secondary);
+      margin-bottom: 22px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      border-radius: 50%; background: rgba(255,255,255,0.45);
+      animation: pulse-dot 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.45; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+      font-weight: 800; line-height: 1.03;
+      letter-spacing: -0.03em; margin-bottom: 22px;
+    }
+    .hero-title span { color: rgba(255,255,255,0.3); }
+    .hero-sub {
+      font-size: 1rem; color: var(--text-secondary);
+      line-height: 1.75; max-width: 440px; margin-bottom: 36px;
+    }
+    .hero-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip {
+      border-radius: 50px; padding: 7px 16px;
+      font-size: 0.76rem; font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .hero-visual { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    .profile-card {
+      width: 100%; max-width: 300px;
+      border-radius: 26px; overflow: hidden;
+      position: relative;
+    }
+    .profile-card img.samuel-img {
+      width: 100%; display: block;
+      filter: grayscale(15%) contrast(1.06) brightness(0.95);
+    }
+    .profile-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 22px 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0) 100%);
+    }
+    .profile-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; }
+    .profile-handle { font-size: 0.76rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+    .vr-logo-wrap {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .vr-logo {
+      width: 64px; height: 64px; border-radius: 50%;
+      object-fit: cover; padding: 8px;
+    }
+    .vr-logo-text { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); }
+
+    /* ─── SECTION HEADER ─── */
+    .sec-num {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.28);
+      margin-bottom: 6px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sec-num::before {
+      content: ''; display: block; width: 5px; height: 5px;
+      background: rgba(255,255,255,0.25); border-radius: 50%;
+    }
+    .sec-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+      font-weight: 800; letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+    .sec-desc {
+      font-size: 0.95rem; color: var(--text-secondary);
+      line-height: 1.75; max-width: 580px;
+      margin-bottom: 44px;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+    }
+
+    /* ─── 01 DIAGNÓSTICO ─── */
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .problem-card { border-radius: 18px; padding: 24px 24px 22px; }
+    .problem-icon { font-size: 1.9rem; margin-bottom: 14px; line-height: 1; }
+    .problem-title {
+      font-family: var(--font-display); font-size: 0.92rem; font-weight: 700;
+      margin-bottom: 7px;
+    }
+    .problem-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.65; }
+    .badge {
+      display: inline-block; margin-top: 14px;
+      border-radius: 50px; padding: 3px 11px;
+      font-size: 0.63rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .badge-red { background: rgba(252,129,129,0.10); color: var(--red); }
+    .badge-amber { background: rgba(251,191,36,0.10); color: rgba(251,191,36,0.9); }
+    .badge-blue { background: rgba(147,197,253,0.10); color: rgba(147,197,253,0.9); }
+
+    /* ─── 02 BIO ─── */
+    .bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .bio-card { border-radius: 20px; padding: 26px 28px; }
+    .bio-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .bio-label::before { content: ''; display: block; width: 7px; height: 7px; border-radius: 50%; }
+    .bio-label.before { color: var(--red); }
+    .bio-label.before::before { background: var(--red); }
+    .bio-label.after  { color: var(--green); }
+    .bio-label.after::before  { background: var(--green); }
+
+    .bio-mock {
+      border-radius: 14px; padding: 18px 20px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.055);
+    }
+    .bio-mock-name { font-weight: 600; font-size: 0.92rem; margin-bottom: 3px; }
+    .bio-mock-handle { font-size: 0.72rem; color: var(--text-secondary); margin-bottom: 14px; }
+    .bio-mock-text { font-size: 0.82rem; line-height: 1.8; color: var(--text-secondary); }
+    .bio-mock-text.new { color: var(--text-primary); }
+    .bio-mock-link { color: rgba(163, 196, 243, 0.85); }
+    .bio-note {
+      margin-top: 16px; padding: 12px 16px;
+      border-radius: 10px; font-size: 0.78rem;
+      color: var(--text-secondary); line-height: 1.6;
+    }
+    .bio-note.good { background: rgba(134,239,172,0.055); border-left: 2px solid rgba(134,239,172,0.35); }
+    .bio-note.bad  { background: rgba(252,129,129,0.055); border-left: 2px solid rgba(252,129,129,0.35); }
+    .bio-note strong { color: var(--text-primary); }
+
+    /* ─── 03 DESTAQUES ─── */
+    .highlights-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    }
+    .hl-item { border-radius: 18px; padding: 22px 16px 20px; text-align: center; }
+    .hl-icon {
+      width: 50px; height: 50px; border-radius: 50%;
+      background: rgba(255,255,255,0.065);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin: 0 auto 14px;
+    }
+    .hl-name { font-family: var(--font-display); font-size: 0.82rem; font-weight: 700; margin-bottom: 7px; }
+    .hl-desc { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.55; }
+    .hl-new {
+      display: inline-block; margin-top: 10px;
+      border-radius: 50px; padding: 2px 9px;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      background: rgba(134,239,172,0.09); color: var(--green);
+    }
+    .hl-exists {
+      display: inline-block; margin-top: 10px;
+      border-radius: 50px; padding: 2px 9px;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      background: rgba(251,191,36,0.09); color: rgba(251,191,36,0.85);
+    }
+
+    /* ─── 04 LINK NA BIO ─── */
+    .link-scene {
+      display: flex; gap: 40px; align-items: flex-start; justify-content: center;
+      flex-wrap: wrap;
+    }
+    .link-phone {
+      width: 280px; border-radius: 36px; padding: 32px 24px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0;
+    }
+    .link-phone-logo {
+      width: 60px; height: 60px; border-radius: 50%;
+      object-fit: cover; padding: 7px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 14px;
+    }
+    .link-phone-name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+    .link-phone-sub { font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 24px; text-align: center; }
+    .lk-btn {
+      display: flex; width: 100%; align-items: center; justify-content: center;
+      gap: 9px; border-radius: 50px; padding: 13px 18px;
+      margin-bottom: 11px; font-size: 0.85rem; font-weight: 500;
+      color: var(--text-primary); text-decoration: none;
+      cursor: pointer; transition: var(--transition-fast);
+    }
+    .lk-btn:hover { transform: translateY(-1px); filter: brightness(1.15); }
+    .lk-btn-icon { font-size: 1rem; }
+
+    .link-desc { max-width: 320px; }
+    .link-desc-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; }
+    .link-desc-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      margin-bottom: 18px;
+    }
+    .link-desc-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 0.75rem; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .link-desc-text strong { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 3px; }
+    .link-desc-text span { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.55; }
+
+    /* ─── 05 VÍDEOS ─── */
+    .video-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .video-block { border-radius: 20px; padding: 26px 24px; }
+    .vb-num {
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.22);
+      margin-bottom: 5px;
+    }
+    .vb-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
+    .vb-idea {
+      display: flex; gap: 9px; align-items: flex-start;
+      margin-bottom: 9px; font-size: 0.79rem;
+      color: var(--text-secondary); line-height: 1.55;
+    }
+    .vb-idea::before { content: '▸'; color: rgba(255,255,255,0.25); flex-shrink: 0; margin-top: 1px; }
+    .vb-tag {
+      display: inline-block; margin-top: 14px;
+      border-radius: 50px; padding: 3px 10px;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.35);
+    }
+
+    /* ─── 06 PRÓXIMOS PASSOS ─── */
+    .steps { display: flex; flex-direction: column; gap: 13px; }
+    .step { display: flex; gap: 18px; align-items: flex-start; border-radius: 16px; padding: 20px 24px; }
+    .step-n {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 0.8rem; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .step-t { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; margin-bottom: 5px; }
+    .step-d { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.65; }
+    .step-when {
+      display: inline-block; margin-top: 9px;
+      border-radius: 50px; padding: 3px 10px;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.32);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center; padding: 70px 24px 50px;
+    }
+    .footer-brand { font-family: var(--font-brand); font-size: 2.2rem; color: rgba(255,255,255,0.25); display: block; margin-bottom: 10px; }
+    .footer-sub { font-size: 0.72rem; color: rgba(255,255,255,0.16); letter-spacing: 1px; }
+
+    /* ─── DISSOLVE ─── */
+    @keyframes dissolve-in {
+      from { opacity: 0; filter: blur(14px); transform: translateY(22px) scale(0.97); }
+      to   { opacity: 1; filter: blur(0);    transform: translateY(0) scale(1); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 820px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { order: -1; }
+      .bio-grid { grid-template-columns: 1fr; }
+      .problem-grid { grid-template-columns: repeat(2, 1fr); }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+      .video-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-label { display: none; }
+      .link-scene { flex-direction: column; align-items: center; }
+    }
+    @media (max-width: 520px) {
+      .problem-grid { grid-template-columns: 1fr; }
+      .video-grid { grid-template-columns: 1fr; }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress"></div>
+  <div class="demo-bg"></div>
+
+  <!-- ─── NAV ─── -->
+  <nav class="glass">
+    <span class="nav-brand">criativvo</span>
+    <div class="nav-sep"></div>
+    <span class="nav-label">Plano de Ação — VR STUDIO</span>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="glass hero-eyebrow">Instagram · Plano de Ação · Maio 2026</div>
+        <h1 class="hero-title">
+          Posicionamento<br>
+          <span>VR</span> STUDIO
+        </h1>
+        <p class="hero-sub">
+          Diagnóstico completo do Instagram atual + todas as mudanças necessárias para transformar
+          @vrstudio.cvo na referência de remoção a laser em Curvelo — antes de qualquer concorrente aparecer.
+        </p>
+        <div class="hero-chips">
+          <span class="glass chip">@vrstudio.cvo</span>
+          <span class="glass chip">📍 Curvelo · MG</span>
+          <span class="glass chip">~80 mil hab.</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="glass glass-card profile-card">
+          <img src="samuel.png" alt="Samuel Araujo — VR Studio" class="samuel-img">
+          <div class="profile-overlay">
+            <div class="profile-name">Samuel Araujo</div>
+            <div class="profile-handle">@vrstudio.cvo · Remoção a Laser</div>
+          </div>
+        </div>
+        <div class="glass glass-card vr-logo-wrap" style="padding:14px 20px; border-radius:50px;">
+          <img src="logo-vrstudio-icon.png" alt="VR Studio" class="vr-logo">
+          <div class="vr-logo-text">Logo oficial · Identidade monochrome</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── 01 DIAGNÓSTICO ─── -->
+  <section class="section-wrap">
+    <div class="container">
+      <div class="sec-num">01 · Diagnóstico</div>
+      <h2 class="sec-title">O que precisa mudar</h2>
+      <p class="sec-desc">
+        6 problemas identificados que estão impedindo o @vrstudio.cvo de crescer e converter clientes.
+        Cada um tem solução direta neste plano — e todos serão resolvidos.
+      </p>
+
+      <div class="problem-grid">
+        <div class="glass glass-card problem-card">
+          <div class="problem-icon">📉</div>
+          <div class="problem-title">Frequência muito baixa</div>
+          <div class="problem-desc">Aproximadamente 2 posts por mês. O algoritmo penaliza contas inativas e entrega menos alcance. Concorrentes que postarem mais aparecem no lugar.</div>
+          <span class="badge badge-red">Urgente</span>
+        </div>
+        <div class="glass glass-card problem-card">
+          <div class="problem-icon">📝</div>
+          <div class="problem-title">Bio sem posicionamento</div>
+          <div class="problem-desc">Quem chega no perfil não sabe o que você faz, onde atende e o que fazer para agendar. 3 segundos de atenção — sem clareza, o lead vai embora.</div>
+          <span class="badge badge-red">Urgente</span>
+        </div>
+        <div class="glass glass-card problem-card">
+          <div class="problem-icon">📍</div>
+          <div class="problem-title">Localização não clicável</div>
+          <div class="problem-desc">Endereço fixo no perfil não abre o Waze ou Google Maps. Quem quer visitar o estúdio não consegue chegar com facilidade.</div>
+          <span class="badge badge-amber">Corrigir</span>
+        </div>
+        <div class="glass glass-card problem-card">
+          <div class="problem-icon">📌</div>
+          <div class="problem-title">Destaques incompletos</div>
+          <div class="problem-desc">Apenas o destaque "Sessões" existe. Sem apresentação do negócio, do profissional, sem FAQ, sem depoimentos, sem caminho para agendamento.</div>
+          <span class="badge badge-amber">Estruturar</span>
+        </div>
+        <div class="glass glass-card problem-card">
+          <div class="problem-icon">🔗</div>
+          <div class="problem-title">Link na bio mal aproveitado</div>
+          <div class="problem-desc">O visitante não tem caminho claro para agendar, ver onde fica ou falar pelo WhatsApp. Um clique perdido é um lead a menos.</div>
+          <span class="badge badge-blue">Criar</span>
+        </div>
+        <div class="glass glass-card problem-card">
+          <div class="problem-icon">🎯</div>
+          <div class="problem-title">Demanda reprimida invisível</div>
+          <div class="problem-desc">A maioria de Curvelo não sabe que remoção a laser existe na cidade. O conteúdo não conscientiza — aparece só para quem já procura ativamente.</div>
+          <span class="badge badge-blue">Estratégico</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── 02 BIO ─── -->
+  <section class="section-wrap">
+    <div class="container">
+      <div class="sec-num">02 · Bio</div>
+      <h2 class="sec-title">Antes e Depois</h2>
+      <p class="sec-desc">
+        A bio é o cartão de visitas do perfil. Em 3 segundos o visitante decide se fica ou vai embora.
+        Vamos transformá-la em uma máquina de direcionamento com posicionamento claro e chamada para ação.
+      </p>
+
+      <div class="bio-grid">
+        <div class="glass glass-card bio-card">
+          <div class="bio-label before">Situação atual — problema</div>
+          <div class="bio-mock">
+            <div class="bio-mock-name">VR STUDIO</div>
+            <div class="bio-mock-handle">@vrstudio.cvo</div>
+            <div class="bio-mock-text">
+              Sem estrutura clara · Sem diferencial · Sem chamada para ação · Localização como endereço fixo (não abre no Maps)
+            </div>
+          </div>
+          <div class="bio-note bad">
+            <strong>Problema:</strong> o visitante chega, não entende o que você faz, não sabe como agendar e vai embora sem interagir.
+          </div>
+        </div>
+
+        <div class="glass glass-card bio-card">
+          <div class="bio-label after">Proposta — novo texto</div>
+          <div class="bio-mock">
+            <div class="bio-mock-name">VR STUDIO</div>
+            <div class="bio-mock-handle">@vrstudio.cvo</div>
+            <div class="bio-mock-text new">
+              💉 Remoção de Tatuagem &amp; Micropigmentação<br>
+              📍 Curvelo - MG<br>
+              ✅ 3 a 6 sessões · Tecnologia a laser<br>
+              👇 Agende sua avaliação gratuita<br>
+              <span class="bio-mock-link">linktr.ee/vrstudio</span>
+            </div>
+          </div>
+          <div class="bio-note good">
+            <strong>Por que funciona:</strong> em 3 segundos o visitante sabe o que você faz, onde fica, o diferencial da sua máquina e como agendar.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── 03 FOTO DE PERFIL ─── -->
+  <section class="section-wrap">
+    <div class="container">
+      <div class="sec-num">03 · Foto de Perfil</div>
+      <h2 class="sec-title">Identidade Visual</h2>
+      <p class="sec-desc">
+        A foto de perfil deve ser a logo ícone (monograma VR, fundo escuro, letras brancas).
+        Limpa, reconhecível e premium — transmite profissionalismo antes mesmo de ler o nome.
+      </p>
+
+      <div style="display:flex; gap:28px; align-items:center; flex-wrap:wrap;">
+        <div class="glass glass-card" style="padding:28px 32px; display:flex; align-items:center; gap:20px; max-width:420px;">
+          <img src="logo-vrstudio-icon.png" alt="Logo ícone VR" style="width:80px; height:80px; border-radius:50%; border:2px solid rgba(255,255,255,0.1);">
+          <div>
+            <div style="font-family:var(--font-display); font-size:0.85rem; font-weight:700; margin-bottom:5px;">Logo ícone (recomendada)</div>
+            <div style="font-size:0.78rem; color:var(--text-secondary); line-height:1.6;">Monograma VR + STUDIO · Fundo cinza escuro · Leitura clara em qualquer tamanho</div>
+            <span class="badge badge-blue" style="margin-top:10px;">Usar como foto de perfil</span>
+          </div>
+        </div>
+        <div class="glass glass-card" style="padding:28px 32px; display:flex; align-items:center; gap:20px; max-width:420px;">
+          <img src="logo-vrstudio-horizontal.png" alt="Logo horizontal VR" style="height:44px; border-radius:8px; background:rgba(255,255,255,0.03); padding:4px 8px;">
+          <div>
+            <div style="font-family:var(--font-display); font-size:0.85rem; font-weight:700; margin-bottom:5px;">Logo horizontal</div>
+            <div style="font-size:0.78rem; color:var(--text-secondary); line-height:1.6;">Usar em capas de destaques, stories e artes de feed</div>
+            <span class="badge badge-amber" style="margin-top:10px;">Artes e destaques</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── 04 DESTAQUES ─── -->
+  <section class="section-wrap">
+    <div class="container">
+      <div class="sec-num">04 · Destaques</div>
+      <h2 class="sec-title">De 1 para 8 destaques</h2>
+      <p class="sec-desc">
+        Estrutura completa com capas padronizadas (fundo preto, tipografia branca).
+        Cada destaque tem função estratégica — juntos, eles respondem todas as dúvidas e quebram todas as objeções antes do primeiro contato.
+      </p>
+
+      <div class="highlights-grid">
+        <div class="glass glass-card hl-item">
+          <div class="hl-icon">⚡</div>
+          <div class="hl-name">Como Funciona</div>
+          <div class="hl-desc">Explicação do processo, tecnologia a laser, número de sessões e o que o cliente pode esperar</div>
+          <span class="hl-new">Criar</span>
+        </div>
+        <div class="glass glass-card hl-item">
+          <div class="hl-icon">✨</div>
+          <div class="hl-name">Antes e Depois</div>
+          <div class="hl-desc">Resultados reais com progressão de sessões — prova social visual que converte</div>
+          <span class="hl-new">Criar</span>
+        </div>
+        <div class="glass glass-card hl-item">
+          <div class="hl-icon">🎥</div>
+          <div class="hl-name">Sessões</div>
+          <div class="hl-desc">Vídeos de atendimentos reais — já existe, vamos reorganizar e curar o conteúdo</div>
+          <span class="hl-exists">Reorganizar</span>
+        </div>
+        <div class="glass glass-card hl-item">
+          <div class="hl-icon">🖊️</div>
+          <div class="hl-name">Micropigmentação</div>
+          <div class="hl-desc">Processo, resultados e diferenças em relação à remoção de tatuagem</div>
+          <span class="hl-new">Criar</span>
+        </div>
+        <div class="glass glass-card hl-item">
+          <div class="hl-icon">💬</div>
+          <div class="hl-name">Depoimentos</div>
+          <div class="hl-desc">Clientes reais falando sobre experiência e resultado — prova social que gera confiança</div>
+          <span class="hl-new">Criar</span>
+        </div>
+        <div class="glass glass-card hl-item">
+          <div class="hl-icon">👤</div>
+          <div class="hl-name">Sobre Mim</div>
+          <div class="hl-desc">Quem é o Samuel, a máquina de R$85k, trajetória e diferenciais técnicos</div>
+          <span class="hl-new">Criar</span>
+        </div>
+        <div class="glass glass-card hl-item">
+          <div class="hl-icon">❓</div>
+          <div class="hl-name">Dúvidas</div>
+          <div class="hl-desc">FAQ completo: dói? Quantas sessões? Funciona em pele negra? Quanto custa? Fica marca?</div>
+          <span class="hl-new">Criar</span>
+        </div>
+        <div class="glass glass-card hl-item">
+          <div class="hl-icon">📅</div>
+          <div class="hl-name">Agende</div>
+          <div class="hl-desc">Passo a passo para marcar, link direto para WhatsApp e localização no Maps</div>
+          <span class="hl-new">Criar</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── 05 LINK NA BIO ─── -->
+  <section class="section-wrap">
+    <div class="container">
+      <div class="sec-num">05 · Link na Bio</div>
+      <h2 class="sec-title">Página de agendamento</h2>
+      <p class="sec-desc">
+        Substituir o link atual por uma página com 3 ações diretas.
+        O cliente escolhe como prefere entrar em contato — sem fricção, sem redirecionamentos desnecessários.
+      </p>
+
+      <div class="link-scene">
+        <div class="glass glass-card link-phone">
+          <img src="logo-vrstudio-icon.png" alt="VR Studio" class="link-phone-logo">
+          <div class="link-phone-name">VR STUDIO</div>
+          <div class="link-phone-sub">Remoção a Laser · Micropigmentação<br>Curvelo - MG</div>
+
+          <a href="https://wa.me/55XXXXXXXXXX?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação%20gratuita." class="glass lk-btn" style="background:rgba(37,211,102,0.1); border-color:rgba(37,211,102,0.2);">
+            <span class="lk-btn-icon">💬</span> Agendar pelo WhatsApp
+          </a>
+          <a href="https://maps.google.com/?q=Rua+Vinte+Um+de+Abril,+11,+Curvelo,+MG" class="glass lk-btn">
+            <span class="lk-btn-icon">📍</span> Como chegar
+          </a>
+          <a href="https://www.instagram.com/vrstudio.cvo/" class="glass lk-btn">
+            <span class="lk-btn-icon">📷</span> Ver resultados no Instagram
+          </a>
+        </div>
+
+        <div class="link-desc">
+          <div class="link-desc-title">Por que funciona</div>
+          <div class="link-desc-item">
+            <div class="link-desc-num">1</div>
+            <div class="link-desc-text">
+              <strong>WhatsApp direto</strong>
+              <span>Mensagem pré-preenchida "gostaria de agendar uma avaliação" — zero fricção para o cliente iniciar o contato</span>
+            </div>
+          </div>
+          <div class="link-desc-item">
+            <div class="link-desc-num">2</div>
+            <div class="link-desc-text">
+              <strong>Google Maps clicável</strong>
+              <span>Abre o Waze/Maps direto com o endereço correto — substitui o endereço fixo atual que ninguém consegue usar</span>
+            </div>
+          </div>
+          <div class="link-desc-item">
+            <div class="link-desc-num">3</div>
+            <div class="link-desc-text">
+              <strong>Instagram com resultados</strong>
+              <span>Quem vem de fora do Instagram pode ver o feed de resultados antes de agendar</span>
+            </div>
+          </div>
+          <div class="glass glass-card" style="padding:14px 18px; border-radius:14px; margin-top:8px;">
+            <div style="font-size:0.75rem; color:var(--text-secondary); line-height:1.65;">
+              ⚠️ <strong style="color:var(--text-primary);">Ação necessária:</strong> confirmar número do WhatsApp do Samuel para ativar o link de agendamento.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── 06 IDEIAS DE REELS ─── -->
+  <section class="section-wrap">
+    <div class="container">
+      <div class="sec-num">06 · Conteúdo</div>
+      <h2 class="sec-title">Ideias de Reels</h2>
+      <p class="sec-desc">
+        6 blocos temáticos que cobrem toda a jornada do cliente — desde descobrir que o serviço existe em Curvelo
+        até o agendamento. Mínimo 1 Reel por semana, meta 2.
+      </p>
+
+      <div class="video-grid">
+        <div class="glass glass-card video-block">
+          <div class="vb-num">Bloco 01</div>
+          <div class="vb-title">Conscientização</div>
+          <div class="vb-idea">"Você sabia que em Curvelo tem remoção a laser?"</div>
+          <div class="vb-idea">"O que você não sabe sobre remoção de tatuagem na sua cidade"</div>
+          <div class="vb-idea">"Curvelo tem solução para a tatuagem que você não gosta"</div>
+          <span class="vb-tag">Prioridade máxima</span>
+        </div>
+
+        <div class="glass glass-card video-block">
+          <div class="vb-num">Bloco 02</div>
+          <div class="vb-title">Diferencial da Máquina</div>
+          <div class="vb-idea">"Por que eu consigo em 3 sessões o que outros fazem em 12"</div>
+          <div class="vb-idea">"Quanto custa uma máquina de remoção profissional?" (revelar os R$85k)</div>
+          <div class="vb-idea">"Eu investi R$85 mil para trazer o melhor equipamento para Curvelo"</div>
+          <span class="vb-tag">Autoridade</span>
+        </div>
+
+        <div class="glass glass-card video-block">
+          <div class="vb-num">Bloco 03</div>
+          <div class="vb-title">Quebra de Objeções</div>
+          <div class="vb-idea">"Dói muito?" — mostrando sessão real ao vivo</div>
+          <div class="vb-idea">"Funciona em pele negra?" — tema raramente abordado no nicho</div>
+          <div class="vb-idea">"Tatuagem colorida tem como remover?"</div>
+          <div class="vb-idea">"Vai ficar marca na pele?"</div>
+          <span class="vb-tag">Conversão</span>
+        </div>
+
+        <div class="glass glass-card video-block">
+          <div class="vb-num">Bloco 04</div>
+          <div class="vb-title">Resultados</div>
+          <div class="vb-idea">Antes e depois com progressão de sessões documentada</div>
+          <div class="vb-idea">Sessão ao vivo em POV — câmera na perspectiva do cliente</div>
+          <div class="vb-idea">"Depois de X sessões" — evolução visual que prova o resultado</div>
+          <span class="vb-tag">Prova social</span>
+        </div>
+
+        <div class="glass glass-card video-block">
+          <div class="vb-num">Bloco 05</div>
+          <div class="vb-title">Samuel como autoridade</div>
+          <div class="vb-idea">Apresentação: 20 anos, Curvelo, especialista em remoção a laser</div>
+          <div class="vb-idea">"Investi R$85 mil para trazer o melhor equipamento para a cidade"</div>
+          <div class="vb-idea">Rotina de atendimento — bastidor do estúdio</div>
+          <span class="vb-tag">Marca pessoal</span>
+        </div>
+
+        <div class="glass glass-card video-block">
+          <div class="vb-num">Bloco 06</div>
+          <div class="vb-title">Parcerias e Comunidade</div>
+          <div class="vb-idea">Collab com Canal Informe — maior página de comunicação de Curvelo</div>
+          <div class="vb-idea">Comercial gravado na academia Skyfit Central</div>
+          <div class="vb-idea">Conteúdo local — mostrar que é de Curvelo, para Curvelo</div>
+          <span class="vb-tag">Alcance local</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── 07 PRÓXIMOS PASSOS ─── -->
+  <section class="section-wrap">
+    <div class="container">
+      <div class="sec-num">07 · Execução</div>
+      <h2 class="sec-title">O que acontece agora</h2>
+      <p class="sec-desc">
+        Tudo o que será feito nas próximas semanas, em ordem de prioridade. Sem achismo — cada entrega tem data e responsável.
+      </p>
+
+      <div class="steps">
+        <div class="glass glass-card step">
+          <div class="step-n">1</div>
+          <div>
+            <div class="step-t">Bio + Foto de perfil + Link</div>
+            <div class="step-d">Atualizar bio com novo texto posicionado, colocar logo como foto de perfil e criar a página de link com WhatsApp (aguardando número) e Google Maps.</div>
+            <span class="step-when">Semana 1</span>
+          </div>
+        </div>
+        <div class="glass glass-card step">
+          <div class="step-n">2</div>
+          <div>
+            <div class="step-t">8 capas dos destaques</div>
+            <div class="step-d">Criar capas padronizadas para todos os destaques: fundo preto, tipografia branca, logo VR Studio — identidade consistente em todo o perfil.</div>
+            <span class="step-when">Semana 1</span>
+          </div>
+        </div>
+        <div class="glass glass-card step">
+          <div class="step-n">3</div>
+          <div>
+            <div class="step-t">Primeiros roteiros e vídeos</div>
+            <div class="step-d">Roteiro da semana → Samuel grava → Dudu edita. Prioridade: apresentação do Samuel + "você sabia que em Curvelo tem remoção a laser?" — conscientização da demanda reprimida.</div>
+            <span class="step-when">Semana 1–2</span>
+          </div>
+        </div>
+        <div class="glass glass-card step">
+          <div class="step-n">4</div>
+          <div>
+            <div class="step-t">Preencher destaques com conteúdo</div>
+            <div class="step-d">Reorganizar o que já existe (Sessões) + criar stories para "Como Funciona", "Sobre Mim" e "Dúvidas". Base para qualquer visitante novo entender tudo sem precisar perguntar.</div>
+            <span class="step-when">Semana 2–3</span>
+          </div>
+        </div>
+        <div class="glass glass-card step">
+          <div class="step-n">5</div>
+          <div>
+            <div class="step-t">Collab com Canal Informe</div>
+            <div class="step-d">Victor e Samuel gravam juntos para o Canal Informe — maior página de comunicação de Curvelo. Alcance de público novo que nunca viu o @vrstudio.cvo.</div>
+            <span class="step-when">A agendar · Mês 1</span>
+          </div>
+        </div>
+        <div class="glass glass-card step">
+          <div class="step-n">6</div>
+          <div>
+            <div class="step-t">Foto profissional com IA + Skyfit</div>
+            <div class="step-d">Foto profissional do Samuel gerada com IA a partir da foto caseira já coletada + gravação de comercial com narrativa natural na academia Skyfit Central.</div>
+            <span class="step-when">Mês 1–2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <span class="footer-brand">criativvo</span>
+    <span class="footer-sub">Plano de Ação — VR STUDIO × Instagram · Maio 2026</span>
+  </footer>
+
+  <script>
+    // ─── PROGRESS BAR ───
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      document.getElementById('progress').style.width = pct + '%';
+    });
+
+    // ─── DISSOLVE IN ───
+    const dissolveIn = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.animation = 'dissolve-in 650ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+          dissolveIn.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.06 });
+
+    document.querySelectorAll('.glass').forEach(el => {
+      el.style.opacity = '0';
+      dissolveIn.observe(el);
+    });
+
+    // ─── PARALLAX TILT ───
+    function initTilt(el) {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width  - 0.5;
+        const y = (e.clientY - rect.top)  / rect.height - 0.5;
+        el.style.transform = `perspective(900px) rotateX(${-y * 5}deg) rotateY(${x * 5}deg) translateY(-2px)`;
+        el.style.transition = 'transform 80ms linear';
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+        el.style.transition = 'transform 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      });
+    }
+    document.querySelectorAll('.glass-card').forEach(initTilt);
+  </script>
+</body>
+</html>
