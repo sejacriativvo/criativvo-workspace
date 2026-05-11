@@ -349,16 +349,56 @@ Chart.register({
   }
 });
 
+// ── Pulse plugin — anima pontos do gráfico de linha ──
+Chart.register({
+  id: 'pulsePoints',
+  afterDraw(chart) {
+    if(!chart.config.options?.plugins?.pulsePoints) return;
+    if(chart._dead) return;
+    const { ctx } = chart;
+    const t = (Date.now() % 1400) / 1400;
+    chart.data.datasets.forEach((_, di) => {
+      const meta = chart.getDatasetMeta(di);
+      meta.data.forEach(pt => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 7 + 11 * t, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(204,0,0,${(1 - t) * 0.45})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+      });
+    });
+    cancelAnimationFrame(chart._pulseRAF);
+    chart._pulseRAF = requestAnimationFrame(() => { if(!chart._dead) chart.draw(); });
+  },
+  destroy(chart) { chart._dead = true; cancelAnimationFrame(chart._pulseRAF); }
+});
+
 // ── Chart defaults ──
 Chart.defaults.color = '#71717a';
 Chart.defaults.font  = { family:'Montserrat', size:11 };
-const BRD = '#CC0000';          // brand red — "você" bars
+const BRD = '#CC0000';
 const BRD_D = 'rgba(204,0,0,0.15)';
-const NEU   = 'rgba(0,0,0,0.10)'; // neutral bars — others
+const NEU   = 'rgba(0,0,0,0.10)';
 const GRN   = '#16a34a';
 const GRD   = 'rgba(22,163,74,0.18)';
 const BD    = '#e4e4e7';
 const AX    = { grid:{ color:BD }, ticks:{ color:'#71717a' } };
+
+// ── Shared animation & tooltip defaults ──
+const ANIM_BAR = {
+  duration: 700, easing: 'easeOutQuart',
+  delay(ctx) { return ctx.type === 'data' ? ctx.dataIndex * 90 : 0; }
+};
+const TIP = {
+  backgroundColor:'rgba(255,255,255,0.97)',
+  titleColor:'#18181b', bodyColor:'#71717a',
+  borderColor:'#e4e4e7', borderWidth:1,
+  padding:12, cornerRadius:10,
+  titleFont:{family:'Montserrat',weight:'800',size:12},
+  bodyFont:{family:'Montserrat',size:11}
+};
 
 // ── Helpers ──
 const R2  = n => 'R$'+n.toFixed(2).replace('.',',');
@@ -568,20 +608,34 @@ function buildCharts(d, prev){
   charts.l = new Chart('chL',{type:'bar',data:{
     labels:[prev.label.split(' ')[0], d.label.split(' ')[0]],
     datasets:[{label:'Conversas',data:[prev.leads,d.leads],backgroundColor:[NEU,BRD],borderRadius:8,borderSkipped:false}]
-  },options:{animation:{duration:250},plugins:{legend:{display:false}},scales:{x:AX,y:{...AX,beginAtZero:true}}}});
+  },options:{animation:ANIM_BAR,plugins:{legend:{display:false},tooltip:TIP},scales:{x:AX,y:{...AX,beginAtZero:true}}}});
 
   if(charts.c) charts.c.destroy();
   if(d.cpl){
     charts.c = new Chart('chC',{type:'line',data:{
       labels:d.weeks ? d.weeks.map(w=>w.l) : [prev.label.split(' ')[0],d.label.split(' ')[0]],
-      datasets:[{label:'CPL (R$)',data:d.weeks?d.weeks.map(w=>w.cpl):[prev.cpl,d.cpl],borderColor:BRD,backgroundColor:BRD_D,fill:true,tension:0.4,pointBackgroundColor:BRD,pointRadius:5}]
-    },options:{animation:{duration:250},plugins:{legend:{display:false}},scales:{x:AX,y:AX}}});
-    document.getElementById('cplLbl').textContent='Evolução do custo por lead';
+      datasets:[{
+        label:'CPL (R$)', data:d.weeks?d.weeks.map(w=>w.cpl):[prev.cpl,d.cpl],
+        borderColor:BRD, backgroundColor:BRD_D, fill:true, tension:0.4,
+        pointBackgroundColor:BRD, pointBorderColor:'#fff', pointBorderWidth:2,
+        pointRadius:7, pointHoverRadius:11, pointHoverBackgroundColor:BRD
+      }]
+    },options:{
+      animation:{duration:900,easing:'easeInOutQuart'},
+      plugins:{
+        legend:{display:false},
+        pulsePoints:true,
+        tooltip:{...TIP,callbacks:{label(ctx){return ` R$${ctx.raw.toFixed(2).replace('.',',')} por lead`;}}}
+      },
+      scales:{x:AX,y:AX}
+    }});
+    document.getElementById('cplLbl').innerHTML =
+      'Evolução do custo por lead <span style="font-size:.55rem;color:var(--mu);font-weight:500;letter-spacing:0;text-transform:none;margin-left:6px;">· passe o mouse nos pontos</span>';
   } else {
     charts.c = new Chart('chC',{type:'bar',data:{
       labels:[prev.label.split(' ')[0],d.label.split(' ')[0]],
       datasets:[{label:'Investimento (R$)',data:[prev.inv,d.inv],backgroundColor:[NEU,BRD],borderRadius:8,borderSkipped:false}]
-    },options:{animation:{duration:250},plugins:{legend:{display:false}},scales:{x:AX,y:{...AX,beginAtZero:true}}}});
+    },options:{animation:ANIM_BAR,plugins:{legend:{display:false},tooltip:TIP},scales:{x:AX,y:{...AX,beginAtZero:true}}}});
     document.getElementById('cplLbl').textContent='Investimento por mês (R$)';
   }
 
@@ -593,7 +647,11 @@ function buildCharts(d, prev){
         {label:'Investimento (R$)',data:d.weeks.map(w=>w.inv),backgroundColor:BRD_D,borderColor:BRD,borderWidth:1.5,borderRadius:6,borderSkipped:false,yAxisID:'y'},
         {label:'Conversas',data:d.weeks.map(w=>w.leads),backgroundColor:NEU,borderRadius:6,borderSkipped:false,yAxisID:'y1'}
       ]
-    },options:{animation:{duration:250},plugins:{legend:{labels:{font:{family:'Montserrat',size:11},color:'#71717a'}}},scales:{x:AX,y:{...AX,beginAtZero:true},y1:{grid:{display:false},ticks:{color:'#71717a'},beginAtZero:true,position:'right'}}}});
+    },options:{
+      animation:ANIM_BAR,
+      plugins:{legend:{labels:{font:{family:'Montserrat',size:11},color:'#71717a'}},tooltip:TIP},
+      scales:{x:AX,y:{...AX,beginAtZero:true},y1:{grid:{display:false},ticks:{color:'#71717a'},beginAtZero:true,position:'right'}}
+    }});
   }
 }
 
@@ -619,7 +677,7 @@ function buildSocial(u){
   const others = SOCIAL_COMP.filter(c=>!c.unit);
   const all    = [me,...others].slice(0,5);
 
-  const logoOpts = { plugins:{ legend:{display:false}, voceLogo:true }, layout:{ padding:{ top:28 } } };
+  const logoOpts = { plugins:{ legend:{display:false}, voceLogo:true, tooltip:TIP }, layout:{ padding:{ top:28 } }, animation:ANIM_BAR };
 
   if(charts.eng) charts.eng.destroy();
   charts.eng = new Chart('chEng',{type:'bar',data:{
