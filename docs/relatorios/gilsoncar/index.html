@@ -180,7 +180,7 @@
 
     /* ── FOOTER ── */
     footer { border-top:1px solid var(--bd); padding:32px 16px; text-align:center; background:var(--card); }
-    .footer-brand { font-family:'AVEstiana', 'Montserrat', sans-serif; font-weight:900; font-size:1.5rem; color:var(--tx); display:block; letter-spacing:1px; margin-bottom:6px; }
+    .footer-brand { font-family:'AVEstiana', 'Montserrat', sans-serif; font-weight:900; font-size:2.6rem; color:var(--tx); display:block; letter-spacing:-2px; margin-bottom:6px; }
     footer p { font-size:.66rem; color:var(--mu); }
 
     /* ── ANIM ── */
@@ -321,6 +321,30 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
 }, { threshold:0.05, rootMargin:'0px 0px -20px 0px' });
 document.querySelectorAll('.anim').forEach(el => obs.observe(el));
+
+// ── GilsonCar logo — preload para usar nos gráficos ──
+const gilsonImg = new Image();
+gilsonImg.src = 'assets/LOGO GILSONCAR.png';
+
+// Plugin: desenha a logo da GilsonCar acima da barra "você"
+Chart.register({
+  id: 'voceLogo',
+  afterDatasetsDraw(chart) {
+    if(!chart.config.options?.plugins?.voceLogo) return;
+    if(!gilsonImg.complete || !gilsonImg.naturalWidth) return;
+    const voceI = chart.data.labels.findIndex(l => l.toLowerCase() === 'você');
+    if(voceI < 0) return;
+    const { ctx } = chart;
+    const meta = chart.getDatasetMeta(0);
+    const bar  = meta.data[voceI];
+    const w = 58, h = 19;
+    const topOfBar = Math.min(bar.y, bar.base ?? bar.y);
+    const y = Math.max(chart.chartArea.top + 2, topOfBar - h - 5);
+    ctx.save();
+    ctx.drawImage(gilsonImg, bar.x - w/2, y, w, h);
+    ctx.restore();
+  }
+});
 
 // ── Chart defaults ──
 Chart.defaults.color = '#71717a';
@@ -592,19 +616,21 @@ function buildSocial(u){
   const others = SOCIAL_COMP.filter(c=>!c.unit);
   const all    = [me,...others].slice(0,5);
 
+  const logoOpts = { plugins:{ legend:{display:false}, voceLogo:true }, layout:{ padding:{ top:28 } } };
+
   if(charts.eng) charts.eng.destroy();
   charts.eng = new Chart('chEng',{type:'bar',data:{
     labels:all.map((c,i)=>i===0?'você':c.h.replace('@','')),
     datasets:[{label:'Engajamento (%)',data:all.map(c=>c.eng),backgroundColor:all.map((_,i)=>i===0?BRD:NEU),borderRadius:8,borderSkipped:false}]
-  },options:{plugins:{legend:{display:false}},scales:{x:{...AX,ticks:{...AX.ticks,maxRotation:30}},y:{...AX,beginAtZero:true}}}});
+  },options:{...logoOpts,scales:{x:{...AX,ticks:{...AX.ticks,maxRotation:30}},y:{...AX,beginAtZero:true}}}});
 
   if(charts.r) charts.r.destroy();
   if(s.reels>0){
-    const rd=[{n:'Furlan',v:2300},{n:'Você',v:s.reels},{n:'Premier',v:886}];
+    const rd=[{n:'Furlan',v:2300},{n:'você',v:s.reels},{n:'Premier',v:886}];
     charts.r = new Chart('chR',{type:'bar',data:{
       labels:rd.map(d=>d.n),
-      datasets:[{label:'Viz. Reels',data:rd.map(d=>d.v),backgroundColor:[NEU,BRD,NEU],borderRadius:8,borderSkipped:false}]
-    },options:{plugins:{legend:{display:false}},scales:{x:AX,y:{...AX,beginAtZero:true}}}});
+      datasets:[{label:'Viz. Reels',data:rd.map(d=>d.v),backgroundColor:rd.map(d=>d.n==='você'?BRD:NEU),borderRadius:8,borderSkipped:false}]
+    },options:{...logoOpts,scales:{x:AX,y:{...AX,beginAtZero:true}}}});
     html('reelsLbl','Visualizações de Reels');
   } else {
     const rk = u==='borborema'
@@ -613,7 +639,7 @@ function buildSocial(u){
     charts.r = new Chart('chR',{type:'bar',data:{
       labels:rk.map(d=>d.n),
       datasets:[{label:'Crescimento (%)',data:rk.map(d=>d.v),backgroundColor:rk.map(d=>d.n==='você'?BRD:NEU),borderRadius:8,borderSkipped:false}]
-    },options:{plugins:{legend:{display:false}},scales:{x:AX,y:AX}}});
+    },options:{...logoOpts,scales:{x:AX,y:AX}}});
     html('reelsLbl','Crescimento de seguidores (%)');
   }
 
