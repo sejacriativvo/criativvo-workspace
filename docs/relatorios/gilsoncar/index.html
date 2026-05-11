@@ -337,7 +337,7 @@ Chart.register({
     const { ctx } = chart;
     const meta = chart.getDatasetMeta(0);
     const bar  = meta.data[voceI];
-    const w = 64, h = 21;
+    const w = 64, h = w * (gilsonImg.naturalHeight / gilsonImg.naturalWidth);
     const topOfBar = Math.min(bar.y, bar.base ?? bar.y);
     const y = topOfBar - h - 6;
     ctx.save();
