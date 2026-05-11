@@ -304,7 +304,7 @@
 </main>
 
 <footer>
-  <span class="footer-brand">Criativvo</span>
+  <span class="footer-brand">criativvo</span>
   <p>Relatório produzido pela Criativvo &nbsp;·&nbsp; criativvo.com.br &nbsp;·&nbsp; Maio de 2026</p>
 </footer>
 
@@ -329,7 +329,7 @@ gilsonImg.src = 'assets/LOGO GILSONCAR.png';
 // Plugin: desenha a logo da GilsonCar acima da barra "você"
 Chart.register({
   id: 'voceLogo',
-  afterDatasetsDraw(chart) {
+  afterDraw(chart) {
     if(!chart.config.options?.plugins?.voceLogo) return;
     if(!gilsonImg.complete || !gilsonImg.naturalWidth) return;
     const voceI = chart.data.labels.findIndex(l => l.toLowerCase() === 'você');
@@ -337,10 +337,13 @@ Chart.register({
     const { ctx } = chart;
     const meta = chart.getDatasetMeta(0);
     const bar  = meta.data[voceI];
-    const w = 58, h = 19;
+    const w = 64, h = 21;
     const topOfBar = Math.min(bar.y, bar.base ?? bar.y);
-    const y = Math.max(chart.chartArea.top + 2, topOfBar - h - 5);
+    const y = topOfBar - h - 6;
     ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, 0, chart.width, chart.height);
+    ctx.clip();
     ctx.drawImage(gilsonImg, bar.x - w/2, y, w, h);
     ctx.restore();
   }
