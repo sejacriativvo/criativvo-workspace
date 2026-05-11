@@ -3,444 +3,543 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Relatório Mensal — GilsonCar Veículos Ibitinga</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Relatório Abril 2026 — GilsonCar Veículos Ibitinga</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --orange: #FF5501; --orange-dim: rgba(255,85,1,0.12);
-      --bg: #000; --s1: #0f0f0f; --s2: #161616; --border: #1f1f1f;
-      --text: #fff; --muted: #777; --green: #22c55e; --red: #ef4444;
+    body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; line-height: 1.6; }
+    a { color: #CC0000; }
+
+    /* PROGRESS BAR */
+    #progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, #CC0000, #ff2020);
+      z-index: 9999; transition: width 0.08s linear;
     }
-    body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; }
+
+    /* LAYOUT */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 
     /* HEADER */
     header {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 28px; height: 58px;
+      background: rgba(0,0,0,0.97); border-bottom: 2px solid #CC0000;
+      padding: 24px 20px; text-align: center;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     }
-    .h-logo { font-weight: 900; font-size: 1.05rem; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; }
-    .h-client { font-size: 0.68rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    header .client-logo { height: 52px; width: auto; margin-bottom: 12px; }
+    header .agency-line { font-size: 0.68rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #444; }
+    header h1 { font-size: 1.2rem; font-weight: 800; color: #fff; margin-top: 10px; }
+    header .periodo { font-size: 0.75rem; color: #555; margin-top: 5px; letter-spacing: 1px; }
 
-    /* HERO */
-    .hero { max-width: 960px; margin: 0 auto; padding: 60px 28px 0; }
-    .hero-chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(255,85,1,0.3); background: var(--orange-dim); border-radius: 20px; padding: 4px 14px; font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 18px; }
-    .hero h1 { font-size: clamp(1.9rem, 5vw, 3rem); font-weight: 900; line-height: 1.05; margin-bottom: 10px; }
-    .hero h1 em { font-style: normal; color: var(--orange); }
-    .hero-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 36px; }
+    /* SECTIONS */
+    section { padding: 56px 20px; }
+    section + section { border-top: 1px solid #111; }
 
-    /* PERIOD TABS */
-    .tabs-wrap { max-width: 960px; margin: 0 auto; padding: 0 28px 48px; }
-    .tabs { display: inline-flex; background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 4px; gap: 4px; }
-    .tab { padding: 9px 22px; border-radius: 9px; border: none; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px; transition: all 0.2s; background: transparent; color: var(--muted); }
-    .tab.on { background: var(--orange); color: #fff; box-shadow: 0 4px 16px rgba(255,85,1,0.35); }
-    .tab:hover:not(.on) { color: var(--text); }
-    .tabs-hint { font-size: 0.7rem; color: var(--muted); margin-top: 10px; }
+    /* SECTION LABELS */
+    .section-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: #CC0000; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      background: #CC0000; border-radius: 50%; flex-shrink: 0;
+    }
+    .section-title { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 28px; }
 
-    /* MAIN */
-    main { max-width: 960px; margin: 0 auto; padding: 0 28px 100px; }
+    /* CARDS */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .card {
+      background: #0c0c0c; border-radius: 14px; padding: 24px 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(204,0,0,0.1);
+    }
+    .card.highlight { border: 1px solid rgba(204,0,0,0.55); }
+    .card.highlight:hover { box-shadow: 0 12px 32px rgba(204,0,0,0.18), 0 0 0 1px rgba(204,0,0,0.5); }
+    .card-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #555; margin-bottom: 8px; }
+    .card-value { font-size: 2rem; font-weight: 900; color: #CC0000; line-height: 1; }
+    .card-value.white { color: #fff; }
+    .card-sub { font-size: 0.73rem; color: #444; margin-top: 6px; }
+    .card-delta { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .delta-up { background: rgba(34,197,94,0.12); color: #22c55e; }
+    .delta-down { background: rgba(239,68,68,0.12); color: #ef4444; }
 
-    /* SECTION */
-    .sec { margin-bottom: 64px; }
-    .sec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
-    .sec-tag { font-size: 0.62rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); }
-    .sec-title { font-size: 1.25rem; font-weight: 800; }
-    .divider { height: 1px; background: var(--border); flex: 1; }
-
-    /* KPIs */
-    .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
-    .kpi { background: var(--s1); border: 1px solid var(--border); border-radius: 16px; padding: 22px 18px; transition: border-color 0.2s; }
-    .kpi.hi { border-color: var(--orange); background: linear-gradient(135deg, rgba(255,85,1,0.07), var(--s1)); }
-    .kpi-lbl { font-size: 0.67rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-    .kpi-val { font-size: 2rem; font-weight: 900; line-height: 1; color: var(--text); transition: all 0.3s; }
-    .kpi.hi .kpi-val { color: var(--orange); }
-    .kpi-badge { display: inline-flex; align-items: center; margin-top: 10px; font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
-    .up { background: rgba(34,197,94,0.1); color: var(--green); }
-    .dn { background: rgba(239,68,68,0.1); color: var(--red); }
-    .neu { background: var(--s2); color: var(--muted); }
-    .kpi-note { font-size: 0.7rem; color: var(--muted); margin-top: 5px; }
-
-    /* SUMMARY BOX */
-    .sum-box { background: var(--s1); border-radius: 16px; border-left: 3px solid var(--orange); padding: 22px 24px; margin-top: 14px; font-size: 0.88rem; color: #bbb; line-height: 1.8; }
-    .sum-box strong { color: var(--text); }
-
-    /* COMPARE */
-    .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
-    .cmp-card { background: var(--s1); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; transition: border-color 0.2s; }
-    .cmp-card.on { border-color: var(--orange); }
-    .cmp-mo { font-size: 0.67rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-    .cmp-card.on .cmp-mo { color: var(--orange); }
-    .cmp-row { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 3px 0; }
-    .cmp-row span:first-child { color: var(--muted); }
-    .cmp-row span:last-child { font-weight: 700; }
+    /* RESUMO TEXTO */
+    .resumo-texto {
+      background: #0c0c0c; border-left: 3px solid #CC0000;
+      border-radius: 0 12px 12px 0; padding: 20px 24px; margin-top: 8px;
+      font-size: 0.93rem; color: #aaa; line-height: 1.75;
+    }
+    .resumo-texto strong { color: #fff; }
 
     /* CHARTS */
-    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-    @media(max-width:580px){ .chart-grid { grid-template-columns: 1fr; } }
-    .chart-card { background: var(--s1); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
-    .chart-card.w { grid-column: 1/-1; }
-    .chart-lbl { font-size: 0.67rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
-
-    /* WEEKS */
-    .weeks { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px; }
-    .wk { background: var(--s1); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
-    .wk.best { border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.04); }
-    .wk-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .wk-lbl { font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
-    .wk-best { font-size: 0.6rem; font-weight: 700; color: var(--green); }
-    .wk-row { display: flex; justify-content: space-between; font-size: 0.79rem; padding: 5px 0; border-bottom: 1px solid var(--border); }
-    .wk-row:last-child { border: none; }
-    .wk-row .wl { color: var(--muted); }
-    .wk-row .wv { font-weight: 700; }
-    .wk-row .wv.o { color: var(--orange); }
+    .chart-wrap { background: #0c0c0c; border-radius: 14px; padding: 24px; margin-bottom: 16px; }
+    .chart-title { font-size: 0.82rem; font-weight: 700; color: #bbb; margin-bottom: 16px; letter-spacing: 0.5px; }
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .charts-grid { grid-template-columns: 1fr; } }
 
     /* TABLE */
-    .tbl-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--border); margin-top: 10px; }
-    table { width: 100%; border-collapse: collapse; min-width: 540px; }
-    thead th { background: var(--s1); color: var(--muted); font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
-    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
-    tbody tr:last-child { border: none; }
-    tbody tr:hover { background: var(--s2); }
-    tbody tr.me { background: var(--orange-dim); }
-    tbody td { padding: 13px 16px; font-size: 0.82rem; color: #bbb; }
-    tbody tr.me td { color: var(--orange); font-weight: 700; }
-    .you { background: var(--orange); color: #fff; font-size: 0.58rem; font-weight: 700; padding: 2px 7px; border-radius: 8px; margin-left: 6px; vertical-align: middle; }
+    .table-wrap { overflow-x: auto; border-radius: 12px; overflow: hidden; margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    thead th {
+      background: #111; color: #555; font-weight: 600;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 12px 14px; text-align: left; font-size: 0.68rem;
+    }
+    tbody tr { border-bottom: 1px solid #111; transition: background 0.15s; }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+    tbody tr:first-child td { color: #CC0000; font-weight: 700; }
+    tbody td { padding: 13px 14px; color: #aaa; }
+    tbody tr:first-child { background: rgba(204,0,0,0.04); }
+
+    /* INSIGHT BOXES */
+    .insights { display: grid; gap: 12px; margin-top: 8px; }
+    .insight { background: #0c0c0c; border-radius: 12px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start; }
+    .insight-icon { font-size: 1.2rem; flex-shrink: 0; line-height: 1.6; }
+    .insight-text { font-size: 0.87rem; color: #aaa; line-height: 1.6; }
+    .insight-text strong { color: #fff; }
+
+    /* WEEKS */
+    .weeks { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 8px; }
+    .week { background: #0c0c0c; border-radius: 12px; padding: 16px; }
+    .week-label { font-size: 0.68rem; font-weight: 700; color: #CC0000; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+    .week-row { display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; padding: 4px 0; border-bottom: 1px solid #111; }
+    .week-row:last-child { border-bottom: none; }
+    .week-row span:last-child { color: #ddd; font-weight: 600; }
 
     /* RANKING */
-    .rank-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
-    .rank { display: flex; align-items: center; gap: 12px; background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 13px 16px; transition: border-color 0.2s; }
-    .rank.me { border-color: var(--orange); }
-    .rank-n { width: 28px; height: 28px; border-radius: 50%; background: var(--s2); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: var(--muted); flex-shrink: 0; }
-    .rank-n.top { background: var(--green); color: #fff; }
-    .rank-n.me-n { background: var(--orange-dim); color: var(--orange); }
-    .rank-name { flex: 1; font-size: 0.83rem; color: #bbb; }
-    .rank.me .rank-name { color: var(--orange); font-weight: 700; }
-    .rank-bar-bg { width: 64px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
-    .rank-bar-fill { height: 100%; border-radius: 2px; }
-    .rank-pct { font-size: 0.85rem; font-weight: 800; min-width: 48px; text-align: right; }
-    .pos { color: var(--green); } .neg { color: var(--red); }
+    .ranking { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .rank-item {
+      display: flex; align-items: center; gap: 12px;
+      background: #0c0c0c; border-radius: 10px; padding: 12px 16px;
+      transition: background 0.15s;
+    }
+    .rank-item:hover { background: #141414; }
+    .rank-num {
+      width: 28px; height: 28px; border-radius: 50%; background: #1a1a1a;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 800; color: #444; flex-shrink: 0;
+    }
+    .rank-num.first { background: #CC0000; color: #fff; }
+    .rank-name { flex: 1; font-size: 0.85rem; color: #aaa; font-weight: 500; }
+    .rank-val { font-size: 0.85rem; font-weight: 700; }
+    .rank-val.pos { color: #22c55e; }
+    .rank-val.neg { color: #ef4444; }
+    .rank-val.mine { color: #CC0000; }
 
-    /* ANALYSIS */
-    .an-grid { display: grid; gap: 10px; }
-    .an { border-radius: 14px; padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start; }
-    .an.ok { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.18); }
-    .an.warn { background: rgba(234,179,8,0.06); border: 1px solid rgba(234,179,8,0.18); }
-    .an.target { background: var(--orange-dim); border: 1px solid rgba(255,85,1,0.22); }
-    .an-icon { font-size: 1.3rem; flex-shrink: 0; }
-    .an h4 { font-size: 0.85rem; font-weight: 800; margin-bottom: 5px; }
-    .an.ok h4 { color: var(--green); } .an.warn h4 { color: #eab308; } .an.target h4 { color: var(--orange); }
-    .an p { font-size: 0.82rem; color: #bbb; line-height: 1.65; }
-    .an p strong { color: var(--text); }
+    /* FOCO */
+    .foco-grid { display: grid; gap: 12px; margin-top: 8px; }
+    .foco { border-radius: 12px; padding: 20px 22px; }
+    .foco.ok { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.18); }
+    .foco.atencao { background: rgba(234,179,8,0.06); border: 1px solid rgba(234,179,8,0.18); }
+    .foco.alvo { background: rgba(204,0,0,0.06); border: 1px solid rgba(204,0,0,0.22); }
+    .foco-header { font-size: 0.77rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .foco.ok .foco-header { color: #22c55e; }
+    .foco.atencao .foco-header { color: #eab308; }
+    .foco.alvo .foco-header { color: #CC0000; }
+    .foco p { font-size: 0.87rem; color: #aaa; line-height: 1.65; }
+    .foco p strong { color: #fff; }
 
-    footer { border-top: 1px solid var(--border); padding: 28px; text-align: center; }
-    .f-logo { font-size: 1.3rem; font-weight: 900; color: var(--orange); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
-    footer p { font-size: 0.7rem; color: var(--muted); }
+    /* FOOTER */
+    footer { background: #050505; border-top: 1px solid #111; padding: 32px 20px; text-align: center; }
+    footer p { font-size: 0.72rem; color: #444; letter-spacing: 1px; }
+    footer .brand { font-family: 'Great Vibes', cursive; color: #CC0000; font-size: 1.2rem; display: block; margin-bottom: 6px; }
+
+    /* ANIMATE ON SCROLL */
+    .anim {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .anim.in { opacity: 1; transform: none; }
+    .anim-delay-1 { transition-delay: 0.08s; }
+    .anim-delay-2 { transition-delay: 0.16s; }
+    .anim-delay-3 { transition-delay: 0.24s; }
+    .anim-delay-4 { transition-delay: 0.32s; }
   </style>
 </head>
 <body>
 
+<div id="progress"></div>
+
+<!-- HEADER -->
 <header>
-  <div class="h-logo">Criativvo</div>
-  <div class="h-client">GilsonCar Veículos · Ibitinga</div>
+  <img class="client-logo" src="../gilsoncar/assets/LOGO GILSONCAR.png" alt="GilsonCar Veículos">
+  <div class="agency-line">Relatório produzido pela Criativvo</div>
+  <h1>Relatório Mensal — Unidade Ibitinga</h1>
+  <div class="periodo">ABRIL 2026 &nbsp;•&nbsp; @gilsoncarveiculos</div>
 </header>
 
-<div class="hero">
-  <div class="hero-chip">📊 Relatório Mensal</div>
-  <h1>Resultado de <em id="heroMonth">Abril 2026</em></h1>
-  <p class="hero-sub">@gilsoncarveiculos &nbsp;·&nbsp; Ibitinga - SP &nbsp;·&nbsp; Gerado pela Criativvo</p>
-</div>
+<!-- RESUMO EXECUTIVO -->
+<section>
+  <div class="container">
+    <div class="section-label">Visão geral</div>
+    <div class="section-title">Resumo do mês</div>
 
-<div class="tabs-wrap">
-  <div class="tabs">
-    <button class="tab" onclick="go('marco')">Março 2026</button>
-    <button class="tab on" onclick="go('abril')">Abril 2026</button>
+    <div class="cards">
+      <div class="card highlight anim anim-delay-1">
+        <div class="card-label">Conversas iniciadas</div>
+        <div class="card-value">602</div>
+        <div class="card-sub">Clientes que falaram com a loja</div>
+        <span class="card-delta delta-up">↑ 40% vs março</span>
+      </div>
+      <div class="card anim anim-delay-2">
+        <div class="card-label">Investido em anúncios</div>
+        <div class="card-value white">R$2.921</div>
+        <div class="card-sub">Total de verba no mês</div>
+        <span class="card-delta delta-up">↓ 8% vs março</span>
+      </div>
+      <div class="card highlight anim anim-delay-3">
+        <div class="card-label">Custo por lead</div>
+        <div class="card-value">R$4,62</div>
+        <div class="card-sub">Cada conversa custou</div>
+        <span class="card-delta delta-up">↓ 41% vs março</span>
+      </div>
+      <div class="card anim anim-delay-4">
+        <div class="card-label">Carros vendidos</div>
+        <div class="card-value white">22</div>
+        <div class="card-sub">Vendas do mês</div>
+        <span class="card-delta delta-up">↓ 1 vs março</span>
+      </div>
+    </div>
+
+    <div class="resumo-texto anim">
+      Abril foi um mês de <strong>eficiência</strong>: com R$271 a menos investido que março, a GilsonCar Ibitinga gerou <strong>173 conversas a mais</strong> e manteve praticamente o mesmo volume de vendas. O custo por lead caiu 41% — cada cliente que chegou ao WhatsApp custou R$4,62, contra R$7,79 em março. O trabalho nas redes sociais também está <strong>acima da média dos concorrentes locais</strong> em engajamento.
+    </div>
   </div>
-  <p class="tabs-hint">Alterne entre os meses para comparar os resultados.</p>
-</div>
+</section>
 
-<main>
+<!-- TRÁFEGO PAGO -->
+<section>
+  <div class="container">
+    <div class="section-label">Meta Ads</div>
+    <div class="section-title">Tráfego pago</div>
 
-  <!-- RESUMO -->
-  <div class="sec">
-    <div class="sec-head"><span class="sec-tag">Visão geral</span><span class="sec-title">Resumo do mês</span><div class="divider"></div></div>
-    <div class="kpis">
-      <div class="kpi hi">
-        <div class="kpi-lbl">Conversas iniciadas</div>
-        <div class="kpi-val" id="vLeads">602</div>
-        <div class="kpi-badge up" id="dLeads">↑ 40% vs março</div>
-        <div class="kpi-note">Clientes no WhatsApp</div>
+    <div class="charts-grid anim">
+      <div class="chart-wrap">
+        <div class="chart-title">Conversas geradas</div>
+        <canvas id="chartConversas" height="200"></canvas>
       </div>
-      <div class="kpi">
-        <div class="kpi-lbl">Investido</div>
-        <div class="kpi-val" id="vInv">R$2.921</div>
-        <div class="kpi-badge up" id="dInv">↓ R$271 vs março</div>
-        <div class="kpi-note">Total de verba em anúncios</div>
-      </div>
-      <div class="kpi hi">
-        <div class="kpi-lbl">Custo por lead</div>
-        <div class="kpi-val" id="vCPL">R$4,62</div>
-        <div class="kpi-badge up" id="dCPL">↓ 41% vs março</div>
-        <div class="kpi-note">Cada conversa custou</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-lbl">Carros vendidos</div>
-        <div class="kpi-val" id="vSales">22</div>
-        <div class="kpi-badge neu" id="dSales">−1 vs março</div>
-        <div class="kpi-note">Vendas confirmadas</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-lbl">Custo por venda</div>
-        <div class="kpi-val" id="vCPS">R$167</div>
-        <div class="kpi-badge neu" id="dCPS">vs R$160 em março</div>
-        <div class="kpi-note">Investimento por carro</div>
+      <div class="chart-wrap">
+        <div class="chart-title">Custo por lead (CPL)</div>
+        <canvas id="chartCPL" height="200"></canvas>
       </div>
     </div>
-    <div class="sum-box" id="sumBox"></div>
+
+    <div class="chart-wrap anim" style="margin-bottom:28px;">
+      <div class="chart-title">Investimento semanal — Abril 2026</div>
+      <canvas id="chartSemanal" height="160"></canvas>
+    </div>
+
+    <div class="section-label" style="margin-bottom:12px;">Detalhamento semanal</div>
+    <div class="weeks anim">
+      <div class="week">
+        <div class="week-label">01–07/04</div>
+        <div class="week-row"><span>Investido</span><span>R$633,95</span></div>
+        <div class="week-row"><span>Conversas</span><span>106</span></div>
+        <div class="week-row"><span>Vendas</span><span>4</span></div>
+        <div class="week-row"><span>CPL</span><span>R$5,35</span></div>
+        <div class="week-row"><span>Custo/venda</span><span>R$158,49</span></div>
+      </div>
+      <div class="week">
+        <div class="week-label">08–14/04</div>
+        <div class="week-row"><span>Investido</span><span>R$583,50</span></div>
+        <div class="week-row"><span>Conversas</span><span>143</span></div>
+        <div class="week-row"><span>Vendas</span><span>2</span></div>
+        <div class="week-row"><span>CPL</span><span>R$3,94</span></div>
+        <div class="week-row"><span>Custo/venda</span><span>R$291,75</span></div>
+      </div>
+      <div class="week">
+        <div class="week-label">15–21/04</div>
+        <div class="week-row"><span>Investido</span><span>R$720,88</span></div>
+        <div class="week-row"><span>Conversas</span><span>111</span></div>
+        <div class="week-row"><span>Vendas</span><span>9</span></div>
+        <div class="week-row"><span>CPL</span><span>R$5,50</span></div>
+        <div class="week-row"><span>Custo/venda</span><span>R$80,10</span></div>
+      </div>
+      <div class="week">
+        <div class="week-label">22–30/04</div>
+        <div class="week-row"><span>Investido</span><span>R$983,05</span></div>
+        <div class="week-row"><span>Conversas</span><span>242</span></div>
+        <div class="week-row"><span>Vendas</span><span>7</span></div>
+        <div class="week-row"><span>CPL</span><span>R$3,69</span></div>
+        <div class="week-row"><span>Custo/venda</span><span>R$140,44</span></div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- TRÁFEGO PAGO -->
-  <div class="sec">
-    <div class="sec-head"><span class="sec-tag">Meta Ads</span><span class="sec-title">Tráfego pago</span><div class="divider"></div></div>
+<!-- REDES SOCIAIS -->
+<section>
+  <div class="container">
+    <div class="section-label">Instagram — Análise de concorrentes</div>
+    <div class="section-title">Redes sociais</div>
 
-    <div class="cmp">
-      <div class="cmp-card" id="cm1">
-        <div class="cmp-mo">Março 2026</div>
-        <div class="cmp-row"><span>Conversas</span><span>429</span></div>
-        <div class="cmp-row"><span>Investimento</span><span>R$3.192</span></div>
-        <div class="cmp-row"><span>CPL</span><span>R$7,79</span></div>
-        <div class="cmp-row"><span>Vendas</span><span>23</span></div>
+    <div class="cards anim" style="margin-bottom:24px;">
+      <div class="card highlight">
+        <div class="card-label">Engajamento público</div>
+        <div class="card-value">0,17%</div>
+        <div class="card-sub">Sua taxa no período</div>
+        <span class="card-delta delta-up">↑ acima da média (0,07%)</span>
       </div>
-      <div class="cmp-card on" id="cm2">
-        <div class="cmp-mo">Abril 2026</div>
-        <div class="cmp-row"><span>Conversas</span><span>602</span></div>
-        <div class="cmp-row"><span>Investimento</span><span>R$2.921</span></div>
-        <div class="cmp-row"><span>CPL</span><span>R$4,62</span></div>
-        <div class="cmp-row"><span>Vendas</span><span>22</span></div>
+      <div class="card">
+        <div class="card-label">Posts publicados</div>
+        <div class="card-value white">15</div>
+        <div class="card-sub">No período analisado</div>
       </div>
-    </div>
-
-    <div class="chart-grid">
-      <div class="chart-card"><div class="chart-lbl">Conversas por semana</div><canvas id="cLeads" height="210"></canvas></div>
-      <div class="chart-card"><div class="chart-lbl">Evolução do custo por lead</div><canvas id="cCPL" height="210"></canvas></div>
-      <div class="chart-card w"><div class="chart-lbl">Investimento × Conversas — semana a semana</div><canvas id="cSem" height="150"></canvas></div>
-    </div>
-
-    <div class="weeks" id="weeksGrid"></div>
-  </div>
-
-  <!-- REDES SOCIAIS -->
-  <div class="sec">
-    <div class="sec-head"><span class="sec-tag">Instagram</span><span class="sec-title">Concorrentes — 03 a 10/05</span><div class="divider"></div></div>
-
-    <div class="kpis" style="margin-bottom:16px;">
-      <div class="kpi hi">
-        <div class="kpi-lbl">Engajamento público</div>
-        <div class="kpi-val">0,17%</div>
-        <div class="kpi-badge up">↑ 1º lugar da região</div>
-        <div class="kpi-note">Média dos concorrentes: 0,07%</div>
+      <div class="card">
+        <div class="card-label">Curtidas totais</div>
+        <div class="card-value white">276</div>
+        <div class="card-sub">No período analisado</div>
       </div>
-      <div class="kpi">
-        <div class="kpi-lbl">Interação por post</div>
-        <div class="kpi-val">20,07</div>
-        <div class="kpi-badge up">2x mais que Furlan</div>
-        <div class="kpi-note">Curtidas + comentários</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-lbl">Viz. de Reels</div>
-        <div class="kpi-val">1,2K</div>
-        <div class="kpi-badge neu">2º lugar (Furlan: 2,3K)</div>
-        <div class="kpi-note">Média no período</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-lbl">Posts publicados</div>
-        <div class="kpi-val">15</div>
-        <div class="kpi-badge neu">Média: 15,2/semana</div>
-        <div class="kpi-note">No período</div>
+      <div class="card">
+        <div class="card-label">Comentários</div>
+        <div class="card-value white">25</div>
+        <div class="card-sub">No período analisado</div>
       </div>
     </div>
 
-    <div class="chart-grid">
-      <div class="chart-card"><div class="chart-lbl">Engajamento vs concorrentes</div><canvas id="cEng" height="220"></canvas></div>
-      <div class="chart-card"><div class="chart-lbl">Visualizações de Reels</div><canvas id="cReels" height="220"></canvas></div>
+    <div class="chart-wrap anim" style="margin-bottom:16px;">
+      <div class="chart-title">Engajamento público — comparativo com concorrentes</div>
+      <canvas id="chartEngajamento" height="200"></canvas>
     </div>
 
-    <div class="tbl-wrap">
+    <div class="chart-wrap anim" style="margin-bottom:24px;">
+      <div class="chart-title">Visualizações médias de Reels</div>
+      <canvas id="chartReels" height="180"></canvas>
+    </div>
+
+    <div class="section-label" style="margin-bottom:12px;">Resumo da concorrência</div>
+    <div class="table-wrap anim">
       <table>
-        <thead><tr><th>Perfil</th><th>Engajamento</th><th>Posts</th><th>Curtidas</th><th>Interação/post</th><th>Viz. Reels</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Perfil</th>
+            <th>Engaj.</th>
+            <th>Posts</th>
+            <th>Curtidas</th>
+            <th>Interação/post</th>
+            <th>Viz. Reels</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr class="me"><td>@gilsoncarveiculos <span class="you">você</span></td><td>0,17%</td><td>15</td><td>276</td><td>20,07</td><td>1.200</td></tr>
-          <tr><td>@_premier_autos</td><td>0,12%</td><td>30</td><td>104</td><td>3,5</td><td>886</td></tr>
-          <tr><td>@furlanveiculos</td><td>0,10%</td><td>21</td><td>181</td><td>8,71</td><td>2.300</td></tr>
-          <tr><td>@belavista_veiculos</td><td>0,09%</td><td>12</td><td>24</td><td>2,0</td><td>0</td></tr>
-          <tr><td>@pinguimmotors</td><td>0,06%</td><td>13</td><td>141</td><td>11,08</td><td>0</td></tr>
-          <tr><td>@ibivelveiculos</td><td>0%</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr>
+            <td>@gilsoncarveiculos ★</td>
+            <td>0,17%</td>
+            <td>15</td>
+            <td>276</td>
+            <td>20,07</td>
+            <td>1.200</td>
+          </tr>
+          <tr>
+            <td>@_premier_autos</td>
+            <td>0,12%</td>
+            <td>30</td>
+            <td>104</td>
+            <td>3,5</td>
+            <td>886</td>
+          </tr>
+          <tr>
+            <td>@furlanveiculos</td>
+            <td>0,10%</td>
+            <td>21</td>
+            <td>181</td>
+            <td>8,71</td>
+            <td>2.300</td>
+          </tr>
+          <tr>
+            <td>@belavista_veiculos</td>
+            <td>0,09%</td>
+            <td>12</td>
+            <td>24</td>
+            <td>2,0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>@pinguimmotors</td>
+            <td>0,06%</td>
+            <td>13</td>
+            <td>141</td>
+            <td>11,08</td>
+            <td>0</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    <div style="margin-top:28px;">
-      <div class="sec-head" style="margin-bottom:12px;"><span class="sec-tag">Crescimento</span><span class="sec-title" style="font-size:1rem;">Ranking de seguidores</span><div class="divider"></div></div>
-      <div class="rank-list">
-        <div class="rank"><div class="rank-n top">1</div><div class="rank-name">@_premier_autos <span style="color:var(--muted);font-size:0.7rem">(~21k)</span></div><div class="rank-bar-bg"><div class="rank-bar-fill pos" style="width:100%;background:var(--green)"></div></div><div class="rank-pct pos">+0,25%</div></div>
-        <div class="rank"><div class="rank-n">2</div><div class="rank-name">@furlanveiculos <span style="color:var(--muted);font-size:0.7rem">(~10k)</span></div><div class="rank-bar-bg"><div class="rank-bar-fill" style="width:24%;background:var(--green)"></div></div><div class="rank-pct pos">+0,06%</div></div>
-        <div class="rank me"><div class="rank-n me-n">3</div><div class="rank-name">@gilsoncarveiculos <span style="color:var(--muted);font-size:0.7rem">(~12,5k)</span></div><div class="rank-bar-bg"><div class="rank-bar-fill" style="width:0%;background:var(--red)"></div></div><div class="rank-pct neg">−0,20%</div></div>
-        <div class="rank"><div class="rank-n">4</div><div class="rank-name">@ibivelveiculos</div><div class="rank-bar-bg"><div class="rank-bar-fill" style="width:0%;background:var(--red)"></div></div><div class="rank-pct neg">−0,33%</div></div>
-        <div class="rank"><div class="rank-n">5</div><div class="rank-name">@belavista_veiculos</div><div class="rank-bar-bg"></div><div class="rank-pct neg">−0,39%</div></div>
-        <div class="rank"><div class="rank-n">6</div><div class="rank-name">@pinguimmotors</div><div class="rank-bar-bg"></div><div class="rank-pct neg">−0,81%</div></div>
+    <div style="margin-top:32px;" class="anim">
+      <div class="section-label" style="margin-bottom:12px;">Crescimento de seguidores no período</div>
+      <div class="ranking">
+        <div class="rank-item">
+          <div class="rank-num">1</div>
+          <div class="rank-name">@_premier_autos</div>
+          <div class="rank-val pos">+0,25%</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num">2</div>
+          <div class="rank-name">@furlanveiculos</div>
+          <div class="rank-val pos">+0,06%</div>
+        </div>
+        <div class="rank-item" style="border: 1px solid rgba(204,0,0,0.3);">
+          <div class="rank-num first">3</div>
+          <div class="rank-name" style="color:#CC0000;font-weight:700;">@gilsoncarveiculos</div>
+          <div class="rank-val neg">−0,20%</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num">4</div>
+          <div class="rank-name">@ibivelveiculos</div>
+          <div class="rank-val neg">−0,33%</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num">5</div>
+          <div class="rank-name">@belavista_veiculos</div>
+          <div class="rank-val neg">−0,39%</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num">6</div>
+          <div class="rank-name">@pinguimmotors</div>
+          <div class="rank-val neg">−0,81%</div>
+        </div>
+      </div>
+      <div style="margin-top:10px; padding:12px 16px; background:#0c0c0c; border-radius:10px; font-size:0.8rem; color:#555;">
+        Seguidores atuais: <strong style="color:#fff;">~12.500</strong> &nbsp;•&nbsp; Maior concorrente: Premier (~21.000) &nbsp;•&nbsp; Furlan (~10.000)
       </div>
     </div>
   </div>
+</section>
 
-  <!-- ANÁLISE -->
-  <div class="sec">
-    <div class="sec-head"><span class="sec-tag">Avaliação</span><span class="sec-title">O que aconteceu em <span id="anMonth">Abril</span></span><div class="divider"></div></div>
-    <div class="an-grid" id="anGrid"></div>
+<!-- ANÁLISE DO MÊS -->
+<section>
+  <div class="container">
+    <div class="section-label">Avaliação</div>
+    <div class="section-title">Análise do mês</div>
+
+    <div class="foco-grid">
+      <div class="foco ok anim">
+        <div class="foco-header">✅ O que funcionou bem</div>
+        <p><strong>CPL 41% mais barato que março.</strong> O custo por lead caiu de R$7,79 para R$4,62 — os anúncios estão chegando nas pessoas certas, com menos desperdício de verba e mais intenção de compra.</p>
+      </div>
+      <div class="foco ok anim">
+        <div class="foco-header">✅ O que funcionou bem</div>
+        <p><strong>Engajamento líder na região.</strong> Com 0,17% de engajamento público, a GilsonCar Ibitinga está na frente de todos os 5 concorrentes monitorados. Cada post gera em média 20 interações — mais que o dobro do segundo colocado (Furlan, 8,71).</p>
+      </div>
+      <div class="foco ok anim">
+        <div class="foco-header">✅ O que funcionou bem</div>
+        <p><strong>Volume de leads recorde: 602 conversas.</strong> São 173 a mais que março, com menos verba investida. A tendência de queda de custo nas últimas 2 semanas (CPL de R$3,69) é um sinal positivo para maio.</p>
+      </div>
+      <div class="foco atencao anim">
+        <div class="foco-header">⚠️ Ponto de atenção</div>
+        <p><strong>Seguidores em queda leve.</strong> O perfil perdeu 0,20% dos seguidores no período — abaixo dos dois principais concorrentes que cresceram. Mais consistência no conteúdo orgânico, especialmente Reels, deve reverter esse movimento.</p>
+      </div>
+      <div class="foco atencao anim">
+        <div class="foco-header">⚠️ Ponto de atenção</div>
+        <p><strong>Reels com menos alcance que Furlan.</strong> A Furlan Veículos teve média de 2.300 visualizações por Reel contra 1.200 da GilsonCar. Aumentar a frequência de Reels e explorar o sábado — dia de pico dos concorrentes — pode ampliar esse número.</p>
+      </div>
+      <div class="foco alvo anim">
+        <div class="foco-header">🎯 Foco de maio</div>
+        <p><strong>Manter o CPL baixo e aumentar o volume de conteúdo orgânico.</strong> Com o custo por lead na faixa de R$3,50–R$5,00, o objetivo de maio é sustentar esse nível enquanto aumentamos a produção de Reels para crescer os seguidores e fortalecer o perfil para fechar mais conversas.</p>
+      </div>
+    </div>
   </div>
+</section>
 
-</main>
-
+<!-- FOOTER -->
 <footer>
-  <div class="f-logo">Criativvo</div>
-  <p>Relatório gerado pela Criativvo &nbsp;·&nbsp; criativvo.com.br &nbsp;·&nbsp; Maio de 2026</p>
+  <div class="container">
+    <span class="brand">Criativvo</span>
+    <p>Relatório produzido pela Criativvo &nbsp;•&nbsp; criativvo.com.br &nbsp;•&nbsp; Maio de 2026</p>
+  </div>
 </footer>
 
 <script>
-Chart.defaults.color = '#555';
-Chart.defaults.font = { family: 'Montserrat', size: 11 };
-const O = '#FF5501', OD = 'rgba(255,85,1,0.15)', GR = 'rgba(100,100,100,0.22)', G2 = '#1f1f1f';
+  // ── Progress bar ──
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    progress.style.width = (Math.min(pct, 1) * 100) + '%';
+  }, { passive: true });
 
-const D = {
-  marco: {
-    leads:429, inv:3192, cpl:7.79, sales:23, cps:160,
-    vInv:'R$3.192', vCPL:'R$7,79', vCPS:'R$160',
-    sum:'Março foi o mês de maior volume de vendas: <strong>23 carros vendidos</strong> com R$3.192 investidos. A semana de 16–22/03 foi excepcional — sozinha gerou <strong>9 vendas</strong> com custo por venda de apenas R$86. O CPL ainda estava em R$7,79, mas caiu semana a semana, preparando o terreno para a eficiência de abril.',
-    weeks:[
-      {l:'01–08/03', inv:813.32, leads:82, sales:5, cpl:9.92, cps:162.66},
-      {l:'09–15/03', inv:766.46, leads:110, sales:3, cpl:6.97, cps:255.49},
-      {l:'16–22/03', inv:775.56, leads:89, sales:9, cpl:8.71, cps:86.17, best:true},
-      {l:'23–31/03', inv:837.50, leads:148, sales:6, cpl:5.56, cps:139.58},
-    ],
-    an:[
-      {t:'ok', i:'✅', h:'23 carros — melhor mês em volume de vendas', p:'A semana de 16–22/03 foi a destaque: 9 vendas, CPL de R$8,71 e custo por venda de apenas R$86 — uma das semanas mais eficientes do histórico da loja.'},
-      {t:'ok', i:'✅', h:'ROI de 63x no período', p:'Para cada R$1 investido em anúncios, a GilsonCar gerou cerca de <strong>R$63 em faturamento</strong>. O retorno estimado total foi de R$201.600 com R$3.192 investidos.'},
-      {t:'warn', i:'⚠️', h:'CPL ainda em R$7,79 — melhorou em abril', p:'O custo por lead caiu ao longo do mês (de R$9,92 na 1ª semana para R$5,56 na última), mostrando uma tendência que foi confirmada e acelerada em abril.'},
-    ]
-  },
-  abril: {
-    leads:602, inv:2921, cpl:4.62, sales:22, cps:167,
-    vInv:'R$2.921', vCPL:'R$4,62', vCPS:'R$167',
-    sum:'Abril foi o mês da <strong>eficiência</strong>: com R$271 a menos que março, a GilsonCar Ibitinga gerou <strong>173 conversas a mais</strong> e manteve quase o mesmo volume de vendas. O custo por lead caiu 41% — de R$7,79 para R$4,62. A última semana do mês registrou o menor CPL da história: <strong>R$3,69</strong>.',
-    weeks:[
-      {l:'01–07/04', inv:633.95, leads:106, sales:4, cpl:5.35, cps:158.49},
-      {l:'08–14/04', inv:583.50, leads:143, sales:2, cpl:3.94, cps:291.75},
-      {l:'15–21/04', inv:720.88, leads:111, sales:9, cpl:5.50, cps:80.10, best:true},
-      {l:'22–30/04', inv:983.05, leads:242, sales:7, cpl:3.69, cps:140.44},
-    ],
-    an:[
-      {t:'ok', i:'✅', h:'CPL caiu 41% — R$4,62 por conversa', p:'O custo por lead saiu de R$7,79 para R$4,62 — e a última semana registrou R$3,69, o menor da história. <strong>Os anúncios estão cada vez mais afiados.</strong>'},
-      {t:'ok', i:'✅', h:'Engajamento #1 da região no Instagram', p:'Com 0,17% de engajamento e 20 interações por post em média, o @gilsoncarveiculos lidera os 5 concorrentes monitorados. Isso não é só número — significa que o conteúdo está chegando no público certo.'},
-      {t:'warn', i:'⚠️', h:'Seguidores caíram levemente (−0,20%)', p:'Premier e Furlan cresceram no período enquanto o perfil caiu um pouco. Publicar Reels mais regularmente — especialmente <strong>aos sábados</strong> (dia de pico dos concorrentes) — tende a reverter essa tendência.'},
-      {t:'target', i:'🎯', h:'Foco de maio: sustentar CPL baixo e crescer seguidores', p:'Com o CPL próximo de R$3,50–R$4,50, o objetivo é manter esse nível enquanto aumentamos a frequência de Reels para crescer o perfil e transformar mais seguidores em compradores.'},
-    ]
-  }
-};
+  // ── Scroll animations ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.anim').forEach(el => observer.observe(el));
 
-let charts = {};
+  // ── Charts ──
+  const red = '#CC0000';
+  const redFade = 'rgba(204,0,0,0.2)';
+  const grayFade = 'rgba(120,120,120,0.25)';
+  const defaultFont = { family: 'Montserrat', size: 11 };
+  Chart.defaults.color = '#555';
+  Chart.defaults.font = defaultFont;
+  const axisOpts = { grid: { color: '#111' }, ticks: { color: '#555' } };
 
-function R(n, dec=0){ return 'R$' + n.toFixed(dec).replace('.',','); }
-function N(n){ return n.toLocaleString('pt-BR'); }
-
-function weeks(data){
-  document.getElementById('weeksGrid').innerHTML = data.weeks.map(w=>`
-    <div class="wk${w.best?' best':''}">
-      <div class="wk-head">
-        <span class="wk-lbl">${w.l}</span>
-        ${w.best?'<span class="wk-best">🏆 melhor</span>':''}
-      </div>
-      <div class="wk-row"><span class="wl">Investido</span><span class="wv">${R(w.inv,2)}</span></div>
-      <div class="wk-row"><span class="wl">Conversas</span><span class="wv o">${w.leads}</span></div>
-      <div class="wk-row"><span class="wl">Vendas</span><span class="wv">${w.sales}</span></div>
-      <div class="wk-row"><span class="wl">CPL</span><span class="wv">${R(w.cpl,2)}</span></div>
-      <div class="wk-row"><span class="wl">Custo/venda</span><span class="wv">${R(w.cps,2)}</span></div>
-    </div>`).join('');
-}
-
-function analysis(data){
-  document.getElementById('anGrid').innerHTML = data.an.map(a=>`
-    <div class="an ${a.t}">
-      <div class="an-icon">${a.i}</div>
-      <div><h4>${a.h}</h4><p>${a.p}</p></div>
-    </div>`).join('');
-}
-
-function updateCharts(d){
-  const labels = d.weeks.map(w=>w.l);
-  const opts = (ax) => ({ animation:{duration:350}, plugins:{legend:{display:false}}, scales:{x:{grid:{color:G2}}, y:{grid:{color:G2}, beginAtZero:true, ...(ax||{})}} });
-
-  if(charts.l) charts.l.destroy();
-  charts.l = new Chart(document.getElementById('cLeads'),{type:'bar',data:{labels,datasets:[{label:'Conversas',data:d.weeks.map(w=>w.leads),backgroundColor:O,borderRadius:8,borderSkipped:false}]},options:opts()});
-
-  if(charts.c) charts.c.destroy();
-  charts.c = new Chart(document.getElementById('cCPL'),{type:'line',data:{labels,datasets:[{label:'CPL (R$)',data:d.weeks.map(w=>w.cpl),borderColor:O,backgroundColor:OD,fill:true,tension:0.4,pointBackgroundColor:O,pointRadius:5}]},options:{...opts(),plugins:{legend:{display:false}}}});
-
-  if(charts.s) charts.s.destroy();
-  charts.s = new Chart(document.getElementById('cSem'),{
-    type:'bar',
-    data:{labels,datasets:[
-      {label:'Investimento (R$)',data:d.weeks.map(w=>w.inv),backgroundColor:OD,borderColor:O,borderWidth:1.5,borderRadius:6,borderSkipped:false,yAxisID:'y'},
-      {label:'Conversas',data:d.weeks.map(w=>w.leads),backgroundColor:GR,borderRadius:6,borderSkipped:false,yAxisID:'y1'}
-    ]},
-    options:{animation:{duration:350},plugins:{legend:{labels:{font:{family:'Montserrat',size:11}}}},scales:{x:{grid:{color:G2}},y:{grid:{color:G2},beginAtZero:true},y1:{grid:{display:false},beginAtZero:true,position:'right'}}}
+  new Chart(document.getElementById('chartConversas'), {
+    type: 'bar',
+    data: {
+      labels: ['Março 2026', 'Abril 2026'],
+      datasets: [{ label: 'Conversas', data: [429, 602], backgroundColor: [grayFade, red], borderRadius: 8, borderSkipped: false }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+    }
   });
-}
 
-function go(m){
-  const d = D[m], isA = m==='abril';
-  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',isA?i===1:i===0));
-  document.getElementById('heroMonth').textContent = isA?'Abril 2026':'Março 2026';
-  document.getElementById('anMonth').textContent = isA?'Abril':'Março';
-  document.getElementById('cm1').classList.toggle('on',!isA);
-  document.getElementById('cm2').classList.toggle('on',isA);
+  new Chart(document.getElementById('chartCPL'), {
+    type: 'bar',
+    data: {
+      labels: ['Março 2026', 'Abril 2026'],
+      datasets: [{ label: 'CPL (R$)', data: [7.79, 4.62], backgroundColor: [grayFade, red], borderRadius: 8, borderSkipped: false }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+    }
+  });
 
-  document.getElementById('vLeads').textContent = N(d.leads);
-  document.getElementById('vInv').textContent = d.vInv;
-  document.getElementById('vCPL').textContent = d.vCPL;
-  document.getElementById('vSales').textContent = d.sales;
-  document.getElementById('vCPS').textContent = d.vCPS;
+  new Chart(document.getElementById('chartSemanal'), {
+    type: 'bar',
+    data: {
+      labels: ['01–07/04', '08–14/04', '15–21/04', '22–30/04'],
+      datasets: [
+        { label: 'Investimento (R$)', data: [633.95, 583.50, 720.88, 983.05], backgroundColor: redFade, borderColor: red, borderWidth: 1, borderRadius: 6, borderSkipped: false },
+        { label: 'Conversas', data: [106, 143, 111, 242], backgroundColor: grayFade, borderRadius: 6, borderSkipped: false }
+      ]
+    },
+    options: {
+      plugins: { legend: { labels: { font: defaultFont, color: '#555' } } },
+      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+    }
+  });
 
-  if(isA){
-    set('dLeads','↑ 40% vs março','up');
-    set('dInv','↓ R$271 vs março','up');
-    set('dCPL','↓ 41% vs março','up');
-    set('dSales','−1 vs março','neu');
-    set('dCPS','vs R$160 em março','neu');
-  } else {
-    set('dLeads','Referência inicial','neu');
-    set('dInv','Referência inicial','neu');
-    set('dCPL','Referência inicial','neu');
-    set('dSales','Maior volume do período','up');
-    set('dCPS','Melhor custo/venda','up');
-  }
+  new Chart(document.getElementById('chartEngajamento'), {
+    type: 'bar',
+    data: {
+      labels: ['GilsonCar ★', 'Premier', 'Furlan', 'Bela Vista', 'Pinguim'],
+      datasets: [{ label: 'Engajamento (%)', data: [0.17, 0.12, 0.10, 0.09, 0.06], backgroundColor: [red, grayFade, grayFade, grayFade, grayFade], borderRadius: 8, borderSkipped: false }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+    }
+  });
 
-  document.getElementById('sumBox').innerHTML = d.sum;
-  weeks(d); analysis(d); updateCharts(d);
-}
-
-function set(id, txt, cls){
-  const el = document.getElementById(id);
-  el.textContent = txt;
-  el.className = 'kpi-badge ' + cls;
-}
-
-// static social charts
-new Chart(document.getElementById('cEng'),{type:'bar',data:{labels:['Você','Premier','Furlan','Bela Vista','Pinguim'],datasets:[{label:'Engajamento (%)',data:[0.17,0.12,0.10,0.09,0.06],backgroundColor:[O,GR,GR,GR,GR],borderRadius:8,borderSkipped:false}]},options:{plugins:{legend:{display:false}},scales:{x:{grid:{color:G2}},y:{grid:{color:G2},beginAtZero:true}}}});
-new Chart(document.getElementById('cReels'),{type:'bar',data:{labels:['Furlan','Você','Premier'],datasets:[{label:'Viz. Reels',data:[2300,1200,886],backgroundColor:[GR,O,GR],borderRadius:8,borderSkipped:false}]},options:{plugins:{legend:{display:false}},scales:{x:{grid:{color:G2}},y:{grid:{color:G2},beginAtZero:true}}}});
-
-go('abril');
+  new Chart(document.getElementById('chartReels'), {
+    type: 'bar',
+    data: {
+      labels: ['Furlan', 'GilsonCar ★', 'Premier', 'Bela Vista', 'Pinguim'],
+      datasets: [{ label: 'Visualizações médias', data: [2300, 1200, 886, 0, 0], backgroundColor: [grayFade, red, grayFade, grayFade, grayFade], borderRadius: 8, borderSkipped: false }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+    }
+  });
 </script>
 </body>
 </html>
