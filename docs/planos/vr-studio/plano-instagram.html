@@ -134,11 +134,11 @@
       max-width: calc(100% - 32px);
     }
     .nav-brand  { font-family: var(--font-brand); font-size: 1.25rem; line-height: 1; color: var(--text); }
-    .nav-pipe   { width: 1px; height: 16px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
-    .nav-lbl    { font-size: 0.65rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); }
+    .nav-pipe   { display: none; width: 1px; height: 16px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
+    .nav-lbl    { display: none; font-size: 0.65rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); }
 
     /* ─── HERO ─── */
-    .hero { padding: 86px var(--pad-x) 60px; }
+    .hero { padding: 86px 0 60px; }
 
     .hero-photo {
       width: 100%; max-width: 300px;
@@ -176,9 +176,10 @@
 
     .hero-title {
       font-family: var(--font-ui);
-      font-size: clamp(2.4rem, 9vw, 4.2rem);
-      font-weight: 800; line-height: 1.04;
-      letter-spacing: -0.03em; margin-bottom: 16px;
+      font-size: clamp(1.75rem, 8vw, 4.2rem);
+      font-weight: 800; line-height: 1.08;
+      letter-spacing: -0.025em; margin-bottom: 16px;
+      overflow-wrap: break-word; word-break: break-word;
     }
     .hero-title em { color: rgba(255,255,255,0.28); font-style: normal; }
 
@@ -206,8 +207,9 @@
     }
     .s-title {
       font-family: var(--font-ui);
-      font-size: clamp(1.6rem, 6vw, 2.4rem);
-      font-weight: 800; letter-spacing: -0.025em; margin-bottom: 10px;
+      font-size: clamp(1.3rem, 5.5vw, 2.4rem);
+      font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px;
+      overflow-wrap: break-word; word-break: break-word;
     }
     .s-desc {
       font-size: 0.88rem; color: var(--muted);
@@ -421,10 +423,10 @@
       :root { --pad-x: 24px; }
 
       nav { padding: 11px 28px; }
-      .nav-pipe { display: block; }
+      .nav-pipe { display: flex; }
       .nav-lbl  { display: block; }
 
-      .hero { padding: 100px var(--pad-x) 72px; }
+      .hero { padding: 100px 0 72px; }
       .hero-photo { max-width: 260px; }
 
       .s-desc { font-size: 0.93rem; }
@@ -446,7 +448,7 @@
       .section { padding: var(--sp-2xl) 0; }
 
       /* Hero two-column */
-      .hero { padding: 130px var(--pad-x) 100px; }
+      .hero { padding: 130px 0 100px; }
       .hero-inner {
         display: grid; grid-template-columns: 1.1fr 0.9fr;
         gap: 70px; align-items: center;
