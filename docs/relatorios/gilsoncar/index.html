@@ -39,7 +39,8 @@
     }
     @font-face { font-family:'AVEstiana'; src:url('../../fonts/AVEstiana-Black.otf') format('opentype'); font-weight:900; }
 
-    /* ── LIQUID GLASS — FILTRO: backdrop-filter + SVG displacement (refração real) ── */
+    /* ── LIQUID GLASS — FILTRO: fundo translúcido + SVG displacement (refração real) ── */
+    /* backdrop-filter removido — causa artefatos de repaint durante scroll quando combinado com SVG filter */
     /* .cc2, .ai, .sum excluídos — filtro distorce canvas/texto */
     .kpi::before, .hero-card::before, .hero-val-box::before,
     .wk::before, .ri::before, .cc::before, .trophy::before {
@@ -47,8 +48,7 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      background: rgba(255,255,255,0.62);
       filter: url(#liquidglass);
       border-radius: inherit;
       pointer-events: none;
