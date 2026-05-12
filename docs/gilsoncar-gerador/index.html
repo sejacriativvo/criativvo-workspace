@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Post — GilsonCar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #CC0000;
+    --black: #0a0a0a;
+    --surface: #141414;
+    --border: #222;
+    --text: #ffffff;
+    --muted: #666;
+    --font: 'Montserrat', sans-serif;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  header img { height: 32px; }
+  header h1 { font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
+  header span { font-size: 12px; color: var(--muted); }
+
+  /* ── SETUP SCREEN ── */
+  #setupScreen {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  .setup-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 48px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+  }
+  .setup-card h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .setup-card p { color: var(--muted); font-size: 14px; margin-bottom: 32px; line-height: 1.6; }
+  .setup-card a { color: var(--red); text-decoration: none; }
+
+  /* ── MAIN APP ── */
+  #appScreen {
+    flex: 1;
+    display: flex;
+    gap: 0;
+    display: none;
+  }
+
+  /* ── LEFT PANEL (controls) ── */
+  .panel-left {
+    width: 380px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .panel-section {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .panel-section:last-child { border-bottom: none; flex: 1; }
+
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* ── UPLOAD ZONE ── */
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 32px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--red); background: rgba(204,0,0,0.04); }
+  .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-zone .icon { font-size: 32px; margin-bottom: 8px; }
+  .upload-zone p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .upload-zone strong { color: var(--red); }
+
+  .upload-preview {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  /* ── INPUTS ── */
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .field input {
+    width: 100%;
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    transition: border-color 0.2s;
+  }
+  .field input:focus { outline: none; border-color: var(--red); }
+  .field input::placeholder { color: #333; }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    width: 100%;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .btn-primary:hover { background: #a80000; }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { background: #333; color: #555; cursor: not-allowed; transform: none; }
+
+  .btn-secondary {
+    width: 100%;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 10px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    margin-top: 10px;
+  }
+  .btn-secondary:hover { border-color: #555; }
+
+  /* ── STATUS LOG ── */
+  #statusLog {
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 12px;
+    color: var(--muted);
+    min-height: 60px;
+    line-height: 1.8;
+    display: none;
+    margin-top: 16px;
+  }
+  #statusLog .ok { color: #4ade80; }
+  #statusLog .err { color: #f87171; }
+  #statusLog .wait { color: #facc15; }
+
+  /* ── RIGHT PANEL (preview) ── */
+  .panel-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    background: #0d0d0d;
+    overflow: auto;
+  }
+
+  /* ── POST PREVIEW ── */
+  .post-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  #postCard {
+    position: relative;
+    width: 540px;
+    height: 675px; /* 1080x1350 at 50% scale */
+    background: #ffffff;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    flex-shrink: 0;
+  }
+
+  /* Background image (gerado pelo Higgsfield) */
+  #bgImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: none;
+  }
+
+  /* Placeholder do fundo */
+  #bgPlaceholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #f0f0f0 0%, #c8c0b8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: #aaa;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  #bgPlaceholder svg { width: 56px; opacity: 0.3; }
+
+  /* Spinner de loading no fundo */
+  #bgLoading {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 5;
+  }
+
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid #eee;
+    border-top-color: var(--red);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #bgLoading p { font-size: 12px; font-weight: 600; color: #555; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* Watermark */
+  .post-watermark {
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    transform: translateY(-50%);
+    width: 310px;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Logo */
+  .post-logo {
+    position: absolute;
+    top: 26px;
+    left: 28px;
+    width: 65px;
+    z-index: 10;
+  }
+
+  /* Text block */
+  .post-text {
+    position: absolute;
+    top: 80px;
+    left: 28px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+  }
+  .post-marca {
+    font-family: var(--font);
+    font-size: 30px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    color: #000;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .post-modelo {
+    font-family: var(--font);
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: #000;
+    text-transform: uppercase;
+    line-height: 0.9;
+  }
+  .post-versao {
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #000;
+    text-transform: uppercase;
+    line-height: 1.4;
+    margin-top: 6px;
+  }
+
+  /* ── DOWNLOAD BUTTON ── */
+  #btnDownload {
+    display: none;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  #btnDownload:hover { background: #a80000; }
+
+  /* ── INPUT BASE (shared) ── */
+  input.base-input {
+    width: 100%;
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 14px;
+  }
+  input.base-input:focus { outline: none; border-color: var(--red); }
+
+  /* ── TOKEN BADGE ── */
+  .token-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(204,0,0,0.08);
+    border: 1px solid rgba(204,0,0,0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .token-info span { color: #4ade80; font-weight: 600; }
+  .token-info button { background: none; border: none; color: var(--muted); font-size: 11px; cursor: pointer; font-family: var(--font); }
+  .token-info button:hover { color: #f87171; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <img src="assets/logo.png" alt="GilsonCar">
+  <div>
+    <h1>Gerador de Post</h1>
+    <span>Powered by Higgsfield AI</span>
+  </div>
+</header>
+
+<!-- ── SETUP SCREEN ── -->
+<div id="setupScreen">
+  <div class="setup-card">
+    <div style="font-size:48px;margin-bottom:16px">🔑</div>
+    <h2>Configure sua API Key</h2>
+    <p>Para gerar imagens, você precisa da sua chave de API do Higgsfield.<br>
+    Acesse <a href="https://higgsfield.ai" target="_blank">higgsfield.ai</a> → Settings → API Keys.</p>
+    <div class="field" style="text-align:left;margin-bottom:20px">
+      <label>Higgsfield API Key</label>
+      <input type="password" id="inputApiKey" class="base-input" placeholder="hf_xxxxxxxxxxxxxxxx">
+    </div>
+    <button class="btn-primary" onclick="salvarToken()">Salvar e Continuar</button>
+  </div>
+</div>
+
+<!-- ── APP SCREEN ── -->
+<div id="appScreen">
+
+  <!-- PAINEL ESQUERDO -->
+  <div class="panel-left">
+
+    <!-- Token info -->
+    <div class="panel-section" style="padding-bottom:16px">
+      <div class="token-info" id="tokenBadge">
+        <span>✓ API Key configurada</span>
+        <button onclick="resetToken()">Trocar</button>
+      </div>
+    </div>
+
+    <!-- Upload foto do carro -->
+    <div class="panel-section">
+      <div class="section-title">1. Foto do Veículo</div>
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="inputCar" accept="image/*" onchange="onCarUpload(event)">
+        <div class="icon">📸</div>
+        <p>Arraste a foto do carro<br>ou <strong>clique para selecionar</strong></p>
+      </div>
+      <img id="carPreview" class="upload-preview" alt="Preview">
+    </div>
+
+    <!-- Texto do post -->
+    <div class="panel-section">
+      <div class="section-title">2. Texto do Post</div>
+      <div class="field">
+        <label>Marca</label>
+        <input type="text" id="inputMarca" class="base-input" value="CHEVROLET" placeholder="Ex: CHEVROLET" oninput="updateText()">
+      </div>
+      <div class="field">
+        <label>Modelo</label>
+        <input type="text" id="inputModelo" class="base-input" value="SPIN" placeholder="Ex: SPIN" oninput="updateText()">
+      </div>
+      <div class="field">
+        <label>Versão / Detalhe</label>
+        <input type="text" id="inputVersao" class="base-input" value="PREMIER (7 LUGARES)" placeholder="Ex: PREMIER (7 LUGARES)" oninput="updateText()">
+      </div>
+    </div>
+
+    <!-- Gerar -->
+    <div class="panel-section">
+      <div class="section-title">3. Gerar</div>
+      <button class="btn-primary" id="btnGerar" onclick="gerarPost()" disabled>
+        <span id="btnGerarIcon">✦</span>
+        <span id="btnGerarText">Selecione uma foto primeiro</span>
+      </button>
+      <div id="statusLog"></div>
+    </div>
+
+  </div>
+
+  <!-- PAINEL DIREITO (preview) -->
+  <div class="panel-right">
+    <div class="post-wrapper">
+
+      <!-- POST CARD (1080x1350 em escala 50%) -->
+      <div id="postCard">
+
+        <!-- Fundo placeholder -->
+        <div id="bgPlaceholder">
+          <svg viewBox="0 0 64 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 24h56M8 24l6-10h28l8 10M14 14l3-6h18l3 6M10 28a4 4 0 1 0 8 0 4 4 0 0 0-8 0M46 28a4 4 0 1 0 8 0 4 4 0 0 0-8 0" stroke="#ccc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Aguardando foto
+        </div>
+
+        <!-- Loading overlay -->
+        <div id="bgLoading">
+          <div class="spinner"></div>
+          <p id="loadingText">Gerando imagem...</p>
+        </div>
+
+        <!-- Imagem gerada (fundo) -->
+        <img id="bgImage" alt="Imagem gerada">
+
+        <!-- Watermark -->
+        <img class="post-watermark" src="assets/logo.png" alt="">
+
+        <!-- Logo -->
+        <img class="post-logo" src="assets/logo.png" alt="GilsonCar">
+
+        <!-- Textos -->
+        <div class="post-text">
+          <span class="post-marca" id="postMarca">CHEVROLET</span>
+          <span class="post-modelo" id="postModelo">SPIN</span>
+          <span class="post-versao" id="postVersao">PREMIER (7 LUGARES)</span>
+        </div>
+
+      </div>
+
+      <!-- Botão de download -->
+      <button id="btnDownload" onclick="baixarPost()">⬇ Baixar Post (1080×1350)</button>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────
+const API_BASE = 'https://api.higgsfield.ai/v1';
+const TEMPLATE_URL = 'assets/TEMPLATE.png';
+const PROMPT = `Preserve o ambiente original EXATAMENTE como está na imagem de referência: fundo branco com formas geométricas cinza suaves, piso de madeira envernizado com reflexos naturais, mesma perspectiva, mesmo enquadramento, mesma altura de câmera, mesmo ângulo de visão em 3/4 frontal, mesma distância focal e mesma profundidade de campo.
+
+A área em vermelho funciona apenas como uma máscara de posicionamento para indicar onde o veículo deve ser inserido. Não use essa silhueta como formato obrigatório. Ignore completamente o contorno da máscara e substitua-o pela silhueta real do veículo fornecido.
+
+TAREFA:
+Inserir o carro enviado pelo usuário exatamente nessa posição, respeitando o tipo real do veículo, seja hatch, sedã, SUV, picape, van ou qualquer outro modelo.
+
+REGRAS OBRIGATÓRIAS:
+- Manter o veículo sempre no mesmo ângulo e enquadramento do template.
+- Ajustar automaticamente escala, proporções e comprimento de acordo com o modelo real do carro.
+- Preservar fielmente a silhueta original do veículo enviado.
+- Não deformar, esticar ou comprimir o carro para caber na máscara.
+- A máscara vermelha serve apenas como referência aproximada de localização e tamanho.
+- Centralizar o veículo na área indicada, ocupando visualmente o mesmo espaço da máscara, mas com suas proporções reais.
+- Manter rodas alinhadas ao piso.
+- Criar sombras de contato realistas sob os pneus.
+- Gerar reflexos fisicamente corretos no piso de madeira.
+- Combinar exposição, temperatura de cor, contraste e nitidez com o ambiente.
+- Preservar detalhes do carro como pintura, faróis, vidros, rodas e acabamentos.
+- Não alterar o fundo, o piso, o enquadramento ou a iluminação.
+
+OBJETIVO DA IMAGEM:
+Criar uma substituição automática de veículo em um template fixo, mantendo sempre o mesmo cenário, posição e ângulo de câmera, enquanto adapta cada novo carro à sua silhueta e proporções reais.
+
+RESULTADO FINAL:
+Integração totalmente realista, aparência de fotografia profissional de showroom, iluminação natural, reflexos precisos, sombras consistentes, acabamento publicitário premium, fotorealista, ultra-detalhado, 8K.`;
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let carFile = null;
+let apiKey = localStorage.getItem('hf_api_key') || '';
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+window.onload = () => {
+  if (apiKey) showApp();
+  setupDrag();
+};
+
+function showApp() {
+  document.getElementById('setupScreen').style.display = 'none';
+  document.getElementById('appScreen').style.display = 'flex';
+  document.getElementById('tokenBadge').style.display = 'flex';
+}
+
+function salvarToken() {
+  const key = document.getElementById('inputApiKey').value.trim();
+  if (!key) return alert('Digite sua API Key.');
+  apiKey = key;
+  localStorage.setItem('hf_api_key', key);
+  showApp();
+}
+
+function resetToken() {
+  localStorage.removeItem('hf_api_key');
+  apiKey = '';
+  document.getElementById('appScreen').style.display = 'none';
+  document.getElementById('setupScreen').style.display = 'flex';
+}
+
+// ─────────────────────────────────────────────
+// DRAG & DROP
+// ─────────────────────────────────────────────
+function setupDrag() {
+  const zone = document.getElementById('uploadZone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('drag');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) processCarFile(file);
+  });
+}
+
+// ─────────────────────────────────────────────
+// UPLOAD CAR PHOTO
+// ─────────────────────────────────────────────
+function onCarUpload(e) {
+  const file = e.target.files[0];
+  if (file) processCarFile(file);
+}
+
+function processCarFile(file) {
+  carFile = file;
+  const url = URL.createObjectURL(file);
+  const preview = document.getElementById('carPreview');
+  preview.src = url;
+  preview.style.display = 'block';
+  // Enable generate button
+  document.getElementById('btnGerar').disabled = false;
+  document.getElementById('btnGerarText').textContent = 'Gerar Post';
+}
+
+// ─────────────────────────────────────────────
+// TEXT SYNC
+// ─────────────────────────────────────────────
+function updateText() {
+  document.getElementById('postMarca').textContent = document.getElementById('inputMarca').value || 'MARCA';
+  document.getElementById('postModelo').textContent = document.getElementById('inputModelo').value || 'MODELO';
+  document.getElementById('postVersao').textContent = document.getElementById('inputVersao').value || 'VERSÃO';
+}
+
+// ─────────────────────────────────────────────
+// LOG HELPER
+// ─────────────────────────────────────────────
+function log(msg, type = '') {
+  const el = document.getElementById('statusLog');
+  el.style.display = 'block';
+  el.innerHTML += `<div class="${type}">${msg}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+
+function clearLog() {
+  const el = document.getElementById('statusLog');
+  el.innerHTML = '';
+  el.style.display = 'none';
+}
+
+function setLoading(show, text = 'Gerando imagem...') {
+  const el = document.getElementById('bgLoading');
+  el.style.display = show ? 'flex' : 'none';
+  document.getElementById('loadingText').textContent = text;
+}
+
+// ─────────────────────────────────────────────
+// HIGGSFIELD API
+// ─────────────────────────────────────────────
+async function hfFetch(endpoint, options = {}) {
+  const res = await fetch(`${API_BASE}${endpoint}`, {
+    ...options,
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    }
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`API ${res.status}: ${err}`);
+  }
+  return res.json();
+}
+
+async function uploadMedia(file) {
+  // 1. Request presigned URL
+  const { uploads } = await hfFetch('/media/upload', {
+    method: 'POST',
+    body: JSON.stringify({ filename: file.name, content_type: file.type })
+  });
+  const { upload_url, media_id } = uploads[0];
+
+  // 2. PUT to S3
+  await fetch(upload_url, {
+    method: 'PUT',
+    headers: { 'Content-Type': file.type },
+    body: file
+  });
+
+  // 3. Confirm
+  await hfFetch('/media/confirm', {
+    method: 'POST',
+    body: JSON.stringify({ media_id, type: 'image' })
+  });
+
+  return media_id;
+}
+
+async function loadTemplateAsFile() {
+  const res = await fetch(TEMPLATE_URL);
+  const blob = await res.blob();
+  return new File([blob], 'TEMPLATE.png', { type: 'image/png' });
+}
+
+async function startGeneration(templateId, carId) {
+  const { results } = await hfFetch('/generate/image', {
+    method: 'POST',
+    body: JSON.stringify({
+      model: 'nano_banana_2',
+      prompt: PROMPT,
+      aspect_ratio: '3:4',
+      resolution: '1k',
+      medias: [
+        { value: templateId, role: 'image' },
+        { value: carId, role: 'image' }
+      ]
+    })
+  });
+  return results[0].id;
+}
+
+async function pollJob(jobId) {
+  const MAX_ATTEMPTS = 60;
+  for (let i = 0; i < MAX_ATTEMPTS; i++) {
+    await new Promise(r => setTimeout(r, 3000));
+    const data = await hfFetch(`/jobs/${jobId}`);
+    const status = data.generation?.status || data.status;
+    if (status === 'completed') return data.generation?.results?.rawUrl || data.results?.rawUrl;
+    if (status === 'failed') throw new Error('Geração falhou no servidor.');
+  }
+  throw new Error('Timeout — geração demorou mais que o esperado.');
+}
+
+// ─────────────────────────────────────────────
+// MAIN FLOW
+// ─────────────────────────────────────────────
+async function gerarPost() {
+  if (!carFile) return;
+
+  const btn = document.getElementById('btnGerar');
+  btn.disabled = true;
+  document.getElementById('btnGerarText').textContent = 'Gerando...';
+  document.getElementById('btnDownload').style.display = 'none';
+  document.getElementById('bgImage').style.display = 'none';
+  document.getElementById('bgPlaceholder').style.display = 'none';
+  clearLog();
+
+  try {
+    // Step 1: Upload template
+    log('⟳ Fazendo upload do template...', 'wait');
+    setLoading(true, 'Enviando template...');
+    const templateFile = await loadTemplateAsFile();
+    const templateId = await uploadMedia(templateFile);
+    log('✓ Template enviado', 'ok');
+
+    // Step 2: Upload car photo
+    log('⟳ Fazendo upload da foto do carro...', 'wait');
+    setLoading(true, 'Enviando foto do carro...');
+    const carId = await uploadMedia(carFile);
+    log('✓ Foto do carro enviada', 'ok');
+
+    // Step 3: Generate
+    log('⟳ Iniciando geração com Nano Banana 2...', 'wait');
+    setLoading(true, 'Gerando imagem...');
+    const jobId = await startGeneration(templateId, carId);
+    log(`✓ Job iniciado: ${jobId.slice(0,8)}...`, 'ok');
+
+    // Step 4: Poll
+    log('⟳ Aguardando resultado...', 'wait');
+    setLoading(true, 'Processando...');
+    const imageUrl = await pollJob(jobId);
+    log('✓ Imagem gerada com sucesso!', 'ok');
+
+    // Step 5: Show result
+    const bgImg = document.getElementById('bgImage');
+    bgImg.onload = () => {
+      setLoading(false);
+      bgImg.style.display = 'block';
+      document.getElementById('btnDownload').style.display = 'block';
+    };
+    bgImg.src = imageUrl;
+
+  } catch (err) {
+    log(`✗ Erro: ${err.message}`, 'err');
+    setLoading(false);
+    document.getElementById('bgPlaceholder').style.display = 'flex';
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+    document.getElementById('btnGerarText').textContent = 'Gerar Post';
+  }
+}
+
+// ─────────────────────────────────────────────
+// DOWNLOAD (1080x1350 real size)
+// ─────────────────────────────────────────────
+async function baixarPost() {
+  const btn = document.getElementById('btnDownload');
+  btn.textContent = '⏳ Preparando...';
+  btn.disabled = true;
+
+  try {
+    const canvas = await html2canvas(document.getElementById('postCard'), {
+      scale: 2, // 540px * 2 = 1080px
+      useCORS: true,
+      allowTaint: false,
+      backgroundColor: '#ffffff'
+    });
+
+    const marca = document.getElementById('inputMarca').value || 'carro';
+    const modelo = document.getElementById('inputModelo').value || 'modelo';
+    const link = document.createElement('a');
+    link.download = `gilsoncar-${marca}-${modelo}.png`.toLowerCase().replace(/\s+/g, '-');
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch (e) {
+    alert('Erro ao exportar: ' + e.message);
+  } finally {
+    btn.textContent = '⬇ Baixar Post (1080×1350)';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
