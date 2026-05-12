@@ -74,15 +74,18 @@
 
     /* ── HEADER ── */
     header {
-      position:sticky; top:2px; z-index:200;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0,0,0,0.07);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.95) inset, 0 4px 24px rgba(0,0,0,0.06);
+      position:fixed; top:10px; left:50%; transform:translateX(-50%);
+      width:calc(100% - 32px); max-width:980px;
+      z-index:200;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.90);
+      border-radius:18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.09), 0 1px 0 rgba(255,255,255,0.95) inset;
       display:flex; align-items:center; justify-content:space-between;
-      padding:0 20px; height:56px;
+      padding:0 20px; height:54px;
     }
-    .h-logo { height:30px; }
+    .h-logo { height:28px; }
     .h-right { display:flex; flex-direction:column; align-items:flex-end; gap:1px; }
     .h-tag  { font-size:.54rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--mu); }
     .h-unit { font-size:.68rem; font-weight:800; color:var(--tx); }
@@ -91,7 +94,7 @@
     .wrap { max-width:980px; margin:0 auto; padding:0 16px; }
 
     /* ── UNIT TABS ── */
-    .unit-tabs { display:flex; gap:8px; padding:20px 16px 0; max-width:980px; margin:0 auto; }
+    .unit-tabs { display:flex; gap:8px; padding:88px 16px 0; max-width:980px; margin:0 auto; }
     .utab {
       flex:1; padding:12px 16px; border-radius:14px;
       border: 1px solid rgba(0,0,0,0.07); border-top-color: rgba(255,255,255,0.95);
@@ -163,13 +166,14 @@
     .hero-desc strong { color:var(--tx); }
     .hero-val-box {
       text-align:center; position:relative; overflow:hidden;
-      border: 1px solid rgba(255,255,255,0.15); border-top-color: rgba(255,255,255,0.32);
+      background: linear-gradient(145deg, #CC0000 0%, #960000 100%);
+      border: 1px solid rgba(255,120,120,0.30); border-top-color: rgba(255,180,180,0.42);
       border-radius:16px; padding:20px 24px; min-width:148px; flex-shrink:0;
-      box-shadow: var(--sh);
+      box-shadow: 0 10px 40px rgba(204,0,0,0.30);
     }
-    .hero-val     { font-size:2.2rem; font-weight:900; color:var(--tx); line-height:1; position:relative; z-index:1; }
-    .hero-val-lbl { font-size:.58rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--mu); margin-top:6px; position:relative; z-index:1; }
-    .hero-val-sub { font-size:.65rem; color:var(--mu); margin-top:4px; position:relative; z-index:1; }
+    .hero-val     { font-size:2.2rem; font-weight:900; color:#fff; line-height:1; position:relative; z-index:1; }
+    .hero-val-lbl { font-size:.58rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,0.65); margin-top:6px; position:relative; z-index:1; }
+    .hero-val-sub { font-size:.65rem; color:rgba(255,255,255,0.60); margin-top:4px; position:relative; z-index:1; }
 
     /* ── MAIN ── */
     main { max-width:980px; margin:0 auto; padding:24px 16px 100px; }
@@ -230,13 +234,13 @@
     .cg  { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
     @media(max-width:560px){ .cg { grid-template-columns:1fr; } }
     .cc2 {
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(0,0,0,0.06); border-top-color: rgba(255,255,255,0.95);
-      border-radius:16px; padding:16px;
-      box-shadow: var(--sh);
+      background: #13142a;
+      border: 1px solid rgba(255,255,255,0.07); border-top-color: rgba(255,255,255,0.13);
+      border-radius:20px; padding:20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
     }
     .cc2.w   { grid-column:1/-1; }
-    .cc2-lbl { font-size:.58rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--mu); margin-bottom:12px; }
+    .cc2-lbl { font-size:.58rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.38); margin-bottom:14px; }
 
     /* ── WEEKS ── */
     .wks { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:10px; margin-top:10px; }
@@ -551,16 +555,23 @@ Chart.register({
   destroy(chart) { chart._dead = true; cancelAnimationFrame(chart._pulseRAF); }
 });
 
-// ── Chart defaults ──
-Chart.defaults.color = 'rgba(30,41,59,0.55)';
+// ── Chart defaults — dark panels ──
+Chart.defaults.color = 'rgba(255,255,255,0.42)';
 Chart.defaults.font  = { family:'Montserrat', size:11 };
-const BRD = '#CC0000';
-const BRD_D = 'rgba(204,0,0,0.18)';
-const NEU   = 'rgba(100,116,139,0.16)';
-const GRN   = '#16a34a';
-const GRD   = 'rgba(22,163,74,0.18)';
-const BD    = 'rgba(0,0,0,0.06)';
-const AX    = { grid:{ color:BD }, ticks:{ color:'rgba(30,41,59,0.45)' } };
+const BRD   = '#CC0000';
+const BRD_D = 'rgba(204,0,0,0.35)';
+const NEU   = 'rgba(255,255,255,0.14)';
+const GRN   = '#34d399';
+const GRD   = 'rgba(52,211,153,0.25)';
+const BD    = 'rgba(255,255,255,0.07)';
+const AX    = { grid:{ color:BD }, ticks:{ color:'rgba(255,255,255,0.40)' } };
+
+// ── Gradiente fill para gráficos de linha ──
+function mkGrad(id, c0, c1){
+  const cv = document.getElementById(id);
+  const g  = cv.getContext('2d').createLinearGradient(0, 0, 0, cv.parentElement.clientHeight || 220);
+  g.addColorStop(0, c0); g.addColorStop(1, c1); return g;
+}
 
 // ── Shared animation & tooltip defaults ──
 const ANIM_BAR = {
@@ -568,9 +579,9 @@ const ANIM_BAR = {
   delay(ctx) { return ctx.type === 'data' ? ctx.dataIndex * 90 : 0; }
 };
 const TIP = {
-  backgroundColor:'rgba(255,255,255,0.97)',
-  titleColor:'rgba(30,41,59,0.95)', bodyColor:'rgba(100,116,139,0.85)',
-  borderColor:'rgba(0,0,0,0.10)', borderWidth:1,
+  backgroundColor:'rgba(8,8,20,0.96)',
+  titleColor:'rgba(255,255,255,0.95)', bodyColor:'rgba(255,255,255,0.52)',
+  borderColor:'rgba(255,255,255,0.12)', borderWidth:1,
   padding:12, cornerRadius:10,
   titleFont:{family:'Montserrat',weight:'800',size:12},
   bodyFont:{family:'Montserrat',size:11}
@@ -807,9 +818,10 @@ function buildCharts(d, prev){
       labels:d.weeks ? d.weeks.map(w=>w.l) : [prev.label.split(' ')[0],d.label.split(' ')[0]],
       datasets:[{
         label:'CPL (R$)', data:d.weeks?d.weeks.map(w=>w.cpl):[prev.cpl,d.cpl],
-        borderColor:BRD, backgroundColor:BRD_D, fill:true, tension:0.4,
+        borderColor:BRD, backgroundColor:mkGrad('chC','rgba(204,0,0,0.50)','rgba(204,0,0,0.00)'),
+        fill:true, tension:0.4, borderWidth:2.5,
         pointBackgroundColor:BRD, pointBorderColor:'#fff', pointBorderWidth:2,
-        pointRadius:7, pointHoverRadius:11, pointHoverBackgroundColor:BRD
+        pointRadius:6, pointHoverRadius:10, pointHoverBackgroundColor:BRD
       }]
     },options:{
       animation:{duration:900,easing:'easeInOutQuart'},
@@ -821,7 +833,7 @@ function buildCharts(d, prev){
       scales:{x:AX,y:AX}
     }});
     document.getElementById('cplLbl').innerHTML =
-      'Evolução do custo por lead <span style="font-size:.55rem;color:var(--mu);font-weight:500;letter-spacing:0;text-transform:none;margin-left:6px;">· passe o mouse nos pontos</span>';
+      'Evolução do custo por lead <span style="font-size:.55rem;color:rgba(255,255,255,0.30);font-weight:500;letter-spacing:0;text-transform:none;margin-left:6px;">· passe o mouse nos pontos</span>';
   } else {
     charts.c = new Chart('chC',{type:'bar',data:{
       labels:[prev.label.split(' ')[0],d.label.split(' ')[0]],
@@ -840,7 +852,7 @@ function buildCharts(d, prev){
       ]
     },options:{
       animation:ANIM_BAR,
-      plugins:{legend:{labels:{font:{family:'Montserrat',size:11},color:'rgba(30,41,59,0.55)'}},tooltip:TIP},
+      plugins:{legend:{labels:{font:{family:'Montserrat',size:11},color:'rgba(255,255,255,0.50)'}},tooltip:TIP},
       scales:{x:AX,y:{...AX,beginAtZero:true},y1:{grid:{display:false},ticks:{color:'rgba(255,255,255,0.44)'},beginAtZero:true,position:'right'}}
     }});
   }
@@ -868,7 +880,7 @@ function buildSocial(u){
   const others = SOCIAL_COMP.filter(c=>!c.unit);
   const all    = [me,...others].slice(0,5);
 
-  const logoOpts = { plugins:{ legend:{display:false}, voceLogo:true, tooltip:TIP }, layout:{ padding:{ top:28 } }, animation:ANIM_BAR };
+  const logoOpts = { plugins:{ legend:{display:false}, voceLogo:true, tooltip:TIP }, layout:{ padding:{ top:28 } }, animation:ANIM_BAR, scales:{x:{...AX,ticks:{...AX.ticks,maxRotation:30}},y:{...AX,beginAtZero:true}} };
 
   if(charts.eng) charts.eng.destroy();
   charts.eng = new Chart('chEng',{type:'bar',data:{
