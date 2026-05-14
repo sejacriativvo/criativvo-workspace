@@ -160,6 +160,26 @@
     .sec-title  { font-size: 1.05rem; font-weight: 800; color: var(--tx); white-space: nowrap; }
     .sec-line   { height: 1px; background: var(--bd); flex: 1; }
 
+    /* ── BANNER CUSTO TOTAL ── */
+    .mktg-wrap  { max-width: 960px; margin: 20px auto 0; padding: 0 20px; }
+    .mktg-inner {
+      background: var(--tx); border-radius: 16px;
+      padding: 26px 32px;
+      display: flex; align-items: center; gap: 36px;
+    }
+    .mktg-main  { flex-shrink: 0; }
+    .mktg-val   { font-size: 2.8rem; font-weight: 900; color: var(--red); line-height: 1; }
+    .mktg-sub   { font-size: .64rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-top: 5px; }
+    .mktg-div   { width: 1px; height: 56px; background: rgba(255,255,255,.12); flex-shrink: 0; }
+    .mktg-info  { flex: 1; }
+    .mktg-title { font-size: .64rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 10px; }
+    .mktg-formula { font-size: .95rem; font-weight: 700; color: #fff; line-height: 1.7; }
+    .mktg-formula em { color: rgba(255,255,255,.45); font-style: normal; }
+    @media(max-width:560px){
+      .mktg-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .mktg-div   { display: none; }
+    }
+
     /* ── KPI CARDS ── */
     .kpis { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 10px; margin-bottom: 16px; }
     @media(max-width:480px){ .kpis { grid-template-columns: 1fr 1fr; } }
@@ -399,6 +419,21 @@
   </div>
 </div>
 
+<!-- BANNER CUSTO TOTAL DE MARKETING -->
+<div class="mktg-wrap">
+  <div class="mktg-inner">
+    <div class="mktg-main">
+      <div class="mktg-val" id="mktgVal">—</div>
+      <div class="mktg-sub">por carro vendido</div>
+    </div>
+    <div class="mktg-div"></div>
+    <div class="mktg-info">
+      <div class="mktg-title">Custo total de marketing</div>
+      <div class="mktg-formula" id="mktgFormula">—</div>
+    </div>
+  </div>
+</div>
+
 <main>
 
   <!-- RESUMO EXECUTIVO -->
@@ -414,7 +449,6 @@
       <div class="kpi anim-d3"><div class="kpi-lbl">Custo por lead</div><div class="kpi-val" id="vC">—</div><div class="badge" id="dC">—</div><div class="kpi-note">Por conversa iniciada</div></div>
       <div class="kpi anim-d4"><div class="kpi-lbl">Carros vendidos</div><div class="kpi-val" id="vS">—</div><div class="badge neu" id="dS">—</div><div class="kpi-note">Vendas confirmadas</div></div>
       <div class="kpi"><div class="kpi-lbl">Custo/venda (tráfego)</div><div class="kpi-val" id="vP">—</div><div class="badge neu" id="dP">—</div><div class="kpi-note">Só verba de anúncio</div></div>
-      <div class="kpi"><div class="kpi-lbl">Custo/venda (total)</div><div class="kpi-val" id="vT">—</div><div class="badge neu" id="dT">—</div><div class="kpi-note">Tráfego + serviço Criativvo</div></div>
     </div>
     <div class="sum" id="sumBox"></div>
   </div>
@@ -837,10 +871,13 @@ function buildKPIs(d, prev){
   html('vS',d.sales); html('vP',d.cps ? 'R$'+N(d.cps) : '—');
 
   const fee = UNITS[curUnit].fee || 0;
-  const totalCpv = d.sales ? Math.round((d.inv + fee) / d.sales) : null;
-  const prevTotalCpv = prev.sales ? Math.round((prev.inv + fee) / prev.sales) : null;
-  html('vT', totalCpv ? 'R$'+N(totalCpv) : '—');
-  set('dT', prevTotalCpv ? 'vs R$'+N(prevTotalCpv)+' ant.' : 'tráfego + R$'+N(fee)+'/mês', 'neu');
+  const totalCost = d.inv + fee;
+  const totalCpv  = d.sales ? Math.round(totalCost / d.sales) : null;
+  html('mktgVal', totalCpv ? 'R$'+N(totalCpv) : '—');
+  html('mktgFormula',
+    `R$${N(Math.round(d.inv))} tráfego <em>+</em> R$${N(fee)} serviço<br>`+
+    `<em>= R$${N(Math.round(totalCost))} ÷ ${d.sales} vendas</em>`
+  );
 
   const lp=Math.round(((d.leads-prev.leads)/prev.leads)*100);
   set('dL',(lp>0?'↑ ':'↓ ')+Math.abs(lp)+'% vs '+prev.label.split(' ')[0].toLowerCase(), lp>0?'up':'dn');
