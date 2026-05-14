@@ -10,26 +10,21 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:    #CC0000;
-      --red-8:  rgba(204,0,0,0.08);
-      --red-15: rgba(204,0,0,0.15);
-      --red-25: rgba(204,0,0,0.25);
-      --grn:    #16a34a;
-      --grn-10: rgba(22,163,74,0.10);
-      --grn-22: rgba(22,163,74,0.22);
-      --yel:    #d97706;
-      --tx:     #0f172a;
-      --mu:     #64748b;
-      --lt:     #94a3b8;
-      --bd:     rgba(0,0,0,0.08);
-      --srf:    #f8fafc;
-      --sh:     0 1px 3px rgba(0,0,0,0.07), 0 4px 20px rgba(0,0,0,0.05);
-      --sh-md:  0 4px 16px rgba(0,0,0,0.09), 0 1px 3px rgba(0,0,0,0.06);
-      --sh-red: 0 8px 32px rgba(204,0,0,0.22);
+      --red:  #CC0000;
+      --grn:  #16a34a;
+      --yel:  #d97706;
+      --tx:   #111827;
+      --mu:   #6b7280;
+      --lt:   #9ca3af;
+      --bg:   #f0f2f5;
+      --card: #ffffff;
+      --bd:   rgba(0,0,0,0.07);
+      --sh:   0 1px 3px rgba(0,0,0,0.08), 0 6px 24px rgba(0,0,0,0.05);
+      --sh-lg:0 4px 16px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.07);
     }
 
     body {
-      background: #ffffff;
+      background: var(--bg);
       color: var(--tx);
       font-family: 'Montserrat', sans-serif;
       -webkit-font-smoothing: antialiased;
@@ -46,55 +41,55 @@
       box-shadow: 0 0 8px rgba(204,0,0,0.5);
     }
 
-    /* ── HEADER ── */
-    header {
+    /* ── NAV ── */
+    nav {
       position: sticky; top: 0; z-index: 200;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      background: var(--card);
       border-bottom: 1px solid var(--bd);
-      padding: 0 20px; height: 60px;
+      padding: 0 24px; height: 56px;
       display: flex; align-items: center; justify-content: space-between;
       box-shadow: 0 1px 0 rgba(0,0,0,0.04);
     }
-    .h-logo  { height: 30px; width: auto; }
-    .h-right { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
-    .h-tag   { font-size: .54rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--mu); }
-    .h-unit  { font-size: .70rem; font-weight: 800; color: var(--tx); }
+    .nav-logo { height: 28px; width: auto; }
+    .nav-mid  { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+    .nav-unit { font-size: .72rem; font-weight: 800; color: var(--tx); }
+    .nav-period { font-size: .58rem; font-weight: 600; color: var(--mu); }
+    .nav-brand { font-size: .64rem; font-weight: 900; color: var(--red); letter-spacing: .5px; }
+
+    /* ── CONTROLS ── */
+    .controls {
+      max-width: 960px; margin: 20px auto 0;
+      padding: 0 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
 
     /* ── UNIT TABS ── */
-    .unit-tabs {
-      max-width: 960px; margin: 0 auto;
-      display: flex; gap: 10px;
-      padding: 24px 20px 0;
-    }
     .utab {
-      flex: 1; padding: 12px 16px; border-radius: 12px;
+      flex: 1; min-width: 140px; padding: 10px 16px; border-radius: 10px;
       border: 1.5px solid var(--bd);
-      background: #fff; box-shadow: var(--sh);
+      background: var(--card); box-shadow: var(--sh);
       cursor: pointer; font-family: 'Montserrat', sans-serif;
-      font-size: .76rem; font-weight: 700;
+      font-size: .74rem; font-weight: 700;
       color: var(--mu); transition: all .18s; text-align: center;
     }
     .utab:hover:not(.on) { border-color: rgba(0,0,0,0.16); color: var(--tx); }
-    .utab.on { background: var(--red); color: #fff; border-color: var(--red); box-shadow: var(--sh-red); }
+    .utab.on { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 4px 16px rgba(204,0,0,0.28); }
 
     /* ── CALENDAR PICKER ── */
-    .period-wrap { max-width: 960px; margin: 12px auto 0; padding: 0 20px; }
     .cal-wrap { position: relative; display: inline-block; }
     .cal-trigger {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 9px 16px; border-radius: 10px;
-      border: 1.5px solid var(--bd); background: #fff;
+      border: 1.5px solid var(--bd); background: var(--card);
       box-shadow: var(--sh); cursor: pointer;
-      font-family: 'Montserrat', sans-serif; font-size: .78rem; font-weight: 700;
+      font-family: 'Montserrat', sans-serif; font-size: .74rem; font-weight: 700;
       color: var(--tx); transition: border-color .18s;
     }
-    .cal-trigger:hover { border-color: var(--red-25); }
+    .cal-trigger:hover { border-color: rgba(204,0,0,0.3); }
     .cal-arrow { transition: transform .18s; }
     .cal-trigger.open .cal-arrow { transform: rotate(180deg); }
     .cal-drop {
       position: absolute; top: calc(100% + 8px); left: 0;
-      background: #fff; border: 1.5px solid var(--bd);
+      background: var(--card); border: 1.5px solid var(--bd);
       border-radius: 14px; padding: 16px;
       box-shadow: 0 16px 48px rgba(0,0,0,0.12);
       z-index: 300; opacity: 0; pointer-events: none;
@@ -111,110 +106,112 @@
       background: transparent; text-align: center;
     }
     .cal-m.dis { opacity: .28; cursor: not-allowed; pointer-events: none; }
-    .cal-m.avail:hover { background: var(--red-8); color: var(--red); border-color: var(--red-15); }
+    .cal-m.avail:hover { background: rgba(204,0,0,0.07); color: var(--red); border-color: rgba(204,0,0,0.2); }
     .cal-m.avail.on { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 4px 14px rgba(204,0,0,0.30); }
 
-    /* ── HERO METRIC ── */
-    .hero { max-width: 960px; margin: 16px auto 0; padding: 0 20px; }
-    .hero-card {
-      background: #fff; border: 1.5px solid var(--bd);
-      border-radius: 18px; padding: 24px;
-      box-shadow: var(--sh-md);
-      display: grid; grid-template-columns: 1fr auto;
-      align-items: center; gap: 20px;
+    /* ── HERO ── */
+    .hero { max-width: 960px; margin: 20px auto 0; padding: 0 20px; }
+    .hero-top {
+      background: var(--red);
+      border-radius: 16px 16px 0 0;
+      padding: 28px 28px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
     }
-    @media(max-width:560px){ .hero-card { grid-template-columns: 1fr; } }
-    .hero-chip {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--red-8); border: 1px solid var(--red-15);
-      border-radius: 20px; padding: 3px 12px;
-      font-size: .58rem; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--red); margin-bottom: 10px;
+    .hero-tag  { font-size: .58rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
+    .hero-title{ font-size: 1.3rem; font-weight: 900; color: #fff; line-height: 1.1; }
+    .hero-sub  { font-size: .72rem; color: rgba(255,255,255,0.70); margin-top: 5px; }
+    .hero-logo { height: 44px; width: auto; filter: brightness(0) invert(1); opacity: .85; flex-shrink: 0; }
+    .hero-metrics {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      background: var(--card); border-radius: 0 0 16px 16px;
+      border: 1px solid var(--bd); border-top: none;
+      box-shadow: var(--sh-lg); overflow: hidden;
     }
-    .hero-title { font-size: .88rem; font-weight: 800; margin-bottom: 6px; }
-    .hero-desc  { font-size: .76rem; color: var(--mu); line-height: 1.7; }
-    .hero-desc strong { color: var(--tx); }
-    .hero-val-box {
-      text-align: center;
-      background: linear-gradient(145deg, var(--red) 0%, #960000 100%);
-      border-radius: 14px; padding: 20px 24px; min-width: 148px;
-      box-shadow: var(--sh-red);
+    @media(max-width:600px){ .hero-metrics { grid-template-columns: repeat(2,1fr); } }
+    .hm {
+      padding: 18px 16px; border-right: 1px solid var(--bd);
+      display: flex; flex-direction: column; gap: 4px;
     }
-    .hero-val     { font-size: 2.2rem; font-weight: 900; color: #fff; line-height: 1; }
-    .hero-val-lbl { font-size: .58rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-top: 6px; }
-    .hero-val-sub { font-size: .65rem; color: rgba(255,255,255,0.60); margin-top: 4px; }
+    .hm:last-child { border-right: none; }
+    .hm-lbl  { font-size: .56rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); }
+    .hm-val  { font-size: 1.8rem; font-weight: 900; color: var(--tx); line-height: 1; }
+    .hm-val.good { color: var(--grn); }
+    .hm-val.warn { color: var(--yel); }
+    .hm-delta{ font-size: .64rem; font-weight: 700; color: var(--mu); }
+    .hm-delta.up  { color: var(--grn); }
+    .hm-delta.dn  { color: #dc2626; }
 
     /* ── MAIN ── */
-    main { max-width: 960px; margin: 0 auto; padding: 24px 20px 80px; }
+    main { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+    /* ── SECTION ── */
     .sec { margin-bottom: 48px; }
-    .sec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-    .sec-tag  { font-size: .54rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); white-space: nowrap; }
-    .sec-title { font-size: 1.05rem; font-weight: 800; white-space: nowrap; color: var(--tx); }
-    .hr { height: 1px; background: var(--bd); flex: 1; min-width: 20px; }
+    .sec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .sec-label  { font-size: .58rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); white-space: nowrap; }
+    .sec-title  { font-size: 1.05rem; font-weight: 800; color: var(--tx); white-space: nowrap; }
+    .sec-line   { height: 1px; background: var(--bd); flex: 1; }
 
     /* ── KPI CARDS ── */
-    .kpis { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 10px; }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 10px; margin-bottom: 16px; }
     @media(max-width:480px){ .kpis { grid-template-columns: 1fr 1fr; } }
     .kpi {
-      background: #fff; border: 1.5px solid var(--bd);
-      border-radius: 14px; padding: 16px 14px;
+      background: var(--card); border: 1px solid var(--bd);
+      border-radius: 14px; padding: 18px 16px;
       box-shadow: var(--sh);
       transition: transform .20s, box-shadow .20s;
     }
-    .kpi:hover { transform: translateY(-2px); box-shadow: var(--sh-md); }
-    .kpi-lbl  { font-size: .58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 8px; }
+    .kpi:hover { transform: translateY(-2px); box-shadow: var(--sh-lg); }
+    .kpi-lbl  { font-size: .56rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 8px; }
     .kpi-val  { font-size: 1.7rem; font-weight: 900; line-height: 1; color: var(--tx); }
     .badge    { display: inline-flex; align-items: center; margin-top: 8px; font-size: .62rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
-    .up  { background: var(--grn-10); color: var(--grn); }
-    .dn  { background: rgba(220,38,38,0.10); color: #dc2626; }
-    .neu { background: rgba(0,0,0,0.05); color: var(--mu); }
+    .up  { background: rgba(22,163,74,0.10);  color: var(--grn); }
+    .dn  { background: rgba(220,38,38,0.10);  color: #dc2626; }
+    .neu { background: rgba(0,0,0,0.05);      color: var(--mu); }
     .kpi-note { font-size: .62rem; color: var(--lt); margin-top: 4px; }
 
     /* ── SUMMARY BOX ── */
     .sum {
-      background: #fff;
-      border-left: 3px solid var(--red);
-      border-top: 1.5px solid var(--bd);
-      border-bottom: 1.5px solid var(--bd);
-      border-right: 1.5px solid var(--bd);
-      border-radius: 0 12px 12px 0;
+      background: var(--card);
+      border-left: 4px solid var(--red);
+      border-radius: 0 10px 10px 0;
       padding: 16px 18px; font-size: .82rem; color: var(--mu);
-      line-height: 1.8; margin-top: 12px; box-shadow: var(--sh);
+      line-height: 1.8; box-shadow: var(--sh);
     }
     .sum strong { color: var(--tx); }
 
-    /* ── COMPARE ── */
-    .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-    @media(max-width:480px){ .cmp { grid-template-columns: 1fr; } }
-    .cc {
-      background: #fff; border: 1.5px solid var(--bd);
-      border-radius: 12px; padding: 14px 16px; box-shadow: var(--sh);
+    /* ── COMPARE GRID ── */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    @media(max-width:480px){ .compare-grid { grid-template-columns: 1fr; } }
+    .cmp-card {
+      background: var(--card); border: 1.5px solid var(--bd);
+      border-radius: 12px; padding: 16px 18px; box-shadow: var(--sh);
     }
-    .cc.on { border-color: var(--red-25); box-shadow: 0 8px 32px rgba(204,0,0,0.10); }
-    .cc-mo  { font-size: .58rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); margin-bottom: 9px; }
-    .cc.on .cc-mo { color: var(--red); }
-    .cc-row { display: flex; justify-content: space-between; font-size: .76rem; padding: 3px 0; }
-    .cc-row span:first-child { color: var(--mu); }
-    .cc-row span:last-child  { font-weight: 700; color: var(--tx); }
+    .cmp-card.active { border-color: var(--red); box-shadow: 0 4px 20px rgba(204,0,0,0.12); }
+    .cmp-label { font-size: .58rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); margin-bottom: 10px; }
+    .cmp-card.active .cmp-label { color: var(--red); }
+    .cmp-row   { display: flex; justify-content: space-between; font-size: .76rem; padding: 4px 0; border-bottom: 1px solid var(--bd); }
+    .cmp-row:last-child { border: none; }
+    .cmp-row span:first-child { color: var(--mu); }
+    .cmp-row span:last-child  { font-weight: 700; color: var(--tx); }
 
-    /* ── CHART PANELS ── */
-    .cg  { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-    @media(max-width:560px){ .cg { grid-template-columns: 1fr; } }
-    .cc2 {
-      background: #fff; border: 1.5px solid var(--bd);
-      border-radius: 16px; padding: 20px; box-shadow: var(--sh);
+    /* ── CHARTS GRID ── */
+    .charts-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    @media(max-width:560px){ .charts-2 { grid-template-columns: 1fr; } }
+    .chart-card {
+      background: var(--card); border: 1px solid var(--bd);
+      border-radius: 14px; padding: 20px; box-shadow: var(--sh);
     }
-    .cc2.w   { grid-column: 1/-1; }
-    .cc2-lbl { font-size: .58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 14px; }
+    .chart-card.full { grid-column: 1/-1; }
+    .chart-lbl { font-size: .58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 16px; }
 
     /* ── WEEK CARDS ── */
-    .wks { display: grid; grid-template-columns: repeat(auto-fit,minmax(175px,1fr)); gap: 10px; margin-top: 10px; }
-    @media(max-width:480px){ .wks { grid-template-columns: 1fr 1fr; } }
+    .weeks-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(175px,1fr)); gap: 10px; margin-top: 12px; }
+    @media(max-width:480px){ .weeks-grid { grid-template-columns: 1fr 1fr; } }
     .wk {
-      background: #fff; border: 1.5px solid var(--bd);
+      background: var(--card); border: 1px solid var(--bd);
       border-radius: 12px; padding: 14px; box-shadow: var(--sh);
     }
-    .wk.best { border-color: var(--red-25); box-shadow: 0 8px 32px rgba(204,0,0,0.12); }
+    .wk.best { border-color: var(--red); box-shadow: 0 4px 20px rgba(204,0,0,0.12); }
     .wk-h   { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .wk-lbl { font-size: .58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); }
     .wk-b   { font-size: .56rem; font-weight: 700; color: var(--grn); }
@@ -225,27 +222,27 @@
     .wv.g { color: var(--grn); }
 
     /* ── TABLE ── */
-    .tw { overflow-x: auto; border-radius: 12px; border: 1.5px solid var(--bd); margin-top: 10px; box-shadow: var(--sh); background: #fff; }
+    .tw { overflow-x: auto; border-radius: 12px; border: 1px solid var(--bd); margin-top: 10px; box-shadow: var(--sh); background: var(--card); }
     table { width: 100%; border-collapse: collapse; min-width: 440px; }
-    thead th { background: var(--srf); color: var(--mu); font-size: .58rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--bd); }
+    thead th { background: #f8f9fb; color: var(--mu); font-size: .58rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--bd); }
     tbody tr { border-bottom: 1px solid var(--bd); transition: background .12s; }
     tbody tr:last-child { border: none; }
-    tbody tr:hover { background: var(--srf); }
-    tbody tr.me   { background: var(--red-8); }
+    tbody tr:hover { background: #f8f9fb; }
+    tbody tr.me   { background: rgba(204,0,0,0.04); }
     tbody td { padding: 10px 14px; font-size: .76rem; color: var(--mu); }
     tbody tr.me td { color: var(--tx); font-weight: 700; }
     .you { background: var(--red); color: #fff; font-size: .5rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; margin-left: 4px; vertical-align: middle; }
 
     /* ── RANKING ── */
-    .rl { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
+    .rank-list { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
     .ri {
-      background: #fff; display: flex; align-items: center; gap: 10px;
-      border: 1.5px solid var(--bd); border-radius: 12px; padding: 10px 14px;
+      background: var(--card); display: flex; align-items: center; gap: 10px;
+      border: 1px solid var(--bd); border-radius: 12px; padding: 10px 14px;
       box-shadow: var(--sh); transition: border-color .15s;
     }
     .ri:hover { border-color: rgba(0,0,0,0.16); }
-    .ri.me { border-color: var(--red-25); box-shadow: 0 8px 32px rgba(204,0,0,0.10); }
-    .ri-n  { width: 24px; height: 24px; border-radius: 50%; background: var(--srf); display: flex; align-items: center; justify-content: center; font-size: .65rem; font-weight: 800; color: var(--mu); flex-shrink: 0; }
+    .ri.me { border-color: var(--red); box-shadow: 0 4px 20px rgba(204,0,0,0.10); }
+    .ri-n  { width: 24px; height: 24px; border-radius: 50%; background: #f0f2f5; display: flex; align-items: center; justify-content: center; font-size: .65rem; font-weight: 800; color: var(--mu); flex-shrink: 0; }
     .ri-n.top { background: var(--red); color: #fff; box-shadow: 0 0 14px rgba(204,0,0,0.40); }
     .ri-name { flex: 1; font-size: .78rem; color: var(--mu); }
     .ri.me .ri-name { color: var(--tx); font-weight: 700; }
@@ -255,45 +252,46 @@
 
     /* ── TROPHY ── */
     .trophy {
-      background: var(--red-8); border: 1.5px solid var(--red-15);
+      background: rgba(204,0,0,0.05); border: 1.5px solid rgba(204,0,0,0.15);
       border-radius: 14px; padding: 22px; text-align: center; margin-bottom: 16px;
-      box-shadow: 0 8px 32px rgba(204,0,0,0.08);
+      box-shadow: 0 4px 16px rgba(204,0,0,0.07);
     }
     .trophy .ti { font-size: 2rem; margin-bottom: 8px; }
     .trophy h3  { font-size: .92rem; font-weight: 800; color: var(--red); margin-bottom: 5px; }
     .trophy p   { font-size: .78rem; color: var(--mu); }
     .trophy p strong { color: var(--tx); }
 
-    /* ── ANALYSIS CARDS ── */
-    .ag { display: grid; gap: 9px; }
-    .ai {
-      background: #fff; border-radius: 12px; padding: 16px 18px;
-      display: flex; gap: 12px; align-items: flex-start;
+    /* ── ANALYSIS ITEMS ── */
+    .analysis-grid { display: grid; gap: 10px; }
+    .analysis-item {
+      background: var(--card); border-radius: 12px;
+      padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start;
       box-shadow: var(--sh);
     }
-    .ai.ok   { border: 1.5px solid var(--grn-22); border-top-color: rgba(22,163,74,0.38); }
-    .ai.warn { border: 1.5px solid rgba(217,119,6,0.22); border-top-color: rgba(217,119,6,0.38); }
-    .ai.tgt  { border: 1.5px solid var(--red-25); border-top-color: rgba(204,0,0,0.40); }
-    .ai-ic   { font-size: 1.05rem; flex-shrink: 0; }
-    .ai h4   { font-size: .78rem; font-weight: 800; margin-bottom: 4px; }
-    .ai.ok h4   { color: var(--grn); }
-    .ai.warn h4 { color: var(--yel); }
-    .ai.tgt h4  { color: var(--red); }
-    .ai p   { font-size: .75rem; color: var(--mu); line-height: 1.65; }
-    .ai p strong { color: var(--tx); }
+    .analysis-item.ok   { border-left: 4px solid var(--grn); }
+    .analysis-item.warn { border-left: 4px solid var(--yel); }
+    .analysis-item.tgt  { border-left: 4px solid var(--red); }
+    .ai-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .ai-body h4 { font-size: .78rem; font-weight: 800; margin-bottom: 5px; }
+    .analysis-item.ok   .ai-body h4 { color: var(--grn); }
+    .analysis-item.warn .ai-body h4 { color: var(--yel); }
+    .analysis-item.tgt  .ai-body h4 { color: var(--red); }
+    .ai-body p  { font-size: .75rem; color: var(--mu); line-height: 1.65; }
+    .ai-body p strong { color: var(--tx); }
 
-    /* ── INFO BOX ── */
-    .info {
-      background: var(--srf); border: 1.5px solid var(--bd);
+    /* ── INFO NOTE ── */
+    .info-note {
+      background: var(--card); border: 1px solid var(--bd);
       border-radius: 10px; padding: 12px 16px;
       font-size: .74rem; color: var(--mu); margin-top: 10px; line-height: 1.6;
+      box-shadow: var(--sh);
     }
 
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--bd);
       padding: 32px 20px; text-align: center;
-      background: var(--srf);
+      background: var(--card);
     }
     .footer-brand { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.6rem; color: var(--red); display: block; letter-spacing: -1px; margin-bottom: 6px; }
     footer p { font-size: .66rem; color: var(--mu); }
@@ -306,12 +304,11 @@
     .anim-d3 { transition-delay: .21s; }
     .anim-d4 { transition-delay: .28s; }
 
-    /* ── RESPONSIVE ── */
     @media(max-width:480px){
-      .sec-title { font-size: .88rem; }
-      .hero-val  { font-size: 1.8rem; }
-      .kpi-val   { font-size: 1.5rem; }
-      .h-logo    { height: 24px; }
+      .hero-title { font-size: 1.05rem; }
+      .hm-val     { font-size: 1.5rem; }
+      .kpi-val    { font-size: 1.45rem; }
+      .nav-logo   { height: 22px; }
     }
   </style>
 </head>
@@ -319,22 +316,20 @@
 
 <div id="progress"></div>
 
-<header>
-  <img class="h-logo" src="assets/LOGO GILSONCAR.png" alt="GilsonCar Veículos">
-  <div class="h-right">
-    <span class="h-tag">Relatório Mensal</span>
-    <span class="h-unit" id="hUnit">GilsonCar Ibitinga</span>
+<nav>
+  <img class="nav-logo" src="assets/LOGO GILSONCAR.png" alt="GilsonCar Veículos">
+  <div class="nav-mid">
+    <span class="nav-unit" id="navUnit">GilsonCar Ibitinga</span>
+    <span class="nav-period" id="navPeriod">Abril 2026</span>
   </div>
-</header>
+  <span class="nav-brand">criativvo</span>
+</nav>
 
-<!-- UNIT TABS -->
-<div class="unit-tabs anim">
+<!-- CONTROLS -->
+<div class="controls anim">
   <button class="utab on" onclick="setUnit('ibitinga')">GilsonCar Ibitinga</button>
-  <button class="utab" onclick="setUnit('borborema')">GilsonCar Borborema</button>
-</div>
+  <button class="utab"    onclick="setUnit('borborema')">GilsonCar Borborema</button>
 
-<!-- CALENDAR PICKER -->
-<div class="period-wrap anim">
   <div class="cal-wrap" id="calWrap">
     <button class="cal-trigger" id="calTrigger" onclick="toggleCal(event)">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
@@ -361,18 +356,36 @@
   </div>
 </div>
 
-<!-- HERO METRIC -->
+<!-- HERO -->
 <div class="hero anim">
-  <div class="hero-card">
+  <div class="hero-top">
     <div>
-      <div class="hero-chip">💡 Custo total de marketing por venda</div>
-      <div class="hero-title">Quanto custou vender 1 carro?</div>
-      <div class="hero-desc" id="hmDesc">—</div>
+      <div class="hero-tag">Relatório Mensal</div>
+      <div class="hero-title" id="hUnit">GilsonCar Ibitinga</div>
+      <div class="hero-sub" id="heroSub">@gilsoncarveiculos &nbsp;·&nbsp; Gestão Criativvo</div>
     </div>
-    <div class="hero-val-box">
-      <div class="hero-val" id="hmVal">—</div>
-      <div class="hero-val-lbl">por carro vendido</div>
-      <div class="hero-val-sub" id="hmVsSub">—</div>
+    <img class="hero-logo" src="assets/LOGO GILSONCAR.png" alt="GilsonCar">
+  </div>
+  <div class="hero-metrics">
+    <div class="hm">
+      <span class="hm-lbl">Conversas</span>
+      <span class="hm-val good" id="hmLeads">—</span>
+      <span class="hm-delta" id="hmLeadsDelta">—</span>
+    </div>
+    <div class="hm">
+      <span class="hm-lbl">Investido</span>
+      <span class="hm-val" id="hmInv">—</span>
+      <span class="hm-delta" id="hmInvDelta">—</span>
+    </div>
+    <div class="hm">
+      <span class="hm-lbl" id="hmCplLbl">CPL</span>
+      <span class="hm-val good" id="hmCpl">—</span>
+      <span class="hm-delta" id="hmCplDelta">—</span>
+    </div>
+    <div class="hm">
+      <span class="hm-lbl">Vendas</span>
+      <span class="hm-val" id="hmSales">—</span>
+      <span class="hm-delta" id="hmSalesDelta">—</span>
     </div>
   </div>
 </div>
@@ -381,10 +394,10 @@
 
   <!-- RESUMO EXECUTIVO -->
   <div class="sec anim">
-    <div class="sec-head">
-      <span class="sec-tag">Visão geral</span>
+    <div class="sec-header">
+      <span class="sec-label">Visão geral</span>
       <span class="sec-title">Resumo do mês</span>
-      <div class="hr"></div>
+      <div class="sec-line"></div>
     </div>
     <div class="kpis">
       <div class="kpi anim-d1"><div class="kpi-lbl">Conversas</div><div class="kpi-val" id="vL">—</div><div class="badge up" id="dL">—</div><div class="kpi-note">Leads no WhatsApp</div></div>
@@ -398,30 +411,42 @@
 
   <!-- TRÁFEGO PAGO -->
   <div class="sec anim">
-    <div class="sec-head">
-      <span class="sec-tag">Meta Ads</span>
+    <div class="sec-header">
+      <span class="sec-label">Meta Ads</span>
       <span class="sec-title">Tráfego pago</span>
-      <div class="hr"></div>
+      <div class="sec-line"></div>
     </div>
-    <div class="cmp">
-      <div class="cc"  id="cm1"><div class="cc-mo" id="cm1mo">Mês anterior</div><div class="cc-row" id="cmL1"></div><div class="cc-row" id="cmI1"></div><div class="cc-row" id="cmC1"></div><div class="cc-row" id="cmS1"></div></div>
-      <div class="cc on" id="cm2"><div class="cc-mo" id="cm2mo">Mês atual</div><div class="cc-row" id="cmL2"></div><div class="cc-row" id="cmI2"></div><div class="cc-row" id="cmC2"></div><div class="cc-row" id="cmS2"></div></div>
+    <div class="compare-grid">
+      <div class="cmp-card" id="cm1">
+        <div class="cmp-label" id="cm1mo">Mês anterior</div>
+        <div class="cmp-row" id="cmL1"></div>
+        <div class="cmp-row" id="cmI1"></div>
+        <div class="cmp-row" id="cmC1"></div>
+        <div class="cmp-row" id="cmS1"></div>
+      </div>
+      <div class="cmp-card active" id="cm2">
+        <div class="cmp-label" id="cm2mo">Mês atual</div>
+        <div class="cmp-row" id="cmL2"></div>
+        <div class="cmp-row" id="cmI2"></div>
+        <div class="cmp-row" id="cmC2"></div>
+        <div class="cmp-row" id="cmS2"></div>
+      </div>
     </div>
-    <div class="cg">
-      <div class="cc2"><div class="cc2-lbl">Conversas</div><canvas id="chL" height="220"></canvas></div>
-      <div class="cc2"><div class="cc2-lbl" id="cplLbl">Custo por lead</div><canvas id="chC" height="220"></canvas></div>
-      <div class="cc2 w" id="semWrap"><div class="cc2-lbl">Investimento × Conversas — semana a semana</div><canvas id="chS" height="160"></canvas></div>
+    <div class="charts-2">
+      <div class="chart-card"><div class="chart-lbl">Conversas</div><canvas id="chL" height="220"></canvas></div>
+      <div class="chart-card"><div class="chart-lbl" id="cplLbl">Custo por lead</div><canvas id="chC" height="220"></canvas></div>
+      <div class="chart-card full" id="semWrap"><div class="chart-lbl">Investimento × Conversas — semana a semana</div><canvas id="chS" height="160"></canvas></div>
     </div>
-    <div class="wks" id="wkGrid"></div>
-    <div class="info" id="wkInfo" style="display:none"></div>
+    <div class="weeks-grid" id="wkGrid"></div>
+    <div class="info-note" id="wkInfo" style="display:none"></div>
   </div>
 
   <!-- REDES SOCIAIS -->
   <div class="sec anim">
-    <div class="sec-head">
-      <span class="sec-tag">Instagram</span>
+    <div class="sec-header">
+      <span class="sec-label">Instagram</span>
       <span class="sec-title">Análise de concorrentes</span>
-      <div class="hr"></div>
+      <div class="sec-line"></div>
     </div>
     <p style="font-size:.7rem;color:var(--mu);margin-bottom:16px;">Período: 03/05/2026 – 10/05/2026</p>
     <div id="trophyWrap"></div>
@@ -431,9 +456,9 @@
       <div class="kpi"><div class="kpi-lbl">Interação/post</div><div class="kpi-val" id="sIpp">—</div><div class="badge neu" id="sIppBadge">—</div><div class="kpi-note">Curtidas + comentários</div></div>
       <div class="kpi"><div class="kpi-lbl">Posts publicados</div><div class="kpi-val" id="sPosts">—</div><div class="badge neu" id="sPostsBadge">—</div><div class="kpi-note">No período</div></div>
     </div>
-    <div class="cg">
-      <div class="cc2"><div class="cc2-lbl">Engajamento vs concorrentes</div><canvas id="chEng" height="240"></canvas></div>
-      <div class="cc2"><div class="cc2-lbl" id="reelsLbl">Visualizações de Reels</div><canvas id="chR" height="240"></canvas></div>
+    <div class="charts-2">
+      <div class="chart-card"><div class="chart-lbl">Engajamento vs concorrentes</div><canvas id="chEng" height="240"></canvas></div>
+      <div class="chart-card"><div class="chart-lbl" id="reelsLbl">Visualizações de Reels</div><canvas id="chR" height="240"></canvas></div>
     </div>
     <div class="tw">
       <table>
@@ -441,24 +466,24 @@
         <tbody id="tBody"></tbody>
       </table>
     </div>
-    <div style="margin-top:24px;">
-      <div class="sec-head" style="margin-bottom:10px;">
-        <span class="sec-tag">Ranking</span>
+    <div style="margin-top:28px;">
+      <div class="sec-header" style="margin-bottom:12px;">
+        <span class="sec-label">Ranking</span>
         <span class="sec-title" style="font-size:.88rem;">Crescimento de seguidores</span>
-        <div class="hr"></div>
+        <div class="sec-line"></div>
       </div>
-      <div class="rl" id="rankList"></div>
+      <div class="rank-list" id="rankList"></div>
     </div>
   </div>
 
   <!-- ANÁLISE DO MÊS -->
   <div class="sec anim">
-    <div class="sec-head">
-      <span class="sec-tag">Avaliação</span>
+    <div class="sec-header">
+      <span class="sec-label">Avaliação</span>
       <span class="sec-title">O que aconteceu em <span id="anMo">Abril</span></span>
-      <div class="hr"></div>
+      <div class="sec-line"></div>
     </div>
-    <div class="ag" id="anGrid"></div>
+    <div class="analysis-grid" id="anGrid"></div>
   </div>
 
 </main>
@@ -486,7 +511,7 @@ document.querySelectorAll('.anim').forEach(el => obs.observe(el));
 const gilsonImg = new Image();
 gilsonImg.src = 'assets/LOGO GILSONCAR.png';
 
-// ── Plugin: desenha a logo da GilsonCar acima da barra "você" ──
+// ── Plugin: logo GilsonCar acima da barra "você" ──
 Chart.register({
   id: 'voceLogo',
   afterDraw(chart) {
@@ -560,17 +585,17 @@ Chart.register({
   }
 });
 
-// ── Chart defaults (tema claro) ──
-Chart.defaults.color = 'rgba(100,116,139,0.80)';
+// ── Chart defaults ──
+Chart.defaults.color = 'rgba(107,114,128,0.80)';
 Chart.defaults.font  = { family:'Montserrat', size:11 };
 
 const BRD   = '#CC0000';
 const BRD_D = 'rgba(204,0,0,0.18)';
-const NEU   = 'rgba(148,163,184,0.28)';
+const NEU   = 'rgba(156,163,175,0.35)';
 const GRN   = '#16a34a';
 const AX    = {
   grid:  { color:'rgba(0,0,0,0.05)', drawBorder:false },
-  ticks: { color:'rgba(100,116,139,0.70)', padding:6 }
+  ticks: { color:'rgba(107,114,128,0.70)', padding:6 }
 };
 
 function mkGrad(id, c0, c1){
@@ -591,8 +616,8 @@ const ANIM_BAR = {
   delay(ctx) { return ctx.type === 'data' ? ctx.dataIndex * 90 : 0; }
 };
 const TIP = {
-  backgroundColor:'rgba(15,23,42,0.94)',
-  titleColor:'rgba(255,255,255,0.95)', bodyColor:'rgba(148,163,184,0.90)',
+  backgroundColor:'rgba(17,24,39,0.94)',
+  titleColor:'rgba(255,255,255,0.95)', bodyColor:'rgba(156,163,175,0.90)',
   borderColor:'rgba(0,0,0,0.10)', borderWidth:1,
   padding:12, cornerRadius:10,
   titleFont:{family:'Montserrat',weight:'800',size:12},
@@ -724,6 +749,7 @@ function pickMonth(key, label, btn){
   document.querySelectorAll('.cal-m.avail').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('calLabel').textContent = label;
+  document.getElementById('navPeriod').textContent = label;
   document.getElementById('calDrop').classList.remove('open');
   document.getElementById('calTrigger').classList.remove('open');
   curKey = key; render();
@@ -739,9 +765,14 @@ function render(){
   const primary    = UNITS[curUnit][curKey];
   const other      = curKey==='abril' ? 'marco' : 'abril';
   const comparison = UNITS[curUnit][other];
-  document.getElementById('hUnit').textContent = UNITS[curUnit].name;
-  document.getElementById('anMo').textContent  = primary.label.split(' ')[0];
-  buildHero(primary, comparison);
+  const unitData   = UNITS[curUnit];
+
+  document.getElementById('hUnit').textContent    = unitData.name;
+  document.getElementById('navUnit').textContent  = unitData.name;
+  document.getElementById('heroSub').textContent  = unitData.handle + ' · Gestão Criativvo';
+  document.getElementById('anMo').textContent     = primary.label.split(' ')[0];
+
+  buildHeroMetrics(primary, comparison);
   buildKPIs(primary, comparison);
   buildCompare(primary, comparison);
   buildWeeks(primary);
@@ -750,13 +781,44 @@ function render(){
   buildAnalysis(primary);
 }
 
-function buildHero(d, prev){
-  const fee=UNITS[curUnit].fee, total=d.inv+fee, perCar=Math.round(total/d.sales);
-  const prevPerCar=Math.round((prev.inv+fee)/prev.sales);
-  const diff=perCar-prevPerCar;
-  html('hmDesc',`Em <strong>${d.label}</strong>, a <strong>${UNITS[curUnit].name}</strong> investiu <strong>R$${N(d.inv)}</strong> em tráfego + <strong>R$${N(fee)}</strong> de gestão Criativvo = <strong>R$${N(total)}</strong> total ÷ <strong>${d.sales}</strong> vendas.`);
-  html('hmVal','R$'+N(perCar));
-  html('hmVsSub',(diff<=0?'↓ R$':'↑ R$')+Math.abs(diff)+' vs '+prev.label.split(' ')[0].toLowerCase());
+function buildHeroMetrics(d, prev){
+  // Conversas
+  document.getElementById('hmLeads').textContent = N(d.leads);
+  const lp = Math.round(((d.leads-prev.leads)/prev.leads)*100);
+  const lEl = document.getElementById('hmLeadsDelta');
+  lEl.textContent = (lp>0?'↑ ':'↓ ')+Math.abs(lp)+'% vs '+prev.label.split(' ')[0].toLowerCase();
+  lEl.className = 'hm-delta '+(lp>0?'up':'dn');
+
+  // Investimento
+  document.getElementById('hmInv').textContent = 'R$'+N(d.inv);
+  const ip = Math.round(((d.inv-prev.inv)/prev.inv)*100);
+  const iEl = document.getElementById('hmInvDelta');
+  iEl.textContent = (ip<0?'↓ ':ip>0?'↑ ':'')+Math.abs(ip)+'% vs '+prev.label.split(' ')[0].toLowerCase();
+  iEl.className = 'hm-delta '+(ip<0?'up':'dn');
+
+  // CPL / ROI
+  const cplEl   = document.getElementById('hmCpl');
+  const cplLbl  = document.getElementById('hmCplLbl');
+  const cplDelta = document.getElementById('hmCplDelta');
+  if(d.cpl){
+    cplLbl.textContent  = 'CPL';
+    cplEl.textContent   = R2(d.cpl);
+    cplEl.className     = 'hm-val good';
+    if(prev.cpl){
+      const cp = Math.round(((d.cpl-prev.cpl)/prev.cpl)*100);
+      cplDelta.textContent = (cp<0?'↓ ':'↑ ')+Math.abs(cp)+'% vs '+prev.label.split(' ')[0].toLowerCase();
+      cplDelta.className = 'hm-delta '+(cp<0?'up':'dn');
+    } else { cplDelta.textContent=''; }
+  } else {
+    cplLbl.textContent  = 'ROI';
+    cplEl.textContent   = d.roi || '—';
+    cplEl.className     = 'hm-val good';
+    cplDelta.textContent = '';
+  }
+
+  // Vendas
+  document.getElementById('hmSales').textContent = d.sales;
+  document.getElementById('hmSalesDelta').textContent = d.sales + ' carros no mês';
 }
 
 function buildKPIs(d, prev){
@@ -849,8 +911,8 @@ function buildCharts(d, prev){
       ]
     },options:{
       animation:ANIM_BAR,
-      plugins:{legend:{labels:{font:{family:'Montserrat',size:11},color:'rgba(100,116,139,0.80)'}},tooltip:TIP},
-      scales:{x:AX,y:{...AX,beginAtZero:true},y1:{grid:{display:false},ticks:{color:'rgba(100,116,139,0.60)',padding:4},beginAtZero:true,position:'right'}}
+      plugins:{legend:{labels:{font:{family:'Montserrat',size:11},color:'rgba(107,114,128,0.80)'}},tooltip:TIP},
+      scales:{x:AX,y:{...AX,beginAtZero:true},y1:{grid:{display:false},ticks:{color:'rgba(107,114,128,0.60)',padding:4},beginAtZero:true,position:'right'}}
     }});
   }
 }
@@ -927,7 +989,11 @@ function buildSocial(u){
 }
 
 function buildAnalysis(d){
-  html('anGrid',d.an.map(a=>`<div class="ai ${a.t}"><div class="ai-ic">${a.i}</div><div><h4>${a.h}</h4><p>${a.p}</p></div></div>`).join(''));
+  html('anGrid',d.an.map(a=>`
+    <div class="analysis-item ${a.t}">
+      <div class="ai-icon">${a.i}</div>
+      <div class="ai-body"><h4>${a.h}</h4><p>${a.p}</p></div>
+    </div>`).join(''));
 }
 
 render();
