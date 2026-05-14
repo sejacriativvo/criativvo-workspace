@@ -3,586 +3,523 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Relatório Abril 2026 — GilsonCar Veículos Borborema</title>
+  <title>Relatório Abril 2026 — GilsonCar Borborema</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:    #CC0000;
-      --red-8:  rgba(204,0,0,0.08);
-      --red-15: rgba(204,0,0,0.15);
-      --red-25: rgba(204,0,0,0.25);
-      --grn:    #16a34a;
-      --grn-10: rgba(22,163,74,0.10);
-      --grn-22: rgba(22,163,74,0.22);
-      --yel:    #d97706;
-      --tx:     #0f172a;
-      --mu:     #64748b;
-      --lt:     #94a3b8;
-      --bd:     rgba(0,0,0,0.08);
-      --srf:    #f8fafc;
-      --sh:     0 1px 3px rgba(0,0,0,0.07), 0 4px 20px rgba(0,0,0,0.05);
-      --sh-md:  0 4px 16px rgba(0,0,0,0.09), 0 1px 3px rgba(0,0,0,0.06);
-      --sh-red: 0 8px 32px rgba(204,0,0,0.22);
+      --red:   #CC0000;
+      --grn:   #16a34a;
+      --yel:   #d97706;
+      --tx:    #111827;
+      --mu:    #6b7280;
+      --lt:    #9ca3af;
+      --bg:    #f0f2f5;
+      --card:  #ffffff;
+      --bd:    rgba(0,0,0,0.07);
+      --sh:    0 1px 3px rgba(0,0,0,0.08), 0 6px 24px rgba(0,0,0,0.05);
+      --sh-lg: 0 4px 16px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.07);
     }
 
-    body {
-      background: #ffffff;
-      color: var(--tx);
-      font-family: 'Montserrat', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-    }
+    body { background: var(--bg); color: var(--tx); font-family: 'Montserrat', sans-serif; -webkit-font-smoothing: antialiased; }
 
-    /* ── PROGRESS BAR ── */
-    #progress {
-      position: fixed; top: 0; left: 0;
-      height: 3px; width: 0%;
-      background: linear-gradient(90deg, var(--red), #ff5555);
-      z-index: 9999; transition: width .08s linear;
-      pointer-events: none;
-      box-shadow: 0 0 8px rgba(204,0,0,0.5);
-    }
+    /* PROGRESS */
+    #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--red), #ff5555); z-index: 9999; transition: width .08s; pointer-events: none; box-shadow: 0 0 8px rgba(204,0,0,0.5); }
 
-    /* ── HEADER ── */
-    header {
+    /* NAV */
+    nav {
+      background: var(--card); border-bottom: 1px solid var(--bd);
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--bd);
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 56px;
     }
-    header .client-logo { height: 44px; width: auto; margin-bottom: 10px; }
-    header .agency-line { font-size: .60rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--lt); }
-    header h1 { font-size: 1.1rem; font-weight: 800; color: var(--tx); margin-top: 8px; }
-    header .periodo { font-size: .70rem; color: var(--mu); margin-top: 4px; letter-spacing: 1px; }
+    nav img { height: 28px; }
+    .nav-info { display: flex; align-items: center; gap: 12px; }
+    .nav-badge { font-size: .60rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); }
+    .nav-sep { width: 1px; height: 18px; background: var(--bd); }
+    .nav-criativvo { font-size: .60rem; font-weight: 800; color: var(--red); letter-spacing: 2px; text-transform: uppercase; }
 
-    /* ── CONTAINER ── */
-    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    /* PAGE */
+    .page { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
 
-    /* ── SECTIONS ── */
-    section { padding: 48px 20px; }
-    section + section { border-top: 1px solid var(--bd); }
-
-    /* ── SECTION LABELS ── */
-    .section-label {
-      font-size: .60rem; font-weight: 700; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--red); margin-bottom: 6px;
-      display: flex; align-items: center; gap: 8px;
+    /* HERO */
+    .hero {
+      background: var(--card); border-radius: 20px;
+      box-shadow: var(--sh-lg); overflow: hidden; margin-bottom: 16px;
     }
-    .section-label::before {
-      content: ''; display: block; width: 5px; height: 5px;
-      background: var(--red); border-radius: 50%; flex-shrink: 0;
+    .hero-top {
+      background: var(--red); padding: 28px 32px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
     }
-    .section-title { font-size: 1.4rem; font-weight: 800; color: var(--tx); margin-bottom: 24px; }
+    @media(max-width:600px){ .hero-top { flex-direction: column; align-items: flex-start; } }
+    .hero-tag { font-size: .60rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
+    .hero-title { font-size: 1.5rem; font-weight: 900; color: #fff; line-height: 1.2; }
+    .hero-sub   { font-size: .78rem; color: rgba(255,255,255,0.70); margin-top: 6px; }
+    .hero-logo  { height: 40px; width: auto; filter: brightness(0) invert(1); opacity: .90; flex-shrink: 0; }
+    .hero-metrics {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      padding: 0;
+    }
+    @media(max-width:600px){ .hero-metrics { grid-template-columns: 1fr 1fr; } }
+    .hm {
+      padding: 22px 20px; border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd);
+      position: relative;
+    }
+    .hm:last-child { border-right: none; }
+    .hm:nth-child(2n) { border-right: none; }
+    @media(min-width:601px){ .hm { border-right: 1px solid var(--bd); } .hm:last-child { border-right: none; } .hm:nth-child(2n) { border-right: 1px solid var(--bd); } .hm:nth-child(4n) { border-right: none; } }
+    .hm.good::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:var(--grn); }
+    .hm.red::before  { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:var(--red); }
+    .hm-lbl { font-size: .58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 8px; }
+    .hm-val { font-size: 2.4rem; font-weight: 900; line-height: 1; color: var(--tx); }
+    .hm-val.accent { color: var(--red); }
+    .hm-delta { display: inline-flex; align-items: center; gap: 3px; margin-top: 8px; font-size: .64rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+    .delta-g { background: rgba(22,163,74,0.10); color: var(--grn); }
+    .delta-r { background: rgba(220,38,38,0.10); color: #dc2626; }
 
-    /* ── KPI CARDS ── */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
-    .card {
-      background: #fff; border: 1.5px solid var(--bd);
-      border-radius: 14px; padding: 20px 18px;
-      box-shadow: var(--sh);
-      transition: transform .20s, box-shadow .20s;
+    /* SECTION */
+    .sec { margin-bottom: 16px; }
+    .sec-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
     }
-    .card:hover { transform: translateY(-2px); box-shadow: var(--sh-md); }
-    .card.highlight { border-color: var(--red-25); box-shadow: 0 4px 20px rgba(204,0,0,0.10); }
-    .card.highlight:hover { box-shadow: 0 12px 40px rgba(204,0,0,0.18); }
-    .card-label { font-size: .62rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--mu); margin-bottom: 8px; }
-    .card-value { font-size: 2rem; font-weight: 900; color: var(--red); line-height: 1; }
-    .card-value.dark { color: var(--tx); }
-    .card-sub { font-size: .70rem; color: var(--lt); margin-top: 6px; }
-    .card-delta { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: .68rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
-    .delta-up { background: var(--grn-10); color: var(--grn); }
-    .delta-down { background: rgba(220,38,38,0.10); color: #dc2626; }
+    .sec-label { font-size: .58rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); white-space: nowrap; }
+    .sec-rule { flex: 1; height: 1px; background: var(--bd); }
+    .sec-title { font-size: 1.10rem; font-weight: 900; color: var(--tx); margin-bottom: 14px; }
 
-    /* ── RESUMO TEXTO ── */
-    .resumo-texto {
-      background: #fff;
-      border-left: 3px solid var(--red);
-      border-top: 1.5px solid var(--bd);
-      border-bottom: 1.5px solid var(--bd);
-      border-right: 1.5px solid var(--bd);
-      border-radius: 0 12px 12px 0;
-      padding: 18px 22px; margin-top: 8px;
-      font-size: .88rem; color: var(--mu); line-height: 1.80;
-      box-shadow: var(--sh);
-    }
-    .resumo-texto strong { color: var(--tx); }
+    /* CARD */
+    .card { background: var(--card); border-radius: 16px; box-shadow: var(--sh); }
+    .card-p { padding: 24px; }
 
-    /* ── CHART PANELS ── */
-    .chart-wrap {
-      background: #fff; border: 1.5px solid var(--bd);
-      border-radius: 14px; padding: 20px; margin-bottom: 12px;
-      box-shadow: var(--sh);
-    }
-    .chart-title { font-size: .72rem; font-weight: 700; color: var(--mu); margin-bottom: 14px; letter-spacing: .5px; text-transform: uppercase; }
-    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 600px) { .charts-grid { grid-template-columns: 1fr; } }
+    /* SUMMARY */
+    .summary-text { font-size: .85rem; color: var(--mu); line-height: 1.85; }
+    .summary-text strong { color: var(--tx); }
 
-    /* ── INSIGHTS ── */
-    .insights { display: grid; gap: 10px; margin-top: 4px; margin-bottom: 24px; }
-    .insight {
-      background: #fff; border: 1.5px solid var(--bd);
-      border-radius: 12px; padding: 16px 18px;
-      display: flex; gap: 12px; align-items: flex-start;
-      box-shadow: var(--sh);
+    /* COMPARE */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    @media(max-width:520px){ .compare-grid { grid-template-columns: 1fr; } }
+    .cmp-card {
+      background: var(--card); border-radius: 14px; padding: 20px;
+      box-shadow: var(--sh); border: 2px solid transparent;
     }
-    .insight-icon { font-size: 1.1rem; flex-shrink: 0; line-height: 1.6; }
-    .insight-text { font-size: .84rem; color: var(--mu); line-height: 1.65; }
-    .insight-text strong { color: var(--tx); }
+    .cmp-card.active { border-color: var(--red); box-shadow: 0 6px 28px rgba(204,0,0,0.14); }
+    .cmp-mo { font-size: .60rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); margin-bottom: 14px; }
+    .cmp-card.active .cmp-mo { color: var(--red); }
+    .cmp-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--bd); }
+    .cmp-row:last-child { border-bottom: none; }
+    .cmp-l { font-size: .76rem; color: var(--mu); }
+    .cmp-v { font-size: .86rem; font-weight: 800; color: var(--tx); }
 
-    /* ── TABLE ── */
-    .table-wrap { overflow-x: auto; border-radius: 12px; overflow: hidden; margin-top: 8px; border: 1.5px solid var(--bd); box-shadow: var(--sh); }
-    table { width: 100%; border-collapse: collapse; font-size: .78rem; }
-    thead th {
-      background: var(--srf); color: var(--mu); font-weight: 700;
-      letter-spacing: .5px; text-transform: uppercase;
-      padding: 10px 14px; text-align: left; font-size: .60rem;
-      border-bottom: 1px solid var(--bd);
+    /* CHART */
+    .chart-card { background: var(--card); border-radius: 16px; padding: 24px; box-shadow: var(--sh); }
+    .chart-lbl { font-size: .60rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 16px; }
+    .charts-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    @media(max-width:560px){ .charts-2 { grid-template-columns: 1fr; } }
+
+    /* INSIGHT */
+    .insights { display: grid; gap: 10px; }
+    .insight-item {
+      background: var(--card); border-radius: 12px; padding: 16px 18px;
+      display: flex; gap: 12px; box-shadow: var(--sh);
+      border-left: 3px solid var(--bd);
     }
+    .insight-item.good { border-left-color: var(--grn); }
+    .insight-item.info { border-left-color: var(--red); }
+    .ii-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .ii-text { font-size: .82rem; color: var(--mu); line-height: 1.65; }
+    .ii-text strong { color: var(--tx); }
+
+    /* TABLE */
+    .table-card { background: var(--card); border-radius: 16px; box-shadow: var(--sh); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { background: var(--bg); font-size: .60rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--mu); padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--bd); }
     tbody tr { border-bottom: 1px solid var(--bd); transition: background .12s; }
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover td { background: var(--srf); }
-    tbody tr:first-child td { color: var(--red); font-weight: 700; }
-    tbody td { padding: 11px 14px; color: var(--mu); }
-    tbody tr:first-child { background: var(--red-8); }
+    tbody tr:hover { background: var(--bg); }
+    tbody tr.me { background: rgba(204,0,0,0.04); }
+    tbody td { padding: 11px 16px; font-size: .78rem; color: var(--mu); }
+    tbody tr.me td { color: var(--tx); font-weight: 700; }
+    .badge-you { background: var(--red); color: #fff; font-size: .48rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 5px; vertical-align: middle; }
 
-    /* ── RANKING ── */
-    .ranking { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
-    .rank-item {
-      display: flex; align-items: center; gap: 12px;
-      background: #fff; border: 1.5px solid var(--bd);
-      border-radius: 10px; padding: 10px 14px;
-      box-shadow: var(--sh); transition: border-color .15s;
+    /* RANKING */
+    .rank-list { display: flex; flex-direction: column; gap: 8px; }
+    .rank-row {
+      background: var(--card); border-radius: 12px; padding: 12px 16px;
+      display: flex; align-items: center; gap: 12px; box-shadow: var(--sh);
     }
-    .rank-item:hover { border-color: rgba(0,0,0,0.16); }
-    .rank-num {
-      width: 26px; height: 26px; border-radius: 50%; background: var(--srf);
-      display: flex; align-items: center; justify-content: center;
-      font-size: .68rem; font-weight: 800; color: var(--mu); flex-shrink: 0;
+    .rank-row.me { box-shadow: 0 4px 20px rgba(204,0,0,0.12); outline: 2px solid rgba(204,0,0,0.20); }
+    .rn { width: 26px; height: 26px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: .66rem; font-weight: 900; color: var(--mu); flex-shrink: 0; }
+    .rn.top { background: var(--red); color: #fff; box-shadow: 0 0 12px rgba(204,0,0,0.45); }
+    .rn-name { flex: 1; font-size: .80rem; color: var(--mu); }
+    .rank-row.me .rn-name { color: var(--tx); font-weight: 700; }
+    .rn-bar { width: 48px; height: 3px; background: var(--bd); border-radius: 2px; overflow: hidden; }
+    .rn-bar div { height: 100%; border-radius: 2px; }
+    .rn-pct { font-size: .82rem; font-weight: 800; min-width: 52px; text-align: right; }
+
+    /* ANALYSIS */
+    .analysis-grid { display: grid; gap: 10px; }
+    .analysis-item {
+      background: var(--card); border-radius: 12px; padding: 18px 20px;
+      box-shadow: var(--sh); display: flex; gap: 14px; align-items: flex-start;
     }
-    .rank-num.first { background: var(--red); color: #fff; box-shadow: 0 0 12px rgba(204,0,0,0.40); }
-    .rank-name { flex: 1; font-size: .82rem; color: var(--mu); font-weight: 500; }
-    .rank-val { font-size: .82rem; font-weight: 700; }
-    .rank-val.pos { color: var(--grn); }
-    .rank-val.neg { color: #dc2626; }
+    .analysis-item.ok   { border-left: 4px solid var(--grn); }
+    .analysis-item.warn { border-left: 4px solid var(--yel); }
+    .analysis-item.tgt  { border-left: 4px solid var(--red); }
+    .ai-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .ai-body h4 { font-size: .80rem; font-weight: 800; margin-bottom: 4px; }
+    .analysis-item.ok h4   { color: var(--grn); }
+    .analysis-item.warn h4 { color: var(--yel); }
+    .analysis-item.tgt h4  { color: var(--red); }
+    .ai-body p { font-size: .76rem; color: var(--mu); line-height: 1.65; }
+    .ai-body p strong { color: var(--tx); }
 
-    /* ── FOCO / ANÁLISE ── */
-    .foco-grid { display: grid; gap: 10px; margin-top: 8px; }
-    .foco { border-radius: 12px; padding: 18px 20px; box-shadow: var(--sh); background: #fff; }
-    .foco.ok   { border: 1.5px solid var(--grn-22); border-top-color: rgba(22,163,74,0.38); }
-    .foco.atencao { border: 1.5px solid rgba(217,119,6,0.22); border-top-color: rgba(217,119,6,0.38); background: #fff; }
-    .foco.alvo { border: 1.5px solid var(--red-25); border-top-color: rgba(204,0,0,0.40); }
-    .foco-header { font-size: .70rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-    .foco.ok .foco-header { color: var(--grn); }
-    .foco.atencao .foco-header { color: var(--yel); }
-    .foco.alvo .foco-header { color: var(--red); }
-    .foco p { font-size: .84rem; color: var(--mu); line-height: 1.65; }
-    .foco p strong { color: var(--tx); }
-
-    /* ── DESTAQUE ── */
-    .destaque-box {
-      background: var(--red-8); border: 1.5px solid var(--red-15);
-      border-radius: 14px; padding: 26px 22px; margin-bottom: 22px; text-align: center;
-      box-shadow: 0 8px 32px rgba(204,0,0,0.08);
+    /* TROPHY */
+    .trophy-banner {
+      background: linear-gradient(135deg, #fff7f7 0%, #fff 100%);
+      border: 2px solid rgba(204,0,0,0.15);
+      border-radius: 16px; padding: 24px; text-align: center;
+      margin-bottom: 16px; box-shadow: var(--sh);
     }
-    .destaque-box .trophy { font-size: 2.2rem; margin-bottom: 10px; }
-    .destaque-box h3 { font-size: 1rem; font-weight: 800; color: var(--red); margin-bottom: 8px; }
-    .destaque-box p { font-size: .84rem; color: var(--mu); line-height: 1.6; }
+    .trophy-icon { font-size: 2.4rem; margin-bottom: 8px; }
+    .trophy-banner h3 { font-size: 1.05rem; font-weight: 900; color: var(--red); margin-bottom: 6px; }
+    .trophy-banner p  { font-size: .80rem; color: var(--mu); line-height: 1.6; }
+    .trophy-banner p strong { color: var(--tx); }
 
-    /* ── FOOTER ── */
-    footer { background: var(--srf); border-top: 1px solid var(--bd); padding: 28px 20px; text-align: center; }
-    footer p { font-size: .68rem; color: var(--mu); letter-spacing: 1px; }
-    footer .brand { font-family: 'Montserrat', sans-serif; font-weight: 900; color: var(--red); font-size: 1.4rem; display: block; margin-bottom: 6px; letter-spacing: -1px; }
+    /* SOCIAL KPI ROW */
+    .skpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .skpi { background: var(--card); border-radius: 12px; padding: 16px; box-shadow: var(--sh); }
+    .skpi-lbl { font-size: .58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 6px; }
+    .skpi-val { font-size: 1.6rem; font-weight: 900; color: var(--tx); line-height: 1; }
+    .skpi-val.accent { color: var(--red); }
+    .skpi-badge { display: inline-flex; margin-top: 7px; font-size: .60rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+    .bg  { background: rgba(22,163,74,0.10); color: var(--grn); }
+    .br  { background: rgba(220,38,38,0.10); color: #dc2626; }
+    .bn  { background: rgba(0,0,0,0.05); color: var(--mu); }
 
-    /* ── SCROLL ANIMATIONS ── */
+    /* FOOTER */
+    footer { background: var(--card); border-top: 1px solid var(--bd); padding: 28px 20px; text-align: center; margin-top: 32px; }
+    .footer-brand { font-weight: 900; font-size: 1.4rem; color: var(--red); display: block; letter-spacing: -1px; margin-bottom: 4px; }
+    footer p { font-size: .64rem; color: var(--lt); letter-spacing: .5px; }
+
+    /* ANIMATIONS */
     .anim { opacity: 0; transform: translateY(16px); transition: opacity .50s ease, transform .50s ease; }
     .anim.in { opacity: 1; transform: none; }
-    .anim-delay-1 { transition-delay: .07s; }
-    .anim-delay-2 { transition-delay: .14s; }
-    .anim-delay-3 { transition-delay: .21s; }
-    .anim-delay-4 { transition-delay: .28s; }
+    .d1 { transition-delay: .06s; } .d2 { transition-delay: .12s; }
+    .d3 { transition-delay: .18s; } .d4 { transition-delay: .24s; }
   </style>
 </head>
 <body>
-
 <div id="progress"></div>
 
-<!-- HEADER -->
-<header>
-  <img class="client-logo" src="../gilsoncar/assets/LOGO GILSONCAR.png" alt="GilsonCar Veículos">
-  <div class="agency-line">Relatório produzido pela Criativvo</div>
-  <h1>Relatório Mensal — Unidade Borborema</h1>
-  <div class="periodo">ABRIL 2026 &nbsp;•&nbsp; @gilsoncarborborema</div>
-</header>
+<!-- NAV -->
+<nav>
+  <img src="../gilsoncar/assets/LOGO GILSONCAR.png" alt="GilsonCar Veículos">
+  <div class="nav-info">
+    <span class="nav-badge">Unidade Borborema</span>
+    <div class="nav-sep"></div>
+    <span class="nav-badge">Abril 2026</span>
+    <div class="nav-sep"></div>
+    <span class="nav-criativvo">Criativvo</span>
+  </div>
+</nav>
 
-<!-- RESUMO EXECUTIVO -->
-<section>
-  <div class="container">
-    <div class="section-label">Visão geral</div>
-    <div class="section-title">Resumo do mês</div>
+<div class="page">
 
-    <div class="cards">
-      <div class="card highlight anim anim-delay-1">
-        <div class="card-label">Conversas iniciadas</div>
-        <div class="card-value">57</div>
-        <div class="card-sub">Clientes que falaram com a loja</div>
-        <span class="card-delta delta-up">↑ 97% vs março</span>
+  <!-- HERO -->
+  <div class="hero anim">
+    <div class="hero-top">
+      <div>
+        <div class="hero-tag">Relatório Mensal</div>
+        <div class="hero-title">GilsonCar Borborema<br>— Abril 2026</div>
+        <div class="hero-sub">@gilsoncarborborema &nbsp;·&nbsp; Gestão Criativvo</div>
       </div>
-      <div class="card anim anim-delay-2">
-        <div class="card-label">Investido em anúncios</div>
-        <div class="card-value dark">R$831</div>
-        <div class="card-sub">Total de verba no mês</div>
-        <span class="card-delta delta-up">↓ 31% vs março</span>
-      </div>
-      <div class="card highlight anim anim-delay-3">
-        <div class="card-label">ROI dos anúncios</div>
-        <div class="card-value">76,66%</div>
-        <div class="card-sub">Retorno sobre investimento</div>
-      </div>
-      <div class="card anim anim-delay-4">
-        <div class="card-label">Carros vendidos</div>
-        <div class="card-value dark">8</div>
-        <div class="card-sub">Vendas confirmadas no mês</div>
-      </div>
+      <img class="hero-logo" src="../gilsoncar/assets/LOGO GILSONCAR.png" alt="GilsonCar">
     </div>
-
-    <div class="resumo-texto anim">
-      Abril foi um mês de <strong>crescimento acelerado</strong> para a unidade Borborema: com menos verba que março (R$831 vs R$1.202), o número de conversas praticamente dobrou — <strong>57 leads contra 29</strong> no mês anterior. Nas redes sociais, a GilsonCar Borborema foi <strong>a conta que mais cresceu em seguidores</strong> entre todos os concorrentes monitorados, com +1,35% no período.
+    <div class="hero-metrics">
+      <div class="hm good d1">
+        <div class="hm-lbl">Conversas</div>
+        <div class="hm-val accent">57</div>
+        <div class="hm-delta delta-g">↑ 97% vs março</div>
+      </div>
+      <div class="hm d2">
+        <div class="hm-lbl">Investido</div>
+        <div class="hm-val">R$831</div>
+        <div class="hm-delta delta-g">↓ 31% vs março</div>
+      </div>
+      <div class="hm red d3">
+        <div class="hm-lbl">ROI</div>
+        <div class="hm-val accent">76,66%</div>
+      </div>
+      <div class="hm d4">
+        <div class="hm-lbl">Vendas</div>
+        <div class="hm-val">8</div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- TRÁFEGO PAGO -->
-<section>
-  <div class="container">
-    <div class="section-label">Meta Ads</div>
-    <div class="section-title">Tráfego pago</div>
+  <!-- RESUMO -->
+  <div class="sec anim">
+    <div class="card card-p">
+      <div class="sec-header">
+        <span class="sec-label">Resumo</span>
+        <div class="sec-rule"></div>
+      </div>
+      <p class="summary-text">
+        Abril foi um mês de <strong>crescimento acelerado</strong> para a unidade Borborema: com menos verba que março (R$831 vs R$1.202), o número de conversas praticamente dobrou — <strong>57 leads contra 29</strong> no mês anterior. Nas redes sociais, a GilsonCar Borborema foi <strong>a conta que mais cresceu em seguidores</strong> entre todos os concorrentes monitorados, com +1,35% no período.
+      </p>
+    </div>
+  </div>
 
-    <div class="charts-grid anim">
-      <div class="chart-wrap">
-        <div class="chart-title">Conversas geradas</div>
+  <!-- TRÁFEGO PAGO -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Meta Ads</span>
+      <div class="sec-rule"></div>
+    </div>
+
+    <div class="compare-grid">
+      <div class="cmp-card">
+        <div class="cmp-mo">Março 2026</div>
+        <div class="cmp-row"><span class="cmp-l">Conversas</span><span class="cmp-v">29</span></div>
+        <div class="cmp-row"><span class="cmp-l">Investimento</span><span class="cmp-v">R$1.202</span></div>
+        <div class="cmp-row"><span class="cmp-l">Vendas</span><span class="cmp-v">17</span></div>
+        <div class="cmp-row"><span class="cmp-l">ROI</span><span class="cmp-v">78,89%</span></div>
+      </div>
+      <div class="cmp-card active">
+        <div class="cmp-mo">Abril 2026 ←</div>
+        <div class="cmp-row"><span class="cmp-l">Conversas</span><span class="cmp-v" style="color:var(--grn)">57</span></div>
+        <div class="cmp-row"><span class="cmp-l">Investimento</span><span class="cmp-v">R$831</span></div>
+        <div class="cmp-row"><span class="cmp-l">Vendas</span><span class="cmp-v">8</span></div>
+        <div class="cmp-row"><span class="cmp-l">ROI</span><span class="cmp-v">76,66%</span></div>
+      </div>
+    </div>
+
+    <div class="charts-2">
+      <div class="chart-card">
+        <div class="chart-lbl">Conversas geradas</div>
         <canvas id="chartConversas" height="200"></canvas>
       </div>
-      <div class="chart-wrap">
-        <div class="chart-title">Investimento vs Vendas</div>
+      <div class="chart-card">
+        <div class="chart-lbl">Investimento vs Vendas</div>
         <canvas id="chartROI" height="200"></canvas>
       </div>
     </div>
 
-    <div class="cards anim">
-      <div class="card">
-        <div class="card-label">Março 2026</div>
-        <div class="card-value dark" style="font-size:1.4rem;">29 leads</div>
-        <div class="card-sub">R$1.202 investidos &nbsp;•&nbsp; 17 vendas &nbsp;•&nbsp; ROI 78,89%</div>
+    <div class="insights">
+      <div class="insight-item good">
+        <div class="ii-icon">⚡</div>
+        <div class="ii-text"><strong>Eficiência quase dobrou.</strong> Com 31% menos verba, foram 97% mais leads — o aprendizado dos anúncios está chegando em pessoas com mais intenção de compra.</div>
       </div>
-      <div class="card highlight">
-        <div class="card-label">Abril 2026</div>
-        <div class="card-value" style="font-size:1.4rem;">57 leads</div>
-        <div class="card-sub">R$831 investidos &nbsp;•&nbsp; 8 vendas &nbsp;•&nbsp; ROI 76,66%</div>
-      </div>
-    </div>
-
-    <div class="insights anim">
-      <div class="insight">
-        <div class="insight-icon">⚡</div>
-        <div class="insight-text"><strong>Eficiência quase dobrou.</strong> Com 31% menos verba, a unidade gerou 97% mais leads — o aprendizado dos anúncios está evoluindo e chegando em pessoas com maior intenção de compra.</div>
-      </div>
-      <div class="insight">
-        <div class="insight-icon">🎯</div>
-        <div class="insight-text"><strong>ROI estável acima de 76%.</strong> Mesmo com volume de vendas diferente em relação a março, o retorno sobre o investimento se manteve consistente — sinal de que a qualidade dos leads está boa.</div>
+      <div class="insight-item info">
+        <div class="ii-icon">🎯</div>
+        <div class="ii-text"><strong>ROI estável acima de 76%.</strong> Mesmo com volume de vendas menor, o retorno sobre o investimento se manteve consistente — qualidade dos leads está boa.</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- REDES SOCIAIS -->
-<section>
-  <div class="container">
-    <div class="section-label">Instagram — Análise de concorrentes</div>
-    <div class="section-title">Redes sociais</div>
+  <!-- INSTAGRAM -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Instagram</span>
+      <div class="sec-rule"></div>
+    </div>
 
-    <div class="destaque-box anim">
-      <div class="trophy">🏆</div>
+    <div class="trophy-banner">
+      <div class="trophy-icon">🏆</div>
       <h3>Maior crescimento de seguidores da região</h3>
-      <p>@gilsoncarborborema cresceu +1,35% no período — mais que todos os concorrentes monitorados.<br>O segundo lugar foi o Premier Veículos com apenas +0,25%.</p>
+      <p>@gilsoncarborborema cresceu <strong>+1,35%</strong> no período — acima de todos os concorrentes monitorados. O segundo lugar foi o Premier com apenas +0,25%.</p>
     </div>
 
-    <div class="cards anim" style="margin-bottom:20px;">
-      <div class="card highlight">
-        <div class="card-label">Engajamento público</div>
-        <div class="card-value">0,57%</div>
-        <div class="card-sub">Sua taxa no período</div>
-        <span class="card-delta delta-up">↑ 8x acima da média (0,07%)</span>
+    <div class="skpi-row">
+      <div class="skpi">
+        <div class="skpi-lbl">Engajamento</div>
+        <div class="skpi-val accent">0,57%</div>
+        <div class="skpi-badge bg">↑ 8x acima da média</div>
       </div>
-      <div class="card">
-        <div class="card-label">Posts publicados</div>
-        <div class="card-value dark">3</div>
-        <div class="card-sub">No período analisado</div>
+      <div class="skpi">
+        <div class="skpi-lbl">Posts</div>
+        <div class="skpi-val">3</div>
+        <div class="skpi-badge br">⚠ média: 15</div>
       </div>
-      <div class="card">
-        <div class="card-label">Curtidas totais</div>
-        <div class="card-value dark">21</div>
-        <div class="card-sub">No período analisado</div>
+      <div class="skpi">
+        <div class="skpi-lbl">Curtidas</div>
+        <div class="skpi-val">21</div>
+        <div class="skpi-badge bn">no período</div>
       </div>
-      <div class="card">
-        <div class="card-label">Interação por post</div>
-        <div class="card-value dark">7,0</div>
-        <div class="card-sub">Média por publicação</div>
+      <div class="skpi">
+        <div class="skpi-lbl">Interação/post</div>
+        <div class="skpi-val">7,0</div>
+        <div class="skpi-badge bg">acima da média</div>
       </div>
     </div>
 
-    <div class="chart-wrap anim" style="margin-bottom:12px;">
-      <div class="chart-title">Engajamento público — comparativo com concorrentes</div>
-      <canvas id="chartEngajamento" height="200"></canvas>
+    <div class="charts-2" style="margin-bottom:16px;">
+      <div class="chart-card">
+        <div class="chart-lbl">Engajamento — vs concorrentes</div>
+        <canvas id="chartEngajamento" height="220"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-lbl">Crescimento de seguidores (%)</div>
+        <canvas id="chartCrescimento" height="220"></canvas>
+      </div>
     </div>
 
-    <div class="section-label" style="margin-bottom:10px;">Resumo da concorrência</div>
-    <div class="table-wrap anim">
+    <div class="table-card" style="margin-bottom:16px;overflow-x:auto;">
       <table>
         <thead>
-          <tr>
-            <th>Perfil</th>
-            <th>Engaj.</th>
-            <th>Posts</th>
-            <th>Curtidas</th>
-            <th>Interação/post</th>
-          </tr>
+          <tr><th>Perfil</th><th>Engaj.</th><th>Posts</th><th>Curtidas</th><th>Inter./post</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td>@gilsoncarborborema ★</td>
-            <td>0,57%</td>
-            <td>3</td>
-            <td>21</td>
-            <td>7,0</td>
-          </tr>
-          <tr>
-            <td>@_premier_autos</td>
-            <td>0,12%</td>
-            <td>30</td>
-            <td>104</td>
-            <td>3,5</td>
-          </tr>
-          <tr>
-            <td>@furlanveiculos</td>
-            <td>0,10%</td>
-            <td>21</td>
-            <td>181</td>
-            <td>8,6</td>
-          </tr>
-          <tr>
-            <td>@belavista_veiculos</td>
-            <td>0,09%</td>
-            <td>12</td>
-            <td>24</td>
-            <td>2,0</td>
-          </tr>
-          <tr>
-            <td>@pinguimmotors</td>
-            <td>0,06%</td>
-            <td>13</td>
-            <td>141</td>
-            <td>10,8</td>
-          </tr>
+          <tr class="me"><td>@gilsoncarborborema <span class="badge-you">você</span></td><td>0,57%</td><td>3</td><td>21</td><td>7,0</td></tr>
+          <tr><td>@_premier_autos</td><td>0,12%</td><td>30</td><td>104</td><td>3,5</td></tr>
+          <tr><td>@furlanveiculos</td><td>0,10%</td><td>21</td><td>181</td><td>8,6</td></tr>
+          <tr><td>@belavista_veiculos</td><td>0,09%</td><td>12</td><td>24</td><td>2,0</td></tr>
+          <tr><td>@pinguimmotors</td><td>0,06%</td><td>13</td><td>141</td><td>10,8</td></tr>
         </tbody>
       </table>
     </div>
 
-    <div style="margin-top:28px;" class="anim">
-      <div class="section-label" style="margin-bottom:10px;">Crescimento de seguidores no período</div>
-      <div class="ranking">
-        <div class="rank-item" style="border-color: var(--red-25); box-shadow: 0 8px 32px rgba(204,0,0,0.10);">
-          <div class="rank-num first">1</div>
-          <div class="rank-name" style="color:var(--red);font-weight:700;">@gilsoncarborborema ★</div>
-          <div class="rank-val pos">+1,35%</div>
-        </div>
-        <div class="rank-item">
-          <div class="rank-num">2</div>
-          <div class="rank-name">@_premier_autos</div>
-          <div class="rank-val pos">+0,25%</div>
-        </div>
-        <div class="rank-item">
-          <div class="rank-num">3</div>
-          <div class="rank-name">@furlanveiculos</div>
-          <div class="rank-val pos">+0,06%</div>
-        </div>
-        <div class="rank-item">
-          <div class="rank-num">4</div>
-          <div class="rank-name">@pinguimmotors</div>
-          <div class="rank-val neg">−0,08%</div>
-        </div>
-        <div class="rank-item">
-          <div class="rank-num">5</div>
-          <div class="rank-name">@belavista_veiculos</div>
-          <div class="rank-val neg">−0,39%</div>
-        </div>
+    <div style="margin-bottom:8px;font-size:.60rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mu);">Ranking — Crescimento de seguidores</div>
+    <div class="rank-list">
+      <div class="rank-row me">
+        <div class="rn top">1</div>
+        <div class="rn-name">@gilsoncarborborema (~3k)</div>
+        <div class="rn-bar"><div style="width:100%;background:var(--red)"></div></div>
+        <div class="rn-pct" style="color:var(--red)">+1,35%</div>
+      </div>
+      <div class="rank-row">
+        <div class="rn">2</div>
+        <div class="rn-name">@_premier_autos (~21k)</div>
+        <div class="rn-bar"><div style="width:18%;background:var(--grn)"></div></div>
+        <div class="rn-pct" style="color:var(--grn)">+0,25%</div>
+      </div>
+      <div class="rank-row">
+        <div class="rn">3</div>
+        <div class="rn-name">@furlanveiculos (~10k)</div>
+        <div class="rn-bar"><div style="width:4%;background:var(--grn)"></div></div>
+        <div class="rn-pct" style="color:var(--grn)">+0,06%</div>
+      </div>
+      <div class="rank-row">
+        <div class="rn">4</div>
+        <div class="rn-name">@pinguimmotors</div>
+        <div class="rn-bar"><div style="width:0;background:#dc2626"></div></div>
+        <div class="rn-pct" style="color:#dc2626">−0,08%</div>
+      </div>
+      <div class="rank-row">
+        <div class="rn">5</div>
+        <div class="rn-name">@belavista_veiculos</div>
+        <div class="rn-bar"><div style="width:0;background:#dc2626"></div></div>
+        <div class="rn-pct" style="color:#dc2626">−0,39%</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ANÁLISE DO MÊS -->
-<section>
-  <div class="container">
-    <div class="section-label">Avaliação</div>
-    <div class="section-title">Análise do mês</div>
-
-    <div class="foco-grid">
-      <div class="foco ok anim">
-        <div class="foco-header">✅ O que funcionou bem</div>
-        <p><strong>Crescimento #1 da região.</strong> Com +1,35%, a GilsonCar Borborema foi o perfil que mais cresceu em seguidores entre todos os concorrentes monitorados — mesmo sendo uma das contas mais novas da região. O conteúdo está atraindo público qualificado.</p>
+  <!-- ANÁLISE -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Avaliação</span>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="analysis-grid">
+      <div class="analysis-item ok">
+        <div class="ai-icon">✅</div>
+        <div class="ai-body"><h4>Crescimento #1 da região — +1,35%</h4><p>O maior crescimento de seguidores entre todos os perfis monitorados. <strong>Mesmo sendo uma das contas mais novas da região.</strong></p></div>
       </div>
-      <div class="foco ok anim">
-        <div class="foco-header">✅ O que funcionou bem</div>
-        <p><strong>Engajamento 8x acima da média.</strong> A taxa de 0,57% é a mais alta entre todos os perfis analisados, muito acima da média regional de 0,07%. Seguidores engajados tendem a converter melhor e indicar mais.</p>
+      <div class="analysis-item ok">
+        <div class="ai-icon">✅</div>
+        <div class="ai-body"><h4>Engajamento 8x acima da média</h4><p>0,57% vs média regional de 0,07%. <strong>Seguidores engajados convertem mais e indicam mais.</strong></p></div>
       </div>
-      <div class="foco ok anim">
-        <div class="foco-header">✅ O que funcionou bem</div>
-        <p><strong>Dobrou os leads com menos verba.</strong> 57 conversas com R$831 em abril contra 29 com R$1.202 em março. A otimização dos anúncios está funcionando — menos gasto, mais resultado.</p>
+      <div class="analysis-item ok">
+        <div class="ai-icon">✅</div>
+        <div class="ai-body"><h4>Dobrou os leads com menos verba</h4><p>57 conversas com R$831 contra 29 com R$1.202 em março. <strong>Menos gasto, mais resultado.</strong></p></div>
       </div>
-      <div class="foco atencao anim">
-        <div class="foco-header">⚠️ Ponto de atenção</div>
-        <p><strong>Volume de conteúdo ainda baixo.</strong> Apenas 3 posts no período enquanto a média dos concorrentes fica acima de 15. Com engajamento e crescimento de seguidores liderando a região, aumentar a frequência de publicação é a principal alavanca para ampliar os resultados orgânicos.</p>
+      <div class="analysis-item warn">
+        <div class="ai-icon">⚠️</div>
+        <div class="ai-body"><h4>Volume de conteúdo ainda baixo</h4><p>Apenas 3 posts no período. Concorrentes publicam 15+ por mês. <strong>Aumentar frequência é a principal alavanca agora.</strong></p></div>
       </div>
-      <div class="foco alvo anim">
-        <div class="foco-header">🎯 Foco de maio</div>
-        <p><strong>Escalar o conteúdo para capitalizar o momentum.</strong> Com engajamento no topo da região e crescimento de seguidores liderando, o próximo passo é aumentar o volume de posts — especialmente Reels — para acelerar esse crescimento e gerar mais conversas orgânicas sem depender só de verba.</p>
+      <div class="analysis-item tgt">
+        <div class="ai-icon">🎯</div>
+        <div class="ai-body"><h4>Foco de maio: escalar o conteúdo</h4><p>Com engajamento e crescimento liderando a região, o próximo passo é aumentar Reels para <strong>gerar mais conversas orgânicas sem depender só de verba.</strong></p></div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- FOOTER -->
+</div>
+
 <footer>
-  <div class="container">
-    <span class="brand">criativvo</span>
-    <p>Relatório produzido pela Criativvo &nbsp;•&nbsp; criativvo.com.br &nbsp;•&nbsp; Maio de 2026</p>
-  </div>
+  <span class="footer-brand">criativvo</span>
+  <p>Relatório produzido pela Criativvo &nbsp;·&nbsp; criativvo.com.br &nbsp;·&nbsp; Maio de 2026</p>
 </footer>
 
 <script>
-  // ── Progress bar ──
-  const progress = document.getElementById('progress');
+  // Progress bar
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    progress.style.width = (Math.min(pct, 1) * 100) + '%';
-  }, { passive: true });
+    document.getElementById('progress').style.width = (Math.min(pct,1)*100)+'%';
+  }, { passive:true });
 
-  // ── Scroll animations ──
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
-  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
-  document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+  // Scroll animations
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.06, rootMargin:'0px 0px -24px 0px' });
+  document.querySelectorAll('.anim').forEach(el => io.observe(el));
 
-  // ── Preload logo para os gráficos ──
-  const gilsonImg = new Image();
-  gilsonImg.src = '../gilsoncar/assets/LOGO GILSONCAR.png';
+  // Preload logo
+  const logo = new Image();
+  logo.src = '../gilsoncar/assets/LOGO GILSONCAR.png';
 
-  // ── Plugin: logo acima da barra "você"/"gilsoncar" ──
+  // Plugin: logo acima da barra da GilsonCar
   Chart.register({
-    id: 'barLogo',
-    afterDraw(chart) {
+    id:'barLogo',
+    afterDraw(chart){
       if(!chart.config.options?.plugins?.barLogo) return;
-      if(!gilsonImg.complete || !gilsonImg.naturalWidth) return;
+      if(!logo.complete || !logo.naturalWidth) return;
       const idx = chart.config.options.plugins.barLogo.index ?? 0;
-      const { ctx } = chart;
-      const meta = chart.getDatasetMeta(0);
-      const bar  = meta.data[idx];
+      const {ctx} = chart;
+      const bar = chart.getDatasetMeta(0).data[idx];
       if(!bar) return;
-      const w = 56, h = w * (gilsonImg.naturalHeight / gilsonImg.naturalWidth);
-      const topOfBar = Math.min(bar.y, bar.base ?? bar.y);
+      const w=52, h=w*(logo.naturalHeight/logo.naturalWidth);
       ctx.save();
-      ctx.drawImage(gilsonImg, bar.x - w/2, topOfBar - h - 6, w, h);
+      ctx.drawImage(logo, bar.x-w/2, Math.min(bar.y, bar.base??bar.y)-h-5, w, h);
       ctx.restore();
     }
   });
 
-  // ── Chart defaults (tema claro) ──
-  const BRD   = '#CC0000';
-  const BRD_D = 'rgba(204,0,0,0.18)';
-  const NEU   = 'rgba(148,163,184,0.28)';
-  Chart.defaults.color = 'rgba(100,116,139,0.80)';
-  Chart.defaults.font  = { family: 'Montserrat', size: 11 };
-  const AX = {
-    grid:  { color: 'rgba(0,0,0,0.05)', drawBorder: false },
-    ticks: { color: 'rgba(100,116,139,0.70)', padding: 6 }
-  };
-  const TIP = {
-    backgroundColor:'rgba(15,23,42,0.94)',
-    titleColor:'rgba(255,255,255,0.95)', bodyColor:'rgba(148,163,184,0.90)',
-    borderColor:'rgba(0,0,0,0.10)', borderWidth:1,
-    padding:12, cornerRadius:10,
-    titleFont:{family:'Montserrat',weight:'800',size:12},
-    bodyFont:{family:'Montserrat',size:11}
-  };
-  const ANIM = { duration:700, easing:'easeOutQuart', delay(ctx){ return ctx.type==='data'?ctx.dataIndex*90:0; } };
+  Chart.defaults.color = 'rgba(107,114,128,0.85)';
+  Chart.defaults.font  = { family:'Montserrat', size:11 };
+  const RED = '#CC0000', REDF = 'rgba(204,0,0,0.18)', NEU = 'rgba(156,163,175,0.30)';
+  const AX = { grid:{color:'rgba(0,0,0,0.05)',drawBorder:false}, ticks:{color:'rgba(107,114,128,0.70)',padding:6} };
+  const TIP = { backgroundColor:'rgba(17,24,39,0.94)', titleColor:'#fff', bodyColor:'rgba(156,163,175,0.90)', borderColor:'rgba(0,0,0,0.08)', borderWidth:1, padding:11, cornerRadius:8, titleFont:{family:'Montserrat',weight:'800',size:12}, bodyFont:{family:'Montserrat',size:11} };
+  const ANIM = { duration:700, easing:'easeOutQuart', delay(c){ return c.type==='data'?c.dataIndex*80:0; } };
 
-  function mkBarGrad(id){
-    const cv = document.getElementById(id);
-    const g  = cv.getContext('2d').createLinearGradient(0, 0, 0, cv.parentElement.clientHeight || 200);
-    g.addColorStop(0, '#ff4444'); g.addColorStop(1, '#990000'); return g;
+  function grad(id, c1, c2){
+    const cv=document.getElementById(id), g=cv.getContext('2d').createLinearGradient(0,0,0,cv.parentElement.clientHeight||200);
+    g.addColorStop(0,c1); g.addColorStop(1,c2); return g;
   }
 
-  new Chart(document.getElementById('chartConversas'), {
-    type: 'bar',
-    data: {
-      labels: ['Março 2026', 'Abril 2026'],
-      datasets: [{
-        label: 'Conversas', data: [29, 57],
-        backgroundColor: [NEU, mkBarGrad('chartConversas')],
-        borderRadius: 10, borderSkipped: false, borderWidth: 0
-      }]
-    },
-    options: {
-      animation: ANIM,
-      plugins: { legend: { display: false }, tooltip: TIP,
-        barLogo: { index: 1 }
-      },
-      layout: { padding: { top: 36 } },
-      scales: { x: AX, y: { ...AX, beginAtZero: true, ticks: { ...AX.ticks, display: false }, grid: { display: false } } }
-    }
-  });
+  new Chart('chartConversas',{type:'bar',data:{
+    labels:['Março','Abril'],
+    datasets:[{data:[29,57],backgroundColor:[NEU,grad('chartConversas','#ff4444','#990000')],borderRadius:10,borderSkipped:false,borderWidth:0}]
+  },options:{animation:ANIM,plugins:{legend:{display:false},tooltip:TIP,barLogo:{index:1}},layout:{padding:{top:34}},scales:{x:AX,y:{...AX,beginAtZero:true,ticks:{display:false},grid:{display:false}}}}});
 
-  new Chart(document.getElementById('chartROI'), {
-    type: 'bar',
-    data: {
-      labels: ['Março 2026', 'Abril 2026'],
-      datasets: [
-        { label: 'Investimento (R$)', data: [1202.11, 831.80], backgroundColor: [NEU, BRD_D], borderRadius: 6, borderSkipped: false, borderWidth: 0 },
-        { label: 'Vendas', data: [17, 8], backgroundColor: [NEU, mkBarGrad('chartROI')], borderRadius: 6, borderSkipped: false, borderWidth: 0 }
-      ]
-    },
-    options: {
-      animation: ANIM,
-      plugins: { legend: { labels: { font: { family:'Montserrat', size:11 }, color:'rgba(100,116,139,0.80)' } }, tooltip: TIP },
-      scales: { x: AX, y: { ...AX, beginAtZero: true } }
-    }
-  });
+  new Chart('chartROI',{type:'bar',data:{
+    labels:['Março','Abril'],
+    datasets:[
+      {label:'Investimento (R$)',data:[1202,832],backgroundColor:[NEU,REDF],borderRadius:8,borderSkipped:false,borderWidth:0},
+      {label:'Vendas',data:[17,8],backgroundColor:[NEU,grad('chartROI','#ff4444','#990000')],borderRadius:8,borderSkipped:false,borderWidth:0}
+    ]
+  },options:{animation:ANIM,plugins:{legend:{labels:{font:{family:'Montserrat',size:10},color:'rgba(107,114,128,0.80)'}},tooltip:TIP},scales:{x:AX,y:{...AX,beginAtZero:true}}}});
 
-  new Chart(document.getElementById('chartEngajamento'), {
-    type: 'bar',
-    data: {
-      labels: ['você', 'Premier', 'Furlan', 'Bela Vista', 'Pinguim'],
-      datasets: [{
-        label: 'Engajamento (%)', data: [0.57, 0.12, 0.10, 0.09, 0.06],
-        backgroundColor: [mkBarGrad('chartEngajamento'), NEU, NEU, NEU, NEU],
-        borderRadius: 10, borderSkipped: false, borderWidth: 0
-      }]
-    },
-    options: {
-      animation: ANIM,
-      plugins: { legend: { display: false }, tooltip: TIP,
-        barLogo: { index: 0 }
-      },
-      layout: { padding: { top: 36 } },
-      scales: { x: AX, y: { ...AX, beginAtZero: true, ticks: { ...AX.ticks, display: false }, grid: { display: false } } }
-    }
-  });
+  new Chart('chartEngajamento',{type:'bar',data:{
+    labels:['você','Premier','Furlan','Bela Vista','Pinguim'],
+    datasets:[{data:[0.57,0.12,0.10,0.09,0.06],backgroundColor:[grad('chartEngajamento','#ff4444','#990000'),NEU,NEU,NEU,NEU],borderRadius:10,borderSkipped:false,borderWidth:0}]
+  },options:{animation:ANIM,plugins:{legend:{display:false},tooltip:TIP,barLogo:{index:0}},layout:{padding:{top:34}},scales:{x:{...AX,ticks:{...AX.ticks,maxRotation:30}},y:{...AX,beginAtZero:true,ticks:{display:false},grid:{display:false}}}}});
+
+  new Chart('chartCrescimento',{type:'bar',data:{
+    labels:['você','Premier','Furlan','Pinguim','Bela Vista'],
+    datasets:[{data:[1.35,0.25,0.06,-0.08,-0.39],backgroundColor:['#CC0000',NEU,NEU,NEU,NEU],borderRadius:8,borderSkipped:false,borderWidth:0}]
+  },options:{animation:ANIM,plugins:{legend:{display:false},tooltip:TIP,barLogo:{index:0}},layout:{padding:{top:34}},scales:{x:{...AX,ticks:{...AX.ticks,maxRotation:30}},y:{...AX}}}});
 </script>
 </body>
 </html>
