@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposta — Reinaldo Meirelles | Criativvo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+
+    header {
+      padding: 56px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #111;
+    }
+
+    .logo {
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;
+      color: #FF5501;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .tagline {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #444;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .hero {
+      padding: 64px 24px 56px;
+      text-align: center;
+    }
+
+    .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #FF5501;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(26px, 5vw, 38px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    h1 em {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.35em;
+      font-style: normal;
+      color: #FF5501;
+      display: block;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: #888;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    section { padding: 56px 24px; border-top: 1px solid #111; }
+
+    h2 {
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    p { font-size: 14px; color: #bbb; margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+
+    .card {
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 12px;
+    }
+
+    .card:last-child { margin-bottom: 0; }
+
+    .card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #FF5501;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    ul { list-style: none; padding: 0; margin: 0; }
+
+    ul li {
+      font-size: 13px;
+      color: #aaa;
+      padding: 7px 0;
+      border-bottom: 1px solid #1a1a1a;
+      display: flex;
+      gap: 10px;
+    }
+
+    ul li:last-child { border-bottom: none; }
+
+    ul li::before {
+      content: '→';
+      color: #FF5501;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    ul.cross li::before {
+      content: '✕';
+      color: #333;
+    }
+
+    ul.cross li { color: #666; }
+
+    .inv-box {
+      background: #0d0d0d;
+      border: 1px solid #FF5501;
+      border-radius: 14px;
+      padding: 36px 32px;
+    }
+
+    .inv-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #1a1a1a;
+      gap: 16px;
+    }
+
+    .inv-row:last-of-type { border-bottom: none; }
+
+    .inv-name { font-size: 14px; font-weight: 600; }
+    .inv-desc { font-size: 12px; color: #555; margin-top: 2px; }
+
+    .inv-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: #FF5501;
+      white-space: nowrap;
+    }
+
+    .inv-val small {
+      font-size: 12px;
+      color: #666;
+      font-weight: 500;
+      margin-left: 3px;
+    }
+
+    .inv-note {
+      font-size: 12px;
+      color: #444;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .cta {
+      padding: 72px 24px;
+      text-align: center;
+      border-top: 1px solid #111;
+    }
+
+    .cta h2 { margin-bottom: 12px; }
+    .cta p { font-size: 14px; color: #777; max-width: 420px; margin: 0 auto 32px; }
+
+    .btn {
+      display: inline-block;
+      background: #FF5501;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 16px 44px;
+      border-radius: 100px;
+      text-decoration: none;
+    }
+
+    .about {
+      background: #080808;
+      border-top: 1px solid #111;
+      padding: 56px 24px;
+      text-align: center;
+    }
+
+    .about h2 { font-size: 20px; margin-bottom: 14px; }
+    .about p { font-size: 13px; color: #888; max-width: 520px; margin: 0 auto 14px; }
+
+    .badge {
+      display: inline-block;
+      background: #111;
+      border: 1px solid #FF5501;
+      border-radius: 100px;
+      padding: 8px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #FF5501;
+      margin-top: 4px;
+    }
+
+    footer {
+      padding: 36px 24px;
+      text-align: center;
+      border-top: 1px solid #111;
+    }
+
+    footer .logo { font-size: 28px; margin-bottom: 6px; }
+    footer p { font-size: 11px; color: #333; margin: 0; }
+    footer a { color: #FF5501; text-decoration: none; }
+
+    @media (max-width: 480px) {
+      .inv-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <span class="logo">Criativvo</span>
+      <span class="tagline">Seu Negócio Vira Marca</span>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <span class="label">Proposta Comercial — Maio 2026</span>
+      <h1>Para Reinaldo Meirelles<em>Instrumentos Musicais</em></h1>
+      <p>Loja no ar, tráfego rodando e vendas crescendo. Isso é o que vamos construir.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <span class="label">Escopo</span>
+      <h2>O que será entregue</h2>
+
+      <div class="card">
+        <span class="card-tag">Setup — Mês 1</span>
+        <h3>Criação completa da loja Shopify</h3>
+        <ul>
+          <li>Configuração e personalização completa da loja</li>
+          <li>Design profissional: home, produto, coleções, sobre e contato</li>
+          <li>Checkout configurado e otimizado para conversão</li>
+          <li>Integração de pagamentos: cartão, Pix, boleto</li>
+          <li>Domínio, SSL e performance</li>
+          <li>Banners e elementos visuais da loja</li>
+          <li>Revisão e aprovação antes do go-live</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="card-tag">Mensal — A partir do mês 2</span>
+        <h3>Tráfego pago, criativos e conteúdo</h3>
+        <ul>
+          <li>Gestão completa do tráfego pago (Meta Ads)</li>
+          <li>Criação de criativos: imagens e vídeos para anúncios</li>
+          <li>Conteúdos de suporte às campanhas</li>
+          <li>Segmentação, testes e otimização contínua</li>
+          <li>Reunião semanal: resultados, análise e próximos passos</li>
+          <li>Ajustes de campanha durante o mês</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <span class="label">Limites do escopo</span>
+      <h2>O que não está incluído</h2>
+      <div class="card">
+        <ul class="cross">
+          <li>Verba de anúncios (paga diretamente ao Meta pelo cliente)</li>
+          <li>Mensalidade do Shopify (plano básico ~R$150/mês, por conta do cliente)</li>
+          <li>Sessão de fotos dos produtos</li>
+          <li>Cadastro dos produtos na loja</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <span class="label">Investimento</span>
+      <h2>Valores</h2>
+      <div class="inv-box">
+        <div class="inv-row">
+          <div>
+            <div class="inv-name">Setup da loja Shopify</div>
+            <div class="inv-desc">Criação completa + design + checkout. Cobrado no mês 1.</div>
+          </div>
+          <div class="inv-val">R$ 5.500 <small>único</small></div>
+        </div>
+        <div class="inv-row">
+          <div>
+            <div class="inv-name">Gestão mensal</div>
+            <div class="inv-desc">Tráfego + criativos + conteúdo + reunião semanal. A partir do mês 2.</div>
+          </div>
+          <div class="inv-val">R$ 2.500 <small>/mês</small></div>
+        </div>
+        <p class="inv-note">Verba de anúncios definida em conjunto conforme a meta de crescimento da loja.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div class="container">
+      <h2>Pronto pra começar?</h2>
+      <p>Confirme e a Criativvo inicia o setup em até 48 horas.</p>
+      <a href="https://wa.me/5516993396988" class="btn">Fechar agora</a>
+    </div>
+  </div>
+
+  <div class="about">
+    <div class="container">
+      <h2>Sobre a Criativvo</h2>
+      <p>Agência 360 de marketing digital e automação. Branding, Shopify, tráfego e conteúdo em uma única solução, sem fragmentação.</p>
+      <p>Em setembro de 2025, assumimos a Gilson Car Veículos do zero. Em dois meses, o cliente bateu o maior faturamento da história e abriu 2 novas unidades.</p>
+      <span class="badge">Case Gilson Car: maior faturamento da história + 2 novas unidades em 2 meses</span>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <span class="logo">Criativvo</span>
+      <p>criativvo.com.br &nbsp;·&nbsp; <a href="https://instagram.com/sejacriativvo">@sejacriativvo</a></p>
+      <p style="margin-top:6px;">Proposta válida por 15 dias.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
