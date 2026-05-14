@@ -7,6 +7,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
+    @font-face {
+      font-family: 'AVEstiana';
+      src: url('../../fonts/AVEstiana-Black.otf') format('opentype');
+      font-weight: 900;
+      font-style: normal;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -50,11 +57,10 @@
       display: flex; align-items: center; justify-content: space-between;
       box-shadow: 0 1px 0 rgba(0,0,0,0.04);
     }
-    .nav-logo { height: 28px; width: auto; }
     .nav-mid  { display: flex; flex-direction: column; align-items: center; gap: 1px; }
     .nav-unit { font-size: .72rem; font-weight: 800; color: var(--tx); }
     .nav-period { font-size: .58rem; font-weight: 600; color: var(--mu); }
-    .nav-brand { font-size: .64rem; font-weight: 900; color: var(--red); letter-spacing: .5px; }
+    .nav-brand { font-family: 'AVEstiana', 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 900; color: var(--red); letter-spacing: .5px; line-height: 1; }
 
     /* ── CONTROLS ── */
     .controls {
@@ -120,7 +126,7 @@
     .hero-tag  { font-size: .58rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
     .hero-title{ font-size: 1.3rem; font-weight: 900; color: #fff; line-height: 1.1; }
     .hero-sub  { font-size: .72rem; color: rgba(255,255,255,0.70); margin-top: 5px; }
-    .hero-logo { height: 44px; width: auto; filter: brightness(0) invert(1); opacity: .85; flex-shrink: 0; }
+    .hero-logo { height: 44px; width: auto; flex-shrink: 0; }
     .hero-metrics {
       display: grid; grid-template-columns: repeat(4,1fr);
       background: var(--card); border-radius: 0 0 16px 16px;
@@ -317,7 +323,7 @@
 <div id="progress"></div>
 
 <nav>
-  <img class="nav-logo" src="assets/LOGO GILSONCAR.png" alt="GilsonCar Veículos">
+  <span class="nav-brand">criativvo</span>
   <div class="nav-mid">
     <span class="nav-unit" id="navUnit">GilsonCar Ibitinga</span>
     <span class="nav-period" id="navPeriod">Abril 2026</span>
