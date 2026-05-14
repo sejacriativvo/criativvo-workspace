@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>IMPACT — Master & Dynamic</title>
+<title>Reinaldo Meirelles | Instrumentos Musicais</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -28,7 +28,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .site-header{position:sticky;top:0;z-index:900;background:#fff;border-bottom:1px solid #e8e8e8}
 .hdr{display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 28px;max-width:1400px;margin:0 auto}
 .hdr-left{display:flex;align-items:center;gap:28px}
-.logo{font-size:18px;font-weight:900;letter-spacing:3px;cursor:pointer;text-transform:uppercase}
+.logo{cursor:pointer;display:flex;align-items:center}.logo img{height:36px;width:auto;display:block;object-fit:contain}
 .nav{display:flex;align-items:center;gap:2px}
 .nav-item{position:relative}
 .nav-link{font-size:12.5px;font-weight:500;padding:8px 10px;display:flex;align-items:center;gap:3px;cursor:pointer;letter-spacing:.1px;transition:opacity .2s}
@@ -59,7 +59,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .hero{position:relative;overflow:hidden;height:calc(100vh - 96px);min-height:520px;max-height:820px}
 .hero-slides{display:flex;height:100%;transition:transform .75s cubic-bezier(.77,0,.18,1)}
 .hero-slide{min-width:100%;height:100%;position:relative;display:flex;align-items:center}
-.s1{background:linear-gradient(140deg,#1c2619,#2d3d28,#4a6741)}
+.s1{background:url('https://d8j0ntlcm91z4.cloudfront.net/user_30OBFJMBtO1fl9Px3XlnKlXPblU/hf_20260514_134003_76150577-c804-4917-824a-60789195bc03.png') center/cover no-repeat}.s1::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(15,22,12,.88) 0%,rgba(15,22,12,.6) 45%,transparent 100%);z-index:1}
 .s2{background:linear-gradient(140deg,#0c0f1a,#1a2035,#24305a)}
 .s3{background:linear-gradient(140deg,#1a0c00,#3a1a00,#5c2a0a)}
 .hero-txt{position:relative;z-index:2;padding:0 72px;max-width:620px}
@@ -254,9 +254,9 @@ footer{background:#000;color:#fff;padding:56px 28px 28px}
 <!-- ───────── ANNOUNCEMENT BAR ───────── -->
 <div class="ann-bar">
   <div class="ann-track" id="annTrack">
-    <div class="ann-item"><em>●</em> New Collaboration: Master &amp; Dynamic x Paris Saint-Germain <em>●</em></div>
-    <div class="ann-item"><em>●</em> Free standard shipping on all orders <em>●</em></div>
-    <div class="ann-item"><em>●</em> Use code IMPACT20 for 20% off your order <em>●</em></div>
+    <div class="ann-item"><em>●</em> Guitarra Seizi Budokan Reinaldo Meirelles Signature disponível agora <em>●</em></div>
+    <div class="ann-item"><em>●</em> Frete grátis em compras acima de R$ 500 <em>●</em></div>
+    <div class="ann-item"><em>●</em> Use o código RM10 e ganhe 10% de desconto na sua primeira compra <em>●</em></div>
   </div>
 </div>
 
@@ -264,7 +264,7 @@ footer{background:#000;color:#fff;padding:56px 28px 28px}
 <header class="site-header">
   <div class="hdr">
     <div class="hdr-left">
-      <div class="logo" onclick="goPage('home')">IMPACT</div>
+      <div class="logo" onclick="goPage('home')"><img src="logo-reinaldo.png" alt="Reinaldo Meirelles" onerror="this.outerHTML='<span style=\'font-size:16px;font-weight:900;letter-spacing:2px\'>REINALDO MEIRELLES</span>'"/></div>
       <nav class="nav">
         <div class="nav-item">
           <div class="nav-link" onclick="goPage('collection','headphones')">Shop <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
@@ -320,27 +320,25 @@ footer{background:#000;color:#fff;padding:56px 28px 28px}
     <div class="hero-slides" id="heroSlides">
       <div class="hero-slide s1">
         <div class="hero-txt">
-          <div class="hero-eye">Introducing the MW08 Sport</div>
-          <h1 class="hero-h1">High-Performance &<br>Elegant Design</h1>
-          <a class="hero-btn" onclick="goPage('collection','earphones')">Shop the MW08 Sport</a>
+          <div class="hero-eye">Seizi Budokan Signature — Edição Limitada</div>
+          <h1 class="hero-h1">Sua Guitarra<br>Assinada.</h1>
+          <a class="hero-btn" onclick="goPage('collection','guitarras')">Ver a Guitarra</a>
         </div>
-        <div class="hero-img"><img src="https://www.masterdynamic.com/cdn/shop/files/MW08SportBL-PDP_1350x1350_InsideChargingCase_V1_9f44db17-1700-4ce1-a2de-18b40d5b0ff9.png?v=1709759508&width=900" alt="MW08 Sport"/></div>
       </div>
       <div class="hero-slide s2">
         <div class="hero-txt">
-          <div class="hero-eye">Flagship Wireless</div>
-          <h1 class="hero-h1">The Evolution of<br>Sound & Design</h1>
-          <a class="hero-btn" onclick="goPage('collection','headphones')">Shop the MW75</a>
+          <div class="hero-eye">Para quem leva a música a sério</div>
+          <h1 class="hero-h1">Guitarras &<br>Violões Premium</h1>
+          <a class="hero-btn" onclick="goPage('collection','guitarras')">Ver Guitarras</a>
         </div>
-        <div class="hero-img"><img src="https://www.masterdynamic.com/cdn/shop/files/MW75B1-PDP_1350x1350_Hero_V2_30f29338-61b6-4e34-930a-03f45c192e3a.png?v=1772053574&width=900" alt="MW75"/></div>
+        <div class="hero-img"><img src="https://www.royalmusic.com.br/wp-content/uploads/2022/12/10360468-01-1000x564.jpg" alt="Seizi Budokan"/></div>
       </div>
       <div class="hero-slide s3">
         <div class="hero-txt">
-          <div class="hero-eye">Limited Edition</div>
-          <h1 class="hero-h1">Master & Dynamic<br>x Paris Saint-Germain</h1>
-          <a class="hero-btn" onclick="goPage('collaborations')">Shop the Collection</a>
+          <div class="hero-eye">Academia do Violão</div>
+          <h1 class="hero-h1">Aprenda com<br>Reinaldo Meirelles</h1>
+          <a class="hero-btn" onclick="goPage('about')">Conhecer a Academia</a>
         </div>
-        <div class="hero-img"><img src="https://www.masterdynamic.com/cdn/shop/files/MG20BGT2-PDP_1350x1350_Hero_V1_ee025a8a-b82b-4a25-954c-d19c4346c948.png?v=1697621482&width=900" alt="Collaboration"/></div>
       </div>
     </div>
     <div class="hero-dots">
@@ -379,13 +377,13 @@ footer{background:#000;color:#fff;padding:56px 28px 28px}
   <!-- MARQUEE -->
   <div class="marquee-wrap">
     <div class="marquee-track">
-      <span class="mq-txt">Mastery is a never-ending pursuit</span>
+      <span class="mq-txt">A música é a linguagem da alma</span>
       <span class="mq-txt" style="color:rgba(255,255,255,.04)">·</span>
-      <span class="mq-txt">Mastery is a never-ending pursuit</span>
+      <span class="mq-txt">A música é a linguagem da alma</span>
       <span class="mq-txt" style="color:rgba(255,255,255,.04)">·</span>
-      <span class="mq-txt">Mastery is a never-ending pursuit</span>
+      <span class="mq-txt">A música é a linguagem da alma</span>
       <span class="mq-txt" style="color:rgba(255,255,255,.04)">·</span>
-      <span class="mq-txt">Mastery is a never-ending pursuit</span>
+      <span class="mq-txt">A música é a linguagem da alma</span>
       <span class="mq-txt" style="color:rgba(255,255,255,.04)">·</span>
     </div>
   </div>
@@ -423,22 +421,22 @@ footer{background:#000;color:#fff;padding:56px 28px 28px}
   <!-- EDITORIAL -->
   <div class="editorial">
     <div class="ed-txt">
-      <div class="ed-eye">Our Story</div>
-      <h2 class="ed-h2">Master & Dynamic's Story</h2>
-      <p class="ed-p">Born out of a personal passion for music, our founding philosophy lives on in every product we build — premium audio combined with equally thoughtful design.</p>
-      <span class="btn-wh" onclick="goPage('about')">Learn More</span>
+      <div class="ed-eye">Quem é Reinaldo</div>
+      <h2 class="ed-h2">20 anos no palco com os maiores</h2>
+      <p class="ed-p">Guitarrista e produtor de Gusttavo Lima, Zé Neto e Cristiano e dezenas de outros grandes artistas do sertanejo. Hoje, Reinaldo compartilha esse universo com você.</p>
+      <span class="btn-wh" onclick="goPage('about')">Conhecer a história</span>
     </div>
     <div class="ed-img"><img src="https://www.masterdynamic.com/cdn/shop/files/image_202_1.jpg?v=1693571861&width=900" alt="Master & Dynamic Story" loading="lazy"/></div>
   </div>
 
   <!-- STATS -->
   <div class="stats-sec">
-    <div class="stats-eye">MW75 Performance</div>
-    <h2 class="stats-h2">The evolution of our very first headphones</h2>
+    <div class="stats-eye">Seizi Budokan Signature</div>
+    <h2 class="stats-h2">A guitarra desenvolvida por quem toca de verdade</h2>
     <div class="stats-grid">
-      <div><div class="stat-val">30<sup>hrs</sup></div><div class="stat-lbl">Battery Life</div></div>
-      <div><div class="stat-val">40<sup>mm</sup></div><div class="stat-lbl">Beryllium Driver</div></div>
-      <div><div class="stat-val">5<sup>min</sup></div><div class="stat-lbl">Fast Charge = 3hrs</div></div>
+      <div><div class="stat-val">+1<sup>ano</sup></div><div class="stat-lbl">De desenvolvimento</div></div>
+      <div><div class="stat-val">22<sup>tr</sup></div><div class="stat-lbl">Trastes em aço inox</div></div>
+      <div><div class="stat-val">HSS</div><div class="stat-lbl">Captadores Jutsu Alnico V</div></div>
     </div>
   </div>
 
@@ -498,14 +496,14 @@ footer{background:#000;color:#fff;padding:56px 28px 28px}
     Back to home
   </div>
   <div class="about-hero">
-    <h1 class="about-h1">Master & Dynamic</h1>
-    <p class="about-sub">We design and engineer premium headphones and audio accessories from our base in New York City.</p>
+    <h1 class="about-h1">Reinaldo Meirelles</h1>
+    <p class="about-sub">Guitarrista, violinista, produtor musical e diretor do RM Studio em Ribeirão Preto.</p>
   </div>
   <div class="about-body">
-    <p>Master & Dynamic was founded in 2014 with a simple premise: that audio equipment could be both acoustically superior and beautifully designed. Since then, we've built a range of headphones, earphones, and accessories that stand at the intersection of exceptional sound and refined aesthetics.</p>
-    <p>Every product begins with a question — how can we improve on what already exists? From our signature beryllium drivers to our premium leather ear cushions, each element is chosen to deliver a listening experience unlike any other.</p>
-    <p>We collaborate with like-minded brands across fashion, motorsport, and culture because we believe great design transcends any single category. Whether it's a limited-edition run with Lamborghini or a capsule collection with Paris Saint-Germain, our collaborations are always rooted in shared values of craft and quality.</p>
-    <p>Based in New York City with distribution worldwide, Master & Dynamic is committed to building tools for a lifetime of listening.</p>
+    <p>Reinaldo Meirelles é um dos guitarristas e violinistas mais versáteis do Brasil. Com mais de 20 anos de carreira, já foi produtor e guitarrista de Gusttavo Lima, Zé Neto e Cristiano, Edson e Hudson, João Bosco e Vinícius, entre outros grandes nomes do sertanejo.</p>
+    <p>Hoje, além de continuar atuando nos palcos, Reinaldo dirige o RM Studio em Ribeirão Preto e lidera a Academia do Violão, o primeiro e único curso de bachata do Brasil.</p>
+    <p>A parceria com a Seizi Guitars resultou na Budokan Reinaldo Meirelles Signature, uma guitarra desenvolvida por mais de um ano com o próprio Reinaldo. Cada detalhe foi pensado para atender profissionais e entusiastas que exigem o melhor em som, toque e estética.</p>
+    <p>Essa loja é a extensão do universo musical do Reinaldo, reunindo os melhores instrumentos para quem leva a música a sério.</p>
   </div>
   <div id="about-footer-wrap"></div>
 </div>
@@ -566,8 +564,8 @@ footer{background:#000;color:#fff;padding:56px 28px 28px}
 <!-- ─── SHARED NEWSLETTER + FOOTER TEMPLATE ─── -->
 <template id="footerTpl">
   <div class="newsletter">
-    <h2 class="nl-h2">Sign up to the newsletter</h2>
-    <p class="nl-sub">Exclusive offers and new products, straight to your inbox.</p>
+    <h2 class="nl-h2">Fique por dentro</h2>
+    <p class="nl-sub">Novidades, lançamentos e conteúdo exclusivo direto no seu e-mail.</p>
     <div class="nl-form">
       <input type="email" class="nl-input" placeholder="Your email address"/>
       <button class="nl-btn">Subscribe</button>
@@ -577,8 +575,8 @@ footer{background:#000;color:#fff;padding:56px 28px 28px}
     <div class="ft-inner">
       <div class="ft-top">
         <div>
-          <div class="ft-logo">IMPACT</div>
-          <p class="ft-tag">Premium audio engineered for performance and designed to last a lifetime.</p>
+          <div class="ft-logo"><img src="logo-reinaldo.png" alt="Reinaldo Meirelles" style="height:32px;width:auto;filter:brightness(0) invert(1)" onerror="this.outerHTML='REINALDO MEIRELLES'"/></div>
+          <p class="ft-tag">Instrumentos musicais selecionados por quem vive de música. Ribeirão Preto, SP.</p>
         </div>
         <div class="ft-col">
           <h4>Products</h4>
@@ -609,7 +607,7 @@ footer{background:#000;color:#fff;padding:56px 28px 28px}
         </div>
       </div>
       <div class="ft-btm">
-        <span class="ft-copy">© 2026 IMPACT Theme — Maestrooo. All rights reserved.</span>
+        <span class="ft-copy">© 2026 Reinaldo Meirelles Instrumentos Musicais. Todos os direitos reservados.</span>
         <div class="ft-social">
           <a>Instagram</a><a>Twitter</a><a>Facebook</a><a>YouTube</a>
         </div>
