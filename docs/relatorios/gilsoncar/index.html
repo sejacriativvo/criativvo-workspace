@@ -57,10 +57,12 @@
       display: flex; align-items: center; justify-content: space-between;
       box-shadow: 0 1px 0 rgba(0,0,0,0.04);
     }
-    .nav-mid  { display: flex; flex-direction: column; align-items: center; gap: 1px; }
-    .nav-unit { font-size: .72rem; font-weight: 800; color: var(--tx); }
-    .nav-period { font-size: .58rem; font-weight: 600; color: var(--mu); }
-    .nav-brand { font-family: 'AVEstiana', 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 900; color: var(--tx); letter-spacing: -1px; line-height: 1; }
+    .nav-spacer { width: 72px; flex-shrink: 0; }
+    .nav-mid  { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .nav-gilson-logo { height: 26px; width: auto; }
+    .nav-city { font-size: .68rem; font-weight: 800; color: var(--tx); letter-spacing: .5px; }
+    .nav-period { font-size: .56rem; font-weight: 600; color: var(--mu); }
+    .nav-brand { font-family: 'AVEstiana', 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 900; color: var(--tx); letter-spacing: -1px; line-height: 1; width: 72px; text-align: right; flex-shrink: 0; }
 
     /* ── CONTROLS ── */
     .controls {
@@ -299,7 +301,7 @@
       padding: 32px 20px; text-align: center;
       background: var(--card);
     }
-    .footer-brand { font-family: 'AVEstiana', 'Montserrat', sans-serif; font-weight: 900; font-size: 1.6rem; color: var(--red); display: block; letter-spacing: -1px; margin-bottom: 6px; }
+    .footer-brand { font-family: 'AVEstiana', 'Montserrat', sans-serif; font-weight: 900; font-size: 1.6rem; color: var(--tx); display: block; letter-spacing: -1px; margin-bottom: 6px; }
     footer p { font-size: .66rem; color: var(--mu); }
 
     /* ── SCROLL ANIMATIONS ── */
@@ -323,9 +325,10 @@
 <div id="progress"></div>
 
 <nav>
-  <span class="nav-brand">criativvo</span>
+  <div class="nav-spacer"></div>
   <div class="nav-mid">
-    <span class="nav-unit" id="navUnit">GilsonCar Ibitinga</span>
+    <img class="nav-gilson-logo" src="assets/LOGO GILSONCAR.png" alt="GilsonCar">
+    <span class="nav-city" id="navCity">Ibitinga</span>
     <span class="nav-period" id="navPeriod">Abril 2026</span>
   </div>
   <span class="nav-brand">criativvo</span>
@@ -773,9 +776,9 @@ function render(){
   const comparison = UNITS[curUnit][other];
   const unitData   = UNITS[curUnit];
 
-  document.getElementById('hUnit').textContent    = unitData.name;
-  document.getElementById('navUnit').textContent  = unitData.name;
-  document.getElementById('heroSub').textContent  = unitData.handle + ' · Gestão Criativvo';
+  document.getElementById('hUnit').textContent   = unitData.name;
+  document.getElementById('navCity').textContent = curUnit === 'ibitinga' ? 'Ibitinga' : 'Borborema';
+  document.getElementById('heroSub').textContent = unitData.handle + ' · Gestão Criativvo';
   document.getElementById('anMo').textContent     = primary.label.split(' ')[0];
 
   buildHeroMetrics(primary, comparison);
