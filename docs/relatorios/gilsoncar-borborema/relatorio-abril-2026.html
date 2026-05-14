@@ -4,162 +4,208 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Relatório Abril 2026 — GilsonCar Veículos Borborema</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; line-height: 1.6; }
-    a { color: #CC0000; }
 
-    /* PROGRESS BAR */
-    #progress {
-      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
-      background: linear-gradient(90deg, #CC0000, #ff2020);
-      z-index: 9999; transition: width 0.08s linear;
+    :root {
+      --red:    #CC0000;
+      --red-8:  rgba(204,0,0,0.08);
+      --red-15: rgba(204,0,0,0.15);
+      --red-25: rgba(204,0,0,0.25);
+      --grn:    #16a34a;
+      --grn-10: rgba(22,163,74,0.10);
+      --grn-22: rgba(22,163,74,0.22);
+      --yel:    #d97706;
+      --tx:     #0f172a;
+      --mu:     #64748b;
+      --lt:     #94a3b8;
+      --bd:     rgba(0,0,0,0.08);
+      --srf:    #f8fafc;
+      --sh:     0 1px 3px rgba(0,0,0,0.07), 0 4px 20px rgba(0,0,0,0.05);
+      --sh-md:  0 4px 16px rgba(0,0,0,0.09), 0 1px 3px rgba(0,0,0,0.06);
+      --sh-red: 0 8px 32px rgba(204,0,0,0.22);
     }
 
-    /* LAYOUT */
-    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    body {
+      background: #ffffff;
+      color: var(--tx);
+      font-family: 'Montserrat', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
 
-    /* HEADER */
+    /* ── PROGRESS BAR ── */
+    #progress {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--red), #ff5555);
+      z-index: 9999; transition: width .08s linear;
+      pointer-events: none;
+      box-shadow: 0 0 8px rgba(204,0,0,0.5);
+    }
+
+    /* ── HEADER ── */
     header {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(0,0,0,0.97); border-bottom: 2px solid #CC0000;
-      padding: 24px 20px; text-align: center;
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--bd);
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
     }
-    header .client-logo { height: 52px; width: auto; margin-bottom: 12px; }
-    header .agency-line { font-size: 0.68rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #444; }
-    header h1 { font-size: 1.2rem; font-weight: 800; color: #fff; margin-top: 10px; }
-    header .periodo { font-size: 0.75rem; color: #555; margin-top: 5px; letter-spacing: 1px; }
+    header .client-logo { height: 44px; width: auto; margin-bottom: 10px; }
+    header .agency-line { font-size: .60rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--lt); }
+    header h1 { font-size: 1.1rem; font-weight: 800; color: var(--tx); margin-top: 8px; }
+    header .periodo { font-size: .70rem; color: var(--mu); margin-top: 4px; letter-spacing: 1px; }
 
-    /* SECTIONS */
-    section { padding: 56px 20px; }
-    section + section { border-top: 1px solid #111; }
+    /* ── CONTAINER ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 
-    /* SECTION LABELS */
+    /* ── SECTIONS ── */
+    section { padding: 48px 20px; }
+    section + section { border-top: 1px solid var(--bd); }
+
+    /* ── SECTION LABELS ── */
     .section-label {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 3px;
-      text-transform: uppercase; color: #CC0000; margin-bottom: 8px;
+      font-size: .60rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--red); margin-bottom: 6px;
       display: flex; align-items: center; gap: 8px;
     }
     .section-label::before {
-      content: ''; display: block; width: 6px; height: 6px;
-      background: #CC0000; border-radius: 50%; flex-shrink: 0;
+      content: ''; display: block; width: 5px; height: 5px;
+      background: var(--red); border-radius: 50%; flex-shrink: 0;
     }
-    .section-title { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 28px; }
+    .section-title { font-size: 1.4rem; font-weight: 800; color: var(--tx); margin-bottom: 24px; }
 
-    /* CARDS */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    /* ── KPI CARDS ── */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
     .card {
-      background: #0c0c0c; border-radius: 14px; padding: 24px 20px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: #fff; border: 1.5px solid var(--bd);
+      border-radius: 14px; padding: 20px 18px;
+      box-shadow: var(--sh);
+      transition: transform .20s, box-shadow .20s;
     }
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(204,0,0,0.1);
-    }
-    .card.highlight { border: 1px solid rgba(204,0,0,0.55); }
-    .card.highlight:hover { box-shadow: 0 12px 32px rgba(204,0,0,0.18), 0 0 0 1px rgba(204,0,0,0.5); }
-    .card-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #555; margin-bottom: 8px; }
-    .card-value { font-size: 2rem; font-weight: 900; color: #CC0000; line-height: 1; }
-    .card-value.white { color: #fff; }
-    .card-sub { font-size: 0.73rem; color: #444; margin-top: 6px; }
-    .card-delta { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
-    .delta-up { background: rgba(34,197,94,0.12); color: #22c55e; }
-    .delta-down { background: rgba(239,68,68,0.12); color: #ef4444; }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--sh-md); }
+    .card.highlight { border-color: var(--red-25); box-shadow: 0 4px 20px rgba(204,0,0,0.10); }
+    .card.highlight:hover { box-shadow: 0 12px 40px rgba(204,0,0,0.18); }
+    .card-label { font-size: .62rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--mu); margin-bottom: 8px; }
+    .card-value { font-size: 2rem; font-weight: 900; color: var(--red); line-height: 1; }
+    .card-value.dark { color: var(--tx); }
+    .card-sub { font-size: .70rem; color: var(--lt); margin-top: 6px; }
+    .card-delta { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: .68rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .delta-up { background: var(--grn-10); color: var(--grn); }
+    .delta-down { background: rgba(220,38,38,0.10); color: #dc2626; }
 
-    /* RESUMO TEXTO */
+    /* ── RESUMO TEXTO ── */
     .resumo-texto {
-      background: #0c0c0c; border-left: 3px solid #CC0000;
-      border-radius: 0 12px 12px 0; padding: 20px 24px; margin-top: 8px;
-      font-size: 0.93rem; color: #aaa; line-height: 1.75;
+      background: #fff;
+      border-left: 3px solid var(--red);
+      border-top: 1.5px solid var(--bd);
+      border-bottom: 1.5px solid var(--bd);
+      border-right: 1.5px solid var(--bd);
+      border-radius: 0 12px 12px 0;
+      padding: 18px 22px; margin-top: 8px;
+      font-size: .88rem; color: var(--mu); line-height: 1.80;
+      box-shadow: var(--sh);
     }
-    .resumo-texto strong { color: #fff; }
+    .resumo-texto strong { color: var(--tx); }
 
-    /* CHARTS */
-    .chart-wrap { background: #0c0c0c; border-radius: 14px; padding: 24px; margin-bottom: 16px; }
-    .chart-title { font-size: 0.82rem; font-weight: 700; color: #bbb; margin-bottom: 16px; letter-spacing: 0.5px; }
-    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    /* ── CHART PANELS ── */
+    .chart-wrap {
+      background: #fff; border: 1.5px solid var(--bd);
+      border-radius: 14px; padding: 20px; margin-bottom: 12px;
+      box-shadow: var(--sh);
+    }
+    .chart-title { font-size: .72rem; font-weight: 700; color: var(--mu); margin-bottom: 14px; letter-spacing: .5px; text-transform: uppercase; }
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     @media (max-width: 600px) { .charts-grid { grid-template-columns: 1fr; } }
 
-    /* INSIGHTS */
-    .insights { display: grid; gap: 12px; margin-top: 4px; margin-bottom: 28px; }
-    .insight { background: #0c0c0c; border-radius: 12px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start; }
-    .insight-icon { font-size: 1.2rem; flex-shrink: 0; line-height: 1.6; }
-    .insight-text { font-size: 0.87rem; color: #aaa; line-height: 1.6; }
-    .insight-text strong { color: #fff; }
-
-    /* TABLE */
-    .table-wrap { overflow-x: auto; border-radius: 12px; overflow: hidden; margin-top: 8px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-    thead th {
-      background: #111; color: #555; font-weight: 600;
-      letter-spacing: 0.5px; text-transform: uppercase;
-      padding: 12px 14px; text-align: left; font-size: 0.68rem;
+    /* ── INSIGHTS ── */
+    .insights { display: grid; gap: 10px; margin-top: 4px; margin-bottom: 24px; }
+    .insight {
+      background: #fff; border: 1.5px solid var(--bd);
+      border-radius: 12px; padding: 16px 18px;
+      display: flex; gap: 12px; align-items: flex-start;
+      box-shadow: var(--sh);
     }
-    tbody tr { border-bottom: 1px solid #111; transition: background 0.15s; }
-    tbody tr:hover td { background: rgba(255,255,255,0.02); }
-    tbody tr:first-child td { color: #CC0000; font-weight: 700; }
-    tbody td { padding: 13px 14px; color: #aaa; }
-    tbody tr:first-child { background: rgba(204,0,0,0.04); }
+    .insight-icon { font-size: 1.1rem; flex-shrink: 0; line-height: 1.6; }
+    .insight-text { font-size: .84rem; color: var(--mu); line-height: 1.65; }
+    .insight-text strong { color: var(--tx); }
 
-    /* RANKING */
-    .ranking { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; border-radius: 12px; overflow: hidden; margin-top: 8px; border: 1.5px solid var(--bd); box-shadow: var(--sh); }
+    table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+    thead th {
+      background: var(--srf); color: var(--mu); font-weight: 700;
+      letter-spacing: .5px; text-transform: uppercase;
+      padding: 10px 14px; text-align: left; font-size: .60rem;
+      border-bottom: 1px solid var(--bd);
+    }
+    tbody tr { border-bottom: 1px solid var(--bd); transition: background .12s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover td { background: var(--srf); }
+    tbody tr:first-child td { color: var(--red); font-weight: 700; }
+    tbody td { padding: 11px 14px; color: var(--mu); }
+    tbody tr:first-child { background: var(--red-8); }
+
+    /* ── RANKING ── */
+    .ranking { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
     .rank-item {
       display: flex; align-items: center; gap: 12px;
-      background: #0c0c0c; border-radius: 10px; padding: 12px 16px;
-      transition: background 0.15s;
+      background: #fff; border: 1.5px solid var(--bd);
+      border-radius: 10px; padding: 10px 14px;
+      box-shadow: var(--sh); transition: border-color .15s;
     }
-    .rank-item:hover { background: #141414; }
+    .rank-item:hover { border-color: rgba(0,0,0,0.16); }
     .rank-num {
-      width: 28px; height: 28px; border-radius: 50%; background: #1a1a1a;
+      width: 26px; height: 26px; border-radius: 50%; background: var(--srf);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.72rem; font-weight: 800; color: #444; flex-shrink: 0;
+      font-size: .68rem; font-weight: 800; color: var(--mu); flex-shrink: 0;
     }
-    .rank-num.first { background: #CC0000; color: #fff; }
-    .rank-name { flex: 1; font-size: 0.85rem; color: #aaa; font-weight: 500; }
-    .rank-val { font-size: 0.85rem; font-weight: 700; }
-    .rank-val.pos { color: #22c55e; }
-    .rank-val.neg { color: #ef4444; }
+    .rank-num.first { background: var(--red); color: #fff; box-shadow: 0 0 12px rgba(204,0,0,0.40); }
+    .rank-name { flex: 1; font-size: .82rem; color: var(--mu); font-weight: 500; }
+    .rank-val { font-size: .82rem; font-weight: 700; }
+    .rank-val.pos { color: var(--grn); }
+    .rank-val.neg { color: #dc2626; }
 
-    /* FOCO */
-    .foco-grid { display: grid; gap: 12px; margin-top: 8px; }
-    .foco { border-radius: 12px; padding: 20px 22px; }
-    .foco.ok { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.18); }
-    .foco.atencao { background: rgba(234,179,8,0.06); border: 1px solid rgba(234,179,8,0.18); }
-    .foco.alvo { background: rgba(204,0,0,0.06); border: 1px solid rgba(204,0,0,0.22); }
-    .foco-header { font-size: 0.77rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-    .foco.ok .foco-header { color: #22c55e; }
-    .foco.atencao .foco-header { color: #eab308; }
-    .foco.alvo .foco-header { color: #CC0000; }
-    .foco p { font-size: 0.87rem; color: #aaa; line-height: 1.65; }
-    .foco p strong { color: #fff; }
+    /* ── FOCO / ANÁLISE ── */
+    .foco-grid { display: grid; gap: 10px; margin-top: 8px; }
+    .foco { border-radius: 12px; padding: 18px 20px; box-shadow: var(--sh); background: #fff; }
+    .foco.ok   { border: 1.5px solid var(--grn-22); border-top-color: rgba(22,163,74,0.38); }
+    .foco.atencao { border: 1.5px solid rgba(217,119,6,0.22); border-top-color: rgba(217,119,6,0.38); background: #fff; }
+    .foco.alvo { border: 1.5px solid var(--red-25); border-top-color: rgba(204,0,0,0.40); }
+    .foco-header { font-size: .70rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .foco.ok .foco-header { color: var(--grn); }
+    .foco.atencao .foco-header { color: var(--yel); }
+    .foco.alvo .foco-header { color: var(--red); }
+    .foco p { font-size: .84rem; color: var(--mu); line-height: 1.65; }
+    .foco p strong { color: var(--tx); }
 
-    /* DESTAQUE */
+    /* ── DESTAQUE ── */
     .destaque-box {
-      background: rgba(204,0,0,0.06); border: 1px solid rgba(204,0,0,0.3);
-      border-radius: 14px; padding: 28px 24px; margin-bottom: 24px; text-align: center;
+      background: var(--red-8); border: 1.5px solid var(--red-15);
+      border-radius: 14px; padding: 26px 22px; margin-bottom: 22px; text-align: center;
+      box-shadow: 0 8px 32px rgba(204,0,0,0.08);
     }
-    .destaque-box .trophy { font-size: 2.4rem; margin-bottom: 10px; }
-    .destaque-box h3 { font-size: 1.05rem; font-weight: 800; color: #CC0000; margin-bottom: 8px; }
-    .destaque-box p { font-size: 0.87rem; color: #aaa; line-height: 1.6; }
+    .destaque-box .trophy { font-size: 2.2rem; margin-bottom: 10px; }
+    .destaque-box h3 { font-size: 1rem; font-weight: 800; color: var(--red); margin-bottom: 8px; }
+    .destaque-box p { font-size: .84rem; color: var(--mu); line-height: 1.6; }
 
-    /* FOOTER */
-    footer { background: #050505; border-top: 1px solid #111; padding: 32px 20px; text-align: center; }
-    footer p { font-size: 0.72rem; color: #444; letter-spacing: 1px; }
-    footer .brand { font-family: 'Great Vibes', cursive; color: #CC0000; font-size: 1.2rem; display: block; margin-bottom: 6px; }
+    /* ── FOOTER ── */
+    footer { background: var(--srf); border-top: 1px solid var(--bd); padding: 28px 20px; text-align: center; }
+    footer p { font-size: .68rem; color: var(--mu); letter-spacing: 1px; }
+    footer .brand { font-family: 'Montserrat', sans-serif; font-weight: 900; color: var(--red); font-size: 1.4rem; display: block; margin-bottom: 6px; letter-spacing: -1px; }
 
-    /* ANIMATE ON SCROLL */
-    .anim {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
-    }
+    /* ── SCROLL ANIMATIONS ── */
+    .anim { opacity: 0; transform: translateY(16px); transition: opacity .50s ease, transform .50s ease; }
     .anim.in { opacity: 1; transform: none; }
-    .anim-delay-1 { transition-delay: 0.08s; }
-    .anim-delay-2 { transition-delay: 0.16s; }
-    .anim-delay-3 { transition-delay: 0.24s; }
-    .anim-delay-4 { transition-delay: 0.32s; }
+    .anim-delay-1 { transition-delay: .07s; }
+    .anim-delay-2 { transition-delay: .14s; }
+    .anim-delay-3 { transition-delay: .21s; }
+    .anim-delay-4 { transition-delay: .28s; }
   </style>
 </head>
 <body>
@@ -189,7 +235,7 @@
       </div>
       <div class="card anim anim-delay-2">
         <div class="card-label">Investido em anúncios</div>
-        <div class="card-value white">R$831</div>
+        <div class="card-value dark">R$831</div>
         <div class="card-sub">Total de verba no mês</div>
         <span class="card-delta delta-up">↓ 31% vs março</span>
       </div>
@@ -200,7 +246,7 @@
       </div>
       <div class="card anim anim-delay-4">
         <div class="card-label">Carros vendidos</div>
-        <div class="card-value white">8</div>
+        <div class="card-value dark">8</div>
         <div class="card-sub">Vendas confirmadas no mês</div>
       </div>
     </div>
@@ -231,7 +277,7 @@
     <div class="cards anim">
       <div class="card">
         <div class="card-label">Março 2026</div>
-        <div class="card-value white" style="font-size:1.4rem;">29 leads</div>
+        <div class="card-value dark" style="font-size:1.4rem;">29 leads</div>
         <div class="card-sub">R$1.202 investidos &nbsp;•&nbsp; 17 vendas &nbsp;•&nbsp; ROI 78,89%</div>
       </div>
       <div class="card highlight">
@@ -266,7 +312,7 @@
       <p>@gilsoncarborborema cresceu +1,35% no período — mais que todos os concorrentes monitorados.<br>O segundo lugar foi o Premier Veículos com apenas +0,25%.</p>
     </div>
 
-    <div class="cards anim" style="margin-bottom:24px;">
+    <div class="cards anim" style="margin-bottom:20px;">
       <div class="card highlight">
         <div class="card-label">Engajamento público</div>
         <div class="card-value">0,57%</div>
@@ -275,27 +321,27 @@
       </div>
       <div class="card">
         <div class="card-label">Posts publicados</div>
-        <div class="card-value white">3</div>
+        <div class="card-value dark">3</div>
         <div class="card-sub">No período analisado</div>
       </div>
       <div class="card">
         <div class="card-label">Curtidas totais</div>
-        <div class="card-value white">21</div>
+        <div class="card-value dark">21</div>
         <div class="card-sub">No período analisado</div>
       </div>
       <div class="card">
         <div class="card-label">Interação por post</div>
-        <div class="card-value white">7,0</div>
+        <div class="card-value dark">7,0</div>
         <div class="card-sub">Média por publicação</div>
       </div>
     </div>
 
-    <div class="chart-wrap anim" style="margin-bottom:16px;">
+    <div class="chart-wrap anim" style="margin-bottom:12px;">
       <div class="chart-title">Engajamento público — comparativo com concorrentes</div>
       <canvas id="chartEngajamento" height="200"></canvas>
     </div>
 
-    <div class="section-label" style="margin-bottom:12px;">Resumo da concorrência</div>
+    <div class="section-label" style="margin-bottom:10px;">Resumo da concorrência</div>
     <div class="table-wrap anim">
       <table>
         <thead>
@@ -347,12 +393,12 @@
       </table>
     </div>
 
-    <div style="margin-top:32px;" class="anim">
-      <div class="section-label" style="margin-bottom:12px;">Crescimento de seguidores no período</div>
+    <div style="margin-top:28px;" class="anim">
+      <div class="section-label" style="margin-bottom:10px;">Crescimento de seguidores no período</div>
       <div class="ranking">
-        <div class="rank-item" style="border: 1px solid rgba(204,0,0,0.4);">
+        <div class="rank-item" style="border-color: var(--red-25); box-shadow: 0 8px 32px rgba(204,0,0,0.10);">
           <div class="rank-num first">1</div>
-          <div class="rank-name" style="color:#CC0000;font-weight:700;">@gilsoncarborborema ★</div>
+          <div class="rank-name" style="color:var(--red);font-weight:700;">@gilsoncarborborema ★</div>
           <div class="rank-val pos">+1,35%</div>
         </div>
         <div class="rank-item">
@@ -414,7 +460,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="container">
-    <span class="brand">Criativvo</span>
+    <span class="brand">criativvo</span>
     <p>Relatório produzido pela Criativvo &nbsp;•&nbsp; criativvo.com.br &nbsp;•&nbsp; Maio de 2026</p>
   </div>
 </footer>
@@ -433,14 +479,54 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
   document.querySelectorAll('.anim').forEach(el => observer.observe(el));
 
-  // ── Charts ──
-  const red = '#CC0000';
-  const redFade = 'rgba(204,0,0,0.2)';
-  const grayFade = 'rgba(120,120,120,0.25)';
-  const defaultFont = { family: 'Montserrat', size: 11 };
-  Chart.defaults.color = '#555';
-  Chart.defaults.font = defaultFont;
-  const axisOpts = { grid: { color: '#111' }, ticks: { color: '#555' } };
+  // ── Preload logo para os gráficos ──
+  const gilsonImg = new Image();
+  gilsonImg.src = '../gilsoncar/assets/LOGO GILSONCAR.png';
+
+  // ── Plugin: logo acima da barra "você"/"gilsoncar" ──
+  Chart.register({
+    id: 'barLogo',
+    afterDraw(chart) {
+      if(!chart.config.options?.plugins?.barLogo) return;
+      if(!gilsonImg.complete || !gilsonImg.naturalWidth) return;
+      const idx = chart.config.options.plugins.barLogo.index ?? 0;
+      const { ctx } = chart;
+      const meta = chart.getDatasetMeta(0);
+      const bar  = meta.data[idx];
+      if(!bar) return;
+      const w = 56, h = w * (gilsonImg.naturalHeight / gilsonImg.naturalWidth);
+      const topOfBar = Math.min(bar.y, bar.base ?? bar.y);
+      ctx.save();
+      ctx.drawImage(gilsonImg, bar.x - w/2, topOfBar - h - 6, w, h);
+      ctx.restore();
+    }
+  });
+
+  // ── Chart defaults (tema claro) ──
+  const BRD   = '#CC0000';
+  const BRD_D = 'rgba(204,0,0,0.18)';
+  const NEU   = 'rgba(148,163,184,0.28)';
+  Chart.defaults.color = 'rgba(100,116,139,0.80)';
+  Chart.defaults.font  = { family: 'Montserrat', size: 11 };
+  const AX = {
+    grid:  { color: 'rgba(0,0,0,0.05)', drawBorder: false },
+    ticks: { color: 'rgba(100,116,139,0.70)', padding: 6 }
+  };
+  const TIP = {
+    backgroundColor:'rgba(15,23,42,0.94)',
+    titleColor:'rgba(255,255,255,0.95)', bodyColor:'rgba(148,163,184,0.90)',
+    borderColor:'rgba(0,0,0,0.10)', borderWidth:1,
+    padding:12, cornerRadius:10,
+    titleFont:{family:'Montserrat',weight:'800',size:12},
+    bodyFont:{family:'Montserrat',size:11}
+  };
+  const ANIM = { duration:700, easing:'easeOutQuart', delay(ctx){ return ctx.type==='data'?ctx.dataIndex*90:0; } };
+
+  function mkBarGrad(id){
+    const cv = document.getElementById(id);
+    const g  = cv.getContext('2d').createLinearGradient(0, 0, 0, cv.parentElement.clientHeight || 200);
+    g.addColorStop(0, '#ff4444'); g.addColorStop(1, '#990000'); return g;
+  }
 
   new Chart(document.getElementById('chartConversas'), {
     type: 'bar',
@@ -448,12 +534,17 @@
       labels: ['Março 2026', 'Abril 2026'],
       datasets: [{
         label: 'Conversas', data: [29, 57],
-        backgroundColor: [grayFade, red], borderRadius: 8, borderSkipped: false
+        backgroundColor: [NEU, mkBarGrad('chartConversas')],
+        borderRadius: 10, borderSkipped: false, borderWidth: 0
       }]
     },
     options: {
-      plugins: { legend: { display: false } },
-      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+      animation: ANIM,
+      plugins: { legend: { display: false }, tooltip: TIP,
+        barLogo: { index: 1 }
+      },
+      layout: { padding: { top: 36 } },
+      scales: { x: AX, y: { ...AX, beginAtZero: true, ticks: { ...AX.ticks, display: false }, grid: { display: false } } }
     }
   });
 
@@ -462,29 +553,34 @@
     data: {
       labels: ['Março 2026', 'Abril 2026'],
       datasets: [
-        { label: 'Investimento (R$)', data: [1202.11, 831.80], backgroundColor: [grayFade, redFade], borderRadius: 6, borderSkipped: false },
-        { label: 'Vendas', data: [17, 8], backgroundColor: ['rgba(120,120,120,0.45)', red], borderRadius: 6, borderSkipped: false }
+        { label: 'Investimento (R$)', data: [1202.11, 831.80], backgroundColor: [NEU, BRD_D], borderRadius: 6, borderSkipped: false, borderWidth: 0 },
+        { label: 'Vendas', data: [17, 8], backgroundColor: [NEU, mkBarGrad('chartROI')], borderRadius: 6, borderSkipped: false, borderWidth: 0 }
       ]
     },
     options: {
-      plugins: { legend: { labels: { font: defaultFont, color: '#555' } } },
-      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+      animation: ANIM,
+      plugins: { legend: { labels: { font: { family:'Montserrat', size:11 }, color:'rgba(100,116,139,0.80)' } }, tooltip: TIP },
+      scales: { x: AX, y: { ...AX, beginAtZero: true } }
     }
   });
 
   new Chart(document.getElementById('chartEngajamento'), {
     type: 'bar',
     data: {
-      labels: ['GilsonCar Borborema ★', 'Premier', 'Furlan', 'Bela Vista', 'Pinguim'],
+      labels: ['você', 'Premier', 'Furlan', 'Bela Vista', 'Pinguim'],
       datasets: [{
         label: 'Engajamento (%)', data: [0.57, 0.12, 0.10, 0.09, 0.06],
-        backgroundColor: [red, grayFade, grayFade, grayFade, grayFade],
-        borderRadius: 8, borderSkipped: false
+        backgroundColor: [mkBarGrad('chartEngajamento'), NEU, NEU, NEU, NEU],
+        borderRadius: 10, borderSkipped: false, borderWidth: 0
       }]
     },
     options: {
-      plugins: { legend: { display: false } },
-      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+      animation: ANIM,
+      plugins: { legend: { display: false }, tooltip: TIP,
+        barLogo: { index: 0 }
+      },
+      layout: { padding: { top: 36 } },
+      scales: { x: AX, y: { ...AX, beginAtZero: true, ticks: { ...AX.ticks, display: false }, grid: { display: false } } }
     }
   });
 </script>
