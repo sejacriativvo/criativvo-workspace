@@ -29,6 +29,8 @@
       --bd:   rgba(0,0,0,0.07);
       --sh:   0 1px 3px rgba(0,0,0,0.06), 0 6px 24px rgba(0,0,0,0.04);
       --sh-lg:0 4px 16px rgba(0,0,0,0.09), 0 1px 3px rgba(0,0,0,0.06);
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
     }
 
     body {
@@ -89,9 +91,14 @@
       background: var(--card); box-shadow: var(--sh);
       cursor: pointer; font-family: 'Montserrat', sans-serif;
       font-size: .74rem; font-weight: 700;
-      color: var(--mu); transition: all .18s; text-align: center;
+      color: var(--mu);
+      transition: transform 160ms var(--ease-out), border-color 160ms ease, color 160ms ease, box-shadow 200ms ease;
+      text-align: center;
     }
-    .utab:hover:not(.on) { border-color: rgba(0,0,0,0.16); color: var(--tx); transform: translateY(-1px); }
+    @media (hover: hover) and (pointer: fine) {
+      .utab:hover:not(.on) { border-color: rgba(0,0,0,0.16); color: var(--tx); transform: translateY(-1px); }
+    }
+    .utab:active:not(.on) { transform: scale(0.97); }
     .utab.on {
       background: linear-gradient(135deg, #e00, #900);
       color: #fff; border-color: transparent;
@@ -107,9 +114,13 @@
       background: var(--card); box-shadow: var(--sh);
       cursor: pointer; font-family: 'Montserrat', sans-serif;
       font-size: .74rem; font-weight: 700;
-      color: var(--tx); transition: all .18s;
+      color: var(--tx);
+      transition: border-color 160ms ease, transform 160ms var(--ease-out);
     }
-    .cal-trigger:hover { border-color: rgba(204,0,0,0.25); }
+    @media (hover: hover) and (pointer: fine) {
+      .cal-trigger:hover { border-color: rgba(204,0,0,0.25); }
+    }
+    .cal-trigger:active { transform: scale(0.98); }
     .cal-arrow { transition: transform .18s; }
     .cal-trigger.open .cal-arrow { transform: rotate(180deg); }
     .cal-drop {
@@ -119,20 +130,26 @@
       border-radius: 16px; padding: 16px;
       box-shadow: 0 16px 48px rgba(0,0,0,0.12);
       z-index: 300; opacity: 0; pointer-events: none;
-      transform: translateY(-6px);
-      transition: opacity .18s, transform .18s; min-width: 240px;
+      transform: translateY(-6px) scale(0.97);
+      transform-origin: top left;
+      transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+      min-width: 240px;
     }
-    .cal-drop.open { opacity: 1; pointer-events: auto; transform: none; }
+    .cal-drop.open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
     .cal-year { font-size: .60rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); margin-bottom: 10px; }
     .cal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
     .cal-m {
       padding: 10px 8px; border-radius: 8px; border: 1.5px solid transparent;
       font-family: 'Montserrat', sans-serif; font-size: .74rem; font-weight: 700;
-      cursor: pointer; transition: all .15s; color: var(--mu);
-      background: transparent; text-align: center;
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease, border-color 150ms ease, transform 150ms var(--ease-out);
+      color: var(--mu); background: transparent; text-align: center;
     }
     .cal-m.dis { opacity: .28; cursor: not-allowed; pointer-events: none; }
-    .cal-m.avail:hover { background: rgba(204,0,0,0.07); color: var(--red); border-color: rgba(204,0,0,0.2); }
+    @media (hover: hover) and (pointer: fine) {
+      .cal-m.avail:hover { background: rgba(204,0,0,0.07); color: var(--red); border-color: rgba(204,0,0,0.2); }
+    }
+    .cal-m.avail:active { transform: scale(0.94); }
     .cal-m.avail.on { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 4px 14px rgba(204,0,0,0.30); }
 
     /* ── HERO ── */
@@ -209,10 +226,12 @@
       box-shadow: var(--sh);
       transition: transform .22s, border-color .22s, box-shadow .22s;
     }
-    .kpi:hover {
-      transform: translateY(-3px);
-      border-color: rgba(204,0,0,0.18);
-      box-shadow: 0 6px 28px rgba(0,0,0,0.09), 0 0 0 1px rgba(204,0,0,0.08);
+    @media (hover: hover) and (pointer: fine) {
+      .kpi:hover {
+        transform: translateY(-3px);
+        border-color: rgba(204,0,0,0.18);
+        box-shadow: 0 6px 28px rgba(0,0,0,0.09), 0 0 0 1px rgba(204,0,0,0.08);
+      }
     }
     .kpi-lbl  { font-size: .54rem; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--mu); margin-bottom: 10px; }
     .kpi-val  { font-size: 1.7rem; font-weight: 900; line-height: 1; color: var(--tx); }
@@ -277,7 +296,9 @@
       box-shadow: var(--sh);
       transition: transform .18s, border-color .18s;
     }
-    .wk:hover { transform: translateY(-2px); border-color: rgba(0,0,0,0.14); }
+    @media (hover: hover) and (pointer: fine) {
+      .wk:hover { transform: translateY(-2px); border-color: rgba(0,0,0,0.14); }
+    }
     .wk.best {
       border-color: var(--red);
       box-shadow: 0 4px 20px rgba(204,0,0,0.10), 0 0 0 1px rgba(204,0,0,0.06);
@@ -313,7 +334,9 @@
       box-shadow: var(--sh);
       transition: border-color .15s, transform .15s;
     }
-    .ri:hover { border-color: rgba(0,0,0,0.14); transform: translateX(3px); }
+    @media (hover: hover) and (pointer: fine) {
+      .ri:hover { border-color: rgba(0,0,0,0.14); transform: translateX(3px); }
+    }
     .ri.me {
       border-color: var(--red);
       box-shadow: 0 0 16px rgba(204,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
@@ -347,7 +370,9 @@
       box-shadow: var(--sh);
       transition: transform .18s;
     }
-    .analysis-item:hover { transform: translateX(3px); }
+    @media (hover: hover) and (pointer: fine) {
+      .analysis-item:hover { transform: translateX(3px); }
+    }
     .analysis-item.ok   { border-left: 3px solid var(--grn); background: linear-gradient(135deg, #f0fdf4, #ffffff); }
     .analysis-item.warn { border-left: 3px solid var(--yel); background: linear-gradient(135deg, #fffbeb, #ffffff); }
     .analysis-item.tgt  { border-left: 3px solid var(--red); background: linear-gradient(135deg, #fff5f5, #ffffff); }
@@ -378,12 +403,20 @@
     footer p { font-size: .66rem; color: var(--mu); }
 
     /* ── SCROLL ANIMATIONS ── */
-    .anim { opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
+    .anim { opacity: 0; transform: translateY(14px); transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out); }
     .anim.in { opacity: 1; transform: none; }
-    .anim-d1 { transition-delay: .07s; }
-    .anim-d2 { transition-delay: .14s; }
-    .anim-d3 { transition-delay: .21s; }
-    .anim-d4 { transition-delay: .28s; }
+    .anim-d1 { transition-delay: 60ms; }
+    .anim-d2 { transition-delay: 110ms; }
+    .anim-d3 { transition-delay: 160ms; }
+    .anim-d4 { transition-delay: 210ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { transform: none; transition: opacity 200ms ease; }
+      .utab, .cal-trigger, .kpi, .wk, .ri, .analysis-item {
+        transition: opacity 150ms ease !important;
+      }
+      .cal-drop { transition: opacity 150ms ease !important; }
+    }
 
     .ghost-bg { display: none; }
 
