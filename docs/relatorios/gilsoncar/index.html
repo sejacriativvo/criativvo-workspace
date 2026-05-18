@@ -228,9 +228,9 @@
     }
     @media (hover: hover) and (pointer: fine) {
       .kpi:hover {
-        transform: translateY(-3px);
-        border-color: rgba(204,0,0,0.18);
-        box-shadow: 0 6px 28px rgba(0,0,0,0.09), 0 0 0 1px rgba(204,0,0,0.08);
+        transform: translateY(-5px);
+        border-color: rgba(204,0,0,0.22);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(204,0,0,0.12);
       }
     }
     .kpi-lbl  { font-size: .54rem; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--mu); margin-bottom: 10px; }
@@ -409,6 +409,57 @@
     .anim-d2 { transition-delay: 110ms; }
     .anim-d3 { transition-delay: 160ms; }
     .anim-d4 { transition-delay: 210ms; }
+    .anim-d5 { transition-delay: 260ms; }
+
+    /* ── STAGGER: hero metrics ── */
+    .hero-metrics .hm { animation: fadeUpHm 350ms var(--ease-out) both paused; }
+    .hero-metrics .hm:nth-child(2) { animation-delay: 55ms; }
+    .hero-metrics .hm:nth-child(3) { animation-delay: 110ms; }
+    .hero-metrics .hm:nth-child(4) { animation-delay: 165ms; }
+    .hero.in .hero-metrics .hm { animation-play-state: running; }
+    @keyframes fadeUpHm {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── STAGGER: rank items ── */
+    .rank-list .ri { animation: slideInRi 350ms var(--ease-out) both paused; }
+    .rank-list .ri:nth-child(2) { animation-delay: 55ms; }
+    .rank-list .ri:nth-child(3) { animation-delay: 110ms; }
+    .rank-list .ri:nth-child(4) { animation-delay: 165ms; }
+    .rank-list .ri:nth-child(5) { animation-delay: 220ms; }
+    .rank-list .ri:nth-child(6) { animation-delay: 275ms; }
+    .sec.in .rank-list .ri { animation-play-state: running; }
+    @keyframes slideInRi {
+      from { opacity: 0; transform: translateX(-10px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── STAGGER: analysis items ── */
+    .analysis-grid .analysis-item { animation: slideInAi 380ms var(--ease-out) both paused; }
+    .analysis-grid .analysis-item:nth-child(2) { animation-delay: 75ms; }
+    .analysis-grid .analysis-item:nth-child(3) { animation-delay: 150ms; }
+    .analysis-grid .analysis-item:nth-child(4) { animation-delay: 225ms; }
+    .analysis-grid .analysis-item:nth-child(5) { animation-delay: 300ms; }
+    .sec.in .analysis-grid .analysis-item { animation-play-state: running; }
+    @keyframes slideInAi {
+      from { opacity: 0; transform: translateX(-12px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── STAGGER: week cards ── */
+    .weeks-grid .wk { animation: fadeUpWk 320ms var(--ease-out) both paused; }
+    .weeks-grid .wk:nth-child(2) { animation-delay: 55ms; }
+    .weeks-grid .wk:nth-child(3) { animation-delay: 110ms; }
+    .weeks-grid .wk:nth-child(4) { animation-delay: 165ms; }
+    .sec.in .weeks-grid .wk { animation-play-state: running; }
+    @keyframes fadeUpWk {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── rank bar fill transition ── */
+    .ri-bar div { height: 100%; border-radius: 2px; transition: width 600ms var(--ease-out); }
 
     @media (prefers-reduced-motion: reduce) {
       .anim { transform: none; transition: opacity 200ms ease; }
@@ -416,6 +467,8 @@
         transition: opacity 150ms ease !important;
       }
       .cal-drop { transition: opacity 150ms ease !important; }
+      .rank-list .ri, .analysis-grid .analysis-item,
+      .weeks-grid .wk, .hero-metrics .hm { animation: none; opacity: 1; transform: none; }
     }
 
     .ghost-bg { display: none; }
@@ -545,11 +598,11 @@
       <div class="sec-line"></div>
     </div>
     <div class="kpis">
-      <div class="kpi anim-d1"><div class="kpi-lbl">Conversas</div><div class="kpi-val" id="vL">—</div><div class="badge up" id="dL">—</div><div class="kpi-note">Leads no WhatsApp</div></div>
-      <div class="kpi anim-d2"><div class="kpi-lbl">Investido em tráfego</div><div class="kpi-val" id="vI">—</div><div class="badge" id="dI">—</div><div class="kpi-note">Verba em anúncios</div></div>
-      <div class="kpi anim-d3"><div class="kpi-lbl">Custo por lead</div><div class="kpi-val" id="vC">—</div><div class="badge" id="dC">—</div><div class="kpi-note">Por conversa iniciada</div></div>
-      <div class="kpi anim-d4"><div class="kpi-lbl">Carros vendidos</div><div class="kpi-val" id="vS">—</div><div class="badge neu" id="dS">—</div><div class="kpi-note">Vendas confirmadas</div></div>
-      <div class="kpi"><div class="kpi-lbl">Custo/venda (tráfego)</div><div class="kpi-val" id="vP">—</div><div class="badge neu" id="dP">—</div><div class="kpi-note">Só verba de anúncio</div></div>
+      <div class="kpi anim anim-d1"><div class="kpi-lbl">Conversas</div><div class="kpi-val" id="vL">—</div><div class="badge up" id="dL">—</div><div class="kpi-note">Leads no WhatsApp</div></div>
+      <div class="kpi anim anim-d2"><div class="kpi-lbl">Investido em tráfego</div><div class="kpi-val" id="vI">—</div><div class="badge" id="dI">—</div><div class="kpi-note">Verba em anúncios</div></div>
+      <div class="kpi anim anim-d3"><div class="kpi-lbl">Custo por lead</div><div class="kpi-val" id="vC">—</div><div class="badge" id="dC">—</div><div class="kpi-note">Por conversa iniciada</div></div>
+      <div class="kpi anim anim-d4"><div class="kpi-lbl">Carros vendidos</div><div class="kpi-val" id="vS">—</div><div class="badge neu" id="dS">—</div><div class="kpi-note">Vendas confirmadas</div></div>
+      <div class="kpi anim anim-d5"><div class="kpi-lbl">Custo/venda (tráfego)</div><div class="kpi-val" id="vP">—</div><div class="badge neu" id="dP">—</div><div class="kpi-note">Só verba de anúncio</div></div>
     </div>
     <div class="sum" id="sumBox"></div>
   </div>
@@ -639,6 +692,22 @@
 </footer>
 
 <script>
+// ── countUp utility ──
+function countUp(el, target, fmt, ms = 700) {
+  if (!el) return;
+  const n = parseFloat(target);
+  if (isNaN(n)) { el.textContent = String(target); return; }
+  const t0 = performance.now();
+  const run = now => {
+    const p = Math.min((now - t0) / ms, 1);
+    const e = 1 - Math.pow(1 - p, 4); // ease-out-quart
+    el.textContent = fmt(e * n);
+    if (p < 1) requestAnimationFrame(run);
+    else el.textContent = fmt(n);
+  };
+  requestAnimationFrame(run);
+}
+
 // ── Progress bar ──
 const progress = document.getElementById('progress');
 window.addEventListener('scroll', () => {
@@ -939,14 +1008,14 @@ function render(){
 
 function buildHeroMetrics(d, prev){
   // Conversas
-  document.getElementById('hmLeads').textContent = N(d.leads);
+  countUp(document.getElementById('hmLeads'), d.leads, v => N(Math.round(v)));
   const lp = Math.round(((d.leads-prev.leads)/prev.leads)*100);
   const lEl = document.getElementById('hmLeadsDelta');
   lEl.textContent = (lp>0?'↑ ':'↓ ')+Math.abs(lp)+'% vs '+prev.label.split(' ')[0].toLowerCase();
   lEl.className = 'hm-delta '+(lp>0?'up':'dn');
 
   // Investimento
-  document.getElementById('hmInv').textContent = 'R$'+N(d.inv);
+  countUp(document.getElementById('hmInv'), d.inv, v => 'R$'+N(Math.round(v)));
   const ip = Math.round(((d.inv-prev.inv)/prev.inv)*100);
   const iEl = document.getElementById('hmInvDelta');
   iEl.textContent = (ip<0?'↓ ':ip>0?'↑ ':'')+Math.abs(ip)+'% vs '+prev.label.split(' ')[0].toLowerCase();
@@ -958,7 +1027,7 @@ function buildHeroMetrics(d, prev){
   const cplDelta = document.getElementById('hmCplDelta');
   if(d.cpl){
     cplLbl.textContent  = 'CPL';
-    cplEl.textContent   = R2(d.cpl);
+    countUp(cplEl, d.cpl, v => 'R$'+v.toFixed(2).replace('.',','));
     cplEl.className     = 'hm-val good';
     if(prev.cpl){
       const cp = Math.round(((d.cpl-prev.cpl)/prev.cpl)*100);
@@ -973,7 +1042,7 @@ function buildHeroMetrics(d, prev){
   }
 
   // Vendas
-  document.getElementById('hmSales').textContent = d.sales;
+  countUp(document.getElementById('hmSales'), d.sales, v => String(Math.round(v)));
   const salesDiff = d.sales - prev.sales;
   const sDeltaEl  = document.getElementById('hmSalesDelta');
   if(salesDiff === 0){
@@ -987,14 +1056,19 @@ function buildHeroMetrics(d, prev){
 }
 
 function buildKPIs(d, prev){
-  html('vL',N(d.leads)); html('vI','R$'+N(d.inv));
-  html('vC',d.cpl ? R2(d.cpl) : (d.roi||'—'));
-  html('vS',d.sales); html('vP',d.cps ? 'R$'+N(d.cps) : '—');
+  countUp(document.getElementById('vL'), d.leads, v => N(Math.round(v)));
+  countUp(document.getElementById('vI'), d.inv, v => 'R$'+N(Math.round(v)));
+  if (d.cpl) countUp(document.getElementById('vC'), d.cpl, v => 'R$'+v.toFixed(2).replace('.',','));
+  else html('vC', d.roi||'—');
+  countUp(document.getElementById('vS'), d.sales, v => String(Math.round(v)));
+  if (d.cps) countUp(document.getElementById('vP'), d.cps, v => 'R$'+N(Math.round(v)));
+  else html('vP','—');
 
   const fee = UNITS[curUnit].fee || 0;
   const totalCost = d.inv + fee;
   const totalCpv  = d.sales ? Math.round(totalCost / d.sales) : null;
-  html('mktgVal', totalCpv ? 'R$'+N(totalCpv) : '—');
+  if (totalCpv) countUp(document.getElementById('mktgVal'), totalCpv, v => 'R$'+N(Math.round(v)));
+  else html('mktgVal','—');
   html('mktgFormula',
     `R$${N(Math.round(d.inv))} tráfego <em>+</em> R$${N(fee)} serviço<br>`+
     `<em>= R$${N(Math.round(totalCost))} ÷ ${d.sales} vendas</em>`
@@ -1096,16 +1170,16 @@ function buildSocial(u){
   html('trophyWrap', s.trophy
     ? `<div class="trophy"><div class="ti">🏆</div><h3>Maior crescimento de seguidores da região</h3><p>${UNITS[u].handle} cresceu <strong>+1,35%</strong> — acima de todos os concorrentes monitorados.</p></div>`
     : '');
-  html('sEng', s.eng.toFixed(2).replace('.',',')+'%');
+  countUp(document.getElementById('sEng'), s.eng, v => v.toFixed(2).replace('.',',')+'%');
   const gc = s.grow>=0 ? 'var(--grn)' : '#dc2626';
   const gEl = document.getElementById('sGrow');
   gEl.style.color = gc;
-  gEl.textContent = (s.grow>=0?'+':'')+s.grow.toFixed(2).replace('.',',')+'%';
+  countUp(gEl, Math.abs(s.grow), v => (s.grow>=0?'+':'-')+v.toFixed(2).replace('.',',')+'%');
   set('sEngBadge',  s.engBadge,  s.engBadgeClass);
   set('sGrowBadge', s.growRank,  s.grow>=0?'up':'dn');
-  html('sIpp',  s.ipp.toFixed(2).replace('.',','));
+  countUp(document.getElementById('sIpp'), s.ipp, v => v.toFixed(2).replace('.',','));
   set('sIppBadge',   s.ippBadge,   s.ippBadgeClass);
-  html('sPosts', s.posts);
+  countUp(document.getElementById('sPosts'), s.posts, v => String(Math.round(v)));
   set('sPostsBadge', s.postsBadge, s.postsBadgeClass);
 
   const me     = SOCIAL_COMP.find(c=>c.unit===u);
@@ -1157,9 +1231,14 @@ function buildSocial(u){
     <div class="ri${r.me?' me':''}">
       <div class="ri-n${r.top?' top':''}">${i+1}</div>
       <div class="ri-name">${r.n} <span style="color:var(--lt);font-size:.65rem">${r.s}</span></div>
-      <div class="ri-bar"><div style="width:${r.bar}%;background:${r.pos?(r.me?BRD:GRN):'#dc2626'}"></div></div>
+      <div class="ri-bar"><div data-w="${r.bar}" style="width:0%;background:${r.pos?(r.me?BRD:GRN):'#dc2626'}"></div></div>
       <div class="ri-pct" style="color:${r.pos?(r.me?BRD:'var(--grn)'):'#dc2626'}">${fmt(r.pct)}</div>
     </div>`).join(''));
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.ri-bar [data-w]').forEach((el, i) => {
+      setTimeout(() => { el.style.width = el.dataset.w + '%'; }, 120 + i * 80);
+    });
+  });
 }
 
 function buildAnalysis(d){
