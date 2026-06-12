@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Guia de Design — Criativvo</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #16181d;
+    --gray-900: #2a2d34;
+    --gray-600: #6b7280;
+    --gray-400: #9ca3af;
+    --gray-200: #e5e7eb;
+    --gray-100: #f3f4f6;
+    --gray-50: #f7f8f9;
+    --accent: #ff5a1f;
+    --wrong: #e5392f;
+    --wrong-bg: #fdeceb;
+    --right: #16a34a;
+    --right-bg: #eafaef;
+  }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: #aab0b8;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @page { size: 1280px 720px; margin: 0; }
+
+  /* ---------- slide 16:9 ---------- */
+  .slide {
+    width: 1280px; height: 720px;
+    background: #fff;
+    margin: 16px auto;
+    padding: 64px 72px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  @media print {
+    body { background: none; }
+    .slide { margin: 0; page-break-after: always; }
+    .slide:last-child { page-break-after: auto; }
+  }
+
+  /* ---------- tipografia ---------- */
+  h1 { font-size: 40px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.08; }
+  h2 { font-size: 34px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; }
+  h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+  p  { font-size: 16px; color: var(--gray-900); }
+  .lead { font-size: 19px; color: var(--gray-600); line-height: 1.55; }
+  .small { font-size: 14px; color: var(--gray-600); line-height: 1.5; }
+
+  .kicker {
+    font-size: 13px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent);
+  }
+
+  /* ---------- header de slide ---------- */
+  .s-head { display: flex; align-items: center; gap: 16px; margin-bottom: 26px; }
+  .s-head .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 46px; height: 46px; border-radius: 12px;
+    background: var(--ink); color: #fff;
+    font-size: 19px; font-weight: 800; flex-shrink: 0;
+  }
+  .s-head .ktitle { display: flex; flex-direction: column; gap: 3px; }
+
+  /* ---------- footer ---------- */
+  .foot {
+    position: absolute; bottom: 30px; left: 72px; right: 72px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--gray-400);
+    border-top: 1px solid var(--gray-200); padding-top: 12px;
+  }
+  .foot .brand { font-weight: 800; color: var(--gray-600); letter-spacing: -0.01em; }
+
+  /* ---------- comparativo ---------- */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .card { border-radius: 16px; overflow: hidden; border: 1px solid var(--gray-200); display: flex; flex-direction: column; }
+  .card-tag { display: flex; align-items: center; gap: 9px; padding: 12px 18px; font-size: 14px; font-weight: 800; letter-spacing: 0.03em; }
+  .card-tag.wrong { background: var(--wrong-bg); color: var(--wrong); }
+  .card-tag.right { background: var(--right-bg); color: var(--right); }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.wrong { background: var(--wrong); }
+  .dot.right { background: var(--right); }
+  .card-stage { flex: 1; background: var(--gray-50); display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .card-note { padding: 12px 18px; font-size: 14px; color: var(--gray-600); background: #fff; border-top: 1px solid var(--gray-100); }
+
+  /* ---------- quadradinho + estrela ---------- */
+  .box {
+    width: 200px; height: 200px; border-radius: 22px;
+    background: #fff; border: 2px solid var(--gray-200);
+    position: relative; flex-shrink: 0;
+  }
+  .box .star { position: absolute; fill: var(--accent); }
+  /* errado: estrela preenche e encosta nas 4 bordas */
+  .box.wrong .star { inset: 0; width: 100%; height: 100%; }
+  /* certo: estrela menor, centralizada */
+  .box.right .star { width: 96px; height: 96px; top: 52px; left: 52px; }
+
+  /* marcadores vermelhos "0" nas 4 bordas (errado) */
+  .zmark {
+    position: absolute; background: var(--wrong); color: #fff;
+    font-size: 12px; font-weight: 800; line-height: 1;
+    padding: 4px 8px; border-radius: 20px; z-index: 3;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  }
+  .zmark.t { top: 7px; left: 50%; transform: translateX(-50%); }
+  .zmark.b { bottom: 7px; left: 50%; transform: translateX(-50%); }
+  .zmark.l { left: 7px; top: 50%; transform: translateY(-50%); }
+  .zmark.r { right: 7px; top: 50%; transform: translateY(-50%); }
+
+  /* barras de margem verdes iguais (certo) */
+  .mbar { position: absolute; background: var(--right); border-radius: 3px; z-index: 3; }
+  .mbar.t { width: 4px; height: 50px; top: 0; left: 50%; transform: translateX(-50%); }
+  .mbar.b { width: 4px; height: 50px; bottom: 0; left: 50%; transform: translateX(-50%); }
+  .mbar.l { height: 4px; width: 50px; left: 0; top: 50%; transform: translateY(-50%); }
+  .mbar.r { height: 4px; width: 50px; right: 0; top: 50%; transform: translateY(-50%); }
+  .mtag {
+    position: absolute; top: -2px; left: 50%; transform: translate(-50%,-130%);
+    background: var(--right); color: #fff; font-size: 11px; font-weight: 800;
+    padding: 3px 9px; border-radius: 20px; white-space: nowrap;
+  }
+
+  /* ---------- bloco de regra ---------- */
+  .rule { background: var(--gray-50); border-left: 4px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; }
+  .rule p { font-size: 15px; }
+  .rule strong { color: var(--ink); }
+
+  /* ---------- listas ---------- */
+  ul.clean { list-style: none; }
+  ul.clean li { font-size: 15px; color: var(--gray-900); padding: 6px 0 6px 28px; position: relative; }
+  ul.clean li::before { content: ""; position: absolute; left: 5px; top: 13px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .checklist li::before { content: "✓"; left: 2px; top: 5px; width: auto; height: auto; background: none; color: var(--right); font-weight: 800; font-size: 17px; }
+  .donts li::before { content: "✕"; left: 3px; top: 6px; width: auto; height: auto; background: none; color: var(--wrong); font-weight: 800; font-size: 16px; }
+
+  /* ---------- escala de espaçamento ---------- */
+  .scale { display: flex; gap: 12px; flex-wrap: wrap; }
+  .scale .pill { background: var(--ink); color: #fff; border-radius: 10px; padding: 10px 16px; font-size: 15px; font-weight: 800; }
+  .scale .pill span { font-weight: 400; opacity: 0.6; font-size: 12px; }
+
+  /* ---------- hierarquia / contraste / cor ---------- */
+  .ct { border-radius: 12px; padding: 22px; text-align: center; font-size: 17px; font-weight: 700; border: 1px solid var(--gray-200); }
+  .ct.bad1 { background: #ffb98a; color: #ffe0cb; }
+  .ct.bad2 { background: #e9ebee; color: #d2d5db; }
+  .ct.good1 { background: var(--ink); color: #fff; }
+  .ct.good2 { background: var(--accent); color: #fff; }
+
+  .swatches { display: flex; border-radius: 12px; overflow: hidden; border: 1px solid var(--gray-200); }
+  .sw { flex: 1; height: 78px; display: flex; align-items: flex-end; padding: 9px; font-size: 11px; font-weight: 800; }
+
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+  /* ---------- capa ---------- */
+  .cover { background: var(--ink); color: #fff; justify-content: space-between; padding: 64px 80px; }
+  .cover .top { display: flex; justify-content: space-between; align-items: center; }
+  .cover .top .logo { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+  .cover .top .tagk { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; color: rgba(255,255,255,0.45); text-transform: uppercase; }
+  .cover h1 { font-size: 72px; line-height: 0.98; letter-spacing: -0.035em; }
+  .cover .sub { font-size: 20px; color: rgba(255,255,255,0.62); margin-top: 22px; max-width: 70%; line-height: 1.5; }
+  .cover .aline { width: 80px; height: 6px; background: var(--accent); border-radius: 3px; margin-bottom: 30px; }
+  .cover .meta { display: flex; gap: 44px; font-size: 13px; color: rgba(255,255,255,0.5); }
+  .cover .meta b { color: #fff; display: block; font-size: 15px; margin-bottom: 3px; }
+
+  /* ---------- agenda ---------- */
+  .agenda { display: flex; flex-direction: column; gap: 0; }
+  .ag-item { display: flex; align-items: center; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--gray-200); }
+  .ag-item:last-child { border-bottom: none; }
+  .ag-item .an { font-size: 19px; font-weight: 800; color: var(--accent); width: 34px; flex-shrink: 0; }
+  .ag-item .at { font-size: 17px; font-weight: 700; }
+  .ag-item .ad { font-size: 13px; color: var(--gray-600); }
+
+  .why-card { background: var(--gray-50); border-radius: 14px; padding: 20px; border: 1px solid var(--gray-200); }
+  .why-card .ico { font-size: 26px; margin-bottom: 8px; }
+  .why-card h3 { margin-bottom: 6px; }
+
+  /* mini-post para demo de margem da peça */
+  .post { width: 200px; height: 200px; border-radius: 14px; background: #fff; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; }
+  .post.tight { padding: 6px; }
+  .post.airy { padding: 26px; }
+  .post .pt { font-size: 21px; font-weight: 800; line-height: 1.05; }
+  .post .pb { font-size: 12px; color: var(--gray-400); }
+
+  .stack { display: flex; flex-direction: column; gap: 18px; }
+  .center { display: flex; align-items: center; justify-content: center; }
+  .grow { flex: 1; }
+</style>
+</head>
+<body>
+
+<!-- ============ 1 · CAPA ============ -->
+<section class="slide cover">
+  <div class="top">
+    <div class="logo">criativvo</div>
+    <div class="tagk">Guia interno · Time de produção</div>
+  </div>
+  <div>
+    <div class="aline"></div>
+    <h1>Design que<br>respira.</h1>
+    <p class="sub">O guia rápido pra todo post sair limpo, alinhado e profissional. Margem de respiro, alinhamento, hierarquia, contraste e cor, sempre com o exemplo do certo e do errado.</p>
+  </div>
+  <div class="meta">
+    <div><b>Pra quem</b>Anderson e Luis</div>
+    <div><b>Foco</b>Produção de posts</div>
+    <div><b>Versão</b>Junho 2026</div>
+  </div>
+</section>
+
+<!-- ============ 2 · POR QUE + AGENDA ============ -->
+<section class="slide">
+  <div class="s-head">
+    <div class="ktitle">
+      <span class="kicker">Antes de começar</span>
+      <h2>Por que isso importa</h2>
+    </div>
+  </div>
+
+  <div class="twocol grow" style="align-items:start;">
+    <div class="stack">
+      <p class="lead" style="font-size:18px;">Design bom não é talento, é seguir regras simples com atenção. A diferença entre um post amador e um profissional está quase toda em <strong style="color:var(--ink)">espaço, alinhamento e consistência</strong>.</p>
+      <div class="why-card">
+        <div class="ico">👁️</div>
+        <h3>O olho percebe antes da cabeça</h3>
+        <p class="small">Ícone colado na borda ou texto torto o cliente sente como "estranho" sem saber explicar. Isso derruba a marca.</p>
+      </div>
+      <div class="why-card">
+        <div class="ico">⚡</div>
+        <h3>Regra economiza tempo</h3>
+        <p class="small">Seguindo um padrão você para de "chutar" e o post sai mais rápido e mais bonito.</p>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="margin-bottom:6px;">O que tem nesse guia</h3>
+      <div class="agenda">
+        <div class="ag-item"><span class="an">01</span><div><div class="at">Margem de respiro</div><div class="ad">Espaço igual em volta de tudo. O mais importante.</div></div></div>
+        <div class="ag-item"><span class="an">02</span><div><div class="at">Alinhamento e grid</div><div class="ad">Nada solto. Tudo na mesma linha invisível.</div></div></div>
+        <div class="ag-item"><span class="an">03</span><div><div class="at">Hierarquia visual</div><div class="ad">O que o olho lê primeiro, segundo e terceiro.</div></div></div>
+        <div class="ag-item"><span class="an">04</span><div><div class="at">Contraste e legibilidade</div><div class="ad">Texto que lê fácil em qualquer tela.</div></div></div>
+        <div class="ag-item"><span class="an">05</span><div><div class="at">Cor e consistência</div><div class="ad">Usar a paleta da marca, sem inventar.</div></div></div>
+        <div class="ag-item"><span class="an">06</span><div><div class="at">Checklist final</div><div class="ad">O que conferir antes de entregar.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span class="brand">criativvo</span><span>Guia de Design</span></div>
+</section>
+
+<!-- ============ 3 · MARGEM DE RESPIRO (HERO) ============ -->
+<section class="slide">
+  <div class="s-head">
+    <span class="num">01</span>
+    <div class="ktitle">
+      <span class="kicker">O conceito mais importante</span>
+      <h2>Margem de respiro</h2>
+    </div>
+  </div>
+
+  <div class="grow" style="display:grid; grid-template-columns: 360px 1fr; gap:40px; align-items:center;">
+    <div class="stack">
+      <p class="lead" style="font-size:18px;">Todo ícone, texto ou imagem precisa de <strong style="color:var(--ink)">espaço vazio em volta</strong>. Sem respiro, sufoca e fica amador. Com respiro, fica limpo e caro.</p>
+      <div class="rule">
+        <p><strong>Regra de ouro:</strong> a folga em cima, embaixo, na esquerda e na direita do elemento tem que ser <strong>igual</strong>. Sobrou mais de um lado? Está desalinhado.</p>
+      </div>
+      <p class="small">No exemplo ao lado, o ícone está dentro de um quadradinho. Veja a diferença quando ele encosta nas bordas e quando respira.</p>
+    </div>
+
+    <div class="compare">
+      <div class="card">
+        <div class="card-tag wrong"><span class="dot wrong"></span> ERRADO</div>
+        <div class="card-stage">
+          <div class="box wrong">
+            <svg class="star" viewBox="0 0 24 24"><path d="M12,0 L14.83,9.16 L24,9.16 L16.59,14.83 L19.42,24 L12,18.32 L4.59,24 L7.41,14.83 L0,9.16 L9.17,9.16 Z"/></svg>
+            <span class="zmark t">0</span>
+            <span class="zmark b">0</span>
+            <span class="zmark l">0</span>
+            <span class="zmark r">0</span>
+          </div>
+        </div>
+        <div class="card-note">Estrela encostando nas 4 bordas. Zero respiro, parece quebrado.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag right"><span class="dot right"></span> CERTO</div>
+        <div class="card-stage">
+          <div class="box right">
+            <svg class="star" viewBox="0 0 24 24"><path d="M12,0 L14.83,9.16 L24,9.16 L16.59,14.83 L19.42,24 L12,18.32 L4.59,24 L7.41,14.83 L0,9.16 L9.17,9.16 Z"/></svg>
+            <span class="mbar t"><span class="mtag">margem igual</span></span>
+            <span class="mbar b"></span>
+            <span class="mbar l"></span>
+            <span class="mbar r"></span>
+          </div>
+        </div>
+        <div class="card-note">Centralizada com folga igual nos 4 lados. Respira.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span class="brand">criativvo</span><span>01 · Margem de respiro</span></div>
+</section>
+
+<!-- ============ 4 · MARGEM NA PEÇA INTEIRA ============ -->
+<section class="slide">
+  <div class="s-head">
+    <span class="num">01</span>
+    <div class="ktitle">
+      <span class="kicker">Margem de respiro · continuação</span>
+      <h2>Respiro vale pra peça inteira</h2>
+    </div>
+  </div>
+
+  <div class="grow" style="display:grid; grid-template-columns: 1fr 380px; gap:44px; align-items:center;">
+    <div>
+      <p class="lead" style="font-size:18px; margin-bottom:20px;">Não é só dentro do quadradinho. O <strong style="color:var(--ink)">post inteiro</strong> precisa de margem. Texto e logo nunca encostam na borda.</p>
+      <div class="compare">
+        <div class="card">
+          <div class="card-tag wrong"><span class="dot wrong"></span> ERRADO</div>
+          <div class="card-stage" style="padding:20px;">
+            <div class="post tight" style="border:1px solid var(--gray-200);">
+              <div class="pt">Título colado<br>na borda</div>
+              <div class="pb">texto grudado embaixo</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-tag right"><span class="dot right"></span> CERTO</div>
+          <div class="card-stage" style="padding:20px;">
+            <div class="post airy" style="border:1px solid var(--gray-200);">
+              <div class="pt">Título com<br>margem</div>
+              <div class="pb">tudo afastado da borda</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div>
+        <h3 style="margin-bottom:8px;">Use sempre os mesmos valores</h3>
+        <p class="small" style="margin-bottom:14px;">Não fique chutando "um pouquinho aqui, um pouquinho ali". Escolha uma escala fixa e repita. Tudo fica harmônico sozinho.</p>
+        <div class="scale">
+          <div class="pill">8 <span>mín</span></div>
+          <div class="pill">16 <span>peq</span></div>
+          <div class="pill">24 <span>méd</span></div>
+          <div class="pill">40 <span>gra</span></div>
+          <div class="pill">64 <span>forte</span></div>
+        </div>
+      </div>
+      <div class="rule">
+        <p><strong>Na dúvida</strong> entre apertado e espaçoso, escolha <strong>mais espaço</strong>. Respiro a mais quase nunca fica feio. A menos, sempre.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span class="brand">criativvo</span><span>01 · Margem de respiro</span></div>
+</section>
+
+<!-- ============ 5 · ALINHAMENTO ============ -->
+<section class="slide">
+  <div class="s-head">
+    <span class="num">02</span>
+    <div class="ktitle">
+      <span class="kicker">Nada solto na peça</span>
+      <h2>Alinhamento e grid</h2>
+    </div>
+  </div>
+
+  <div class="grow" style="display:grid; grid-template-columns: 1fr 420px; gap:44px; align-items:center;">
+    <div class="compare">
+      <div class="card">
+        <div class="card-tag wrong"><span class="dot wrong"></span> ERRADO</div>
+        <div class="card-stage" style="align-items:stretch; padding:24px;">
+          <div style="width:100%; display:flex; flex-direction:column; gap:11px;">
+            <div style="font-weight:800; font-size:19px;">Título</div>
+            <div style="font-size:14px; color:var(--gray-600); margin-left:34px;">Linha começando torta</div>
+            <div style="font-size:14px; color:var(--gray-600); margin-left:16px;">Outra fora do eixo</div>
+            <div style="background:var(--accent); width:78px; height:28px; border-radius:8px; margin-left:48px;"></div>
+          </div>
+        </div>
+        <div class="card-note">Cada coisa começa num ponto diferente. Bagunça.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag right"><span class="dot right"></span> CERTO</div>
+        <div class="card-stage" style="align-items:stretch; padding:24px;">
+          <div style="width:100%; display:flex; flex-direction:column; gap:11px; border-left:2px dashed var(--right); padding-left:14px;">
+            <div style="font-weight:800; font-size:19px;">Título</div>
+            <div style="font-size:14px; color:var(--gray-600);">Linha alinhada à esquerda</div>
+            <div style="font-size:14px; color:var(--gray-600);">Tudo no mesmo eixo</div>
+            <div style="background:var(--accent); width:78px; height:28px; border-radius:8px;"></div>
+          </div>
+        </div>
+        <div class="card-note">Tudo na mesma linha invisível (verde). Organizado.</div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="rule">
+        <p><strong>Teste rápido:</strong> imagine uma linha reta na borda esquerda dos elementos. Todos encostam nela? Se um "vaza", conserte.</p>
+      </div>
+      <ul class="clean">
+        <li><strong>Escolha um alinhamento e mantenha.</strong> Ou tudo à esquerda, ou tudo centralizado. Não misture.</li>
+        <li><strong>Centralizado de verdade.</strong> No centro exato, não "quase".</li>
+        <li><strong>Use as réguas e guias</strong> da ferramenta. Não confie só no olho.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot"><span class="brand">criativvo</span><span>02 · Alinhamento e grid</span></div>
+</section>
+
+<!-- ============ 6 · HIERARQUIA ============ -->
+<section class="slide">
+  <div class="s-head">
+    <span class="num">03</span>
+    <div class="ktitle">
+      <span class="kicker">O que o olho lê primeiro</span>
+      <h2>Hierarquia visual</h2>
+    </div>
+  </div>
+
+  <div class="grow" style="display:grid; grid-template-columns: 1fr 420px; gap:44px; align-items:center;">
+    <div class="compare">
+      <div class="card">
+        <div class="card-tag wrong"><span class="dot wrong"></span> ERRADO</div>
+        <div class="card-stage" style="align-items:stretch; padding:24px;">
+          <div style="text-align:left;">
+            <div style="font-size:16px; font-weight:600;">Promoção de inverno</div>
+            <div style="font-size:16px; font-weight:600;">Até 50% de desconto</div>
+            <div style="font-size:16px; font-weight:600;">Só essa semana, corra</div>
+          </div>
+        </div>
+        <div class="card-note">Tudo do mesmo tamanho. Nada se destaca.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag right"><span class="dot right"></span> CERTO</div>
+        <div class="card-stage" style="align-items:stretch; padding:24px;">
+          <div style="text-align:left;">
+            <div style="font-size:13px; font-weight:800; color:var(--accent); letter-spacing:0.1em;">PROMOÇÃO DE INVERNO</div>
+            <div style="font-size:34px; font-weight:800; line-height:1.02; margin:6px 0;">Até 50%<br>de desconto</div>
+            <div style="font-size:13px; color:var(--gray-600);">Só essa semana, corra</div>
+          </div>
+        </div>
+        <div class="card-note">Três níveis: rótulo, número gigante, detalhe.</div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="rule">
+        <p><strong>Pense em 3 níveis:</strong> 1) o que grita (título/número), 2) o que apoia (subtítulo), 3) o detalhe (legenda). Tamanhos bem diferentes pra cada.</p>
+      </div>
+      <ul class="clean">
+        <li><strong>Tamanho:</strong> o principal é o maior. Diferença visível, não 14 vs 16.</li>
+        <li><strong>Peso:</strong> negrito no principal, normal no resto.</li>
+        <li><strong>Cor da marca</strong> só pra destacar o que importa.</li>
+        <li><strong>Só um "herói"</strong> por peça. Não dois.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot"><span class="brand">criativvo</span><span>03 · Hierarquia visual</span></div>
+</section>
+
+<!-- ============ 7 · CONTRASTE ============ -->
+<section class="slide">
+  <div class="s-head">
+    <span class="num">04</span>
+    <div class="ktitle">
+      <span class="kicker">Texto que lê fácil</span>
+      <h2>Contraste e legibilidade</h2>
+    </div>
+  </div>
+
+  <div class="grow" style="display:grid; grid-template-columns: 1fr 440px; gap:44px; align-items:center;">
+    <div>
+      <p class="lead" style="font-size:17px; margin-bottom:18px;">O texto tem que ler fácil <strong style="color:var(--ink)">em qualquer tela</strong>, até no sol. Se precisa apertar o olho, está errado.</p>
+      <div class="twocol" style="gap:18px;">
+        <div>
+          <div class="ct bad1">Texto fraco</div>
+          <p class="small" style="text-align:center; margin-top:8px; color:var(--wrong); font-weight:700;">✕ Claro sobre claro</p>
+        </div>
+        <div>
+          <div class="ct good2">Texto forte</div>
+          <p class="small" style="text-align:center; margin-top:8px; color:var(--right); font-weight:700;">✓ Branco sobre cor cheia</p>
+        </div>
+        <div>
+          <div class="ct bad2">Sem força</div>
+          <p class="small" style="text-align:center; margin-top:8px; color:var(--wrong); font-weight:700;">✕ Cinza claro no branco</p>
+        </div>
+        <div>
+          <div class="ct good1">Leitura limpa</div>
+          <p class="small" style="text-align:center; margin-top:8px; color:var(--right); font-weight:700;">✓ Escuro sobre claro</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="rule">
+        <p><strong>Teste do celular:</strong> mande a arte pro seu WhatsApp e olhe no celular com pouco brilho. Leu de boa? Passou.</p>
+      </div>
+      <ul class="clean">
+        <li><strong>Nada de texto minúsculo.</strong> Se some na miniatura, ninguém lê no feed.</li>
+        <li><strong>Texto sobre foto:</strong> escureça a foto ou use uma faixa atrás.</li>
+        <li><strong>No máximo 2 fontes</strong> por peça.</li>
+        <li><strong>Evite frases longas em CAIXA ALTA.</strong> Cansa.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot"><span class="brand">criativvo</span><span>04 · Contraste e legibilidade</span></div>
+</section>
+
+<!-- ============ 8 · COR ============ -->
+<section class="slide">
+  <div class="s-head">
+    <span class="num">05</span>
+    <div class="ktitle">
+      <span class="kicker">A marca é sagrada</span>
+      <h2>Cor e consistência</h2>
+    </div>
+  </div>
+
+  <div class="grow" style="display:grid; grid-template-columns: 1fr 440px; gap:44px; align-items:center;">
+    <div>
+      <p class="lead" style="font-size:17px; margin-bottom:16px;">Cada cliente tem uma <strong style="color:var(--ink)">paleta definida</strong>. Usem só essas cores, sempre. Inventar cor quebra a identidade.</p>
+      <div class="swatches" style="margin-bottom:12px;">
+        <div class="sw" style="background:#16181d; color:#fff;">PRINCIPAL</div>
+        <div class="sw" style="background:#ff5a1f; color:#fff;">DESTAQUE</div>
+        <div class="sw" style="background:#f3f4f6; color:#6b7280;">FUNDO</div>
+        <div class="sw" style="background:#6b7280; color:#fff;">APOIO</div>
+      </div>
+      <p class="small">Cada cliente tem o arquivo da paleta na pasta dele. Puxe sempre o código exato (ex: <strong>#ff5a1f</strong>), nunca uma cor "parecida" no olho.</p>
+    </div>
+
+    <div class="stack">
+      <div class="compare">
+        <div class="card">
+          <div class="card-tag wrong"><span class="dot wrong"></span> ERRADO</div>
+          <div class="card-stage" style="padding:22px;">
+            <div style="display:flex; gap:8px;">
+              <div style="width:36px;height:36px;border-radius:9px;background:#ff5a1f;"></div>
+              <div style="width:36px;height:36px;border-radius:9px;background:#8b5cf6;"></div>
+              <div style="width:36px;height:36px;border-radius:9px;background:#22c55e;"></div>
+              <div style="width:36px;height:36px;border-radius:9px;background:#ec4899;"></div>
+              <div style="width:36px;height:36px;border-radius:9px;background:#06b6d4;"></div>
+            </div>
+          </div>
+          <div class="card-note">Arco-íris fora da marca.</div>
+        </div>
+        <div class="card">
+          <div class="card-tag right"><span class="dot right"></span> CERTO</div>
+          <div class="card-stage" style="padding:22px;">
+            <div style="display:flex; gap:8px;">
+              <div style="width:36px;height:36px;border-radius:9px;background:#16181d;"></div>
+              <div style="width:36px;height:36px;border-radius:9px;background:#ff5a1f;"></div>
+              <div style="width:36px;height:36px;border-radius:9px;background:#f3f4f6;border:1px solid var(--gray-200);"></div>
+            </div>
+          </div>
+          <div class="card-note">Poucas cores, todas da paleta.</div>
+        </div>
+      </div>
+      <div class="rule">
+        <p><strong>Regra simples:</strong> 1 cor principal + 1 de destaque + neutros (preto, branco, cinza). Resolve 90% dos posts.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span class="brand">criativvo</span><span>05 · Cor e consistência</span></div>
+</section>
+
+<!-- ============ 9 · CHECKLIST ============ -->
+<section class="slide">
+  <div class="s-head">
+    <span class="num">06</span>
+    <div class="ktitle">
+      <span class="kicker">Antes de mandar pra aprovação</span>
+      <h2>Checklist final</h2>
+    </div>
+  </div>
+
+  <div class="grow" style="display:flex; flex-direction:column; gap:24px;">
+    <div class="twocol">
+      <div>
+        <h3 style="color:var(--right); margin-bottom:4px;">Tem que ter ✓</h3>
+        <ul class="clean checklist">
+          <li>Margem igual nas 4 bordas do post</li>
+          <li>Ícones com respiro, sem encostar nas bordas</li>
+          <li>Tudo alinhado na mesma linha invisível</li>
+          <li>Um elemento claramente principal</li>
+          <li>Texto legível no celular no sol</li>
+          <li>Só cores e fontes da paleta do cliente</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--wrong); margin-bottom:4px;">Não pode ter ✕</h3>
+        <ul class="clean donts">
+          <li>Elemento colado na borda</li>
+          <li>Coisas tortas ou fora do eixo</li>
+          <li>Tudo do mesmo tamanho</li>
+          <li>Texto sumindo no fundo</li>
+          <li>Mais de 2 fontes na peça</li>
+          <li>Cor inventada fora da marca</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="background:var(--ink); color:#fff; border-radius:16px; padding:24px 28px; display:flex; align-items:center; gap:28px;">
+      <div style="flex-shrink:0;">
+        <div class="kicker" style="color:var(--accent);">Na dúvida, pergunte 3 coisas</div>
+        <div style="font-size:15px; color:rgba(255,255,255,0.7); margin-top:6px;">Respirando? · Alinhado? · Na marca?</div>
+      </div>
+      <div style="width:1px; height:46px; background:rgba(255,255,255,0.15);"></div>
+      <p style="color:#fff; font-size:19px; font-weight:700; line-height:1.35;">Espaço, alinhamento e consistência. Acerte os três e o post já fica 90% mais profissional.</p>
+    </div>
+  </div>
+
+  <div class="foot"><span class="brand">criativvo</span><span>06 · Checklist final</span></div>
+</section>
+
+</body>
+</html>

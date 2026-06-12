@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório Mensal — GilsonCar Veículos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand:   #CC0000;
+      --brand-d: rgba(204,0,0,0.14);
+      --brand-b: rgba(204,0,0,0.35);
+      --glass:   rgba(255,255,255,0.07);
+      --glass-a: rgba(255,255,255,0.11);
+      --bd:      rgba(255,255,255,0.12);
+      --tx:      rgba(255,255,255,0.95);
+      --mu:      rgba(255,255,255,0.46);
+      --gr:      #34d399;
+      --gr-d:    rgba(52,211,153,0.14);
+      --gr-b:    rgba(52,211,153,0.30);
+      --rd:      #f87171;
+      --rd-d:    rgba(248,113,113,0.12);
+      --sh:      0 1px 0 rgba(255,255,255,0.20) inset, 0 12px 40px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.40);
+      --blur:    blur(40px) saturate(180%);
+      --rim:     rgba(255,255,255,0.26);
+    }
+
+    body {
+      background: #07070f;
+      background-image:
+        radial-gradient(ellipse 70% 55% at 14% 10%, rgba(204,0,0,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 45% at 86% 90%, rgba(90,50,200,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 35% at 52% 52%, rgba(204,0,0,0.04) 0%, transparent 70%);
+      color: var(--tx);
+      font-family: 'Montserrat', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    @font-face { font-family:'AVEstiana'; src:url('../../docs/fonts/AVEstiana-Black.otf') format('opentype'); font-weight:900; }
+
+    /* ── GLASS SPECULAR — brilho na borda superior de todos os painéis ── */
+    .kpi::before, .cc2::before, .hero-card::before, .hero-val-box::before,
+    .wk::before, .ri::before, .cc::before, .trophy::before, .ai::before, .sum::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 52%;
+      background: linear-gradient(160deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 38%, transparent 100%);
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── PROGRESS ── */
+    #progress { position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg,#CC0000,#ff5555); z-index:9999; transition:width .08s linear; pointer-events:none; box-shadow:0 0 8px rgba(204,0,0,0.6); }
+
+    /* ── HEADER ── */
+    header {
+      position:sticky; top:2px; z-index:200;
+      background: rgba(7,7,15,0.78);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 4px 28px rgba(0,0,0,0.65);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 20px; height:56px;
+    }
+    .h-logo { height:30px; filter:brightness(1.05); }
+    .h-right { display:flex; flex-direction:column; align-items:flex-end; gap:1px; }
+    .h-tag  { font-size:.54rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--mu); }
+    .h-unit { font-size:.68rem; font-weight:800; color:var(--tx); }
+
+    /* ── WRAP ── */
+    .wrap { max-width:980px; margin:0 auto; padding:0 16px; }
+
+    /* ── UNIT TABS ── */
+    .unit-tabs { display:flex; gap:8px; padding:20px 16px 0; max-width:980px; margin:0 auto; }
+    .utab {
+      flex:1; padding:12px 16px; border-radius:14px;
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.16) inset, 0 6px 20px rgba(0,0,0,0.40);
+      cursor:pointer; font-family:'Montserrat',sans-serif; font-size:.76rem; font-weight:700;
+      color:var(--mu); transition:all .20s; text-align:center;
+    }
+    .utab:hover:not(.on) { color:var(--tx); border-color:rgba(255,255,255,0.24); background:var(--glass-a); }
+    .utab.on {
+      background: linear-gradient(145deg, rgba(204,0,0,0.85) 0%, rgba(150,0,0,0.92) 100%);
+      color:#fff; border-color: rgba(255,120,120,0.38); border-top-color: rgba(255,180,180,0.45);
+      box-shadow: 0 1px 0 rgba(255,200,200,0.28) inset, 0 6px 28px rgba(204,0,0,0.50);
+    }
+
+    /* ── PERIOD TABS ── */
+    .period-wrap { max-width:980px; margin:12px auto 0; padding:0 16px; }
+    .period-tabs { display:flex; gap:8px; }
+    .ptab {
+      flex:1; padding:12px 16px; border-radius:14px;
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.16) inset, 0 6px 20px rgba(0,0,0,0.40);
+      cursor:pointer; font-family:'Montserrat',sans-serif; font-size:.78rem; font-weight:700;
+      color:var(--mu); transition:all .20s; text-align:center;
+    }
+    .ptab:hover:not(.on) { color:var(--tx); border-color:rgba(255,255,255,0.24); background:var(--glass-a); }
+    .ptab.on {
+      background: linear-gradient(145deg, rgba(204,0,0,0.85) 0%, rgba(150,0,0,0.92) 100%);
+      color:#fff; border-color: rgba(255,120,120,0.38); border-top-color: rgba(255,180,180,0.45);
+      box-shadow: 0 1px 0 rgba(255,200,200,0.28) inset, 0 6px 28px rgba(204,0,0,0.50);
+    }
+
+    /* ── HERO ── */
+    .hero { margin:16px auto 0; padding:0 16px; max-width:980px; }
+    .hero-card {
+      position:relative; overflow:hidden;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      border-radius:20px;
+      padding:24px; display:grid; grid-template-columns:1fr auto;
+      align-items:center; gap:20px;
+      box-shadow: var(--sh);
+    }
+    @media(max-width:560px){ .hero-card { grid-template-columns:1fr; } }
+    .hero-chip  { display:inline-flex; align-items:center; gap:6px; background:var(--brand-d); border:1px solid var(--brand-b); border-radius:20px; padding:3px 12px; font-size:.58rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--brand); margin-bottom:10px; position:relative; z-index:1; }
+    .hero-title { font-size:.88rem; font-weight:800; margin-bottom:6px; position:relative; z-index:1; }
+    .hero-desc  { font-size:.76rem; color:var(--mu); line-height:1.7; position:relative; z-index:1; }
+    .hero-desc strong { color:var(--tx); }
+    .hero-val-box {
+      text-align:center; position:relative; overflow:hidden;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15); border-top-color: rgba(255,255,255,0.32);
+      border-radius:16px; padding:20px 24px; min-width:148px; flex-shrink:0;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.22) inset, 0 8px 28px rgba(0,0,0,0.45);
+    }
+    .hero-val     { font-size:2.2rem; font-weight:900; color:#fff; line-height:1; position:relative; z-index:1; }
+    .hero-val-lbl { font-size:.58rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--mu); margin-top:6px; position:relative; z-index:1; }
+    .hero-val-sub { font-size:.65rem; color:var(--mu); margin-top:4px; position:relative; z-index:1; }
+
+    /* ── MAIN ── */
+    main { max-width:980px; margin:0 auto; padding:24px 16px 100px; }
+    .sec  { margin-bottom:48px; }
+    .sec-head  { display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+    .sec-tag   { font-size:.54rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--brand); white-space:nowrap; }
+    .sec-title { font-size:1rem; font-weight:800; white-space:nowrap; color:var(--tx); }
+    .hr { height:1px; background:var(--bd); flex:1; min-width:20px; }
+
+    /* ── KPIS ── */
+    .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; }
+    @media(max-width:480px){ .kpis { grid-template-columns:1fr 1fr; } }
+    @media(max-width:320px){ .kpis { grid-template-columns:1fr; } }
+    .kpi {
+      position:relative; overflow:hidden;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      border-radius:16px; padding:16px 14px;
+      box-shadow: var(--sh);
+      transition:transform .20s, box-shadow .20s;
+    }
+    .kpi:hover { transform:translateY(-3px); box-shadow: 0 1px 0 rgba(255,255,255,0.28) inset, 0 20px 56px rgba(0,0,0,0.60); }
+    .kpi-lbl  { font-size:.58rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--mu); margin-bottom:8px; position:relative; z-index:1; }
+    .kpi-val  { font-size:1.7rem; font-weight:900; line-height:1; color:#fff; position:relative; z-index:1; }
+    .badge    { display:inline-flex; align-items:center; margin-top:8px; font-size:.62rem; font-weight:700; padding:3px 8px; border-radius:20px; position:relative; z-index:1; }
+    .up  { background:var(--gr-d); color:var(--gr); }
+    .dn  { background:var(--rd-d); color:var(--rd); }
+    .neu { background:rgba(255,255,255,0.08); color:var(--mu); border:1px solid var(--bd); }
+    .kpi-note { font-size:.62rem; color:var(--mu); margin-top:4px; position:relative; z-index:1; }
+
+    /* ── SUMMARY ── */
+    .sum {
+      position:relative; overflow:hidden;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border-left:3px solid var(--brand);
+      border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); border-right:1px solid var(--bd);
+      border-radius:0 14px 14px 0;
+      padding:16px 18px; font-size:.82rem; color:var(--mu); line-height:1.8; margin-top:12px;
+      box-shadow: var(--sh);
+    }
+    .sum strong { color:var(--tx); }
+
+    /* ── COMPARE ── */
+    .cmp { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+    @media(max-width:480px){ .cmp { grid-template-columns:1fr; } }
+    .cc {
+      position:relative; overflow:hidden;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      border-radius:14px; padding:14px 16px;
+      box-shadow: var(--sh);
+    }
+    .cc.on {
+      border-color: var(--brand-b); border-top-color: rgba(255,130,130,0.42);
+      background: linear-gradient(135deg, rgba(204,0,0,0.11) 0%, rgba(255,255,255,0.05) 100%);
+      box-shadow: 0 1px 0 rgba(255,200,200,0.22) inset, 0 10px 36px rgba(204,0,0,0.22), 0 4px 16px rgba(0,0,0,0.45);
+    }
+    .cc-mo  { font-size:.58rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--mu); margin-bottom:9px; position:relative; z-index:1; }
+    .cc.on .cc-mo { color:var(--brand); }
+    .cc-row { display:flex; justify-content:space-between; font-size:.76rem; padding:3px 0; position:relative; z-index:1; }
+    .cc-row span:first-child { color:var(--mu); }
+    .cc-row span:last-child  { font-weight:700; color:var(--tx); }
+
+    /* ── CHARTS ── */
+    .cg  { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+    @media(max-width:560px){ .cg { grid-template-columns:1fr; } }
+    .cc2 {
+      position:relative; overflow:hidden;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      border-radius:16px; padding:16px;
+      box-shadow: var(--sh);
+    }
+    .cc2.w   { grid-column:1/-1; }
+    .cc2-lbl { font-size:.58rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--mu); margin-bottom:12px; position:relative; z-index:1; }
+
+    /* ── WEEKS ── */
+    .wks { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:10px; margin-top:10px; }
+    @media(max-width:480px){ .wks { grid-template-columns:1fr 1fr; } }
+    @media(max-width:340px){ .wks { grid-template-columns:1fr; } }
+    .wk {
+      position:relative; overflow:hidden;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      border-radius:14px; padding:14px;
+      box-shadow: var(--sh);
+    }
+    .wk.best {
+      border-color: var(--brand-b); border-top-color: rgba(255,130,130,0.42);
+      background: linear-gradient(135deg, rgba(204,0,0,0.12) 0%, rgba(255,255,255,0.05) 100%);
+      box-shadow: 0 1px 0 rgba(255,200,200,0.22) inset, 0 10px 36px rgba(204,0,0,0.28), 0 4px 16px rgba(0,0,0,0.45);
+    }
+    .wk-h    { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; position:relative; z-index:1; }
+    .wk-lbl  { font-size:.58rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--brand); }
+    .wk-b    { font-size:.56rem; font-weight:700; color:var(--gr); }
+    .wr      { display:flex; justify-content:space-between; font-size:.74rem; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.07); position:relative; z-index:1; }
+    .wr:last-child { border:none; }
+    .wl { color:var(--mu); }
+    .wv { font-weight:700; color:var(--tx); }
+    .wv.g { color:var(--gr); }
+
+    /* ── TABLE ── */
+    .tw {
+      overflow-x:auto; border-radius:14px;
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      margin-top:10px;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      box-shadow: var(--sh);
+    }
+    table { width:100%; border-collapse:collapse; min-width:440px; }
+    thead th { background:rgba(255,255,255,0.05); color:var(--mu); font-size:.58rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:10px 14px; text-align:left; border-bottom:1px solid var(--bd); }
+    tbody tr { border-bottom:1px solid rgba(255,255,255,0.07); transition:background .12s; }
+    tbody tr:last-child { border:none; }
+    tbody tr:hover { background:rgba(255,255,255,0.05); }
+    tbody tr.me   { background:var(--brand-d); }
+    tbody td { padding:10px 14px; font-size:.76rem; color:var(--mu); }
+    tbody tr.me td { color:var(--tx); font-weight:700; }
+    .you { background:var(--brand); color:#fff; font-size:.5rem; font-weight:700; padding:2px 6px; border-radius:6px; margin-left:4px; vertical-align:middle; }
+
+    /* ── RANKING ── */
+    .rl { display:flex; flex-direction:column; gap:7px; margin-top:10px; }
+    .ri {
+      position:relative; overflow:hidden;
+      display:flex; align-items:center; gap:10px;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      border-radius:13px; padding:10px 14px;
+      box-shadow: var(--sh);
+      transition:border-color .15s;
+    }
+    .ri:hover { border-color:rgba(255,255,255,0.24); }
+    .ri.me   { border-color:var(--brand-b); border-top-color:rgba(255,130,130,0.40); background:linear-gradient(135deg,rgba(204,0,0,0.10) 0%,rgba(255,255,255,0.05) 100%); }
+    .ri-n    { position:relative; z-index:1; width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,0.10); display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:800; color:var(--mu); flex-shrink:0; }
+    .ri-n.top { background:var(--brand); color:#fff; box-shadow:0 0 14px rgba(204,0,0,0.55); }
+    .ri-name { position:relative; z-index:1; flex:1; font-size:.78rem; color:var(--mu); }
+    .ri.me .ri-name { color:var(--tx); font-weight:700; }
+    .ri-bar  { position:relative; z-index:1; width:52px; height:3px; background:rgba(255,255,255,0.10); border-radius:2px; overflow:hidden; }
+    .ri-bar div { height:100%; border-radius:2px; }
+    .ri-pct  { position:relative; z-index:1; font-size:.8rem; font-weight:800; min-width:50px; text-align:right; }
+
+    /* ── TROPHY ── */
+    .trophy {
+      position:relative; overflow:hidden;
+      background: linear-gradient(135deg, rgba(204,0,0,0.13) 0%, rgba(255,255,255,0.05) 100%);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--brand-b); border-top-color: rgba(255,130,130,0.42);
+      border-radius:16px; padding:22px; text-align:center; margin-bottom:16px;
+      box-shadow: 0 1px 0 rgba(255,200,200,0.22) inset, 0 10px 40px rgba(204,0,0,0.28), 0 4px 20px rgba(0,0,0,0.50);
+    }
+    .trophy .ti { font-size:2rem; margin-bottom:8px; position:relative; z-index:1; }
+    .trophy h3  { font-size:.92rem; font-weight:800; color:var(--brand); margin-bottom:5px; position:relative; z-index:1; }
+    .trophy p   { font-size:.78rem; color:var(--mu); position:relative; z-index:1; }
+    .trophy p strong { color:var(--tx); }
+
+    /* ── ANALYSIS ── */
+    .ag { display:grid; gap:9px; }
+    .ai {
+      position:relative; overflow:hidden;
+      border-radius:14px; padding:16px 18px; display:flex; gap:12px; align-items:flex-start;
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.10) inset, 0 6px 20px rgba(0,0,0,0.40);
+    }
+    .ai.ok   { background:rgba(52,211,153,0.08);  border:1px solid rgba(52,211,153,0.22); border-top-color:rgba(52,211,153,0.38); }
+    .ai.warn { background:rgba(251,191,36,0.07);  border:1px solid rgba(251,191,36,0.22); border-top-color:rgba(251,191,36,0.38); }
+    .ai.tgt  { background:var(--brand-d); border:1px solid var(--brand-b); border-top-color:rgba(255,130,130,0.40); }
+    .ai-ic   { font-size:1.05rem; flex-shrink:0; position:relative; z-index:1; }
+    .ai h4   { font-size:.78rem; font-weight:800; margin-bottom:4px; position:relative; z-index:1; }
+    .ai.ok h4   { color:var(--gr); }
+    .ai.warn h4 { color:#fbbf24; }
+    .ai.tgt h4  { color:var(--brand); }
+    .ai p   { font-size:.75rem; color:var(--mu); line-height:1.65; position:relative; z-index:1; }
+    .ai p strong { color:var(--tx); }
+
+    /* ── INFO ── */
+    .info {
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--bd); border-top-color: var(--rim);
+      border-radius:13px; padding:13px 16px; font-size:.74rem; color:var(--mu); margin-top:10px; line-height:1.6;
+      box-shadow: var(--sh);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--bd);
+      padding:32px 16px; text-align:center;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    }
+    .footer-brand { font-family:'AVEstiana','Montserrat',sans-serif; font-weight:900; font-size:2.6rem; color:var(--tx); display:block; letter-spacing:-2px; margin-bottom:6px; }
+    footer p { font-size:.66rem; color:var(--mu); }
+
+    /* ── ANIM ── */
+    .anim { opacity:0; transform:translateY(14px); transition:opacity .45s ease,transform .45s ease; }
+    .anim.in { opacity:1; transform:none; }
+
+    /* ── MOBILE TWEAKS ── */
+    @media(max-width:480px){
+      .sec-title { font-size:.88rem; }
+      .hero-val  { font-size:1.8rem; }
+      .kpi-val   { font-size:1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header>
+  <img class="h-logo" src="assets/LOGO GILSONCAR.png" alt="GilsonCar Veículos">
+  <div class="h-right">
+    <span class="h-tag">Relatório Mensal</span>
+    <span class="h-unit" id="hUnit">GilsonCar Ibitinga</span>
+  </div>
+</header>
+
+<!-- UNIT TABS -->
+<div class="unit-tabs anim">
+  <button class="utab on" onclick="setUnit('ibitinga')">GilsonCar Ibitinga</button>
+  <button class="utab" onclick="setUnit('borborema')">GilsonCar Borborema</button>
+</div>
+
+<!-- PERIOD TABS -->
+<div class="period-wrap anim">
+  <div class="period-tabs">
+    <button class="ptab" id="ptMarco" onclick="setMonth('marco')">Março 2026</button>
+    <button class="ptab on" id="ptAbril" onclick="setMonth('abril')">Abril 2026</button>
+  </div>
+</div>
+
+<!-- HERO METRIC -->
+<div class="hero anim">
+  <div class="hero-card">
+    <div>
+      <div class="hero-chip">💡 Custo total de marketing por venda</div>
+      <div class="hero-title">Quanto custou vender 1 carro?</div>
+      <div class="hero-desc" id="hmDesc">—</div>
+    </div>
+    <div class="hero-val-box">
+      <div class="hero-val" id="hmVal">—</div>
+      <div class="hero-val-lbl">por carro vendido</div>
+      <div class="hero-val-sub" id="hmVsSub">—</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- RESUMO -->
+  <div class="sec anim">
+    <div class="sec-head"><span class="sec-tag">Visão geral</span><span class="sec-title">Resumo do mês</span><div class="hr"></div></div>
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-lbl">Conversas</div><div class="kpi-val" id="vL">—</div><div class="badge up" id="dL">—</div><div class="kpi-note">Leads no WhatsApp</div></div>
+      <div class="kpi"><div class="kpi-lbl">Investido em tráfego</div><div class="kpi-val" id="vI">—</div><div class="badge" id="dI">—</div><div class="kpi-note">Verba em anúncios</div></div>
+      <div class="kpi"><div class="kpi-lbl">Custo por lead</div><div class="kpi-val" id="vC">—</div><div class="badge" id="dC">—</div><div class="kpi-note">Por conversa iniciada</div></div>
+      <div class="kpi"><div class="kpi-lbl">Carros vendidos</div><div class="kpi-val" id="vS">—</div><div class="badge neu" id="dS">—</div><div class="kpi-note">Vendas confirmadas</div></div>
+      <div class="kpi"><div class="kpi-lbl">Custo/venda (tráfego)</div><div class="kpi-val" id="vP">—</div><div class="badge neu" id="dP">—</div><div class="kpi-note">Só verba de anúncio</div></div>
+    </div>
+    <div class="sum" id="sumBox"></div>
+  </div>
+
+  <!-- TRÁFEGO PAGO -->
+  <div class="sec anim">
+    <div class="sec-head"><span class="sec-tag">Meta Ads</span><span class="sec-title">Tráfego pago</span><div class="hr"></div></div>
+    <div class="cmp">
+      <div class="cc"  id="cm1"><div class="cc-mo" id="cm1mo">Mês anterior</div><div class="cc-row" id="cmL1"></div><div class="cc-row" id="cmI1"></div><div class="cc-row" id="cmC1"></div><div class="cc-row" id="cmS1"></div></div>
+      <div class="cc on" id="cm2"><div class="cc-mo" id="cm2mo">Mês atual</div><div class="cc-row" id="cmL2"></div><div class="cc-row" id="cmI2"></div><div class="cc-row" id="cmC2"></div><div class="cc-row" id="cmS2"></div></div>
+    </div>
+    <div class="cg">
+      <div class="cc2"><div class="cc2-lbl">Conversas</div><canvas id="chL" height="220"></canvas></div>
+      <div class="cc2"><div class="cc2-lbl" id="cplLbl">Custo por lead</div><canvas id="chC" height="220"></canvas></div>
+      <div class="cc2 w" id="semWrap"><div class="cc2-lbl">Investimento × Conversas — semana a semana</div><canvas id="chS" height="160"></canvas></div>
+    </div>
+    <div class="wks" id="wkGrid"></div>
+    <div class="info" id="wkInfo" style="display:none"></div>
+  </div>
+
+  <!-- REDES SOCIAIS -->
+  <div class="sec anim">
+    <div class="sec-head"><span class="sec-tag">Instagram</span><span class="sec-title">Análise de concorrentes</span><div class="hr"></div></div>
+    <p style="font-size:.7rem;color:var(--mu);margin-bottom:16px;">Período: 03/05/2026 – 10/05/2026</p>
+    <div id="trophyWrap"></div>
+    <div class="kpis" style="margin-bottom:12px;">
+      <div class="kpi"><div class="kpi-lbl">Engajamento</div><div class="kpi-val" id="sEng">—</div><div class="badge up" id="sEngBadge">—</div><div class="kpi-note">Média concorrentes: 0,07%</div></div>
+      <div class="kpi"><div class="kpi-lbl">Crescimento</div><div class="kpi-val" id="sGrow">—</div><div class="badge" id="sGrowBadge">—</div><div class="kpi-note">Seguidores no período</div></div>
+      <div class="kpi"><div class="kpi-lbl">Interação/post</div><div class="kpi-val" id="sIpp">—</div><div class="badge neu" id="sIppBadge">—</div><div class="kpi-note">Curtidas + comentários</div></div>
+      <div class="kpi"><div class="kpi-lbl">Posts publicados</div><div class="kpi-val" id="sPosts">—</div><div class="badge neu" id="sPostsBadge">—</div><div class="kpi-note">No período</div></div>
+    </div>
+    <div class="cg">
+      <div class="cc2"><div class="cc2-lbl">Engajamento vs concorrentes</div><canvas id="chEng" height="240"></canvas></div>
+      <div class="cc2"><div class="cc2-lbl" id="reelsLbl">Visualizações de Reels</div><canvas id="chR" height="240"></canvas></div>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Perfil</th><th>Engajamento</th><th>Posts</th><th>Curtidas</th><th>Interação/post</th></tr></thead>
+        <tbody id="tBody"></tbody>
+      </table>
+    </div>
+    <div style="margin-top:24px;">
+      <div class="sec-head" style="margin-bottom:10px;"><span class="sec-tag">Ranking</span><span class="sec-title" style="font-size:.88rem;">Crescimento de seguidores</span><div class="hr"></div></div>
+      <div class="rl" id="rankList"></div>
+    </div>
+  </div>
+
+  <!-- ANÁLISE -->
+  <div class="sec anim">
+    <div class="sec-head"><span class="sec-tag">Avaliação</span><span class="sec-title">O que aconteceu em <span id="anMo">Abril</span></span><div class="hr"></div></div>
+    <div class="ag" id="anGrid"></div>
+  </div>
+
+</main>
+
+<footer>
+  <span class="footer-brand">criativvo</span>
+  <p>Relatório produzido pela criativvo &nbsp;·&nbsp; criativvo.com.br &nbsp;·&nbsp; Maio de 2026</p>
+</footer>
+
+<script>
+// ── Progress bar ──
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  progress.style.width = (Math.min(pct,1)*100)+'%';
+}, { passive:true });
+
+// ── Scroll animations ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold:0.05, rootMargin:'0px 0px -20px 0px' });
+document.querySelectorAll('.anim').forEach(el => obs.observe(el));
+
+// ── GilsonCar logo — preload para usar nos gráficos ──
+const gilsonImg = new Image();
+gilsonImg.src = 'assets/LOGO GILSONCAR.png';
+
+// Plugin: desenha a logo da GilsonCar acima da barra "você"
+Chart.register({
+  id: 'voceLogo',
+  afterDraw(chart) {
+    if(!chart.config.options?.plugins?.voceLogo) return;
+    if(!gilsonImg.complete || !gilsonImg.naturalWidth) return;
+    const voceI = chart.data.labels.findIndex(l => l.toLowerCase() === 'você');
+    if(voceI < 0) return;
+    const { ctx } = chart;
+    const meta = chart.getDatasetMeta(0);
+    const bar  = meta.data[voceI];
+    const w = 64, h = w * (gilsonImg.naturalHeight / gilsonImg.naturalWidth);
+    const topOfBar = Math.min(bar.y, bar.base ?? bar.y);
+    const y = topOfBar - h - 6;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, 0, chart.width, chart.height);
+    ctx.clip();
+    ctx.drawImage(gilsonImg, bar.x - w/2, y, w, h);
+    ctx.restore();
+  }
+});
+
+// ── Pulse plugin — anima pontos do gráfico de linha ──
+Chart.register({
+  id: 'pulsePoints',
+  afterDraw(chart) {
+    if(!chart.config.options?.plugins?.pulsePoints) return;
+    if(chart._dead) return;
+    const { ctx } = chart;
+    const t = (Date.now() % 1400) / 1400;
+    chart.data.datasets.forEach((_, di) => {
+      const meta = chart.getDatasetMeta(di);
+      meta.data.forEach(pt => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 7 + 11 * t, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(204,0,0,${(1 - t) * 0.45})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+      });
+    });
+    cancelAnimationFrame(chart._pulseRAF);
+    chart._pulseRAF = requestAnimationFrame(() => { if(!chart._dead) chart.draw(); });
+  },
+  destroy(chart) { chart._dead = true; cancelAnimationFrame(chart._pulseRAF); }
+});
+
+// ── Chart defaults ──
+Chart.defaults.color = 'rgba(255,255,255,0.46)';
+Chart.defaults.font  = { family:'Montserrat', size:11 };
+const BRD = '#CC0000';
+const BRD_D = 'rgba(204,0,0,0.22)';
+const NEU   = 'rgba(255,255,255,0.14)';
+const GRN   = '#34d399';
+const GRD   = 'rgba(52,211,153,0.22)';
+const BD    = 'rgba(255,255,255,0.10)';
+const AX    = { grid:{ color:BD }, ticks:{ color:'rgba(255,255,255,0.44)' } };
+
+// ── Shared animation & tooltip defaults ──
+const ANIM_BAR = {
+  duration: 700, easing: 'easeOutQuart',
+  delay(ctx) { return ctx.type === 'data' ? ctx.dataIndex * 90 : 0; }
+};
+const TIP = {
+  backgroundColor:'rgba(10,10,22,0.94)',
+  titleColor:'rgba(255,255,255,0.95)', bodyColor:'rgba(255,255,255,0.55)',
+  borderColor:'rgba(255,255,255,0.14)', borderWidth:1,
+  padding:12, cornerRadius:10,
+  titleFont:{family:'Montserrat',weight:'800',size:12},
+  bodyFont:{family:'Montserrat',size:11}
+};
+
+// ── Helpers ──
+const R2  = n => 'R$'+n.toFixed(2).replace('.',',');
+const N   = n => n.toLocaleString('pt-BR');
+const set = (id,txt,cls) => { const e=document.getElementById(id); e.textContent=txt; if(cls) e.className='badge '+cls; };
+const html = (id,h) => document.getElementById(id).innerHTML = h;
+const row  = (l,v) => `<span>${l}</span><span>${v}</span>`;
+
+// ── DATA ──
+
+const UNITS = {
+  ibitinga: {
+    name:'GilsonCar Ibitinga', handle:'@gilsoncarveiculos', fee:4000,
+    social:{ eng:0.17, grow:-0.20, ipp:20.07, posts:15, reels:1200,
+      trophy:false, growRank:'3º lugar',
+      engBadge:'↑ 1º lugar da região', engBadgeClass:'up',
+      ippBadge:'2x mais que Furlan',    ippBadgeClass:'up',
+      postsBadge:'Média conc.: 15,2',   postsBadgeClass:'neu',
+    },
+    marco:{ leads:429, inv:3192, cpl:7.79, sales:23, cps:160,
+      label:'Março 2026',
+      sum:'Março foi o mês de maior volume de vendas: <strong>23 carros vendidos</strong> com R$3.192 em tráfego. A semana de 16–22/03 foi excepcional — sozinha gerou <strong>9 vendas</strong> com custo por venda de R$86.',
+      weeks:[
+        {l:'01–08/03',inv:813.32,leads:82, sales:5,cpl:9.92,cps:162.66},
+        {l:'09–15/03',inv:766.46,leads:110,sales:3,cpl:6.97,cps:255.49},
+        {l:'16–22/03',inv:775.56,leads:89, sales:9,cpl:8.71,cps:86.17, best:true},
+        {l:'23–31/03',inv:837.50,leads:148,sales:6,cpl:5.56,cps:139.58},
+      ],
+      an:[
+        {t:'ok',  i:'✅',h:'23 carros — melhor mês em volume',p:'A semana de 16–22/03 foi a destaque: 9 vendas com custo de R$86/venda. <strong>Cada R$1 gerou ~R$63 em faturamento.</strong>'},
+        {t:'warn',i:'⚠️',h:'CPL em R$7,79',p:'Custo por lead caiu ao longo do mês (de R$9,92 → R$5,56), tendência que acelerou em abril.'},
+      ]
+    },
+    abril:{ leads:602, inv:2921, cpl:4.62, sales:22, cps:167,
+      label:'Abril 2026',
+      sum:'Abril foi o mês da <strong>eficiência</strong>: com R$271 a menos que março, foram <strong>173 conversas a mais</strong> com quase o mesmo volume de vendas. CPL caiu 41% — de R$7,79 para <strong>R$4,62</strong>.',
+      weeks:[
+        {l:'01–07/04',inv:633.95,leads:106,sales:4,cpl:5.35,cps:158.49},
+        {l:'08–14/04',inv:583.50,leads:143,sales:2,cpl:3.94,cps:291.75},
+        {l:'15–21/04',inv:720.88,leads:111,sales:9,cpl:5.50,cps:80.10, best:true},
+        {l:'22–30/04',inv:983.05,leads:242,sales:7,cpl:3.69,cps:140.44},
+      ],
+      an:[
+        {t:'ok', i:'✅',h:'CPL caiu 41% — R$4,62 por conversa',p:'Última semana: R$3,69 — o menor da história. <strong>Os anúncios estão cada vez mais afiados.</strong>'},
+        {t:'ok', i:'✅',h:'Engajamento #1 da região',p:'0,17% e 20 interações por post — lidera todos os 5 concorrentes monitorados.'},
+        {t:'warn',i:'⚠️',h:'Seguidores caíram levemente (−0,20%)',p:'Premier e Furlan cresceram. Reels frequentes — especialmente <strong>aos sábados</strong> — devem reverter isso.'},
+        {t:'tgt', i:'🎯',h:'Foco de maio: sustentar CPL baixo e crescer seguidores',p:'Manter CPL em R$3,50–R$4,50 e aumentar Reels para crescer o perfil organicamente.'},
+      ]
+    }
+  },
+  borborema: {
+    name:'GilsonCar Borborema', handle:'@gilsoncarborborema', fee:750,
+    social:{ eng:0.57, grow:1.35, ipp:7.0, posts:3, reels:0,
+      trophy:true, growRank:'🏆 1º lugar',
+      engBadge:'↑ 8x acima da média', engBadgeClass:'up',
+      ippBadge:'acima da média (5,4)', ippBadgeClass:'up',
+      postsBadge:'⚠️ Média é 15,2',   postsBadgeClass:'dn',
+    },
+    marco:{ leads:29, inv:1202, cpl:null, sales:17, cps:null, roi:'78,89%',
+      label:'Março 2026',
+      sum:'Março foi a estreia em Borborema: <strong>17 carros vendidos</strong> com R$1.202 investidos. ROI de 78,89% — anúncios certeiros desde o primeiro mês.',
+      weeks:null,
+      an:[
+        {t:'ok', i:'✅',h:'17 vendas com R$1.202 investidos',p:'ROI de 78,89% desde o primeiro mês de operação em Borborema.'},
+        {t:'warn',i:'⚠️',h:'Volume de conversas ainda baixo (29)',p:'Abril mostrou que havia espaço: 57 conversas com menos verba.'},
+      ]
+    },
+    abril:{ leads:57, inv:831, cpl:null, sales:8, cps:null, roi:'76,66%',
+      label:'Abril 2026',
+      sum:'Abril foi o mês do <strong>crescimento nas redes</strong>: @gilsoncarborborema foi o perfil que <strong>mais cresceu em seguidores da região</strong> (+1,35%). Nos anúncios, conversas quase dobraram com menos verba.',
+      weeks:null,
+      an:[
+        {t:'ok', i:'✅',h:'🏆 Crescimento #1 da região: +1,35%',p:'O maior crescimento de seguidores entre todos os perfis monitorados.'},
+        {t:'ok', i:'✅',h:'Engajamento 8x acima da média (0,57%)',p:'A maior taxa de toda a análise — seguidores altamente engajados.'},
+        {t:'ok', i:'✅',h:'Conversas quase dobraram com menos verba',p:'29 → 57 conversas, com R$371 a menos investidos.'},
+        {t:'warn',i:'⚠️',h:'Apenas 3 posts — concorrentes publicam 15+',p:'Engajamento excelente por post. Aumentar frequência acelerará o crescimento.'},
+        {t:'tgt', i:'🎯',h:'Foco de maio: mais conteúdo, crescimento contínuo',p:'Aumentar Reels para transformar o engajamento atual em mais seguidores e compradores.'},
+      ]
+    }
+  }
+};
+
+const SOCIAL_COMP = [
+  {h:'@gilsoncarveiculos',  eng:0.17, posts:15, curtidas:276, ipp:20.07, unit:'ibitinga'},
+  {h:'@gilsoncarborborema', eng:0.57, posts:3,  curtidas:21,  ipp:7.0,   unit:'borborema'},
+  {h:'@_premier_autos',     eng:0.12, posts:30, curtidas:104, ipp:3.5},
+  {h:'@furlanveiculos',     eng:0.10, posts:21, curtidas:181, ipp:8.71},
+  {h:'@belavista_veiculos', eng:0.09, posts:12, curtidas:24,  ipp:2.0},
+  {h:'@pinguimmotors',      eng:0.06, posts:13, curtidas:141, ipp:11.08},
+];
+
+const RANK = {
+  ibitinga: [
+    {n:'@_premier_autos',     s:'(~21k)',   pct:0.25,  bar:18, pos:true},
+    {n:'@furlanveiculos',     s:'(~10k)',   pct:0.06,  bar:4,  pos:true},
+    {n:'@gilsoncarveiculos',  s:'(~12,5k)', pct:-0.20, bar:0,  pos:false, me:true},
+    {n:'@ibivelveiculos',     s:'',         pct:-0.33, bar:0,  pos:false},
+    {n:'@belavista_veiculos', s:'',         pct:-0.39, bar:0,  pos:false},
+    {n:'@pinguimmotors',      s:'',         pct:-0.81, bar:0,  pos:false},
+  ],
+  borborema: [
+    {n:'@gilsoncarborborema', s:'(~3k)',  pct:1.35,  bar:100, pos:true, me:true, top:true},
+    {n:'@_premier_autos',     s:'(~21k)', pct:0.25,  bar:18,  pos:true},
+    {n:'@furlanveiculos',     s:'(~10k)', pct:0.06,  bar:4,   pos:true},
+    {n:'@pinguimmotors',      s:'',       pct:-0.08, bar:0,   pos:false},
+    {n:'@belavista_veiculos', s:'',       pct:-0.39, bar:0,   pos:false},
+  ]
+};
+
+// ── State ──
+let curUnit='ibitinga', charts={};
+let curKey='abril';
+
+const fmt = n => (n>=0?'+':'')+n.toFixed(2).replace('.',',')+'%';
+
+// ── Month selector ──
+function setMonth(key){
+  curKey = key;
+  document.getElementById('ptMarco').classList.toggle('on', key==='marco');
+  document.getElementById('ptAbril').classList.toggle('on', key==='abril');
+  render();
+}
+
+// ── Unit selector ──
+function setUnit(u){
+  curUnit = u;
+  document.querySelectorAll('.utab').forEach((b,i) => b.classList.toggle('on', u==='ibitinga'?i===0:i===1));
+  render();
+}
+
+// ── Render ──
+function render(){
+  const primary    = UNITS[curUnit][curKey];
+  const other      = curKey==='abril' ? 'marco' : 'abril';
+  const comparison = UNITS[curUnit][other];
+
+  document.getElementById('hUnit').textContent = UNITS[curUnit].name;
+  document.getElementById('anMo').textContent  = primary.label.split(' ')[0];
+
+  buildHero(primary, comparison);
+  buildKPIs(primary, comparison);
+  buildCompare(primary, comparison);
+  buildWeeks(primary);
+  buildCharts(primary, comparison);
+  buildSocial(curUnit);
+  buildAnalysis(primary);
+}
+
+function buildHero(d, prev){
+  const fee=UNITS[curUnit].fee, total=d.inv+fee, perCar=Math.round(total/d.sales);
+  const prevPerCar=Math.round((prev.inv+fee)/prev.sales);
+  const diff=perCar-prevPerCar;
+  html('hmDesc',`Em <strong>${d.label}</strong>, a <strong>${UNITS[curUnit].name}</strong> investiu <strong>R$${N(d.inv)}</strong> em tráfego + <strong>R$${N(fee)}</strong> de gestão criativvo = <strong>R$${N(total)}</strong> total ÷ <strong>${d.sales}</strong> vendas.`);
+  html('hmVal','R$'+N(perCar));
+  html('hmVsSub',(diff<=0?'↓ R$':'↑ R$')+Math.abs(diff)+' vs '+prev.label.split(' ')[0].toLowerCase());
+}
+
+function buildKPIs(d, prev){
+  html('vL',N(d.leads)); html('vI','R$'+N(d.inv));
+  html('vC',d.cpl ? R2(d.cpl) : (d.roi||'—'));
+  html('vS',d.sales); html('vP',d.cps ? 'R$'+N(d.cps) : '—');
+
+  const lp=Math.round(((d.leads-prev.leads)/prev.leads)*100);
+  set('dL',(lp>0?'↑ ':'↓ ')+Math.abs(lp)+'% vs '+prev.label.split(' ')[0].toLowerCase(), lp>0?'up':'dn');
+  const ip=Math.round(((d.inv-prev.inv)/prev.inv)*100);
+  set('dI',(ip<0?'↓ ':ip>0?'↑ ':'')+Math.abs(ip)+'% vs '+prev.label.split(' ')[0].toLowerCase(), ip<0?'up':'dn');
+  if(d.cpl&&prev.cpl){
+    const cp=Math.round(((d.cpl-prev.cpl)/prev.cpl)*100);
+    set('dC',(cp<0?'↓ ':'↑ ')+Math.abs(cp)+'% vs '+prev.label.split(' ')[0].toLowerCase(), cp<0?'up':'dn');
+  } else {
+    set('dC', d.roi ? 'ROI: '+d.roi : '—','neu');
+  }
+  set('dS', d.sales+' vendas no mês','neu');
+  set('dP', d.cps&&prev.cps ? 'vs R$'+N(prev.cps)+' ant.' : '—','neu');
+  html('sumBox',d.sum);
+}
+
+function buildCompare(d, prev){
+  html('cm1mo',prev.label); html('cm2mo',d.label);
+  html('cmL1',row('Conversas',prev.leads));        html('cmI1',row('Investimento','R$'+N(prev.inv)));
+  html('cmC1',row(prev.cpl?'CPL':'ROI',prev.cpl?R2(prev.cpl):(prev.roi||'—'))); html('cmS1',row('Vendas',prev.sales));
+  html('cmL2',row('Conversas',d.leads));           html('cmI2',row('Investimento','R$'+N(d.inv)));
+  html('cmC2',row(d.cpl?'CPL':'ROI',d.cpl?R2(d.cpl):(d.roi||'—'))); html('cmS2',row('Vendas',d.sales));
+}
+
+function buildWeeks(d){
+  const grid=document.getElementById('wkGrid'), info=document.getElementById('wkInfo'), sem=document.getElementById('semWrap');
+  if(!d.weeks){
+    grid.innerHTML=''; info.style.display='block';
+    info.innerHTML='Detalhamento semanal não disponível para esta unidade.';
+    sem.style.display='none'; return;
+  }
+  sem.style.display=''; info.style.display='none';
+  grid.innerHTML=d.weeks.map(w=>`
+    <div class="wk${w.best?' best':''}">
+      <div class="wk-h"><span class="wk-lbl">${w.l}</span>${w.best?'<span class="wk-b">🏆 melhor</span>':''}</div>
+      <div class="wr"><span class="wl">Investido</span><span class="wv">${R2(w.inv)}</span></div>
+      <div class="wr"><span class="wl">Conversas</span><span class="wv g">${w.leads}</span></div>
+      <div class="wr"><span class="wl">Vendas</span><span class="wv">${w.sales}</span></div>
+      <div class="wr"><span class="wl">CPL</span><span class="wv">${R2(w.cpl)}</span></div>
+      <div class="wr"><span class="wl">Custo/venda</span><span class="wv">${R2(w.cps)}</span></div>
+    </div>`).join('');
+}
+
+function buildCharts(d, prev){
+  if(charts.l) charts.l.destroy();
+  charts.l = new Chart('chL',{type:'bar',data:{
+    labels:[prev.label.split(' ')[0], d.label.split(' ')[0]],
+    datasets:[{label:'Conversas',data:[prev.leads,d.leads],backgroundColor:[NEU,BRD],borderRadius:8,borderSkipped:false}]
+  },options:{animation:ANIM_BAR,plugins:{legend:{display:false},tooltip:TIP},scales:{x:AX,y:{...AX,beginAtZero:true}}}});
+
+  if(charts.c) charts.c.destroy();
+  if(d.cpl){
+    charts.c = new Chart('chC',{type:'line',data:{
+      labels:d.weeks ? d.weeks.map(w=>w.l) : [prev.label.split(' ')[0],d.label.split(' ')[0]],
+      datasets:[{
+        label:'CPL (R$)', data:d.weeks?d.weeks.map(w=>w.cpl):[prev.cpl,d.cpl],
+        borderColor:BRD, backgroundColor:BRD_D, fill:true, tension:0.4,
+        pointBackgroundColor:BRD, pointBorderColor:'#fff', pointBorderWidth:2,
+        pointRadius:7, pointHoverRadius:11, pointHoverBackgroundColor:BRD
+      }]
+    },options:{
+      animation:{duration:900,easing:'easeInOutQuart'},
+      plugins:{
+        legend:{display:false},
+        pulsePoints:true,
+        tooltip:{...TIP,callbacks:{label(ctx){return ` R$${ctx.raw.toFixed(2).replace('.',',')} por lead`;}}}
+      },
+      scales:{x:AX,y:AX}
+    }});
+    document.getElementById('cplLbl').innerHTML =
+      'Evolução do custo por lead <span style="font-size:.55rem;color:var(--mu);font-weight:500;letter-spacing:0;text-transform:none;margin-left:6px;">· passe o mouse nos pontos</span>';
+  } else {
+    charts.c = new Chart('chC',{type:'bar',data:{
+      labels:[prev.label.split(' ')[0],d.label.split(' ')[0]],
+      datasets:[{label:'Investimento (R$)',data:[prev.inv,d.inv],backgroundColor:[NEU,BRD],borderRadius:8,borderSkipped:false}]
+    },options:{animation:ANIM_BAR,plugins:{legend:{display:false},tooltip:TIP},scales:{x:AX,y:{...AX,beginAtZero:true}}}});
+    document.getElementById('cplLbl').textContent='Investimento por mês (R$)';
+  }
+
+  if(charts.s) charts.s.destroy();
+  if(d.weeks){
+    charts.s = new Chart('chS',{type:'bar',data:{
+      labels:d.weeks.map(w=>w.l),
+      datasets:[
+        {label:'Investimento (R$)',data:d.weeks.map(w=>w.inv),backgroundColor:BRD_D,borderColor:BRD,borderWidth:1.5,borderRadius:6,borderSkipped:false,yAxisID:'y'},
+        {label:'Conversas',data:d.weeks.map(w=>w.leads),backgroundColor:NEU,borderRadius:6,borderSkipped:false,yAxisID:'y1'}
+      ]
+    },options:{
+      animation:ANIM_BAR,
+      plugins:{legend:{labels:{font:{family:'Montserrat',size:11},color:'rgba(255,255,255,0.46)'}},tooltip:TIP},
+      scales:{x:AX,y:{...AX,beginAtZero:true},y1:{grid:{display:false},ticks:{color:'rgba(255,255,255,0.44)'},beginAtZero:true,position:'right'}}
+    }});
+  }
+}
+
+function buildSocial(u){
+  const s = UNITS[u].social;
+  html('trophyWrap', s.trophy
+    ? `<div class="trophy"><div class="ti">🏆</div><h3>Maior crescimento de seguidores da região</h3><p>${UNITS[u].handle} cresceu <strong>+1,35%</strong> — acima de todos os concorrentes monitorados.</p></div>`
+    : '');
+
+  html('sEng', s.eng.toFixed(2).replace('.',',')+'%');
+  const gc = s.grow>=0 ? 'var(--tx)' : 'var(--rd)';
+  const gEl = document.getElementById('sGrow');
+  gEl.style.color = gc;
+  gEl.textContent = (s.grow>=0?'+':'')+s.grow.toFixed(2).replace('.',',')+'%';
+  set('sEngBadge',  s.engBadge,  s.engBadgeClass);
+  set('sGrowBadge', s.growRank,  s.grow>=0?'up':'dn');
+  html('sIpp',  s.ipp.toFixed(2).replace('.',','));
+  set('sIppBadge',   s.ippBadge,   s.ippBadgeClass);
+  html('sPosts', s.posts);
+  set('sPostsBadge', s.postsBadge, s.postsBadgeClass);
+
+  const me     = SOCIAL_COMP.find(c=>c.unit===u);
+  const others = SOCIAL_COMP.filter(c=>!c.unit);
+  const all    = [me,...others].slice(0,5);
+
+  const logoOpts = { plugins:{ legend:{display:false}, voceLogo:true, tooltip:TIP }, layout:{ padding:{ top:28 } }, animation:ANIM_BAR };
+
+  if(charts.eng) charts.eng.destroy();
+  charts.eng = new Chart('chEng',{type:'bar',data:{
+    labels:all.map((c,i)=>i===0?'você':c.h.replace('@','')),
+    datasets:[{label:'Engajamento (%)',data:all.map(c=>c.eng),backgroundColor:all.map((_,i)=>i===0?BRD:NEU),borderRadius:8,borderSkipped:false}]
+  },options:{...logoOpts,scales:{x:{...AX,ticks:{...AX.ticks,maxRotation:30}},y:{...AX,beginAtZero:true}}}});
+
+  if(charts.r) charts.r.destroy();
+  if(s.reels>0){
+    const rd=[{n:'Furlan',v:2300},{n:'você',v:s.reels},{n:'Premier',v:886}];
+    charts.r = new Chart('chR',{type:'bar',data:{
+      labels:rd.map(d=>d.n),
+      datasets:[{label:'Viz. Reels',data:rd.map(d=>d.v),backgroundColor:rd.map(d=>d.n==='você'?BRD:NEU),borderRadius:8,borderSkipped:false}]
+    },options:{...logoOpts,scales:{x:AX,y:{...AX,beginAtZero:true}}}});
+    html('reelsLbl','Visualizações de Reels');
+  } else {
+    const rk = u==='borborema'
+      ? [{n:'você',v:1.35},{n:'premier',v:0.25},{n:'furlan',v:0.06},{n:'pinguim',v:-0.08},{n:'bela vista',v:-0.39}]
+      : [{n:'premier',v:0.25},{n:'furlan',v:0.06},{n:'você',v:-0.20},{n:'ibivel',v:-0.33},{n:'bela vista',v:-0.39}];
+    charts.r = new Chart('chR',{type:'bar',data:{
+      labels:rk.map(d=>d.n),
+      datasets:[{label:'Crescimento (%)',data:rk.map(d=>d.v),backgroundColor:rk.map(d=>d.n==='você'?BRD:NEU),borderRadius:8,borderSkipped:false}]
+    },options:{...logoOpts,scales:{x:AX,y:AX}}});
+    html('reelsLbl','Crescimento de seguidores (%)');
+  }
+
+  const rows = SOCIAL_COMP.filter(c=>c.unit===u||!c.unit).map(c=>{
+    const isMe = c.unit===u;
+    return `<tr${isMe?' class="me"':''}><td>${c.h}${isMe?'<span class="you">você</span>':''}</td><td>${c.eng.toFixed(2).replace('.',',')}%</td><td>${c.posts}</td><td>${c.curtidas}</td><td>${c.ipp}</td></tr>`;
+  });
+  html('tBody',rows.join(''));
+
+  html('rankList',RANK[u].map((r,i)=>`
+    <div class="ri${r.me?' me':''}">
+      <div class="ri-n${r.top?' top':''}">${i+1}</div>
+      <div class="ri-name">${r.n} <span style="color:var(--mu);font-size:.65rem">${r.s}</span></div>
+      <div class="ri-bar"><div style="width:${r.bar}%;background:${r.pos?(r.me?BRD:GRN):'var(--rd)'}"></div></div>
+      <div class="ri-pct" style="color:${r.pos?'var(--tx)':'var(--rd)'}">${fmt(r.pct)}</div>
+    </div>`).join(''));
+}
+
+function buildAnalysis(d){
+  html('anGrid',d.an.map(a=>`<div class="ai ${a.t}"><div class="ai-ic">${a.i}</div><div><h4>${a.h}</h4><p>${a.p}</p></div></div>`).join(''));
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estudo de Mercado — Método Atleta da Pelada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:     #07090A;
+      --surf:   #0D1117;
+      --card:   #131C20;
+      --border: #1E2C32;
+      --lime:   #A8FF3E;
+      --lime2:  rgba(168,255,62,.12);
+      --lime3:  rgba(168,255,62,.06);
+      --red:    #FF4D4D;
+      --red2:   rgba(255,77,77,.12);
+      --gold:   #FFD060;
+      --white:  #F0F2F0;
+      --gray:   #7A8A7A;
+      --gray2:  #4A5A4A;
+    }
+
+    @page { size: A4 portrait; margin: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #000; }
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── PAGES ── */
+    .page {
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto;
+      position: relative;
+      page-break-after: always;
+      page-break-inside: avoid;
+      overflow: hidden;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+    }
+    .page:last-child { page-break-after: auto; }
+
+    /* ── SHARED ── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 10mm;
+    }
+    .tag::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--lime);
+      display: block;
+    }
+
+    .page-label {
+      position: absolute;
+      top: 10mm;
+      right: 10mm;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: var(--gray2);
+      text-transform: uppercase;
+    }
+
+    .made-by {
+      position: absolute;
+      bottom: 8mm;
+      left: 12mm;
+      font-size: 9px;
+      color: var(--gray2);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+    .made-by b { color: var(--gray); font-weight: 600; }
+
+    /* ── PAGE 1 — COVER ── */
+    .cover {
+      background:
+        linear-gradient(160deg, rgba(7,9,10,0) 30%, rgba(7,9,10,.95) 80%),
+        linear-gradient(to bottom, rgba(7,9,10,.6) 0%, rgba(7,9,10,.85) 100%),
+        url('https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+      justify-content: flex-end;
+      padding: 0 14mm 18mm;
+    }
+    .cover-eyebrow {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 6mm;
+    }
+    .cover-title {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 82px;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 8mm;
+    }
+    .cover-title span { color: var(--lime); }
+    .cover-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(240,242,240,.75);
+      line-height: 1.6;
+      max-width: 120mm;
+      margin-bottom: 14mm;
+    }
+    .cover-for {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: 0.4px;
+    }
+    .cover-for::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--lime);
+      display: block;
+    }
+    .cover-logo {
+      position: absolute;
+      top: 12mm;
+      left: 14mm;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray2);
+    }
+
+    /* ── INNER PAGES LAYOUT ── */
+    .inner {
+      padding: 16mm 14mm 14mm;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── PAGE 2 — O PROBLEMA ── */
+    .prob-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 120%, rgba(255,77,77,.08) 0%, transparent 70%),
+        var(--bg);
+    }
+
+    .big-num {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 160px;
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+      color: var(--red);
+    }
+    .big-num-label {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(240,242,240,.8);
+      line-height: 1.5;
+      max-width: 110mm;
+      margin: 6mm 0 12mm;
+    }
+    .big-num-label strong { color: var(--white); font-weight: 600; }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: auto;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 18px;
+    }
+    .stat-card.danger { border-color: rgba(255,77,77,.3); background: rgba(255,77,77,.06); }
+    .stat-card .sc-num {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 38px;
+      letter-spacing: -0.03em;
+      color: var(--red);
+      line-height: 1;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .stat-card.lime .sc-num { color: var(--lime); }
+    .stat-card .sc-label {
+      font-size: 11.5px;
+      color: var(--gray);
+      line-height: 1.5;
+      font-weight: 400;
+    }
+    .source-note {
+      font-size: 9px;
+      color: var(--gray2);
+      margin-top: 6mm;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── PAGE 3 — O MERCADO ── */
+    .mkt-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 50% at 50% 0%, rgba(168,255,62,.06) 0%, transparent 60%),
+        var(--bg);
+    }
+    .mkt-hero {
+      text-align: center;
+      margin: auto 0;
+      padding: 8mm 0;
+    }
+    .mkt-hero .pre {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 4mm;
+      display: block;
+    }
+    .mkt-hero .hero-num {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 130px;
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+      color: var(--white);
+    }
+    .mkt-hero .hero-num span { color: var(--lime); }
+    .mkt-hero .hero-label {
+      font-size: 20px;
+      font-weight: 300;
+      color: rgba(240,242,240,.7);
+      margin: 5mm 0 10mm;
+      line-height: 1.4;
+    }
+    .mkt-hero .hero-source {
+      font-size: 9.5px;
+      color: var(--gray2);
+      letter-spacing: 0.5px;
+    }
+
+    .mkt-pills {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8mm;
+    }
+    .pill {
+      padding: 12px 20px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+    }
+    .pill .p-val {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 22px;
+      color: var(--lime);
+      letter-spacing: -0.02em;
+    }
+    .pill .p-text {
+      font-size: 11px;
+      color: var(--gray);
+      line-height: 1.4;
+      font-weight: 400;
+    }
+
+    /* ── PAGE 4 — PERFIL ── */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      flex: 1;
+    }
+    .profile-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .profile-card .pc-icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+    .profile-card .pc-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+    .profile-card .pc-desc {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .profile-card.highlight {
+      background: var(--lime2);
+      border-color: rgba(168,255,62,.25);
+    }
+    .profile-card.highlight .pc-title { color: var(--lime); }
+
+    /* ── PAGE 5 — O GAP ── */
+    .gap-table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 6mm 0;
+    }
+    .gap-table th {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 10px 16px;
+      text-align: left;
+    }
+    .gap-table th:first-child { color: var(--gray); }
+    .gap-table th:nth-child(2) { color: var(--gray); text-align: center; }
+    .gap-table th:nth-child(3) { color: var(--lime); text-align: center; }
+    .gap-table td {
+      font-size: 12.5px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      color: var(--gray);
+    }
+    .gap-table td:first-child { color: var(--white); font-weight: 500; }
+    .gap-table td:nth-child(2), .gap-table td:nth-child(3) { text-align: center; font-size: 16px; }
+    .gap-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+    .gap-val-no  { color: rgba(255,77,77,.8); }
+    .gap-val-yes { color: var(--lime); }
+
+    .proof-strip {
+      margin-top: 8mm;
+      padding: 18px 20px;
+      background: var(--lime2);
+      border: 1px solid rgba(168,255,62,.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .proof-strip .ps-num {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      color: var(--lime);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .proof-strip .ps-text {
+      font-size: 13px;
+      color: rgba(240,242,240,.85);
+      line-height: 1.6;
+    }
+    .proof-strip .ps-text b { color: var(--white); font-weight: 600; }
+
+    /* ── PAGE 6 — O PRODUTO ── */
+    .prod-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom right, rgba(168,255,62,.04) 0%, transparent 50%),
+        var(--bg);
+    }
+    .prod-hero-title {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 60px;
+      letter-spacing: -0.03em;
+      line-height: 0.9;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 8mm;
+    }
+    .prod-hero-title span { color: var(--lime); }
+    .prod-desc {
+      font-size: 14px;
+      color: rgba(240,242,240,.7);
+      line-height: 1.7;
+      max-width: 150mm;
+      margin-bottom: 10mm;
+    }
+    .prod-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10mm;
+    }
+    .prod-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 18px;
+    }
+    .prod-card .prc-num {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 44px;
+      color: var(--lime);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .prod-card .prc-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .prod-card .prc-desc {
+      font-size: 11.5px;
+      color: var(--gray);
+      line-height: 1.55;
+    }
+    .prod-tag-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .prod-tag {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--gray);
+    }
+    .prod-tag.active {
+      background: var(--lime2);
+      border-color: rgba(168,255,62,.25);
+      color: var(--lime);
+    }
+
+    /* ── PAGE 7 — COMO FUNCIONA ── */
+    .flow-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+    }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-num {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--lime);
+      letter-spacing: -0.03em;
+      width: 32px;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .flow-content .fc-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+    }
+    .flow-content .fc-desc {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .flow-content .fc-desc b { color: rgba(240,242,240,.8); font-weight: 600; }
+    .flow-badge {
+      margin-left: auto;
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .flow-badge.auto { background: var(--lime2); color: var(--lime); border: 1px solid rgba(168,255,62,.2); }
+    .flow-badge.manual { background: var(--card); color: var(--gray); border: 1px solid var(--border); }
+
+    .flow-callout {
+      margin-top: 8mm;
+      padding: 18px 22px;
+      background: var(--lime2);
+      border: 1px solid rgba(168,255,62,.2);
+      border-radius: 14px;
+      font-size: 13.5px;
+      color: rgba(240,242,240,.85);
+      line-height: 1.6;
+      font-style: italic;
+      font-weight: 300;
+    }
+    .flow-callout b { color: var(--lime); font-style: normal; font-weight: 700; font-size: 15px; }
+
+    /* ── PAGE 8 — MONETIZAÇÃO ── */
+    .mono-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(255,208,96,.05) 0%, transparent 60%),
+        var(--bg);
+    }
+    .mono-hero {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 56px;
+      letter-spacing: -0.03em;
+      line-height: 0.92;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 10mm;
+    }
+    .mono-hero span { color: var(--gold); }
+
+    .mono-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10mm;
+    }
+    .mono-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 20px;
+    }
+    .mono-card.gold-card {
+      background: rgba(255,208,96,.07);
+      border-color: rgba(255,208,96,.25);
+    }
+    .mono-card .mc-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .mono-card.gold-card .mc-label { color: var(--gold); }
+    .mono-card .mc-val {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .mono-card.gold-card .mc-val { color: var(--gold); }
+    .mono-card .mc-desc {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    .mono-math {
+      padding: 16px 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .mono-math .mm-item {
+      text-align: center;
+      flex: 1;
+    }
+    .mono-math .mm-item .mmv {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 28px;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      display: block;
+    }
+    .mono-math .mm-item .mml {
+      font-size: 10px;
+      color: var(--gray);
+      font-weight: 500;
+      margin-top: 4px;
+    }
+    .mono-math .mm-op {
+      font-size: 24px;
+      color: var(--gray2);
+      font-weight: 300;
+      flex-shrink: 0;
+    }
+    .mono-math .mm-result .mmv { color: var(--lime); }
+
+    /* ── PAGE 9 — PROJEÇÃO ── */
+    .proj-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(168,255,62,.07) 0%, transparent 70%),
+        var(--bg);
+    }
+    .proj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin: 8mm 0;
+    }
+    .proj-scenario {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .proj-scenario.best {
+      background: var(--lime2);
+      border-color: rgba(168,255,62,.3);
+    }
+    .proj-scenario .ps-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 4px;
+    }
+    .proj-scenario.best .ps-label { color: rgba(168,255,62,.7); }
+    .proj-scenario .ps-alunos {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 52px;
+      color: var(--white);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .proj-scenario.best .ps-alunos { color: var(--lime); }
+    .proj-scenario .ps-sub {
+      font-size: 11px;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+    .proj-scenario .ps-mes {
+      font-size: 11px;
+      color: var(--gray);
+      font-weight: 400;
+    }
+    .proj-scenario .ps-mes b {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      display: block;
+      margin-top: 2px;
+    }
+    .proj-scenario.best .ps-mes b { color: var(--lime); }
+    .proj-scenario .ps-ano {
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--gray);
+    }
+    .proj-scenario.best .ps-ano { border-color: rgba(168,255,62,.2); }
+    .proj-scenario .ps-ano b {
+      color: var(--white);
+      font-weight: 700;
+    }
+    .proj-scenario.best .ps-ano b { color: var(--lime); }
+
+    /* bar chart */
+    .bar-chart {
+      margin: 4mm 0 0;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .bar-label {
+      font-size: 10.5px;
+      color: var(--gray);
+      font-weight: 500;
+      width: 24mm;
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      height: 10px;
+      background: var(--card);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: var(--lime);
+      opacity: .35;
+    }
+    .bar-fill.mid { opacity: .65; }
+    .bar-fill.top { opacity: 1; }
+    .bar-val {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--white);
+      width: 26mm;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .proj-note {
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 11.5px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .proj-note b { color: rgba(240,242,240,.8); font-weight: 600; }
+
+    /* ── PAGE 10 — PRÓXIMOS PASSOS ── */
+    .next-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(168,255,62,.05) 0%, transparent 40%),
+        var(--bg);
+    }
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 8mm 0;
+      flex: 1;
+    }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--lime);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--lime);
+    }
+    .step-body .sb-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+    }
+    .step-body .sb-desc {
+      font-size: 12.5px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .step-body .sb-desc b { color: rgba(240,242,240,.8); font-weight: 600; }
+    .step-time {
+      margin-left: auto;
+      flex-shrink: 0;
+      text-align: right;
+    }
+    .step-time .st-val {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      color: var(--lime);
+      display: block;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .step-time .st-unit {
+      font-size: 9.5px;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .cta-block {
+      padding: 20px 24px;
+      background: var(--lime2);
+      border: 1px solid rgba(168,255,62,.25);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cta-block .cb-text {
+      font-size: 13px;
+      color: rgba(240,242,240,.8);
+      line-height: 1.6;
+      max-width: 110mm;
+    }
+    .cta-block .cb-text b { color: var(--lime); font-size: 15px; font-weight: 700; display: block; margin-bottom: 4px; }
+    .cta-pill {
+      flex-shrink: 0;
+      padding: 14px 24px;
+      background: var(--lime);
+      color: #070C07;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====================================
+     PAGE 1 — COVER
+===================================== -->
+<section class="page cover">
+  <div class="cover-logo">CRIATIVVO · ESTUDO ESTRATÉGICO</div>
+  <div class="page-label">01 / 10</div>
+
+  <div class="cover-eyebrow">Estudo de Mercado · 2026</div>
+  <h1 class="cover-title">Método<br/><span>Atleta</span><br/>da Pelada</h1>
+  <div class="cover-sub">A maior oportunidade não explorada do mercado fitness amador no Brasil. Dados, projeções e o caminho para monetizar.</div>
+  <div class="cover-for">Preparado para Hugo Araujo · Junho 2026</div>
+</section>
+
+
+<!-- ====================================
+     PAGE 2 — O PROBLEMA
+===================================== -->
+<section class="page">
+  <div class="prob-bg"></div>
+  <div class="inner" style="position:relative;z-index:1;">
+    <span class="page-label">02 / 10</span>
+    <div class="tag">O Problema</div>
+
+    <div class="big-num">1 em 4</div>
+    <div class="big-num-label">
+      lesões no futebol amador é <strong>grave o suficiente para afastar o atleta por mais de 21 dias.</strong><br/>
+      E quase ninguém faz prevenção.
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card danger">
+        <span class="sc-num">85%</span>
+        <span class="sc-label">das lesões atingem membros inferiores: joelho, tornozelo, coxa e quadril</span>
+      </div>
+      <div class="stat-card danger">
+        <span class="sc-num">24%</span>
+        <span class="sc-label">das lesões são graves, com afastamento superior a 21 dias de jogo</span>
+      </div>
+      <div class="stat-card danger">
+        <span class="sc-num" style="font-size:26px;margin-top:4px;">R$50k</span>
+        <span class="sc-label">custo máximo de uma cirurgia de LCA + reabilitação completa sem convênio</span>
+      </div>
+    </div>
+
+    <div class="source-note">Fonte: Revista Brasileira de Medicina do Esporte (SciELO) · Copa Municipal de Futebol Amador, SP · HU Revista UFJF 2022</div>
+    <div class="made-by">Elaborado por <b>criativvo</b></div>
+  </div>
+</section>
+
+
+<!-- ====================================
+     PAGE 3 — O MERCADO
+===================================== -->
+<section class="page">
+  <div class="mkt-bg"></div>
+  <div class="inner" style="position:relative;z-index:1;justify-content:center;">
+    <span class="page-label">03 / 10</span>
+    <div class="tag" style="justify-content:center;">O Mercado</div>
+
+    <div class="mkt-hero">
+      <span class="pre">Praticantes ativos de futebol no Brasil</span>
+      <div class="hero-num">15,3<span>M</span></div>
+      <div class="hero-label">de brasileiros jogam futebol regularmente<br/>segundo dados oficiais do IBGE</div>
+      <div class="hero-source">Fonte: IBGE / PNAD 2015 — Práticas de Esporte e Atividade Física · estimativas de mercado chegam a 30 milhões incluindo praticantes ocasionais</div>
+    </div>
+
+    <div class="mkt-pills">
+      <div class="pill">
+        <span class="p-val">94,5%</span>
+        <span class="p-text">homens<br/>praticantes</span>
+      </div>
+      <div class="pill">
+        <span class="p-val">2ª</span>
+        <span class="p-text">maior busca esportiva<br/>no Google Brasil</span>
+      </div>
+      <div class="pill">
+        <span class="p-val">25–40</span>
+        <span class="p-text">anos, faixa principal<br/>do peladeiro adulto</span>
+      </div>
+    </div>
+
+    <div class="made-by">Elaborado por <b>criativvo</b></div>
+  </div>
+</section>
+
+
+<!-- ====================================
+     PAGE 4 — PERFIL DO CLIENTE
+===================================== -->
+<section class="page">
+  <div class="inner">
+    <span class="page-label">04 / 10</span>
+    <div class="tag">O Cliente Ideal</div>
+    <h2 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:44px;letter-spacing:-0.03em;color:var(--white);text-transform:uppercase;margin-bottom:8mm;line-height:0.95;">Ele tem<br/><span style="color:var(--lime);">nome.</span></h2>
+
+    <div class="profile-grid">
+      <div class="profile-card highlight">
+        <div class="pc-icon">⚽</div>
+        <div class="pc-title">Joga pelada 1 a 2x por semana</div>
+        <div class="pc-desc">Fiel ao futebol do fim de semana há anos. O time, o campo, os amigos: rotina sagrada.</div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-icon">🦵</div>
+        <div class="pc-title">Sente dor depois de jogar</div>
+        <div class="pc-desc">Joelho travado na segunda, tornozelo inflamado, coxa pesada. Aceita como "normal", mas incomoda cada vez mais.</div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-icon">📱</div>
+        <div class="pc-title">Busca solução no Google e YouTube</div>
+        <div class="pc-desc">Já pesquisou "exercício para dor no joelho" e "como fortalecer tornozelo para futebol". Não encontrou nada específico para ele.</div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-icon">💸</div>
+        <div class="pc-title">Não tem orçamento para personal</div>
+        <div class="pc-desc">Pagaria R$50 a R$150 por uma solução prática, mas não R$300/mês por personal trainer presencial. O digital resolve.</div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-icon">🎯</div>
+        <div class="pc-title">Quer continuar jogando, não parar</div>
+        <div class="pc-desc">A motivação não é virar atleta. É continuar jogando por mais 10, 20 anos sem precisar de cirurgia.</div>
+      </div>
+      <div class="profile-card">
+        <div class="pc-icon">🏆</div>
+        <div class="pc-title">Se identifica com o título "Potência"</div>
+        <div class="pc-desc">Quer se sentir parte de um grupo seleto. O bordão "fala potência" já cria pertencimento antes mesmo de pagar.</div>
+      </div>
+    </div>
+
+    <div class="made-by">Elaborado por <b>criativvo</b></div>
+  </div>
+</section>
+
+
+<!-- ====================================
+     PAGE 5 — O GAP
+===================================== -->
+<section class="page">
+  <div class="inner">
+    <span class="page-label">05 / 10</span>
+    <div class="tag">O Gap de Mercado</div>
+    <h2 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:44px;letter-spacing:-0.03em;color:var(--white);text-transform:uppercase;margin-bottom:6mm;line-height:0.95;">Esse mercado<br/><span style="color:var(--lime);">está esperando.</span></h2>
+    <p style="font-size:13px;color:var(--gray);max-width:150mm;line-height:1.65;margin-bottom:6mm;">Existe preparação física para futebol profissional. Existe fitness genérico. Existe academia. O que não existe é um protocolo pensado especificamente para quem joga pelada e tem dor.</p>
+
+    <table class="gap-table">
+      <thead>
+        <tr>
+          <th>O que existe hoje</th>
+          <th>Para o peladeiro</th>
+          <th>Método Atleta da Pelada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cursos para preparadores físicos (CPT, CBF Academy)</td>
+          <td><span class="gap-val-no">✗</span></td>
+          <td><span class="gap-val-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Personal trainers online (fitness genérico)</td>
+          <td><span class="gap-val-no">✗</span></td>
+          <td><span class="gap-val-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Apps de treino (Nike, Freeletics)</td>
+          <td><span class="gap-val-no">✗</span></td>
+          <td><span class="gap-val-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Protocolo por tipo de lesão específica</td>
+          <td><span class="gap-val-no">✗</span></td>
+          <td><span class="gap-val-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Validado por preparador de nível profissional</td>
+          <td><span class="gap-val-no">✗</span></td>
+          <td><span class="gap-val-yes">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="proof-strip">
+      <div class="ps-num">158K</div>
+      <div class="ps-text">
+        O perfil <b>@preparadorpedroferreira</b> acumulou 158 mil seguidores falando sobre dor no futebol amador, sem produto validado no mercado. Isso é a prova de que a demanda existe, é enorme e está esperando por alguém que resolva de verdade.
+      </div>
+    </div>
+
+    <div class="made-by">Elaborado por <b>criativvo</b></div>
+  </div>
+</section>
+
+
+<!-- ====================================
+     PAGE 6 — O PRODUTO
+===================================== -->
+<section class="page">
+  <div class="prod-bg"></div>
+  <div class="inner" style="position:relative;z-index:1;">
+    <span class="page-label">06 / 10</span>
+    <div class="tag">O Produto</div>
+
+    <div class="prod-hero-title">Método<br/><span>Atleta</span><br/>da Pelada</div>
+    <p class="prod-desc">
+      Protocolo de preparação física criado com validação médica, pensado exclusivamente para jogadores de futebol amador. Não é ficha de academia. É um sistema de 90 dias que ensina o atleta a treinar do jeito certo para a lesão que ele já tem, ou para evitar a que está por vir.
+    </p>
+
+    <div class="prod-grid">
+      <div class="prod-card">
+        <span class="prc-num">15</span>
+        <div class="prc-title">Protocolos por lesão</div>
+        <div class="prc-desc">Joelho, tornozelo, LCA, lombar, virilha e mais. Um para cada condição.</div>
+      </div>
+      <div class="prod-card">
+        <span class="prc-num">3</span>
+        <div class="prc-title">Fases por protocolo</div>
+        <div class="prc-desc">Ativação, fortalecimento e explosividade. Progressão mês a mês, sem pular etapas.</div>
+      </div>
+      <div class="prod-card">
+        <span class="prc-num">90</span>
+        <div class="prc-title">Dias de transformação</div>
+        <div class="prc-desc">Do diagnóstico à performance. Resultado mensurável em um trimestre.</div>
+      </div>
+    </div>
+
+    <div class="prod-tag-strip">
+      <span class="prod-tag active">Dor no joelho</span>
+      <span class="prod-tag active">Entorse de tornozelo</span>
+      <span class="prod-tag active">Reconstrução de LCA</span>
+      <span class="prod-tag active">Dor lombar</span>
+      <span class="prod-tag">Estiramento de coxa</span>
+      <span class="prod-tag">Lesão de virilha</span>
+      <span class="prod-tag">Condicionamento geral</span>
+    </div>
+
+    <div class="made-by">Elaborado por <b>criativvo</b></div>
+  </div>
+</section>
+
+
+<!-- ====================================
+     PAGE 7 — COMO FUNCIONA
+===================================== -->
+<section class="page">
+  <div class="inner">
+    <span class="page-label">07 / 10</span>
+    <div class="tag">Como Funciona</div>
+    <h2 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:44px;letter-spacing:-0.03em;color:var(--white);text-transform:uppercase;margin-bottom:8mm;line-height:0.95;">O sistema<br/><span style="color:var(--lime);">trabalha por você.</span></h2>
+
+    <div class="flow-wrap">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <div class="flow-content">
+          <div class="fc-title">Atleta acessa o site e compra o acesso</div>
+          <div class="fc-desc">Landing page de vendas com copy focada na dor. Pagamento via cartão, Pix ou parcelado. <b>R$297 por trimestre.</b></div>
+        </div>
+        <div class="flow-badge manual">Hugo faz</div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <div class="flow-content">
+          <div class="fc-title">Cria login e entra na área de membros</div>
+          <div class="fc-desc">Sistema libera acesso automaticamente após confirmação do pagamento. Sem intervenção manual.</div>
+        </div>
+        <div class="flow-badge auto">Automático</div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <div class="flow-content">
+          <div class="fc-title">Responde o quiz de diagnóstico</div>
+          <div class="fc-desc"><b>15 perguntas</b> sobre posição, lesão atual, frequência de treino e equipamento disponível.</div>
+        </div>
+        <div class="flow-badge auto">Automático</div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <div class="flow-content">
+          <div class="fc-title">Sistema seleciona o protocolo certo</div>
+          <div class="fc-desc">Lógica interna escolhe 1 dos 15 protocolos com base nas respostas. <b>Sem curadoria manual.</b></div>
+        </div>
+        <div class="flow-badge auto">Automático</div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">05</div>
+        <div class="flow-content">
+          <div class="fc-title">Recebe as fases mês a mês</div>
+          <div class="fc-desc">Mês 1, 2 e 3 entregues automaticamente na data certa. O atleta sempre tem algo novo para fazer.</div>
+        </div>
+        <div class="flow-badge auto">Automático</div>
+      </div>
+    </div>
+
+    <div class="flow-callout">
+      <b>100% escalável.</b> Você prepara os protocolos uma vez. O sistema atende 10 ou 10.000 alunos sem aumentar seu tempo operacional.
+    </div>
+
+    <div class="made-by">Elaborado por <b>criativvo</b></div>
+  </div>
+</section>
+
+
+<!-- ====================================
+     PAGE 8 — MONETIZAÇÃO
+===================================== -->
+<section class="page">
+  <div class="mono-bg"></div>
+  <div class="inner" style="position:relative;z-index:1;">
+    <span class="page-label">08 / 10</span>
+    <div class="tag">Monetização</div>
+
+    <div class="mono-hero">Como você<br/><span>ganha dinheiro.</span></div>
+
+    <div class="mono-grid">
+      <div class="mono-card">
+        <span class="mc-label">Preço por aluno</span>
+        <span class="mc-val">R$297</span>
+        <div class="mc-desc">por trimestre. Equivale a R$99/mês por um protocolo criado por um preparador que treinou profissionais.</div>
+      </div>
+      <div class="mono-card gold-card">
+        <span class="mc-label">LTV médio por aluno</span>
+        <span class="mc-val">R$891</span>
+        <div class="mc-desc">aluno que renova 3 vezes (média esperada). Cada renovação é automática, sem novo esforço de venda.</div>
+      </div>
+      <div class="mono-card">
+        <span class="mc-label">Ticket médio mensal</span>
+        <span class="mc-val">R$99</span>
+        <div class="mc-desc">por aluno na base. Receita previsível, recorrente e que cresce com cada novo aluno sem custo operacional extra.</div>
+      </div>
+      <div class="mono-card">
+        <span class="mc-label">Upsell possível</span>
+        <span class="mc-val">+R$197</span>
+        <div class="mc-desc">sessão de consultoria individual com Hugo para quem quiser acompanhamento personalizado. Opcional, de alto valor.</div>
+      </div>
+    </div>
+
+    <div class="mono-math">
+      <div class="mm-item">
+        <span class="mmv">100</span>
+        <div class="mml">alunos ativos</div>
+      </div>
+      <div class="mm-op">×</div>
+      <div class="mm-item">
+        <span class="mmv">R$99</span>
+        <div class="mml">ticket mensal</div>
+      </div>
+      <div class="mm-op">=</div>
+      <div class="mm-item mm-result">
+        <span class="mmv">R$9.900</span>
+        <div class="mml">por mês recorrente</div>
+      </div>
+    </div>
+
+    <div class="made-by">Elaborado por <b>criativvo</b></div>
+  </div>
+</section>
+
+
+<!-- ====================================
+     PAGE 9 — PROJEÇÃO DE RECEITA
+===================================== -->
+<section class="page">
+  <div class="proj-bg"></div>
+  <div class="inner" style="position:relative;z-index:1;">
+    <span class="page-label">09 / 10</span>
+    <div class="tag">Projeção de Receita</div>
+    <h2 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:40px;letter-spacing:-0.03em;color:var(--white);text-transform:uppercase;margin-bottom:6mm;line-height:0.95;">3 cenários.<br/><span style="color:var(--lime);">Todos viáveis.</span></h2>
+
+    <div class="proj-grid">
+      <div class="proj-scenario">
+        <div class="ps-label">Conservador</div>
+        <div class="ps-alunos">50</div>
+        <div class="ps-sub">alunos ativos</div>
+        <div class="ps-mes">
+          Receita mensal
+          <b>R$4.950</b>
+        </div>
+        <div class="ps-ano">Anual: <b>R$59.400</b></div>
+      </div>
+      <div class="proj-scenario">
+        <div class="ps-label">Realista</div>
+        <div class="ps-alunos">200</div>
+        <div class="ps-sub">alunos ativos</div>
+        <div class="ps-mes">
+          Receita mensal
+          <b>R$19.800</b>
+        </div>
+        <div class="ps-ano">Anual: <b>R$237.600</b></div>
+      </div>
+      <div class="proj-scenario best">
+        <div class="ps-label">Otimista</div>
+        <div class="ps-alunos">500</div>
+        <div class="ps-sub">alunos ativos</div>
+        <div class="ps-mes">
+          Receita mensal
+          <b>R$49.500</b>
+        </div>
+        <div class="ps-ano">Anual: <b>R$594.000</b></div>
+      </div>
+    </div>
+
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">Conservador</div>
+        <div class="bar-track"><div class="bar-fill" style="width:10%;"></div></div>
+        <div class="bar-val">R$4.950/mês</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Realista</div>
+        <div class="bar-track"><div class="bar-fill mid" style="width:40%;"></div></div>
+        <div class="bar-val">R$19.800/mês</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Otimista</div>
+        <div class="bar-track"><div class="bar-fill top" style="width:100%;"></div></div>
+        <div class="bar-val">R$49.500/mês</div>
+      </div>
+    </div>
+
+    <div class="proj-note" style="margin-top:6mm;">
+      <b>Base do cálculo:</b> R$99/mês por aluno (equivalente trimestral de R$297). Cenário conservador acessível com uma audiência de 5.000 seguidores e taxa de conversão de 1%. Cenário realista alcançável em 6 a 12 meses com tráfego pago e conteúdo orgânico consistente.
+    </div>
+
+    <div class="made-by">Elaborado por <b>criativvo</b></div>
+  </div>
+</section>
+
+
+<!-- ====================================
+     PAGE 10 — PRÓXIMOS PASSOS
+===================================== -->
+<section class="page">
+  <div class="next-bg"></div>
+  <div class="inner" style="position:relative;z-index:1;">
+    <span class="page-label">10 / 10</span>
+    <div class="tag">Próximos Passos</div>
+    <h2 style="font-family:'Oswald',sans-serif;font-weight:700;font-size:44px;letter-spacing:-0.03em;color:var(--white);text-transform:uppercase;margin-bottom:2mm;line-height:0.95;">Do zero ao<br/><span style="color:var(--lime);">lançamento</span><br/>em 14 dias.</h2>
+
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-circle">1</div>
+        <div class="step-body">
+          <div class="sb-title">Hugo prepara os protocolos com o doutor</div>
+          <div class="sb-desc">15 fichas estruturadas por tipo de lesão, com as 3 fases (ativação, força, explosividade). <b>Esse é o único trabalho que depende de você.</b> Pode ser feito em paralelo ao desenvolvimento.</div>
+        </div>
+        <div class="step-time">
+          <span class="st-val">1–2</span>
+          <span class="st-unit">semanas</span>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-circle">2</div>
+        <div class="step-body">
+          <div class="sb-title">Criativvo constrói o sistema completo</div>
+          <div class="sb-desc">Landing page, app com login, quiz de 15 perguntas, lógica de seleção de protocolo, entrega automática das 3 fases e painel de gestão. <b>Stack tecnológico testado em produção.</b></div>
+        </div>
+        <div class="step-time">
+          <span class="st-val">14</span>
+          <span class="st-unit">dias</span>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-circle">3</div>
+        <div class="step-body">
+          <div class="sb-title">Lançamento para a base + tráfego pago</div>
+          <div class="sb-desc">Ativação da audiência orgânica do Instagram e início das campanhas no Meta Ads. <b>Primeiros alunos na primeira semana.</b> Gestão contínua da Criativvo.</div>
+        </div>
+        <div class="step-time">
+          <span class="st-val">1ª</span>
+          <span class="st-unit">semana</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <div class="cb-text">
+        <b>A janela está aberta agora.</b>
+        O nicho não está saturado, a demanda existe e a tecnologia está pronta. Cada semana de espera é uma semana que alguém com menos credencial que a sua chega antes.
+      </div>
+      <a href="https://wa.me/5516993396988" class="cta-pill">Fala potência</a>
+    </div>
+
+    <div class="made-by">Elaborado por <b>criativvo</b> · criativvo.com.br</div>
+  </div>
+</section>
+
+</body>
+</html>

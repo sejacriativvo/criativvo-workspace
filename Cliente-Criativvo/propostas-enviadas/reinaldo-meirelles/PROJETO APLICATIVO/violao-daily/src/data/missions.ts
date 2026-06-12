@@ -1,0 +1,77 @@
+import type { Mission } from '../types'
+
+export const dailyMissions: Mission[] = [
+  {
+    id: 'mis-1',
+    scope: 'daily',
+    title: 'Complete 1 lição hoje',
+    description: 'Mantenha sua sequência viva',
+    reward: 20,
+    current: 0,
+    target: 1,
+    iconKey: 'check',
+  },
+  {
+    id: 'mis-2',
+    scope: 'daily',
+    title: 'Pratique 5 minutos',
+    description: 'Mesmo um pouco já é progresso',
+    reward: 15,
+    current: 3,
+    target: 5,
+    iconKey: 'timer',
+  },
+  {
+    id: 'mis-3',
+    scope: 'daily',
+    title: 'Revise 1 acorde',
+    description: 'Volte e fortaleça o que você sabe',
+    reward: 10,
+    current: 0,
+    target: 1,
+    iconKey: 'rotate',
+  },
+]
+
+export const weeklyMissions: Mission[] = [
+  {
+    id: 'wkl-1',
+    scope: 'weekly',
+    title: 'Complete 5 lições',
+    description: 'Avance no seu mapa',
+    reward: 80,
+    current: 3,
+    target: 5,
+    iconKey: 'map',
+  },
+  {
+    id: 'wkl-2',
+    scope: 'weekly',
+    title: 'Aprenda 1 música',
+    description: 'Toque algo do início ao fim',
+    reward: 100,
+    current: 0,
+    target: 1,
+    iconKey: 'music',
+  },
+  {
+    id: 'wkl-3',
+    scope: 'weekly',
+    title: 'Pratique 4 dias na semana',
+    description: 'Crie ritmo e disciplina',
+    reward: 80,
+    current: 3,
+    target: 4,
+    iconKey: 'calendar',
+  },
+  {
+    id: 'wkl-4',
+    scope: 'weekly',
+    title: 'Ganhe 200 XP',
+    description: 'Cada lição conta',
+    reward: 60,
+    current: 120,
+    target: 200,
+    iconKey: 'sparkle',
+  },
+]

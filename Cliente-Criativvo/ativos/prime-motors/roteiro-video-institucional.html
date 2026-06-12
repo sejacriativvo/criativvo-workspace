@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face {
+    font-family: 'AVEstiana';
+    src: url('../../../criativvo/marca/AVEstiana-Black.otf') format('opentype');
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #fff;
+    color: #111;
+    width: 794px;
+    margin: 0 auto;
+  }
+
+  /* ── CAPA ── */
+  .capa {
+    width: 794px;
+    height: 1123px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 72px 64px;
+    page-break-after: always;
+  }
+
+  .capa-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .logo {
+    font-family: 'AVEstiana', sans-serif;
+    font-size: 20px;
+    color: #111;
+    letter-spacing: -0.03em;
+  }
+
+  .capa-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #999;
+  }
+
+  .capa-middle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 0;
+  }
+
+  .capa-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #FF5501;
+    margin-bottom: 20px;
+  }
+
+  .capa-titulo {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #111;
+    margin-bottom: 12px;
+  }
+
+  .capa-subtitulo {
+    font-size: 18px;
+    font-weight: 400;
+    color: #888;
+    margin-bottom: 48px;
+  }
+
+  .capa-linha {
+    width: 48px;
+    height: 3px;
+    background: #FF5501;
+    border-radius: 2px;
+    margin-bottom: 36px;
+  }
+
+  .capa-meta {
+    display: flex;
+    gap: 48px;
+  }
+
+  .capa-meta-item {}
+
+  .capa-meta-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 4px;
+  }
+
+  .capa-meta-valor {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .capa-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .capa-bottom-info {
+    font-size: 12px;
+    font-weight: 500;
+    color: #bbb;
+    line-height: 1.7;
+  }
+
+  .capa-slogan {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #ccc;
+    text-align: right;
+  }
+
+  /* ── PÁGINA INTERNA ── */
+  .pagina {
+    width: 794px;
+    padding: 64px 64px 56px;
+    page-break-after: always;
+  }
+
+  .pagina-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 1.5px solid #111;
+    margin-bottom: 40px;
+  }
+
+  .pagina-header-logo {
+    font-family: 'AVEstiana', sans-serif;
+    font-size: 16px;
+    color: #111;
+    letter-spacing: -0.03em;
+  }
+
+  .pagina-header-info {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #aaa;
+  }
+
+  /* ── CENA ── */
+  .cena {
+    margin-bottom: 40px;
+    page-break-inside: avoid;
+  }
+
+  .cena-topo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .cena-num {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #FF5501;
+    background: rgba(255,85,1,0.08);
+    padding: 4px 12px;
+    border-radius: 50px;
+  }
+
+  .cena-nome {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #111;
+  }
+
+  .cena-tempo {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    color: #bbb;
+  }
+
+  .cena-divisor {
+    width: 100%;
+    height: 1px;
+    background: #eee;
+    margin-bottom: 20px;
+  }
+
+  .cena-linhas {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Linha de visual */
+  .linha {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .linha-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #bbb;
+    width: 80px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .linha-conteudo {
+    font-size: 13px;
+    font-weight: 400;
+    color: #444;
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  /* Linha de fala — destaque */
+  .linha-fala .linha-label {
+    color: #FF5501;
+  }
+
+  .linha-fala .linha-conteudo {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.6;
+    border-left: 3px solid #FF5501;
+    padding-left: 16px;
+  }
+
+  /* Linha de texto na tela */
+  .linha-tela .linha-conteudo {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  /* Linha de tip */
+  .linha-tip .linha-conteudo {
+    font-size: 12px;
+    font-weight: 400;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  /* Separador entre cenas */
+  .sep-cena {
+    width: 100%;
+    height: 1px;
+    background: #f0f0f0;
+    margin-bottom: 40px;
+  }
+
+  /* Tabela */
+  .tabela-titulo {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #111;
+    margin-bottom: 20px;
+    padding-top: 8px;
+    page-break-inside: avoid;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: avoid;
+  }
+
+  thead th {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #aaa;
+    padding: 10px 0;
+    text-align: left;
+    border-bottom: 1.5px solid #111;
+  }
+
+  tbody td {
+    font-size: 13px;
+    color: #444;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  tbody td:first-child {
+    font-weight: 700;
+    color: #FF5501;
+    width: 60px;
+  }
+
+  tbody td:nth-child(2) {
+    font-weight: 600;
+    color: #111;
+    width: 130px;
+  }
+
+  .nota-musica {
+    margin-top: 36px;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    page-break-inside: avoid;
+  }
+
+  .nota-musica-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 8px;
+  }
+
+  .nota-musica-texto {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'AVEstiana', sans-serif;
+    font-size: 14px;
+    color: #ccc;
+    letter-spacing: -0.03em;
+  }
+
+  .footer-num {
+    font-size: 11px;
+    font-weight: 500;
+    color: #ccc;
+    letter-spacing: 0.1em;
+  }
+
+  @media print {
+    body { margin: 0; }
+    .capa, .pagina { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<div class="capa">
+  <div class="capa-top">
+    <div class="logo">criativvo</div>
+    <div class="capa-tag">Uso interno — Criativvo</div>
+  </div>
+
+  <div class="capa-middle">
+    <div class="capa-label">Roteiro de Vídeo</div>
+    <div class="capa-titulo">Vídeo<br>Institucional</div>
+    <div class="capa-subtitulo">Prime Motors — Penápolis, SP</div>
+    <div class="capa-linha"></div>
+    <div class="capa-meta">
+      <div class="capa-meta-item">
+        <div class="capa-meta-label">Formato</div>
+        <div class="capa-meta-valor">Reels / Vertical</div>
+      </div>
+      <div class="capa-meta-item">
+        <div class="capa-meta-label">Duração</div>
+        <div class="capa-meta-valor">45 – 50 segundos</div>
+      </div>
+      <div class="capa-meta-item">
+        <div class="capa-meta-label">Cenas</div>
+        <div class="capa-meta-valor">7 cenas</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="capa-bottom">
+    <div class="capa-bottom-info">
+      criativvo.com.br<br>
+      @sejacriativvo<br>
+      Junho / 2026
+    </div>
+    <div class="capa-slogan">Seu Negócio<br>Vira Marca</div>
+  </div>
+</div>
+
+<!-- PÁG 1 — Cenas 1 e 2 -->
+<div class="pagina">
+  <div class="pagina-header">
+    <div class="pagina-header-logo">criativvo</div>
+    <div class="pagina-header-info">Prime Motors — Roteiro Institucional</div>
+  </div>
+
+  <!-- CENA 1 -->
+  <div class="cena">
+    <div class="cena-topo">
+      <div class="cena-num">Cena 01</div>
+      <div class="cena-nome">Hook de abertura</div>
+      <div class="cena-tempo">0s – 4s</div>
+    </div>
+    <div class="cena-divisor"></div>
+    <div class="cena-linhas">
+      <div class="linha">
+        <div class="linha-label">Visual</div>
+        <div class="linha-conteudo">Drone desce rápido em cima da fachada. Salão envidraçado e carros visíveis lá de cima. Sem corte, movimento fluido.</div>
+      </div>
+      <div class="linha linha-tela">
+        <div class="linha-label">Tela</div>
+        <div class="linha-conteudo">"Penápolis mudou de nível."</div>
+      </div>
+      <div class="linha linha-tip">
+        <div class="linha-label">Take</div>
+        <div class="linha-conteudo">Shot mais importante do vídeo. Gravar na hora dourada (fim de tarde) — a luz entra pelo vidro e valoriza os carros. Sem narração nessa cena.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep-cena"></div>
+
+  <!-- CENA 2 -->
+  <div class="cena">
+    <div class="cena-topo">
+      <div class="cena-num">Cena 02</div>
+      <div class="cena-nome">Entrada na loja</div>
+      <div class="cena-tempo">4s – 9s</div>
+    </div>
+    <div class="cena-divisor"></div>
+    <div class="cena-linhas">
+      <div class="linha">
+        <div class="linha-label">Visual</div>
+        <div class="linha-conteudo">Câmera entra pela porta de vidro em câmera lenta. Salão se abre, carros em destaque, iluminação limpa.</div>
+      </div>
+      <div class="linha linha-fala">
+        <div class="linha-label">Fala</div>
+        <div class="linha-conteudo">Aqui é a Prime Motors. Uma loja pensada pra quem leva carro a sério.</div>
+      </div>
+      <div class="linha linha-tip">
+        <div class="linha-label">Take</div>
+        <div class="linha-conteudo">Gimbal obrigatório nessa entrada. Câmera lenta cria contraste com os cortes rápidos que vêm na cena seguinte.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep-cena"></div>
+
+  <!-- CENA 3 -->
+  <div class="cena">
+    <div class="cena-topo">
+      <div class="cena-num">Cena 03</div>
+      <div class="cena-nome">Estoque em destaque</div>
+      <div class="cena-tempo">9s – 18s</div>
+    </div>
+    <div class="cena-divisor"></div>
+    <div class="cena-linhas">
+      <div class="linha">
+        <div class="linha-label">Visual</div>
+        <div class="linha-conteudo">Sequência de cortes rápidos: emblema do carro, câmera deslizando pelo capô, interior, rodas, drone baixo passando entre os carros. Hilux, BMW, SUVs. Câmera sempre em movimento.</div>
+      </div>
+      <div class="linha linha-fala">
+        <div class="linha-label">Fala</div>
+        <div class="linha-conteudo">Seminovos selecionados com critério. Cada carro aqui tem história, tem qualidade e tem procedência.</div>
+      </div>
+      <div class="linha linha-tip">
+        <div class="linha-label">Take</div>
+        <div class="linha-conteudo">Nunca carro parado e câmera parada ao mesmo tempo. Foco nos detalhes premium: emblema, painel, couro. Gravar pelo menos 3 modelos diferentes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-logo">criativvo</div>
+    <div class="footer-num">1 / 3</div>
+  </div>
+</div>
+
+<!-- PÁG 2 — Cenas 4 e 5 -->
+<div class="pagina">
+  <div class="pagina-header">
+    <div class="pagina-header-logo">criativvo</div>
+    <div class="pagina-header-info">Prime Motors — Roteiro Institucional</div>
+  </div>
+
+  <!-- CENA 4 -->
+  <div class="cena">
+    <div class="cena-topo">
+      <div class="cena-num">Cena 04</div>
+      <div class="cena-nome">Humanização — Sócios</div>
+      <div class="cena-tempo">18s – 28s</div>
+    </div>
+    <div class="cena-divisor"></div>
+    <div class="cena-linhas">
+      <div class="linha">
+        <div class="linha-label">Visual</div>
+        <div class="linha-conteudo">Neto olha direto pra câmera. Natural, sem pose forçada. Fundo com os carros fora de foco. Luz boa na face.</div>
+      </div>
+      <div class="linha linha-fala">
+        <div class="linha-label">Fala</div>
+        <div class="linha-conteudo">Sou o Neto, sócio aqui junto com o Leandro. A gente abriu essa loja do zero porque acredita que Penápolis merecia algo diferente. E é isso que a gente entrega.</div>
+      </div>
+      <div class="linha linha-tip">
+        <div class="linha-label">Take</div>
+        <div class="linha-conteudo">Gravar 3-4 takes com variações naturais na fala. Deixar o Neto usar as palavras dele, desde que a ideia fique. Cena mais importante pro vínculo com o público.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep-cena"></div>
+
+  <!-- CENA 5 -->
+  <div class="cena">
+    <div class="cena-topo">
+      <div class="cena-num">Cena 05</div>
+      <div class="cena-nome">Serviços</div>
+      <div class="cena-tempo">28s – 38s</div>
+    </div>
+    <div class="cena-divisor"></div>
+    <div class="cena-linhas">
+      <div class="linha">
+        <div class="linha-label">Visual</div>
+        <div class="linha-conteudo">Cortes rápidos: tablet com simulação de financiamento, handshake, chave sendo entregue, carro saindo da loja.</div>
+      </div>
+      <div class="linha linha-tela">
+        <div class="linha-label">Tela</div>
+        <div class="linha-conteudo">✔ Financiamento facilitado &nbsp;&nbsp; ✔ Aceita troca mediante avaliação &nbsp;&nbsp; ✔ Compramos seu usado</div>
+      </div>
+      <div class="linha linha-fala">
+        <div class="linha-label">Fala</div>
+        <div class="linha-conteudo">Financiamento facilitado, aceita troca na avaliação e a gente também compra o seu usado.</div>
+      </div>
+      <div class="linha linha-tip">
+        <div class="linha-label">Take</div>
+        <div class="linha-conteudo">Narração rápida e firme. Cada serviço sincronizado com o texto que aparece na tela. Tablet precisa mostrar uma simulação real.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep-cena"></div>
+
+  <!-- CENA 6 -->
+  <div class="cena">
+    <div class="cena-topo">
+      <div class="cena-num">Cena 06</div>
+      <div class="cena-nome">Encerramento com marca</div>
+      <div class="cena-tempo">38s – 45s</div>
+    </div>
+    <div class="cena-divisor"></div>
+    <div class="cena-linhas">
+      <div class="linha">
+        <div class="linha-label">Visual</div>
+        <div class="linha-conteudo">Drone sobe devagar mostrando a loja inteira de cima. Logo Prime Motors aparece sobre a imagem.</div>
+      </div>
+      <div class="linha linha-fala">
+        <div class="linha-label">Fala</div>
+        <div class="linha-conteudo">Vem conhecer. A gente te recebe aqui.</div>
+      </div>
+      <div class="linha linha-tip">
+        <div class="linha-label">Take</div>
+        <div class="linha-conteudo">Subida lenta e suave — esse shot precisa de calma depois do ritmo das cenas anteriores.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-logo">criativvo</div>
+    <div class="footer-num">2 / 3</div>
+  </div>
+</div>
+
+<!-- PÁG 3 — Cena 7 + Tabela -->
+<div class="pagina">
+  <div class="pagina-header">
+    <div class="pagina-header-logo">criativvo</div>
+    <div class="pagina-header-info">Prime Motors — Roteiro Institucional</div>
+  </div>
+
+  <!-- CENA 7 -->
+  <div class="cena">
+    <div class="cena-topo">
+      <div class="cena-num">Cena 07</div>
+      <div class="cena-nome">CTA Final</div>
+      <div class="cena-tempo">45s – 50s</div>
+    </div>
+    <div class="cena-divisor"></div>
+    <div class="cena-linhas">
+      <div class="linha">
+        <div class="linha-label">Visual</div>
+        <div class="linha-conteudo">Tela escura com logo Prime Motors centralizado. Montado em edição.</div>
+      </div>
+      <div class="linha linha-tela">
+        <div class="linha-label">Tela</div>
+        <div class="linha-conteudo">Prime Motors — Penápolis, SP &nbsp;|&nbsp; @primemotors018 &nbsp;|&nbsp; primemotors018.com.br &nbsp;|&nbsp; Fale agora no WhatsApp 👇</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep-cena"></div>
+
+  <!-- TABELA -->
+  <div class="tabela-titulo">Guia de filmagem por cena</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Cena</th>
+        <th>Equipamento</th>
+        <th>Observação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>01</td>
+        <td>Drone</td>
+        <td>Descida rápida, desacelera na fachada. Hora dourada ideal.</td>
+      </tr>
+      <tr>
+        <td>02</td>
+        <td>Gimbal</td>
+        <td>Entrada lenta pela porta. Estabilizador obrigatório.</td>
+      </tr>
+      <tr>
+        <td>03</td>
+        <td>Câmera + Drone</td>
+        <td>Cortes de 2-3s. Câmera sempre em movimento. Mínimo 3 carros.</td>
+      </tr>
+      <tr>
+        <td>04</td>
+        <td>Tripé / Gimbal</td>
+        <td>Neto direto pra câmera. Luz lateral. Gravar 3-4 takes.</td>
+      </tr>
+      <tr>
+        <td>05</td>
+        <td>Câmera na mão</td>
+        <td>Cortes rápidos. Tablet com simulação real na tela.</td>
+      </tr>
+      <tr>
+        <td>06</td>
+        <td>Drone</td>
+        <td>Subida lenta. Logo aparece em pós-produção.</td>
+      </tr>
+      <tr>
+        <td>07</td>
+        <td>Motion graphic</td>
+        <td>Tela escura com logo e CTA. Montado em edição.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="nota-musica">
+    <div class="nota-musica-label">Direção de Música</div>
+    <div class="nota-musica-texto">Instrumental com bateria marcada e grave. Estilo premium, tom sério. Volume baixo quando o Neto fala, sobe nos shots de carro.</div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-logo">criativvo</div>
+    <div class="footer-num">3 / 3</div>
+  </div>
+</div>
+
+</body>
+</html>

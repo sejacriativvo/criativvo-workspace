@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-ink-100 text-ink-800 font-sans antialiased;
+    font-weight: 600;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+
+  button {
+    @apply select-none;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Fredoka', system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .app-shell {
+    @apply mx-auto flex min-h-screen w-full max-w-[480px] flex-col bg-white md:my-6 md:min-h-[calc(100vh-3rem)] md:rounded-[40px] md:overflow-hidden;
+  }
+
+  /* Pills coloridas que parecem etiquetas de jogo */
+  .pill {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold;
+    font-family: 'Nunito', system-ui, sans-serif;
+  }
+
+  /* Card branco gamificado */
+  .card-soft {
+    @apply rounded-3xl border-2 border-ink-200 bg-white;
+  }
+
+  .card-flat {
+    @apply rounded-3xl bg-white;
+  }
+
+  .heading-display {
+    font-family: 'Fredoka', system-ui, sans-serif;
+    @apply font-bold tracking-tight text-ink-900;
+  }
+}
+
+/* Botões 3D — texto uppercase, sombra inferior colorida que dá sensação de profundidade.
+   Definidos fora de @layer pra evitar problema com classes shadow-* customizadas no @apply. */
+.btn-3d {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  padding: 0 1.5rem;
+  min-height: 56px;
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: transform 0.1s, box-shadow 0.1s;
+  cursor: pointer;
+  user-select: none;
+  border: 0;
+  outline: none;
+  line-height: 1;
+}
+.btn-3d > span {
+  font-family: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+.btn-3d:active {
+  transform: translateY(2px);
+  box-shadow: none !important;
+}
+.btn-3d:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-3d-green {
+  background: #58CC02;
+  color: white;
+  box-shadow: 0 4px 0 0 #46A302;
+}
+.btn-3d-blue {
+  background: #1CB0F6;
+  color: white;
+  box-shadow: 0 4px 0 0 #0E84BC;
+}
+.btn-3d-yellow {
+  background: #FFC800;
+  color: #2B2B2B;
+  box-shadow: 0 4px 0 0 #DC9F00;
+}
+.btn-3d-red {
+  background: #FF4B4B;
+  color: white;
+  box-shadow: 0 4px 0 0 #C53030;
+}
+.btn-3d-grape {
+  background: #CE82FF;
+  color: white;
+  box-shadow: 0 4px 0 0 #8444C2;
+}
+.btn-3d-gray {
+  background: white;
+  color: #777777;
+  border: 2px solid #E5E5E5;
+  box-shadow: 0 3px 0 0 #C4C4C4;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Trilha pontilhada vertical (mapa) */
+.dotted-trail {
+  background-image: radial-gradient(circle, #D1D1D1 2px, transparent 2px);
+  background-size: 6px 14px;
+  background-repeat: repeat-y;
+}
+
+/* Shimmer suave para skeletons */
+.shimmer-bg {
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}

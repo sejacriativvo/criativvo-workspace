@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Template Demais Produtos — Maccari Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #888;
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    /* Canvas 1080 × 1920 */
+    .card {
+      width: 1080px;
+      height: 1920px;
+      background: #fff;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════ HEADER ══════════════ */
+    .header {
+      padding: 65px 65px 0 65px;
+      flex-shrink: 0;
+    }
+
+    /* ✏️ Linha 1 + 2 do título (marca / nome do produto) */
+    .title {
+      font-size: 115px;
+      font-weight: 900;
+      line-height: 0.92;
+      color: #000;
+      letter-spacing: -3px;
+      margin-bottom: 20px;
+    }
+
+    /* ✏️ Especificações técnicas */
+    .specs {
+      font-size: 27px;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: 0.4px;
+      margin-bottom: 36px;
+    }
+
+    /* ══════════════ IMAGEM ══════════════ */
+    .image-section {
+      flex: 1;
+      position: relative;
+      margin: 0 65px;
+      min-height: 0;
+    }
+
+    /* Borda vermelha grossa ao redor da foto */
+    .image-frame {
+      width: 100%;
+      height: 100%;
+      border: 12px solid #D20000;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      background: #d5d5d5;
+    }
+
+    /* ✏️ Foto do produto — trocar src */
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: 800;
+      color: #999;
+      letter-spacing: 3px;
+    }
+
+    /* Coração 3D — fora do frame, canto superior direito */
+    .heart {
+      position: absolute;
+      top: -55px;
+      right: 5px;
+      font-size: 135px;
+      line-height: 1;
+      z-index: 30;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+      pointer-events: none;
+    }
+
+    /* Logo da Maccari dentro da imagem, centro-inferior */
+    .logo-overlay {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+    }
+
+    /* ✏️ Ajuste o height conforme necessário */
+    .logo-overlay img {
+      height: 80px;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    }
+
+    /* ══════════════ RODAPÉ TEAL ══════════════ */
+    .price-footer {
+      flex-shrink: 0;
+      background: #5ABCB7;
+      border-radius: 22px 22px 0 0;
+      margin-top: 20px;
+      padding: 42px 65px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    /* ─── LADO ESQUERDO ─── */
+    .left-side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Linha com "12x" + ".sem / juros" */
+    .parcel-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1;
+    }
+
+    /* ✏️ Número de parcelas */
+    .num {
+      font-size: 92px;
+      font-weight: 900;
+      color: #000;
+      line-height: 1;
+    }
+
+    /* ".sem" e "juros" empilhados */
+    .parcel-words {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+      padding-bottom: 2px;
+      align-self: flex-end;
+      margin-bottom: 4px;
+    }
+
+    .parcel-words span {
+      font-size: 44px;
+      font-weight: 900;
+      color: #000;
+    }
+
+    /* "Exceto Linha Apple" */
+    .exceto {
+      font-size: 21px;
+      font-weight: 700;
+      color: #111;
+      margin-left: 2px;
+    }
+
+    /* Badge preto de garantia — versão genérica (escudo) */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      background: #000;
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 12px;
+    }
+
+    .badge-icon {
+      font-size: 32px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* Duas linhas dentro do badge */
+    .badge-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .badge-text .b1 {
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .badge-text .b2 {
+      font-size: 23px;
+      font-weight: 600;
+    }
+
+    /* ─── LADO DIREITO ─── */
+    .right-side {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0;
+      padding-top: 4px;
+    }
+
+    /* "A Prazo: R$199,99" com riscado no preço */
+    .prazo-row {
+      font-size: 30px;
+      font-weight: 600;
+      color: #111;
+      white-space: nowrap;
+    }
+
+    /* ✏️ Preço a prazo riscado */
+    .prazo-row s {
+      font-weight: 800;
+      font-size: 33px;
+      text-decoration-thickness: 2.5px;
+    }
+
+    /* "A Vista" */
+    .avista {
+      font-size: 42px;
+      font-weight: 800;
+      color: #000;
+      margin-top: 6px;
+    }
+
+    /* Preço à vista — linha de valores */
+    .preco-linha {
+      display: flex;
+      align-items: flex-start;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    /* "R$" menor */
+    .preco-rs {
+      font-size: 44px;
+      font-weight: 900;
+      color: #000;
+      margin-top: 14px;
+    }
+
+    /* ✏️ Valor principal (ex: 10.000,) */
+    .preco-valor {
+      font-size: 105px;
+      font-weight: 900;
+      color: #000;
+      letter-spacing: -3px;
+      line-height: 1;
+    }
+
+    /* ✏️ Centavos em superscript */
+    .preco-centavos {
+      font-size: 50px;
+      font-weight: 900;
+      color: #000;
+      margin-top: 8px;
+      align-self: flex-start;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <!-- ══ HEADER ══ -->
+  <div class="header">
+    <div class="title">Template para<br>Samsung</div><!-- ✏️ marca/produto -->
+    <div class="specs">ESIM 256GB 8GB RAM 6.3" 48MP + 48MP + 18MP</div><!-- ✏️ specs -->
+  </div>
+
+  <!-- ══ IMAGEM ══ -->
+  <div class="image-section">
+    <span class="heart">❤️</span>
+
+    <div class="image-frame">
+      <!-- ✏️ Trocar por <img class="product-image" src="foto.jpg" alt=""> -->
+      <div class="img-placeholder">FOTO DO PRODUTO</div>
+
+      <!-- Logo Maccari sobre a imagem -->
+      <div class="logo-overlay">
+        <img src="../logo.png" alt="Maccari Store">
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RODAPÉ ══ -->
+  <div class="price-footer">
+
+    <!-- ESQUERDA -->
+    <div class="left-side">
+      <div class="parcel-row">
+        <span class="num">12x</span><!-- ✏️ parcelas -->
+        <div class="parcel-words">
+          <span>.sem</span>
+          <span>juros</span>
+        </div>
+      </div>
+      <div class="exceto">Exceto Linha Apple</div>
+      <div class="badge">
+        <span class="badge-icon">🛡️</span><!-- ícone de garantia genérico -->
+        <div class="badge-text">
+          <span class="b1">Garantia</span>
+          <span class="b2">de: 6 Meses</span><!-- ✏️ prazo -->
+        </div>
+      </div>
+    </div>
+
+    <!-- DIREITA -->
+    <div class="right-side">
+      <div class="prazo-row">A Prazo:&nbsp;<s>R$199,99</s></div><!-- ✏️ -->
+      <div class="avista">A Vista</div>
+      <div class="preco-linha">
+        <span class="preco-rs">R$&nbsp;</span>
+        <span class="preco-valor">10.000,</span><!-- ✏️ -->
+        <span class="preco-centavos">99</span><!-- ✏️ -->
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Maccari — Promoção Gin + Vodka</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#05090A; }
+  body { display:flex; justify-content:center; }
+
+  .story {
+    width:1080px; height:1920px;
+    position:relative; overflow:hidden;
+    font-family:'Inter',sans-serif;
+    background:#07100F; color:#F4F8F6;
+  }
+
+  /* ─────── HERO ─────── */
+  .hero { position:absolute; inset:0; }
+  .hero img {
+    width:100%; height:100%;
+    object-fit:cover; object-position:center 46%;
+  }
+  .scrim-top {
+    position:absolute; top:0; left:0; right:0; height:300px;
+    background:linear-gradient(180deg, rgba(6,13,12,.80) 0%, rgba(6,13,12,.30) 50%, transparent 100%);
+    z-index:2;
+  }
+  .scrim-bot {
+    position:absolute; left:0; right:0; bottom:0; height:920px;
+    background:linear-gradient(to top,
+      #050B0A 0%, #050B0A 16%, rgba(5,11,10,.95) 30%,
+      rgba(5,11,10,.74) 44%, rgba(5,11,10,.30) 60%, transparent 78%);
+    z-index:2;
+  }
+  .glow {
+    position:absolute; left:50%; bottom:250px; transform:translateX(-50%);
+    width:900px; height:760px; border-radius:50%;
+    background:radial-gradient(circle, rgba(221,232,74,.15) 0%, transparent 60%);
+    z-index:2; pointer-events:none;
+  }
+
+  /* ─────── LOGO ─────── */
+  .logo {
+    position:absolute; top:58px; left:0; right:0;
+    display:flex; justify-content:center; z-index:6;
+  }
+  .logo img { height:88px; filter:drop-shadow(0 6px 20px rgba(0,0,0,.6)); }
+
+  /* selo Copa/promo no topo */
+  .selo {
+    position:absolute; top:70px; right:52px; z-index:6;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    width:132px; height:132px; border-radius:50%;
+    background:#DDE84A; color:#0A1413;
+    box-shadow:0 12px 30px rgba(0,0,0,.45);
+    transform:rotate(-10deg);
+    border:3px solid rgba(255,255,255,.30);
+    text-align:center;
+  }
+  .selo b { font-size:27px; font-weight:900; line-height:.95; letter-spacing:-.5px; }
+  .selo small { font-size:13px; font-weight:800; letter-spacing:2px; margin-top:3px; }
+
+  /* ─────── BLOCO PROMO (base) ─────── */
+  .promo {
+    position:absolute; left:62px; right:62px; bottom:84px; z-index:7;
+  }
+
+  .kicker {
+    display:inline-flex; align-items:center; gap:11px;
+    background:#DDE84A; color:#0A1413;
+    font-weight:900; font-size:23px; letter-spacing:4px;
+    padding:12px 24px 12px 20px; border-radius:100px;
+    box-shadow:0 8px 22px rgba(221,232,74,.28);
+  }
+  .kicker .bolt { width:19px; height:19px; display:block; }
+
+  .produtos {
+    margin-top:24px; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+    line-height:1;
+  }
+  .produtos .nome {
+    font-weight:900; font-size:50px; letter-spacing:-1.4px;
+    color:#FFFFFF; text-shadow:0 4px 16px rgba(0,0,0,.7);
+  }
+  .produtos .vol  { font-weight:800; font-size:30px; color:#DDE84A; letter-spacing:-.5px; }
+  .produtos .plus { font-weight:900; font-size:38px; color:#DDE84A; }
+  .produtos .sub {
+    width:100%; margin-top:8px;
+    font-weight:600; font-size:21px; color:rgba(244,248,246,.66); letter-spacing:.4px;
+  }
+
+  /* preco */
+  .preco-row {
+    margin-top:30px; display:flex; align-items:center; gap:26px;
+  }
+  .preco-lbl {
+    font-weight:900; font-size:30px; line-height:1.02;
+    letter-spacing:.5px; color:#FFFFFF; text-transform:uppercase;
+    text-shadow:0 3px 12px rgba(0,0,0,.6);
+  }
+  .preco-lbl em { font-style:normal; color:#DDE84A; display:block; }
+  .preco {
+    display:flex; align-items:flex-start; line-height:.82;
+    color:#DDE84A;
+    text-shadow:0 10px 36px rgba(221,232,74,.32), 0 4px 12px rgba(0,0,0,.5);
+  }
+  .preco .cifrao { font-weight:900; font-size:74px; margin-top:14px; letter-spacing:-2px; }
+  .preco .valor  { font-weight:900; font-size:184px; letter-spacing:-8px; }
+
+  /* CTA */
+  .cta {
+    margin-top:32px;
+    display:flex; align-items:center; gap:17px;
+    background:rgba(255,255,255,.06);
+    border:1.5px solid rgba(221,232,74,.42);
+    border-radius:18px; padding:21px 28px;
+  }
+  .cta .wpp {
+    flex:0 0 auto; width:50px; height:50px; border-radius:13px;
+    background:#DDE84A; display:flex; align-items:center; justify-content:center;
+  }
+  .cta .wpp svg { width:30px; height:30px; }
+  .cta .txt { display:flex; flex-direction:column; line-height:1.12; }
+  .cta .txt b { font-size:31px; font-weight:900; letter-spacing:-.3px; color:#fff; }
+  .cta .txt span { font-size:20px; font-weight:600; color:rgba(244,248,246,.74); }
+
+  .endereco {
+    margin-top:16px; font-size:19px; font-weight:600;
+    color:rgba(244,248,246,.55); letter-spacing:.3px;
+    display:flex; align-items:center; gap:9px;
+  }
+  .endereco svg { width:17px; height:17px; flex:0 0 auto; }
+
+  .legal {
+    position:absolute; bottom:34px; left:0; right:0; z-index:7;
+    text-align:center; font-size:15px; font-weight:700;
+    letter-spacing:1.2px; color:rgba(244,248,246,.42);
+  }
+</style>
+</head>
+<body>
+  <div class="story">
+
+    <div class="hero">
+      <img src="hero.png" alt="Maccari Store promoção gin e vodka">
+    </div>
+    <div class="scrim-top"></div>
+    <div class="scrim-bot"></div>
+    <div class="glow"></div>
+
+    <div class="logo">
+      <img src="../../../assets/logo.png" alt="Maccari Store">
+    </div>
+
+    <div class="selo">
+      <b>CLIMA<br>DE COPA</b>
+      <small>SÓ HOJE</small>
+    </div>
+
+    <div class="promo">
+
+      <div class="kicker">
+        <svg class="bolt" viewBox="0 0 24 24" fill="#0A1413"><path d="M13 2 L4 14 h6 l-1 8 9-12 h-6 z"/></svg>
+        PROMOÇÃO
+      </div>
+
+      <div class="produtos">
+        <span class="nome">TANQUERAY</span><span class="vol">750ml</span>
+        <span class="plus">+</span>
+        <span class="nome">ABSOLUT</span><span class="vol">1L</span>
+        <span class="sub">Gin + Vodka, as duas tradicionais</span>
+      </div>
+
+      <div class="preco-row">
+        <div class="preco-lbl">leve<br>as duas<em>por</em></div>
+        <div class="preco">
+          <span class="cifrao">R$</span>
+          <span class="valor">100</span>
+        </div>
+      </div>
+
+      <div class="cta">
+        <span class="wpp">
+          <svg viewBox="0 0 32 32" fill="#0A1413"><path d="M16 3C9 3 3.5 8.5 3.5 15.5c0 2.4.7 4.7 1.9 6.7L3 29l7-1.8c1.9 1 4 1.6 6 1.6 7 0 12.5-5.5 12.5-12.5S23 3 16 3zm0 22.8c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-4.1 1.1 1.1-4-.3-.4a10.2 10.2 0 01-1.6-5.4c0-5.7 4.7-10.3 10.4-10.3S26.3 9.8 26.3 15.5 21.7 25.8 16 25.8zm5.8-7.7c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.4 5.3 4.7 2 .8 2.7.9 3.7.8.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>
+        </span>
+        <div class="txt">
+          <b>(16) 99712-3537</b>
+          <span>Chama no zap e garanta a sua</span>
+        </div>
+      </div>
+
+      <div class="endereco">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#DDE84A" stroke-width="2"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        Maccari Store · R. Miguel Landim, 849 · Centro, Ibitinga
+      </div>
+
+    </div>
+
+    <div class="legal">VENDA PROIBIDA PARA MENORES DE 18 ANOS · APRECIE COM MODERAÇÃO</div>
+  </div>
+</body>
+</html>

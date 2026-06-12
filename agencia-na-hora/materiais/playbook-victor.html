@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook Victor - Agência na Hora</title>
+<style>
+  :root{ --cor:#2f6df0; --tinta:#15171c; --suave:#71757e; --linha:#e7e9ee; --leve:#f4f7fe; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--tinta);background:#e9ebef;line-height:1.5;}
+  .page{max-width:800px;margin:20px auto;background:#fff;}
+
+  .hero{background:var(--cor);color:#fff;padding:46px 52px 40px;}
+  .hero .kicker{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;opacity:.8;}
+  .hero h1{font-size:62px;font-weight:800;letter-spacing:-2px;line-height:1;margin:8px 0 6px;}
+  .hero .role{font-size:19px;font-weight:600;opacity:.95;}
+  .hero .missao{margin-top:18px;font-size:16px;line-height:1.5;max-width:90%;opacity:.95;border-left:3px solid rgba(255,255,255,.5);padding-left:14px;}
+
+  .body{padding:34px 52px 46px;}
+
+  .oferta{background:var(--leve);border-radius:14px;padding:18px 22px;margin-bottom:30px;}
+  .oferta .t{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cor);margin-bottom:10px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{background:#fff;border:1px solid var(--linha);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;}
+  .oferta .preco{margin-top:10px;font-size:13px;color:var(--suave);}
+
+  .secao{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cor);margin:0 0 18px;}
+
+  .step{display:flex;gap:20px;align-items:flex-start;padding:0 0 22px;}
+  .step .num{flex:none;width:46px;height:46px;border-radius:14px;background:var(--cor);color:#fff;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .step .txt h3{font-size:19px;font-weight:800;letter-spacing:-.3px;margin-bottom:3px;}
+  .step .txt p{font-size:14.5px;color:var(--suave);line-height:1.5;}
+  .step .txt b{color:var(--tinta);}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .card{border:2px solid var(--linha);border-radius:16px;padding:18px 20px;}
+  .card .lbl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--suave);margin-bottom:6px;}
+  .card .val{font-size:16px;font-weight:700;line-height:1.35;}
+  .card.entrega{border-color:var(--cor);background:var(--leve);}
+  .card.entrega .val{color:var(--cor);}
+
+  .foot{margin-top:30px;padding-top:16px;border-top:1px solid var(--linha);font-size:12.5px;color:var(--suave);display:flex;justify-content:space-between;}
+  .logo{font-weight:800;color:var(--tinta);}
+
+  @media print{
+    body{background:#fff;}
+    .page{margin:0;max-width:100%;}
+    .step,.cards,.oferta{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="kicker">Agência na Hora · Playbook</div>
+    <h1>Victor</h1>
+    <div class="role">Comercial · vendas e call de descoberta</div>
+    <div class="missao">Sua missão: trazer o cliente pra dentro e extrair na call tudo que o time precisa pra montar a entrega. Você é a porta de entrada. Call mal feita = time montando no escuro.</div>
+  </div>
+
+  <div class="body">
+
+    <div class="oferta">
+      <div class="t">O que a gente vende (lembre sempre)</div>
+      <div class="chips">
+        <span class="chip">🌐 Site profissional</span>
+        <span class="chip">🎯 Tráfego automatizado</span>
+        <span class="chip">🎠 Carrosséis</span>
+        <span class="chip">📍 Google Meu Negócio</span>
+      </div>
+      <div class="preco">Oferta única · ~R$ 2.000 · qualquer nicho de negócio local</div>
+    </div>
+
+    <div class="secao">Seu passo a passo</div>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div class="txt"><h3>Prospectar e qualificar</h3><p>Negócio local, qualquer nicho. <b>Indicação e YouTube</b> são as fontes principais. O lead tem perfil e fôlego pra fechar?</p></div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="txt"><h3>Apresentar a oferta e fechar</h3><p>Mostra a oferta única (~R$ 2.000), fecha e <b>registra o pagamento</b>. À vista vs parcelado.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="txt"><h3>Agendar a call de descoberta</h3><p>Marca a call no <b>Google Meet</b> logo após o pagamento. Meta: em até 48h.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="txt"><h3>Conduzir a call</h3><p>Segue o <b>guia de perguntas</b> (perguntas-onboarding-vendedor). <b>Transcrição (Yati) ligada</b> desde o início. Deixa o cliente falar.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="txt"><h3>Passar o bastão</h3><p>Manda pra <b>Produção (Anderson + Luis)</b>: transcrição + logo + fotos + WhatsApp + endereço. <b>Avisa o Alisson</b> que tem cliente novo pra tráfego.</p></div>
+    </div>
+
+    <div class="cards">
+      <div class="card entrega">
+        <div class="lbl">Você entrega</div>
+        <div class="val">Transcrição completa + material do cliente</div>
+      </div>
+      <div class="card">
+        <div class="lbl">Passa pra</div>
+        <div class="val">Produção (Anderson + Luis)</div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span><span class="logo">criativvo</span> · Agência na Hora</span>
+      <span>Playbook do Victor · 29/05/2026</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Movisol — Payback 3 anos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --azul:    #004CF1;
+    --azul-dk: #0036C8;
+    --azul-lt: #1A63FF;
+    --branco:  #FFFFFF;
+    --preto:   #0A0A0A;
+  }
+
+  html, body { margin:0; padding:0; background: var(--azul); }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  .post { width:1080px; height:1350px; position:relative; overflow:hidden; background:var(--azul); }
+
+  .logo-branca { height:38px; max-width:180px; object-fit:contain; object-position:left center; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 30px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .pill::before { content:''; width:7px; height:7px; border-radius:50%; background:currentColor; opacity:.7; flex-shrink:0; }
+  .pill-glass { background:rgba(255,255,255,.13); color:#fff; border:1px solid rgba(255,255,255,.22); }
+
+  .grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .content {
+    position:absolute; inset:0;
+    padding:72px;
+    display:flex; flex-direction:column;
+  }
+
+  .top { display:flex; align-items:center; justify-content:space-between; }
+  .handle { font-size:16px; font-weight:500; color:rgba(255,255,255,.4); letter-spacing:.5px; }
+
+  .mid {
+    flex:1; display:flex; flex-direction:column;
+    justify-content:center; gap:18px;
+  }
+
+  .hook {
+    font-size:46px; font-weight:500; line-height:1.2;
+    color:rgba(255,255,255,.7); max-width:760px;
+    letter-spacing:-1px;
+    margin-bottom:8px;
+  }
+
+  .number-line { display:flex; align-items:baseline; gap:14px; line-height:1; margin-top:4px; }
+
+  .number {
+    font-size:260px; font-weight:900;
+    line-height:.85; color:#fff;
+    letter-spacing:-10px;
+  }
+
+  .unit {
+    font-size:72px; font-weight:800;
+    color:#fff; letter-spacing:-2px;
+    align-self:flex-end; margin-bottom:22px;
+  }
+
+  .punch {
+    font-size:54px; font-weight:800;
+    color:#fff; line-height:1.1;
+    max-width:840px; margin-top:18px;
+    letter-spacing:-1.5px;
+  }
+
+  .punch em { font-style:normal; color:#fff; }
+
+  .sub {
+    font-size:30px; font-weight:400; line-height:1.45;
+    color:rgba(255,255,255,.7); max-width:780px;
+    margin-top:22px;
+  }
+
+  .source {
+    font-size:13px; font-weight:500;
+    color:rgba(255,255,255,.3); letter-spacing:.5px;
+    margin-top:24px;
+  }
+
+  .bottom {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(255,255,255,.12); padding-top:28px;
+  }
+
+  .city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,.25); }
+</style>
+</head>
+<body>
+
+<div class="post">
+  <div class="grid"></div>
+  <div class="content">
+    <div class="top">
+      <img class="logo-branca" src="../../../assets/logo/LOGO%20%2B%20ESCRITA%20LOGO%20BRANCA.png" alt="Movisol">
+      <span class="handle">@movisol.se</span>
+    </div>
+
+    <div class="mid">
+      <div>
+        <span class="pill pill-glass">A conta dói?</span>
+      </div>
+
+      <p class="hook">A conta de luz só sobe. Mas tem um prazo pra ela parar de mexer com você:</p>
+
+      <div class="number-line">
+        <span class="number">3</span>
+        <span class="unit">anos.</span>
+      </div>
+
+      <p class="punch">É o tempo pra um sistema solar se pagar sozinho.</p>
+
+      <p class="sub">Depois disso, a economia cai todo mês no seu bolso. Enquanto a conta da rua continua subindo, a sua trava no mesmo lugar.</p>
+
+      <p class="source">Fonte: Greener, Estudo Estratégico Mercado Fotovoltaico GD, 2025.</p>
+    </div>
+
+    <div class="bottom">
+      <span class="city">Ibitinga · SP</span>
+      <span class="pill pill-glass" style="font-size:10px; padding:8px 20px;">Quer simular? Fala com a gente.</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

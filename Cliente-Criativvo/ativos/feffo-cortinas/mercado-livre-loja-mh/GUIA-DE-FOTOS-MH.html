@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Jost:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+@page{size:A4;margin:0}
+body{font-family:'Jost',sans-serif;color:#1c2733;font-size:13px;line-height:1.5}
+.page{width:210mm;min-height:297mm;padding:18mm 16mm;position:relative}
+.page+.page{page-break-before:always}
+/* capa / header */
+.cover-head{background:#0A1826;color:#fff;margin:-18mm -16mm 10mm;padding:16mm 16mm 12mm;position:relative;overflow:hidden}
+.flag{position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(90deg,#1FAE4E 0 40%,#FFDF00 40% 75%,#F88800 75% 100%)}
+.logo{height:62px;margin-bottom:18px}
+.cover-head h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:40px;line-height:1.05}
+.cover-head p{color:#B9C2CC;margin-top:8px;font-size:14px;max-width:150mm}
+h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:24px;color:#0A1826;margin:22px 0 10px;border-bottom:2px solid #F88800;padding-bottom:6px}
+.intro b{color:#0A1826}
+.rules{background:#F4F1EC;border-left:4px solid #F88800;padding:14px 18px;border-radius:4px;margin:8px 0 4px}
+.rules li{margin:5px 0 5px 16px}
+/* card de foto */
+.shot{border:1px solid #dfe4ea;border-radius:8px;padding:16px 18px;margin:14px 0;break-inside:avoid;page-break-inside:avoid}
+.shot-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.num{flex:none;width:34px;height:34px;border-radius:50%;background:#0A1826;color:#FFDF00;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center}
+.shot-h .ttl{font-weight:700;font-size:17px;color:#0A1826}
+.shot-h .use{margin-left:auto;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#86634A;background:#F4F1EC;padding:4px 10px;border-radius:20px}
+.grid{display:flex;gap:18px}
+.col{flex:1}
+.row{margin:6px 0}
+.k{font-weight:700;color:#0A1826}
+.sizes{margin-top:8px;border-top:1px dashed #cfd6dd;padding-top:8px}
+.sizes table{width:100%;border-collapse:collapse;font-size:12px}
+.sizes th,.sizes td{text-align:left;padding:4px 6px;border-bottom:1px solid #eef1f4}
+.sizes th{color:#86634A;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px}
+/* diagrama de enquadramento */
+.diag{flex:none}
+.frame{position:relative;background:#eef1f4;border:2px solid #0A1826;border-radius:4px;overflow:hidden}
+.zone{position:absolute;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;text-align:center;text-transform:uppercase;letter-spacing:.5px}
+.z-prod{background:rgba(31,174,78,.18);color:#0c7a37}
+.z-text{background:rgba(248,136,0,.16);color:#9a5a00}
+.cap{font-size:10px;color:#7a8794;text-align:center;margin-top:5px}
+.foot{position:absolute;left:16mm;right:16mm;bottom:10mm;font-size:10px;color:#9aa6b2;border-top:1px solid #e3e8ed;padding-top:8px;display:flex;justify-content:space-between}
+</style></head>
+<body>
+
+<!-- PAGINA 1 -->
+<div class="page">
+  <div class="cover-head">
+    <img class="logo" src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja-mh/_logo/mh-logo.png">
+    <h1>Guia de Fotos — Loja Oficial Mercado Livre</h1>
+    <p>Padrão de fotografia para os banners e componentes da loja MH Enxovais. Siga o enquadramento de cada foto para o texto não cobrir o produto.</p>
+    <div class="flag"></div>
+  </div>
+
+  <div class="intro">
+    <h2>Regras gerais (valem para todas as fotos)</h2>
+    <div class="rules"><ul>
+      <li><b>Luz:</b> natural e suave, de preferência lateral. Nada de flash duro ou sombra pesada.</li>
+      <li><b>Fundo:</b> clean e organizado. Ambiente arrumado, sem objetos fora de lugar.</li>
+      <li><b>Produto:</b> bem passado, sem amassado, sem etiqueta/preço aparecendo.</li>
+      <li><b>Qualidade:</b> maior resolução possível (celular no modo alta qualidade serve). <b>Mandar o arquivo original</b>, sem filtro e sem corte.</li>
+      <li><b>Zona segura:</b> respeite a área indicada em cada foto. A parte marcada como "texto" deve ficar mais vazia/lisa, porque é onde entra a escrita.</li>
+      <li><b>Coesão:</b> as 3 fotos de categoria (1, 2 e 3) devem ter a <b>mesma luz e o mesmo estilo de fundo</b> para ficarem combinando.</li>
+    </ul></div>
+  </div>
+
+  <h2>Lista de fotos</h2>
+  <table class="sizes"><tr><th>#</th><th>Foto</th><th>Onde é usada</th><th>Formato</th></tr>
+    <tr><td>1</td><td>Categoria "Casa"</td><td>Galeria de categorias</td><td>Quadrada</td></tr>
+    <tr><td>2</td><td>Categoria "Móveis e Decorações"</td><td>Galeria de categorias</td><td>Quadrada</td></tr>
+    <tr><td>3</td><td>Categoria "Indústria e Comércio"</td><td>Galeria de categorias</td><td>Quadrada</td></tr>
+    <tr><td>4</td><td>Cama posta (ambiente)</td><td>Banner secundário</td><td>Horizontal</td></tr>
+    <tr><td>5</td><td>Ambiente premium</td><td>Banner principal (versão premium)</td><td>Horizontal + Vertical</td></tr>
+    <tr><td>6</td><td>Ambiente completo</td><td>Etiquetas de produto</td><td>Horizontal</td></tr>
+  </table>
+
+  <div class="foot"><span>MH Enxovais · Guia de Fotos</span><span>Criativvo</span></div>
+</div>
+
+<!-- PAGINA 2 -->
+<div class="page">
+  <h2>Categorias (fotos 1, 2 e 3)</h2>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">1</div><div class="ttl">Categoria — Casa</div><div class="use">Tile 800×800</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Produto:</span> cama posta premium (jogo de cama + edredom ou cobreleito). É o carro-chefe do enxoval.</div>
+        <div class="row"><span class="k">Precisa aparecer:</span> cama bem arrumada, enxoval passado, vista de frente ou levemente de cima.</div>
+        <div class="row"><span class="k">Alinhamento:</span> produto <b>centralizado</b>, com margem em volta. <b>Terço de baixo mais calmo</b> (entra o nome "Casa"). Não cortar o produto nas bordas.</div>
+        <div class="sizes">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Único (desktop + mobile)</td><td>800 × 800 px</td><td>1600 × 1600 px (quadrada)</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:150px;height:150px">
+          <div class="zone z-prod" style="inset:8px 8px 42px 8px">Produto<br>centralizado</div>
+          <div class="zone z-text" style="left:8px;right:8px;bottom:8px;height:30px">nome (deixar calmo)</div>
+        </div>
+        <div class="cap">quadrado 1:1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">2</div><div class="ttl">Categoria — Móveis e Decorações</div><div class="use">Tile 800×800</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Produto:</span> peça de decoração / conforto: almofadas decorativas, manta dobrada sobre poltrona, ou itens de decoração do mix.</div>
+        <div class="row"><span class="k">Precisa aparecer:</span> composição decorativa bem montada, mesma pegada de luz e fundo da foto 1.</div>
+        <div class="row"><span class="k">Alinhamento:</span> produto <b>centralizado</b>, <b>terço de baixo calmo</b> (entra o nome).</div>
+        <div class="sizes">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Único</td><td>800 × 800 px</td><td>1600 × 1600 px (quadrada)</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:150px;height:150px">
+          <div class="zone z-prod" style="inset:8px 8px 42px 8px">Produto<br>centralizado</div>
+          <div class="zone z-text" style="left:8px;right:8px;bottom:8px;height:30px">nome (deixar calmo)</div>
+        </div>
+        <div class="cap">quadrado 1:1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">3</div><div class="ttl">Categoria — Indústria e Comércio</div><div class="use">Tile 800×800</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Produto:</span> pegada de atacado / profissional: pilha organizada de enxoval ou toalhas, rolos de tecido, ou cama de hotel/pousada montada.</div>
+        <div class="row"><span class="k">Precisa aparecer:</span> sensação de volume e qualidade profissional (B2B).</div>
+        <div class="row"><span class="k">Alinhamento:</span> produto <b>centralizado</b>, <b>terço de baixo calmo</b>.</div>
+        <div class="sizes">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Único</td><td>800 × 800 px</td><td>1600 × 1600 px (quadrada)</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:150px;height:150px">
+          <div class="zone z-prod" style="inset:8px 8px 42px 8px">Produto<br>centralizado</div>
+          <div class="zone z-text" style="left:8px;right:8px;bottom:8px;height:30px">nome (deixar calmo)</div>
+        </div>
+        <div class="cap">quadrado 1:1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>MH Enxovais · Guia de Fotos</span><span>Criativvo</span></div>
+</div>
+
+<!-- PAGINA 3 -->
+<div class="page">
+  <h2>Banners e etiquetas (fotos 4, 5 e 6)</h2>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">4</div><div class="ttl">Cama posta — Banner secundário</div><div class="use">1500×375 / 600×340</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Produto:</span> cama posta premium ou ambiente montado.</div>
+        <div class="row"><span class="k">Precisa aparecer:</span> o produto na <b>metade DIREITA</b> do quadro. A <b>metade esquerda</b> mais limpa (parede / espaço vazio), porque é onde entra o texto.</div>
+        <div class="row"><span class="k">Alinhamento:</span> foto <b>horizontal e ampla</b>. Os dois tamanhos (desktop e mobile) são horizontais, então uma única foto larga atende os dois.</div>
+        <div class="sizes">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Desktop</td><td>1500 × 375 px</td><td rowspan="2">3000 × 800 px (horizontal ampla)</td></tr>
+          <tr><td>Mobile</td><td>600 × 340 px</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:170px;height:70px">
+          <div class="zone z-text" style="left:6px;top:6px;bottom:6px;width:74px">texto<br>(deixar limpo)</div>
+          <div class="zone z-prod" style="right:6px;top:6px;bottom:6px;width:78px">Produto<br>à direita</div>
+        </div>
+        <div class="cap">horizontal</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">5</div><div class="ttl">Ambiente premium — Banner principal</div><div class="use">1920×640 / 600×800</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Produto:</span> ambiente decorado premium (quarto com cama posta), estilo editorial de revista.</div>
+        <div class="row"><span class="k">Atenção:</span> aqui são <b>2 fotos do MESMO ambiente</b>, porque desktop e mobile têm formatos bem diferentes.</div>
+        <div class="row"><span class="k">Desktop (horizontal):</span> produto à <b>direita</b>, esquerda calma pro texto.</div>
+        <div class="row"><span class="k">Mobile (vertical):</span> produto no <b>centro / baixo</b>, com o <b>topo mais vazio</b> pro texto.</div>
+        <div class="sizes">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Desktop (horizontal)</td><td>1920 × 640 px</td><td>3000 × 1000 px</td></tr>
+          <tr><td>Mobile (vertical)</td><td>600 × 800 px</td><td>1200 × 1600 px</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:150px;height:54px;margin-bottom:8px">
+          <div class="zone z-text" style="left:5px;top:5px;bottom:5px;width:64px">texto</div>
+          <div class="zone z-prod" style="right:5px;top:5px;bottom:5px;width:70px">Produto</div>
+        </div>
+        <div class="cap" style="margin-bottom:8px">desktop horizontal</div>
+        <div class="frame" style="width:70px;height:94px;margin:0 auto">
+          <div class="zone z-text" style="left:5px;right:5px;top:5px;height:30px">texto</div>
+          <div class="zone z-prod" style="left:5px;right:5px;bottom:5px;height:50px">Produto</div>
+        </div>
+        <div class="cap">mobile vertical</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">6</div><div class="ttl">Ambiente completo — Etiquetas</div><div class="use">1200×800</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Produto:</span> ambiente lindo com <b>vários produtos MH na mesma cena</b> (cama posta + almofadas + manta + cortina, se tiver).</div>
+        <div class="row"><span class="k">Precisa aparecer:</span> quanto mais produto diferente visível na foto, melhor (cada um vira uma etiqueta clicável).</div>
+        <div class="row"><span class="k">Alinhamento:</span> <b>sem zona de texto</b> — pode preencher a cena toda. Foco nítido, nada cortado. Tirar 1 a 2 ambientes (ex: quarto e sala).</div>
+        <div class="sizes">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Único (ML ajusta sozinho)</td><td>1200 × 800 px</td><td>2400 × 1600 px (horizontal 3:2)</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:150px;height:100px">
+          <div class="zone z-prod" style="inset:6px">Vários produtos<br>(cena toda)</div>
+        </div>
+        <div class="cap">horizontal 3:2</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>MH Enxovais · Guia de Fotos</span><span>Criativvo</span></div>
+</div>
+
+</body></html>

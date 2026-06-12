@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Story 3 — Como participar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #1a1a1a; }
+    body { display: flex; justify-content: center; padding: 30px; }
+
+    .card {
+      width: 1080px;
+      height: 1920px;
+      font-family: 'Montserrat', sans-serif;
+      position: relative;
+      overflow: hidden;
+      color: #F2EAD8;
+      background:
+        radial-gradient(ellipse 90% 50% at 50% 0%, rgba(237,125,23,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 80% 40% at 50% 100%, rgba(232,197,138,0.14) 0%, transparent 55%),
+        linear-gradient(180deg, #28180C 0%, #1A120B 45%, #14080C 100%);
+    }
+
+    /* Subtle decorative element: faded "11/06" massive text background */
+    .deco {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-8deg);
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 500;
+      font-size: 720px;
+      color: rgba(232,197,138,0.04);
+      line-height: 1;
+      letter-spacing: -20px;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+      font-variation-settings: 'opsz' 144;
+      white-space: nowrap;
+    }
+
+    /* Brand lockup */
+    .lockup {
+      position: absolute;
+      top: 130px;
+      left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 34px;
+      z-index: 5;
+    }
+    .lockup .cs {
+      height: 100px;
+      filter: drop-shadow(0 4px 24px rgba(0,0,0,0.75));
+    }
+    .lockup .x {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 400;
+      font-size: 46px;
+      color: #E8C58A;
+      opacity: 0.9;
+    }
+    .lockup .mc {
+      height: 84px;
+      filter: drop-shadow(0 4px 24px rgba(0,0,0,0.75));
+    }
+
+    /* Eyebrow + headline title block */
+    .title {
+      position: absolute;
+      top: 380px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 5;
+    }
+    .title .eyebrow {
+      font-family: 'Montserrat';
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 10px;
+      color: #ED7D17;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+    }
+    .title .eyebrow::before,
+    .title .eyebrow::after {
+      content: '';
+      width: 70px; height: 1px;
+      background: rgba(237,125,23,0.55);
+    }
+    .title .h {
+      font-family: 'Fraunces';
+      font-weight: 500;
+      font-size: 180px;
+      line-height: 1.0;
+      letter-spacing: -4px;
+      color: #F2EAD8;
+      font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    }
+    .title .h em { font-style: italic; color: #E8C58A; }
+
+    /* Steps — editorial, no cards */
+    .steps {
+      position: absolute;
+      top: 850px;
+      left: 90px; right: 90px;
+      z-index: 5;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      align-items: center;
+      gap: 38px;
+      padding: 30px 0;
+    }
+    .step + .step {
+      border-top: 1px solid rgba(242,234,216,0.12);
+    }
+    .step .num {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 500;
+      font-size: 96px;
+      color: #5ABCB7;
+      line-height: 1;
+      text-align: left;
+      font-variation-settings: 'opsz' 144;
+    }
+    .step .body {
+      font-family: 'Montserrat';
+      font-size: 34px;
+      font-weight: 500;
+      color: #F2EAD8;
+      line-height: 1.3;
+    }
+    .step .body b { color: #E8C58A; font-weight: 700; }
+
+    /* SORTEIO 11/06 final — protagonist */
+    .sorteio-block {
+      position: absolute;
+      top: 1530px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 5;
+    }
+    .sorteio-label {
+      font-family: 'Montserrat';
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 12px;
+      color: #ED7D17;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+    }
+    .sorteio-label::before,
+    .sorteio-label::after {
+      content: '';
+      width: 70px; height: 1px;
+      background: rgba(237,125,23,0.55);
+    }
+    .sorteio-date {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 500;
+      font-size: 220px;
+      color: #E8C58A;
+      line-height: 1;
+      letter-spacing: -5px;
+      font-variation-settings: 'opsz' 144;
+    }
+
+    /* Footer */
+    .footer {
+      position: absolute;
+      bottom: 70px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      font-family: 'Montserrat';
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 5px;
+      color: #6e6450;
+      text-transform: uppercase;
+    }
+    .footer svg {
+      width: 16px; height: 16px;
+      stroke: #6e6450;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="deco">11/06</div>
+
+    <div class="lockup">
+      <img class="cs" src="../../../assets/logo-castellinhos-clean.png" alt="Castellinhos">
+      <span class="x">×</span>
+      <img class="mc" src="../../../assets/logo.png" alt="Maccari Store">
+    </div>
+
+    <div class="title">
+      <div class="eyebrow"><span>COMO PARTICIPAR</span></div>
+      <div class="h">É <em>fácil</em>.</div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <div class="body"><b>Compre</b> na Maccari Store ou <b>consuma</b> no Castellinhos</div>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <div class="body">Receba seu <b>cupom</b> no balcão e preencha</div>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <div class="body">Aguarde o <b>sorteio</b> ao vivo no Instagram</div>
+      </div>
+    </div>
+
+    <div class="sorteio-block">
+      <div class="sorteio-label"><span>SORTEIO</span></div>
+      <div class="sorteio-date">11/06</div>
+    </div>
+
+    <div class="footer">
+      <svg viewBox="0 0 24 24"><path d="M5 12 h14 M13 6 l6 6 -6 6"/></svg>
+      REGULAMENTO COMPLETO NA LEGENDA
+    </div>
+  </div>
+</body>
+</html>

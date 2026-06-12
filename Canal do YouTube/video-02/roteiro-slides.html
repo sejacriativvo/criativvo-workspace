@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roteiro em slides — fala junto com a apresentação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF7F2;--bg-alt:#F3EFE8;--bg-card:#FFFFFF;--bg-dark:#1C1917;
+    --primary:#C96442;--primary-light:#E8A88C;--primary-glow:rgba(201,100,66,.08);--primary-border:rgba(201,100,66,.25);
+    --text:#1C1917;--text-mid:#57534E;--text-muted:#A8A29E;--border:#E7E5E4;--border-warm:#D6D3D1;
+    --sans:'Bricolage Grotesque',-apple-system,system-ui,sans-serif;--serif:'Instrument Serif',Georgia,serif;--mono:'SF Mono','Courier New',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+  .s{font-family:var(--serif);font-style:italic;color:var(--primary);font-weight:400}
+
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:6;background:var(--bg-dark);padding:11px 26px;display:flex;align-items:center;gap:14px;border-bottom:3px solid var(--primary)}
+  .topbar .lbl{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--primary-light);white-space:nowrap}
+  .track{flex:1;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+  .fill{height:100%;background:var(--primary);width:0;transition:width .4s ease}
+  .topbar .cnt{font-size:12px;font-weight:700;color:var(--primary-light);white-space:nowrap}
+
+  .stage{position:fixed;inset:0;top:0;z-index:1}
+  .slide{position:absolute;inset:0;background:var(--bg);opacity:0;pointer-events:none;overflow-y:auto;padding:78px 7vw 90px;transition:opacity .35s ease}
+  .slide.active{opacity:1;pointer-events:auto}
+  .wrap{max-width:880px;margin:0 auto;min-height:calc(100vh - 168px);display:flex;flex-direction:column;justify-content:center}
+
+  .meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .snum{background:var(--primary);color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em;padding:5px 12px;border-radius:20px}
+  .stitle{font-size:13px;font-weight:700;color:var(--text);letter-spacing:.01em}
+  .tag{font-family:var(--serif);font-style:italic;color:var(--primary);font-size:20px;margin-left:auto}
+  .tag.none{color:var(--text-muted);font-size:13px;font-family:var(--sans);font-style:normal;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+
+  .screen{font-size:13px;color:var(--text-muted);font-weight:600;margin-bottom:22px;padding-left:14px;border-left:3px solid var(--border-warm);line-height:1.45}
+
+  .gancho{font-size:clamp(20px,2.6vw,30px);font-weight:800;color:var(--primary);line-height:1.34;margin-bottom:16px;letter-spacing:-.01em}
+  .gpill{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--primary);padding:4px 10px;border-radius:20px;margin-right:11px;vertical-align:middle}
+
+  .fala{font-size:clamp(18px,2.25vw,27px);line-height:1.6;color:var(--text);font-weight:500;letter-spacing:-.005em}
+  .fala em{font-family:var(--serif);font-style:italic;color:var(--primary);font-weight:400;letter-spacing:0}
+  .fala p{margin-bottom:.65em}
+  .fala p:last-child{margin-bottom:0}
+
+  .dica{margin-top:24px;background:var(--primary-glow);border:1px solid var(--primary-border);border-radius:10px;padding:13px 16px;font-size:14px;color:var(--text-mid);line-height:1.5;display:flex;gap:9px}
+  .dica b{color:var(--primary);font-weight:800}
+
+  .divider .fala{font-size:clamp(19px,2.2vw,26px);color:var(--text-mid)}
+
+  .hint{position:fixed;bottom:22px;left:26px;z-index:6;font-size:12px;color:var(--text-muted);letter-spacing:.03em;transition:opacity .4s;font-weight:600}
+  .nav{position:fixed;bottom:18px;right:26px;z-index:6;display:flex;gap:8px}
+  .nav button{width:38px;height:38px;border-radius:10px;border:1px solid var(--border-warm);background:#fff;color:var(--text-mid);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .nav button:hover{color:#fff;border-color:var(--primary);background:var(--primary)}
+
+  .syncdot{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:7;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--primary);background:rgba(201,100,66,.12);border:1px solid var(--primary-border);padding:5px 13px;border-radius:20px;display:none}
+  .syncdot.on{display:inline-block}
+
+  @media (max-width:760px){.slide{padding:74px 7vw 92px}.tag{margin-left:0}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="lbl">Roteiro · fala junto</span>
+  <div class="track"><div class="fill" id="fill"></div></div>
+  <span class="cnt"><span id="cur">1</span> / <span id="total">23</span></span>
+</div>
+
+<div class="stage" id="stage">
+
+  <!-- 1 -->
+  <section class="slide active">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 1</span><span class="stitle">Capa</span><span class="tag none">Abertura</span></div>
+      <div class="screen">Na tela: logo do Claude + "O sistema que faz uma loja de carros rodar sozinha".</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Eu construí o sistema que controla uma loja de carros inteira conversando com uma IA. Sem ser programador."</div>
+      <div class="fala">"Duas lojas, estoque, vendas, lucro, tudo. Comecei sozinho, sem escrever código. Mas já vou ser sincero contigo: quando o sistema passou a guardar dado sigiloso de cliente, eu peguei dicas com amigos desenvolvedores pra reforçar a segurança. A IA não substitui um bom dev, ela <em>turbina.</em> Esse vídeo é pra quem quer aprender a usar IA e pro dono de loja que precisa de um sistema desse."</div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 2</span><span class="stitle">O que cabe aqui dentro</span><span class="tag none">Hook</span></div>
+      <div class="screen">Na tela: "Estoque, vendas, agenda, metas, anúncios e lucro. Tudo num lugar só."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Tudo que uma loja de carros precisa, dentro de um app só."</div>
+      <div class="fala">"Estoque, vendas, agenda, metas, anúncio e lucro. Num app só, no celular do time. E começou do jeito mais improvável: conversando com uma IA, sem escrever código. Deixa eu te provar."</div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 3</span><span class="stitle">A enquete (a dor)</span><span class="tag none">A dor</span></div>
+      <div class="screen">Na tela: três cartões de pergunta estilo enquete.</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Dono de loja de carros: responde rápido, de cabeça."</div>
+      <div class="fala">"Qual carro tá parado há mais de noventa dias? Quanto custou pra vender o último carro? Cadê o contato do cliente que pediu uma caminhonete? Travou em alguma? Pois é. É exatamente isso que esse sistema resolve."</div>
+      <div class="dica"><b>Dica</b> Pausa real depois de cada pergunta. O silêncio faz o cara responder na cabeça e travar.</div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide divider">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 4</span><span class="stitle">Divisória · O que é um sistema operacional</span></div>
+      <div class="fala">"Mas antes, o que é um 'sistema operacional'? Parece nome difícil, mas é a coisa mais simples do mundo."</div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 5</span><span class="stitle">O que é um sistema operacional</span><span class="tag">o celular</span></div>
+      <div class="screen">Na tela: "Pensa no seu celular. Um lugar só onde você faz tudo."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Você usa um sistema operacional todo dia e nem percebe."</div>
+      <div class="fala">
+        <p>"O seu celular é um. Antes, pra cada coisa você precisava de um aparelho: telefone pra ligar, rádio pra música, televisão pro jogo, câmera pra foto, jornal pra notícia. Hoje tá tudo no celular, num lugar só. <em>Isso é um sistema operacional.</em></p>
+        <p>Eu fiz a mesma coisa com uma loja de carros: peguei o que tava espalhado em planilha, caderno e WhatsApp e juntei num app só."</p>
+      </div>
+      <div class="dica"><b>Dica</b> É a fala mais importante. Pausa, deixa a imagem do celular assentar antes de trazer pra loja.</div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 6</span><span class="stitle">A virada de chave</span><span class="tag none">O cérebro do negócio</span></div>
+      <div class="screen">Na tela: "Antes de abrir a planilha ou o caderno, o time abre esse app."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Vira sistema operacional quando todo mundo abre ele primeiro."</div>
+      <div class="fala">"Antes da planilha, antes do caderno, antes do WhatsApp. Quando é o primeiro lugar que todo mundo olha, ele virou <em>o cérebro do negócio.</em>"</div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide divider">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 7</span><span class="stitle">Divisória · O segredo não é a IA</span></div>
+      <div class="fala">"E o segredo disso tudo não é a inteligência artificial. Sério. Esse é o ponto que quase ninguém entende."</div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 8</span><span class="stitle">O segredo é o contexto</span><span class="tag none">Contexto &gt; IA</span></div>
+      <div class="screen">Na tela: "A mesma IA tá na mão de todo mundo. O que muda é ela conhecer a sua loja."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"A IA é igual pra todo mundo. Por isso ela não é o segredo."</div>
+      <div class="fala">"Se fosse só a IA, todo mundo já teria um sistema desse. O segredo não é a ferramenta, é o que você ensina pra ela sobre o seu negócio. A mesma IA, na mão de quem dá o contexto certo, <em>vira ouro.</em> Na mão de quem não dá, é genérica que nem as outras."</div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 9</span><span class="stitle">Genérico x sob medida</span><span class="tag">o terno</span></div>
+      <div class="screen">Na tela: dois cartões, "É alugado" e "É seu".</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Comprar sistema pronto é tipo alugar terno."</div>
+      <div class="fala">"Serve mais ou menos, aperta num canto, sobra no outro. O que eu fiz é sob medida, feito pro jeito que essa loja trabalha. <em>Veste perfeito.</em>"</div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide divider">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 10</span><span class="stitle">Divisória · As 4 partes</span></div>
+      <div class="fala">"Um sistema desse tem quatro partes. Rapidinho, pra você entender o que tá vendo na tela."</div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 11</span><span class="stitle">As 4 partes</span><span class="tag none">As 4 partes</span></div>
+      <div class="screen">Na tela: 4 cartões: Conhecer, Conectar, Fazer, Sozinho.</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Todo sistema que funciona tem quatro partes."</div>
+      <div class="fala">"Um: conhecer o negócio. Dois: conectar nas suas ferramentas. Três: fazer o trabalho. Quatro: rodar sozinho, sem você pedir. <em>Conhecer, conectar, fazer, sozinho.</em> Guarda isso."</div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 12</span><span class="stitle">Conexões</span><span class="tag none">Conexões</span></div>
+      <div class="screen">Na tela: "No que o sistema se liga sozinho" + site, anúncios, banco.</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"O sistema busca a informação sozinho, de onde ela já tá."</div>
+      <div class="fala">"Ele se liga sozinho no seu site de carros, nos seus anúncios e no banco de dados. Você não copia nada na mão."</div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 13</span><span class="stitle">Estoque automático</span><span class="tag none">Estoque sozinho</span></div>
+      <div class="screen">Na tela: "O estoque se atualiza sozinho. Ninguém cadastra carro na mão."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Ninguém cadastra carro nesse sistema. Nunca."</div>
+      <div class="fala">"Vendeu no site, o carro some sozinho. Entrou um novo, aparece sozinho. Todo dia, no automático. <em>O estoque se cuida sozinho.</em>"</div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 14</span><span class="stitle">Por dentro do painel</span><span class="tag none">Visual</span></div>
+      <div class="screen">Na tela: mockup do painel com a barra lateral (Painel, Estoque, Clientes, Agenda, Metas, Relatórios) e os números no meio.</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Olha por dentro do painel que controla a loja."</div>
+      <div class="fala">"Do lado, as seções: estoque, clientes, agenda, metas e relatórios. No meio, os números da loja. Estoque com o custo escondido do vendedor, clientes do interesse até a venda, e o relatório de quanto custa pra vender um carro. <em>No próximo vídeo eu abro cada parte por dentro.</em>"</div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 15</span><span class="stitle">Feito pra sua loja</span><span class="tag none">Adaptação</span></div>
+      <div class="screen">Na tela: "Cada loja é diferente. O sistema também."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Cada loja é diferente. O sistema também."</div>
+      <div class="fala">"E presta atenção nisso: dependendo da sua loja, eu crio painel novo, campo novo, tela nova. Se o seu atendimento é de um jeito, se os seus vendedores trabalham diferente, o sistema se molda nisso. <em>Ele acompanha o diferencial da sua loja.</em>"</div>
+    </div>
+  </section>
+
+  <!-- 16 -->
+  <section class="slide divider">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 16</span><span class="stitle">Divisória · E o sigilo?</span></div>
+      <div class="fala">"Aí vem a pergunta que todo dono de loja faz: tá, mas e o sigilo? Meu vendedor vai ver quanto eu lucro?"</div>
+    </div>
+  </section>
+
+  <!-- 17 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 17</span><span class="stitle">Cada um vê o que é dele</span><span class="tag none">Acessos</span></div>
+      <div class="screen">Na tela: três cartões: Você (dono), Vendedor, Marketing.</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Cada pessoa que entra vê um app diferente."</div>
+      <div class="fala">"Você, dono, vê tudo: custo, lucro, resultado. O vendedor vê o carro e o cliente, mas <em>nunca o seu lucro.</em> O marketing vê só o relatório de anúncio. Mesma porta, três acessos diferentes."</div>
+    </div>
+  </section>
+
+  <!-- 18 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 18</span><span class="stitle">Segurança</span><span class="tag">o cofre</span></div>
+      <div class="screen">Na tela: "É como um cofre. O vendedor tem a chave da loja, não a do seu lucro."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Seu vendedor nunca vai ver o seu lucro. Nem se ele quiser."</div>
+      <div class="fala">"É tipo um cofre: ele tem a chave da loja, mas não a do cofre. E o número do seu lucro nem chega no celular dele. <em>Não dá pra ver o que nunca chegou na sua mão.</em>"</div>
+    </div>
+  </section>
+
+  <!-- 19 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 19</span><span class="stitle">Falando a verdade</span><span class="tag none">Honestidade</span></div>
+      <div class="screen">Na tela: "Não saiu perfeito de primeira."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Quem te promete IA perfeita de primeira tá mentindo."</div>
+      <div class="fala">"Vou ser sincero: não saiu perfeito de primeira. Sistema bom vai sendo ajustado no uso, semana após semana. Hoje roda firme, todo dia, na mão do time. Mas levou ajuste."</div>
+    </div>
+  </section>
+
+  <!-- 20 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 20</span><span class="stitle">O que roda sozinho</span><span class="tag none">Roda sozinho</span></div>
+      <div class="screen">Na tela: "O que acontece sem ninguém mexer" + lista.</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Esse sistema trabalha enquanto a loja tá fechada."</div>
+      <div class="fala">"O estoque atualiza, o relatório se monta, os números do anúncio entram. <em>Você dorme, e de manhã tá tudo pronto.</em>"</div>
+    </div>
+  </section>
+
+  <!-- 21 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 21</span><span class="stitle">Como foi feito</span><span class="tag">o WhatsApp</span></div>
+      <div class="screen">Na tela: terminal com uma instrução em português + "✓ pronto".</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Eu não escrevo código. Eu escrevo em português."</div>
+      <div class="fala">"Igual mensagem no WhatsApp: 'cria um relatório de quanto custa pra vender um carro em cada loja'. E a IA faz. Eu mando, ela executa. <em>Mas calma, que isso tem um detalhe importante.</em>"</div>
+    </div>
+  </section>
+
+  <!-- 22 (novo) — IA NAO SUBSTITUI O DEV -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 22</span><span class="stitle">A IA não substitui o desenvolvedor</span><span class="tag none">Respeito + segurança</span></div>
+      <div class="screen">Na tela: "A IA não substitui o desenvolvedor. Ela turbina."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"A IA não substitui um desenvolvedor. Quem te disser isso tá te enganando."</div>
+      <div class="fala">"Eu comecei sozinho, só conversando. Mas a hora que o sistema começou a guardar dado sigiloso dos clientes, eu peguei dicas com amigos desenvolvedores pra reforçar a segurança. A IA é uma ferramenta poderosa, mas não substitui um bom programador, ela deixa ele muito mais rápido. E olha: se você é desenvolvedor e tá vendo esse vídeo, <em>me manda uma mensagem com uma dica de segurança. Toda ajuda é bem-vinda, vai me ajudar demais.</em>"</div>
+      <div class="dica"><b>Dica</b> Fala de cabeça erguida. O convite pros devs mandarem dica gera mensagem e comentário, e prova que você leva a segurança do cliente a sério.</div>
+    </div>
+  </section>
+
+  <!-- 22 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 23</span><span class="stitle">O número que importa</span><span class="tag">o motor</span></div>
+      <div class="screen">Na tela: "Quanto custa pra vender 1 carro?"</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"No fim, importa um número só."</div>
+      <div class="fala">"Quanto custa pra vender um carro. Você não precisa entender de tecnologia pra usar, do mesmo jeito que não precisa entender de motor pra dirigir. <em>Você olha o número e sabe na hora se tá no lucro ou no prejuízo.</em>"</div>
+    </div>
+  </section>
+
+  <!-- 23 -->
+  <section class="slide">
+    <div class="wrap">
+      <div class="meta"><span class="snum">Slide 24</span><span class="stitle">Fechamento</span><span class="tag none">Chamada</span></div>
+      <div class="screen">Na tela: "Tem uma loja de carros? Isso pode ser seu."</div>
+      <div class="gancho"><span class="gpill">Gancho</span>"Se você tem uma loja, isso pode ser seu."</div>
+      <div class="fala">"Uma loja de carros inteira rodando num sistema feito sob medida, construído conversando com uma IA. Se você é empresário e pensou 'eu preciso disso', ou se quer aprender a construir, comenta aqui embaixo qual é o seu caso. E se inscreve, que no próximo vídeo eu faço o tour por dentro da plataforma."</div>
+    </div>
+  </section>
+
+</div>
+
+<div class="syncdot" id="syncdot">● decks sincronizados</div>
+<div class="hint" id="hint">← → passar · F tela cheia</div>
+<div class="nav"><button id="prev" aria-label="anterior">‹</button><button id="next" aria-label="próximo">›</button></div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let i = 0;
+  const fill=document.getElementById('fill'), cur=document.getElementById('cur'), hint=document.getElementById('hint');
+  document.getElementById('total').textContent = total;
+
+  function show(n){
+    i = Math.max(0, Math.min(total-1, n));
+    slides.forEach((s,k)=>s.classList.toggle('active', k===i));
+    slides[i].scrollTop = 0;
+    fill.style.width = (i/(total-1))*100 + '%';
+    cur.textContent = i+1;
+    hint.style.opacity = i>0 ? '0' : '1';
+    if(window.__deckBroadcast) window.__deckBroadcast();
+  }
+  const next=()=>show(i+1), prev=()=>show(i-1);
+
+  document.addEventListener('keydown', e=>{
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); next(); }
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prev(); }
+    else if(e.key==='Home'){ show(0) } else if(e.key==='End'){ show(total-1) }
+    else if(e.key.toLowerCase()==='f'){ document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.(); }
+  });
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', prev);
+
+  /* ===== SINCRONIZACAO ENTRE OS DOIS DECKS ===== */
+  (function(){
+    const KEY='gc-deck-sync';
+    let suppress=false, ready=false;
+    let bc=null; try{ bc=new BroadcastChannel(KEY); }catch(e){}
+    const dot=document.getElementById('syncdot');
+    function connected(){ if(dot) dot.classList.add('on'); }
+    function post(p){
+      try{ bc&&bc.postMessage(p); }catch(e){}
+      try{ localStorage.setItem(KEY, Date.now()+'~'+JSON.stringify(p)); }catch(e){}
+      try{ window.opener&&window.opener.postMessage({__deck:p},'*'); }catch(e){}
+      try{ window.__child&&window.__child.postMessage({__deck:p},'*'); }catch(e){}
+    }
+    function recv(p){
+      if(!p) return;
+      connected();
+      if(p.req){ post({idx:i}); return; }
+      if(typeof p.idx==='number' && p.idx!==i){ suppress=true; show(p.idx); suppress=false; }
+    }
+    if(bc) bc.onmessage=e=>recv(e.data);
+    window.addEventListener('storage',e=>{ if(e.key===KEY && e.newValue){ try{ recv(JSON.parse(e.newValue.split('~').slice(1).join('~'))); }catch(_){} } });
+    window.addEventListener('message',e=>{ const d=e.data; if(d&&d.__deck) recv(d.__deck); });
+    window.__deckBroadcast=function(){ if(ready&&!suppress) post({idx:i}); };
+    setTimeout(()=>{ ready=true; post({req:1}); }, 250);
+  })();
+
+  show(0);
+</script>
+</body>
+</html>

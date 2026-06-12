@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposta — Reinaldo Meirelles | Criativvo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 660px; margin: 0 auto; padding: 0 24px; }
+
+    header {
+      padding: 52px 24px 36px;
+      text-align: center;
+      border-bottom: 1px solid #111;
+    }
+
+    .logo {
+      font-family: 'Great Vibes', cursive;
+      font-size: 46px;
+      color: #FF5501;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .tagline {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #444;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .hero {
+      padding: 60px 24px 52px;
+      text-align: center;
+    }
+
+    .label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #FF5501;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    h1 em {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.3em;
+      font-style: normal;
+      color: #FF5501;
+      display: block;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: #777;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    section { padding: 52px 24px; border-top: 1px solid #111; }
+
+    h2 {
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    p { font-size: 14px; color: #bbb; margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    .card {
+      background: #0f0f0f;
+      border: 1px solid #1c1c1c;
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 10px;
+    }
+    .card:last-child { margin-bottom: 0; }
+
+    .card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #FF5501;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    ul { list-style: none; padding: 0; margin: 0; }
+
+    ul li {
+      font-size: 13px;
+      color: #999;
+      padding: 7px 0;
+      border-bottom: 1px solid #181818;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    ul li:last-child { border-bottom: none; }
+
+    ul li::before {
+      content: '→';
+      color: #FF5501;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    ul.cross li::before { content: '✕'; color: #2a2a2a; }
+    ul.cross li { color: #555; }
+
+    .highlight-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: #0f0f0f;
+      border: 1px solid #1c1c1c;
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-bottom: 10px;
+    }
+
+    .highlight-row .num {
+      font-size: 38px;
+      font-weight: 900;
+      color: #FF5501;
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 52px;
+      text-align: center;
+    }
+
+    .highlight-row .desc { font-size: 13px; color: #888; line-height: 1.5; }
+    .highlight-row .desc strong { color: #fff; font-weight: 700; display: block; font-size: 14px; margin-bottom: 2px; }
+
+    .platforms {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .platform-pill {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #ccc;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .platform-pill .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #FF5501;
+      flex-shrink: 0;
+    }
+
+    .inv-box {
+      background: #080808;
+      border: 1px solid #FF5501;
+      border-radius: 14px;
+      padding: 32px 28px;
+    }
+
+    .inv-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #181818;
+      gap: 16px;
+    }
+
+    .inv-row:last-of-type { border-bottom: none; }
+
+    .inv-name { font-size: 14px; font-weight: 600; }
+    .inv-desc { font-size: 12px; color: #555; margin-top: 2px; }
+
+    .inv-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #FF5501;
+      white-space: nowrap;
+    }
+
+    .inv-val small {
+      font-size: 12px;
+      color: #666;
+      font-weight: 500;
+      margin-left: 3px;
+    }
+
+    .inv-note {
+      font-size: 12px;
+      color: #444;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid #181818;
+      line-height: 1.7;
+    }
+
+    .cta {
+      padding: 68px 24px;
+      text-align: center;
+      border-top: 1px solid #111;
+    }
+
+    .cta h2 { margin-bottom: 10px; }
+    .cta p { font-size: 14px; color: #666; max-width: 380px; margin: 0 auto 28px; }
+
+    .btn {
+      display: inline-block;
+      background: #FF5501;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 15px 40px;
+      border-radius: 100px;
+      text-decoration: none;
+    }
+
+    .about {
+      background: #060606;
+      border-top: 1px solid #111;
+      padding: 52px 24px;
+      text-align: center;
+    }
+
+    .about h2 { font-size: 18px; margin-bottom: 12px; }
+    .about p { font-size: 13px; color: #777; max-width: 500px; margin: 0 auto 12px; }
+
+    .badge {
+      display: inline-block;
+      background: #111;
+      border: 1px solid #FF5501;
+      border-radius: 100px;
+      padding: 7px 18px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #FF5501;
+      margin-top: 4px;
+    }
+
+    footer {
+      padding: 32px 24px;
+      text-align: center;
+      border-top: 1px solid #111;
+    }
+
+    footer .logo { font-size: 26px; margin-bottom: 6px; }
+    footer p { font-size: 11px; color: #2e2e2e; margin: 0; }
+    footer a { color: #FF5501; text-decoration: none; }
+
+    @media (max-width: 480px) {
+      .inv-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .highlight-row { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <span class="logo">Criativvo</span>
+      <span class="tagline">Seu Negócio Vira Marca</span>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <span class="label">Proposta Comercial — Maio 2026</span>
+      <h1>Para Reinaldo Meirelles<em>Social Media</em></h1>
+      <p>Criativos prontos, redes no ar e tráfego rodando. A gente cuida do visual, você cuida da música.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <span class="label">Escopo</span>
+      <h2>O que vamos entregar</h2>
+
+      <div class="card">
+        <span class="card-tag">Criativos e posts</span>
+        <h3>3 posts por semana</h3>
+        <ul>
+          <li>Criação das artes: imagens geradas com IA conforme necessidade e fotos dos produtos</li>
+          <li>Conteúdo focado em guitarras, violões, acessórios e cursos</li>
+          <li>Legendas com a voz do Reinaldo</li>
+          <li>Agendamento e publicação via plataforma profissional</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="card-tag">Plataforma de agendamento</span>
+        <h3>Gestão em 3 redes com um clique</h3>
+        <ul>
+          <li>Instagram, Facebook e TikTok conectados na mesma plataforma</li>
+          <li>Reinaldo recebe acesso: vê tudo programado e pode agendar os próprios vídeos</li>
+          <li>Quando gravar um vídeo, é só jogar na plataforma e publicar nos três ao mesmo tempo</li>
+        </ul>
+        <div class="platforms">
+          <span class="platform-pill"><span class="dot"></span>Instagram</span>
+          <span class="platform-pill"><span class="dot"></span>Facebook</span>
+          <span class="platform-pill"><span class="dot"></span>TikTok</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag">Tráfego pago</span>
+        <h3>Gestão de Meta Ads</h3>
+        <ul>
+          <li>Criação e gestão das campanhas no Meta Ads</li>
+          <li>Criativos para anúncios: imagens e copies</li>
+          <li>Segmentação, testes A/B e otimização contínua</li>
+          <li>Relatório mensal com resultados e recomendações</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <span class="label">Volume mensal</span>
+      <h2>O que sai todo mês</h2>
+
+      <div class="highlight-row">
+        <div class="num">12</div>
+        <div class="desc">
+          <strong>Posts criados e publicados</strong>
+          3 por semana — imagens com IA ou fotos dos produtos
+        </div>
+      </div>
+
+      <div class="highlight-row">
+        <div class="num">3</div>
+        <div class="desc">
+          <strong>Redes sociais ativas</strong>
+          Instagram, Facebook e TikTok no mesmo calendário
+        </div>
+      </div>
+
+      <div class="highlight-row">
+        <div class="num">∞</div>
+        <div class="desc">
+          <strong>Vídeos do Reinaldo agendados</strong>
+          Gravou? Manda pra gente ou sobe direto na plataforma. A gente agenda nos três canais.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <span class="label">Fora do escopo</span>
+      <h2>O que não está incluído</h2>
+      <div class="card">
+        <ul class="cross">
+          <li>Produção de vídeo (roteiro, gravação, edição)</li>
+          <li>Verba de anúncios (paga diretamente ao Meta pelo Reinaldo)</li>
+          <li>Gestão de Kwai (pode entrar como upgrade futuro)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <span class="label">Investimento</span>
+      <h2>Valor</h2>
+      <div class="inv-box">
+        <div class="inv-row">
+          <div>
+            <div class="inv-name">Gestão mensal completa</div>
+            <div class="inv-desc">12 posts + agendamento multi-rede + tráfego pago + relatório</div>
+          </div>
+          <div class="inv-val">R$ 3.000 <small>/mês</small></div>
+        </div>
+        <p class="inv-note">A verba de anúncios fica fora desse valor e é paga direto pelo Reinaldo ao Meta. Com ~R$2.000/dia rodando, a gestão profissional garante que o dinheiro seja bem direcionado em cada campanha.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div class="container">
+      <h2>Pronto pra começar?</h2>
+      <p>Confirme e já arrancamos essa semana.</p>
+      <a href="https://wa.me/5516993396988" class="btn">Fechar agora</a>
+    </div>
+  </div>
+
+  <div class="about">
+    <div class="container">
+      <h2>Sobre a Criativvo</h2>
+      <p>Agência 360 de marketing digital e automação. Branding, Shopify, tráfego e conteúdo em uma única solução, sem fragmentação.</p>
+      <p>Em setembro de 2025, assumimos a Gilson Car Veículos do zero. Em dois meses, o cliente bateu o maior faturamento da história e abriu 2 novas unidades.</p>
+      <span class="badge">Case Gilson Car: maior faturamento da história + 2 novas unidades em 2 meses</span>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <span class="logo">Criativvo</span>
+      <p>criativvo.com.br &nbsp;·&nbsp; <a href="https://instagram.com/sejacriativvo">@sejacriativvo</a></p>
+      <p style="margin-top:6px;">Proposta válida por 15 dias.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brief de Imagens · Maccari Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  html,body{background:#fbfbfd;color:#1d1d1f;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+
+  /* HEADER */
+  .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.06)}
+  .topbar-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:-.01em}
+  .brand-dot{width:8px;height:8px;background:#ff6b00;border-radius:50%}
+  .progress-pill{display:flex;align-items:center;gap:10px;background:#f5f5f7;border-radius:980px;padding:8px 16px;font-size:13px;font-weight:500}
+  .progress-bar{position:relative;width:120px;height:6px;background:#e5e5ea;border-radius:3px;overflow:hidden}
+  .progress-fill{position:absolute;top:0;left:0;height:100%;background:#1d1d1f;border-radius:3px;transition:width .4s ease}
+
+  /* HERO */
+  .hero{max-width:980px;margin:0 auto;padding:72px 24px 32px;text-align:center}
+  .hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#86868b;margin-bottom:14px}
+  .hero h1{font-size:clamp(34px,5vw,56px);font-weight:700;letter-spacing:-.025em;line-height:1.05;margin-bottom:18px}
+  .hero p{font-size:clamp(16px,2vw,20px);color:#6e6e73;max-width:620px;margin:0 auto;line-height:1.45}
+
+  /* GUIDELINES BOX */
+  .guidelines{max-width:980px;margin:32px auto 0;padding:0 24px}
+  .guidelines-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:24px 28px}
+  .guidelines-card summary{cursor:pointer;font-weight:600;font-size:15px;list-style:none;display:flex;align-items:center;justify-content:space-between}
+  .guidelines-card summary::-webkit-details-marker{display:none}
+  .guidelines-card summary::after{content:'+';font-size:22px;font-weight:300;color:#86868b}
+  .guidelines-card[open] summary::after{content:'−'}
+  .guidelines-body{padding-top:18px;border-top:1px solid rgba(0,0,0,.06);margin-top:18px}
+  .guidelines-body ul{list-style:none;display:grid;grid-template-columns:1fr;gap:12px}
+  .guidelines-body li{font-size:14px;color:#1d1d1f;display:flex;gap:10px;line-height:1.5}
+  .guidelines-body li::before{content:'·';color:#ff6b00;font-weight:700;font-size:18px;line-height:1}
+  .guidelines-body li strong{color:#000}
+
+  /* FILTERS */
+  .filters{max-width:1200px;margin:48px auto 24px;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .filter-btn{padding:8px 16px;border-radius:980px;border:1px solid rgba(0,0,0,.1);background:#fff;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s ease}
+  .filter-btn:hover{background:#f5f5f7}
+  .filter-btn.active{background:#1d1d1f;color:#fff;border-color:#1d1d1f}
+  .reset-btn{margin-left:auto;padding:8px 14px;border-radius:8px;border:0;background:transparent;font-family:inherit;font-size:12px;color:#86868b;cursor:pointer}
+  .reset-btn:hover{color:#1d1d1f}
+
+  /* GRID */
+  .grid{max-width:1200px;margin:0 auto;padding:0 24px 72px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+
+  /* CARD */
+  .card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:14px;transition:all .25s ease;position:relative}
+  .card:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+  .card.done{opacity:.55;background:#f5f5f7}
+  .card.done .card-title{text-decoration:line-through}
+
+  .card-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .card-id{font-family:'SF Mono','Monaco',monospace;font-size:11px;font-weight:600;letter-spacing:.05em;color:#86868b}
+  .card-prio{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px}
+  .prio-alta{background:#ffe5d9;color:#c2410c}
+  .prio-media{background:#fef3c7;color:#92400e}
+  .prio-baixa{background:#e0e7ff;color:#3730a3}
+  .prio-pronto{background:#d1fae5;color:#065f46}
+
+  .card-title{font-size:18px;font-weight:600;letter-spacing:-.015em;line-height:1.25}
+  .card-dim{font-family:'SF Mono','Monaco',monospace;font-size:12px;color:#86868b}
+  .card-instr{font-size:14px;color:#1d1d1f;line-height:1.55;flex:1}
+
+  .card-actions{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+  .btn{flex:1;min-width:120px;padding:10px 14px;border-radius:10px;border:1px solid rgba(0,0,0,.1);background:#fff;font-family:inherit;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s ease;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+  .btn:hover{background:#f5f5f7}
+  .btn.primary{background:#1d1d1f;color:#fff;border-color:#1d1d1f}
+  .btn.primary:hover{background:#000}
+  .btn.copied{background:#d1fae5;color:#065f46;border-color:#a7f3d0}
+
+  .check-wrap{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f5f5f7;border-radius:10px;cursor:pointer;user-select:none}
+  .check-wrap:hover{background:#ececf0}
+  .check-wrap input{width:18px;height:18px;cursor:pointer;accent-color:#1d1d1f}
+  .check-wrap label{font-size:13px;font-weight:500;cursor:pointer;flex:1}
+
+  /* SECTION HEADERS */
+  .section-title{grid-column:1/-1;margin:32px 0 4px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#86868b;padding-left:4px}
+  .section-title:first-child{margin-top:0}
+
+  /* FOOTER */
+  footer{border-top:1px solid rgba(0,0,0,.06);padding:32px 24px;text-align:center;font-size:12px;color:#86868b}
+  footer a{color:#06c}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#1d1d1f;color:#fff;padding:14px 22px;border-radius:12px;font-size:13px;font-weight:500;opacity:0;transition:all .3s ease;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (max-width:600px){
+    .hero{padding:48px 20px 24px}
+    .grid{padding:0 16px 48px;gap:14px}
+    .filters{padding:0 16px}
+    .topbar-inner{padding:12px 16px}
+    .progress-pill{padding:6px 12px;font-size:12px}
+    .progress-bar{width:80px}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="brand-dot"></span><span>Criativvo · Brief Maccari Store</span></div>
+    <div class="progress-pill">
+      <span id="progressText">0 / 27 produzidas</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">Brief de produção · 27 imagens</div>
+  <h1>Imagens da nova loja Maccari.</h1>
+  <p>Estilo Apple. Clean, minimalista, com muita respiração. Cada card abaixo tem o que produzir, dimensão, instrução e prompt pronto pra IA. Marque o checkbox conforme for entregando, seu progresso fica salvo neste dispositivo.</p>
+</section>
+
+<section class="guidelines">
+  <details class="guidelines-card" open>
+    <summary>Diretrizes gerais (vale pra TODAS as imagens)</summary>
+    <div class="guidelines-body">
+      <ul>
+        <li><strong>Fundo:</strong> branco puro #FFFFFF, cinza claríssimo #F5F5F7 (cinza Apple), ou gradient sutil dos dois. Nunca colorido.</li>
+        <li><strong>Iluminação:</strong> suave, difusa, sem sombra dura. Reflexo sutil no chão se for produto.</li>
+        <li><strong>Composição:</strong> muito negative space. Produto centralizado ou levemente à esquerda. Não encher.</li>
+        <li><strong>Pessoas:</strong> natural, sem pose forçada, foco no produto sendo usado. Roupa neutra (branco, cinza, preto).</li>
+        <li><strong>Proibido:</strong> fundo verde-água do template demo, ilustrações chapadas, foto de banco com cara de stock.</li>
+        <li><strong>Entrega:</strong> JPG alta qualidade. PNG quando precisar de fundo transparente (ícones e logos).</li>
+        <li><strong>Referência de mood:</strong> abra <a href="https://www.apple.com/br/" target="_blank" style="color:#06c">apple.com/br</a> e olhe os banners de produto. Esse é o nível.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<div class="filters">
+  <button class="filter-btn active" data-filter="todas">Todas</button>
+  <button class="filter-btn" data-filter="alta">Prioridade alta</button>
+  <button class="filter-btn" data-filter="media">Prioridade média</button>
+  <button class="filter-btn" data-filter="baixa">Prioridade baixa</button>
+  <button class="filter-btn" data-filter="pendentes">Pendentes</button>
+  <button class="filter-btn" data-filter="prontas">Produzidas</button>
+  <button class="reset-btn" onclick="resetAll()">Resetar progresso</button>
+</div>
+
+<main class="grid" id="grid"></main>
+
+<footer>
+  Brief gerado pela Criativvo · Maccari Store · Atualizado em 27/05/2026<br>
+  Dúvidas? Fale com o Matheus no WhatsApp.
+</footer>
+
+<div class="toast" id="toast">Prompt copiado</div>
+
+<script>
+const ITEMS = [
+  // BLOCO 1 — HERO
+  {section:"Hero principal · Carrossel de 3 slides"},
+  {id:"FOTO-01",title:"Fachada Maccari (versão mobile)",prio:"alta",dim:"750×1100 mobile",instr:"Versão mobile vertical da MESMA foto da fachada que já está no hero desktop. Cortar e ajustar pra caber em proporção retrato sem perder o letreiro 'maccari'. Se necessário, refotografar em vertical no mesmo horário do dia.",prompt:"Foto vertical fachada de loja, letreiro grande 'maccari' em destaque, fundo céu claro, luz natural de dia, composição clean, espaço para texto na parte inferior, fotografia comercial estilo Apple"},
+  {id:"FOTO-02",title:"iPhone 17 Pro Max para hero slide 2",prio:"alta",dim:"2560×1080 desktop · 750×1100 mobile",instr:"iPhone 17 Pro Max preto em ângulo 3/4, levemente flutuando. Câmera traseira em destaque. Sombra suave embaixo. Produzir as duas versões (desktop e mobile).",prompt:"iPhone 17 Pro Max preto em ângulo 3/4, levemente flutuando, fundo gradient cinza Apple #F5F5F7, câmera traseira em destaque, iluminação suave difusa, sombra leve embaixo, fotografia de produto premium, estilo Apple, alta resolução, sem texto"},
+  {id:"FOTO-03",title:"Apple Watch ou Garmin no pulso (hero slide 3)",prio:"alta",dim:"2560×1080 desktop · 750×1100 mobile",instr:"Pulso de pessoa correndo OU close do relógio em fundo claro. Tela ligada com hora visível. Roupa esportiva neutra (cinza/preto).",prompt:"Close de pulso com Apple Watch Ultra 3 ligado mostrando hora, fundo desfocado claro, pessoa em movimento, roupa esportiva cinza, luz natural, fotografia lifestyle estilo Apple, alta resolução"},
+
+  // BLOCO 2 — HERO SECUNDÁRIO
+  {section:"Hero secundário · Categorias"},
+  {id:"FOTO-04",title:"Banner grande 'Celulares'",prio:"alta",dim:"1200×900",instr:"Mão segurando iPhone 17 em fundo branco. Tela ligada (homescreen padrão Apple). Mão de pessoa adulta, sem joia chamativa.",prompt:"Mão segurando iPhone 17 preto, tela ligada com homescreen Apple, fundo branco puro, iluminação difusa de estúdio, foto comercial estilo Apple, alta resolução"},
+  {id:"FOTO-05",title:"Card categoria 'Apple'",prio:"alta",dim:"600×600",instr:"Stack de 3 iPhones em cores diferentes (preto, branco, dourado) sobrepostos levemente. Fundo cinza claro #F5F5F7.",prompt:"Três iPhones cores diferentes (preto, branco, dourado) sobrepostos em ângulo, fundo cinza claro #F5F5F7, vista superior diagonal, luz difusa, foto de produto estilo Apple, alta resolução"},
+  {id:"FOTO-06",title:"Card categoria 'Samsung'",prio:"alta",dim:"600×600",instr:"Galaxy S25 Ultra preto fundo cinza claro. Aparelho centralizado.",prompt:"Samsung Galaxy S25 Ultra preto centralizado, fundo cinza claro #F5F5F7, vista frontal, luz suave de estúdio, foto de produto premium, alta resolução"},
+  {id:"FOTO-07",title:"Card categoria 'Xiaomi'",prio:"alta",dim:"600×600",instr:"Redmi Note 13 ou Xiaomi 14 azul fundo cinza claro.",prompt:"Xiaomi Redmi Note 13 azul, fundo cinza claro #F5F5F7, vista frontal, luz suave de estúdio, foto de produto premium, alta resolução"},
+  {id:"FOTO-08",title:"Card 'iPhone 17 Pro Max chegou'",prio:"alta",dim:"800×600",instr:"iPhone 17 Pro Max em ângulo 3/4 sobre fundo branco. Pode ter um selo discreto 'Novo' no canto superior direito (fonte fina).",prompt:"iPhone 17 Pro Max em ângulo 3/4, fundo branco puro, espaço vazio à direita para texto, iluminação clean de estúdio, foto de produto estilo Apple"},
+
+  // BLOCO 3 — BANNERS GRANDES
+  {section:"Banners grandes · Categorias destacadas"},
+  {id:"FOTO-09",title:"Banner 'Celulares' (vertical)",prio:"media",dim:"1200×1500",instr:"Se a foto que já está no template tiver boa qualidade, manter. Caso contrário, refazer: iPhone branco na mão de pessoa, fundo branco, foco no produto.",prompt:"iPhone 17 branco em mão de pessoa, fundo branco puro, vertical, foco total no produto, luz difusa estilo Apple, alta resolução"},
+  {id:"FOTO-10",title:"Banner 'Casa Inteligente'",prio:"media",dim:"1200×1500",instr:"Robô aspirador Xiaomi no chão de uma sala minimalista (sofá cinza, parede branca, pé de planta). Vista de cima ou ângulo levemente alto. Sala arejada.",prompt:"Robô aspirador Xiaomi branco no chão de madeira clara, sala minimalista com sofá cinza e pé de planta ao fundo, parede branca, luz natural lateral, vista superior diagonal, fotografia lifestyle estilo Apple, alta resolução"},
+
+  // BLOCO 5 — IPHONE 17 (3 motivos)
+  {section:"iPhone 17 · 3 motivos pra comprar"},
+  {id:"FOTO-11",title:"Banner grande iPhone 17 (lateral esquerdo)",prio:"media",dim:"1000×1200",instr:"iPhone 17 Pro Max em ângulo dramático (vertical, levemente inclinado), fundo gradient cinza Apple. Câmera traseira em destaque, brilho na lente.",prompt:"iPhone 17 Pro Max preto em ângulo dramático vertical, levemente inclinado, fundo gradient cinza Apple #F5F5F7 para branco, câmera traseira em destaque com brilho na lente, foto comercial premium estilo Apple"},
+  {id:"FOTO-12",title:"Card 01 'Câmera Pro'",prio:"media",dim:"800×800",instr:"Close extremo do módulo de 3 câmeras do iPhone 17 Pro Max. Fundo preto ou cinza escuro pra contraste.",prompt:"Close extremo macro do módulo de 3 câmeras do iPhone 17 Pro Max, fundo preto profundo, brilho intenso nas lentes, fotografia de produto premium hiper detalhada, estilo Apple"},
+  {id:"FOTO-13",title:"Card 02 'Bateria que dura'",prio:"media",dim:"800×800",instr:"iPhone com ícone de bateria 100% na tela, em fundo branco. Pode ter linha sutil indicando duração embaixo.",prompt:"iPhone 17 tela ligada mostrando ícone de bateria 100% verde, fundo branco puro, vista frontal direta, luz suave, foto de produto estilo Apple"},
+  {id:"FOTO-14",title:"Card 03 'Em até 18x'",prio:"media",dim:"800×800",instr:"iPhone 17 em ângulo 3/4 com etiqueta minimalista '18x' sobreposta de forma discreta (fonte fina, cinza).",prompt:"iPhone 17 preto em ângulo 3/4, fundo branco com etiqueta minimalista discreta '18x' em fonte fina cinza no canto, foto de produto estilo Apple"},
+
+  // BLOCO 6 — POR QUE COMPRAR
+  {section:"Por que comprar na Maccari"},
+  {id:"FOTO-15",title:"Interior da loja física Maccari",prio:"media",dim:"1000×1200",instr:"Interior da loja: vitrine com iPhones expostos, iluminação clean, ângulo amplo. Sem pessoas OU com pessoa olhando produto, sem mostrar rosto.",prompt:"Interior moderno de loja de eletrônicos, vitrine com iPhones expostos, iluminação branca clean, parede branca, piso claro, ângulo amplo, sem pessoas em destaque, fotografia comercial estilo Apple Store"},
+  {id:"ICONE-01",title:"Ícone 'Loja física Ibitinga'",prio:"media",dim:"400×400 PNG transparente",instr:"Pin de localização estilo linha fina, monocromático preto. Bem minimalista.",prompt:"Ícone vetorial linha fina pin de localização, monocromático preto, fundo transparente, minimalista, estilo iOS"},
+  {id:"ICONE-02",title:"Ícone 'WhatsApp direto'",prio:"media",dim:"400×400 PNG transparente",instr:"Balão de conversa estilo linha fina, monocromático preto.",prompt:"Ícone vetorial linha fina balão de conversa, monocromático preto, fundo transparente, minimalista, estilo iOS"},
+  {id:"ICONE-03",title:"Ícone 'Frete grátis'",prio:"media",dim:"400×400 PNG transparente",instr:"Caminhão estilo linha fina, monocromático preto.",prompt:"Ícone vetorial linha fina caminhão de entrega, monocromático preto, fundo transparente, minimalista, estilo iOS"},
+
+  // BLOCO 7 — BANNER LOJA FÍSICA
+  {section:"Banner Loja Física · Full-width"},
+  {id:"FOTO-16",title:"Fachada Maccari hora dourada",prio:"alta",dim:"2560×1100 desktop · 750×1100 mobile",instr:"Fachada da Maccari com luzes acesas, hora dourada (fim de tarde) se possível. Versão DIFERENTE da FOTO-01 (que é do hero), pra não repetir. Foco na placa/entrada.",prompt:"Fachada de loja Maccari letreiro iluminado ao entardecer hora dourada, luzes internas acesas, céu laranja-rosa, foco na entrada, fotografia comercial cinematográfica, alta resolução"},
+
+  // BLOCO 9 — DEPOIMENTOS
+  {section:"Depoimentos · Avatares"},
+  {id:"AVATAR-01",title:"Avatar cliente 1",prio:"baixa",dim:"400×400 PNG circular",instr:"Foto real de cliente (com autorização) OU avatar genérico clean fundo cinza claro. Recorte circular. Sem cara de banco de stock.",prompt:"Retrato de pessoa adulta sorrindo levemente, fundo cinza claro, iluminação natural suave, foto candid não posada, recorte quadrado, estilo natural sem maquiagem pesada"},
+  {id:"AVATAR-02",title:"Avatar cliente 2",prio:"baixa",dim:"400×400 PNG circular",instr:"Foto real de cliente OU avatar genérico (gênero diferente do avatar 1).",prompt:"Retrato de pessoa adulta diferente do anterior, sorriso leve, fundo cinza claro, luz natural suave, foto candid, estilo natural"},
+  {id:"AVATAR-03",title:"Avatar cliente 3",prio:"baixa",dim:"400×400 PNG circular",instr:"Foto real ou avatar (pessoa mais jovem ou mais madura, variar).",prompt:"Retrato de pessoa adulta variando perfil dos avatares anteriores, fundo cinza claro, luz natural, foto candid natural"},
+  {id:"AVATAR-04",title:"Avatar cliente 4",prio:"baixa",dim:"400×400 PNG circular",instr:"Foto real ou avatar (variar idade/gênero/etnia).",prompt:"Retrato de pessoa adulta com perfil diferente dos anteriores, fundo cinza claro, luz natural, foto candid"},
+  {id:"AVATAR-05",title:"Avatar cliente 5",prio:"baixa",dim:"400×400 PNG circular",instr:"Foto real ou avatar (variar perfil).",prompt:"Retrato de pessoa adulta diferente dos anteriores, fundo cinza claro, luz natural, foto candid"},
+
+  // BLOCO 10 — TROCAS + GARANTIA
+  {section:"Trocas e Garantia · 2 banners"},
+  {id:"FOTO-17",title:"Banner 'Trocas e Devoluções'",prio:"baixa",dim:"900×700",instr:"Caixa de iPhone aberta sobre mesa branca minimalista, com etiqueta discreta. Sem pessoa.",prompt:"Caixa branca de iPhone aberta sobre mesa de madeira clara, etiqueta discreta de envio ao lado, fundo branco, vista superior, iluminação difusa, foto comercial clean estilo Apple"},
+  {id:"FOTO-18",title:"Banner 'Garantia oficial'",prio:"baixa",dim:"900×700",instr:"Selo discreto sobre produto Apple OU iPhone na embalagem original lacrada. Fundo branco.",prompt:"iPhone 17 na caixa original lacrada, selo discreto de garantia oficial, fundo branco puro, vista superior diagonal, luz difusa, foto comercial estilo Apple"},
+
+  // BLOCO 11 — 3 CARDS
+  {section:"3 cards inferiores · Parcelamento, Troca, Envio"},
+  {id:"ICONE-04",title:"Ícone 'Parcele em 18x'",prio:"media",dim:"400×400 PNG transparente",instr:"Cartão de crédito linha fina monocromático preto.",prompt:"Ícone vetorial linha fina cartão de crédito, monocromático preto, fundo transparente, minimalista, estilo iOS"},
+  {id:"ICONE-05",title:"Ícone 'Troca facilitada'",prio:"media",dim:"400×400 PNG transparente",instr:"Setas circulares (loop de troca) linha fina monocromático preto.",prompt:"Ícone vetorial linha fina setas circulares formando loop de troca, monocromático preto, fundo transparente, minimalista"},
+  {id:"ICONE-06",title:"Ícone 'Envio para todo o Brasil'",prio:"media",dim:"400×400 PNG transparente",instr:"Mapa do Brasil ou caixa de envio, linha fina monocromático preto.",prompt:"Ícone vetorial linha fina mapa do Brasil estilizado, monocromático preto, fundo transparente, minimalista"},
+
+  // EXTRAS
+  {section:"Extras · Logos e favicon"},
+  {id:"LOGO-01",title:"Logo Maccari branca (header sobre foto)",prio:"alta",dim:"600×200 PNG transparente",instr:"Versão branca da logo Maccari pra aparecer no header quando estiver sobre o slide de foto escura.",prompt:"Logo Maccari Store em branco puro, fundo transparente, alta resolução, vetorial"},
+  {id:"LOGO-02",title:"Logo Maccari preta (header sticky)",prio:"alta",dim:"600×200 PNG transparente",instr:"Versão preta da logo Maccari pra header branco fixo quando o cliente rola a página.",prompt:"Logo Maccari Store em preto puro, fundo transparente, alta resolução, vetorial"},
+  {id:"FAVICON",title:"Favicon do navegador",prio:"alta",dim:"512×512 PNG",instr:"Símbolo Maccari isolado (sem texto), pra abinha do navegador.",prompt:"Símbolo da marca Maccari isolado sem texto, monocromático preto, fundo transparente quadrado, alta resolução"}
+];
+
+const STORAGE_KEY = "maccari_brief_state_v1";
+const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+let activeFilter = "todas";
+
+function totalCount(){return ITEMS.filter(i=>i.id).length;}
+function doneCount(){return Object.values(state).filter(Boolean).length;}
+
+function updateProgress(){
+  const done = doneCount();
+  const total = totalCount();
+  const pct = total ? Math.round((done/total)*100) : 0;
+  document.getElementById("progressText").textContent = `${done} / ${total} produzidas`;
+  document.getElementById("progressFill").style.width = pct + "%";
+}
+
+function render(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  ITEMS.forEach(item=>{
+    if(item.section){
+      const h = document.createElement("div");
+      h.className = "section-title";
+      h.textContent = item.section;
+      h.dataset.section = "1";
+      grid.appendChild(h);
+      return;
+    }
+    const done = !!state[item.id];
+    const showByFilter = (
+      activeFilter==="todas" ||
+      (activeFilter==="alta" && item.prio==="alta") ||
+      (activeFilter==="media" && item.prio==="media") ||
+      (activeFilter==="baixa" && item.prio==="baixa") ||
+      (activeFilter==="pendentes" && !done) ||
+      (activeFilter==="prontas" && done)
+    );
+    if(!showByFilter) return;
+
+    const card = document.createElement("article");
+    card.className = "card" + (done ? " done" : "");
+    card.innerHTML = `
+      <div class="card-head">
+        <span class="card-id">${item.id}</span>
+        <span class="card-prio ${done?'prio-pronto':'prio-'+item.prio}">${done?'Pronto':item.prio}</span>
+      </div>
+      <div>
+        <div class="card-title">${item.title}</div>
+        <div class="card-dim">${item.dim}</div>
+      </div>
+      <p class="card-instr">${item.instr}</p>
+      <div class="check-wrap" onclick="toggleDone('${item.id}')">
+        <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();toggleDone('${item.id}')">
+        <label>Marcar como produzida</label>
+      </div>
+      <div class="card-actions">
+        <button class="btn primary" onclick="copyPrompt('${item.id}',this)">Copiar prompt IA</button>
+        <a class="btn" href="https://www.apple.com/br/" target="_blank">Ver mood Apple</a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  // Hide section titles whose next siblings are all hidden
+  document.querySelectorAll(".section-title").forEach(h=>{
+    let next = h.nextElementSibling;
+    let hasVisible = false;
+    while(next && !next.dataset.section){
+      hasVisible = true;
+      break;
+    }
+    h.style.display = hasVisible ? "" : "none";
+  });
+}
+
+function toggleDone(id){
+  state[id] = !state[id];
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  updateProgress();
+  render();
+}
+
+function copyPrompt(id, btn){
+  const item = ITEMS.find(i=>i.id===id);
+  if(!item) return;
+  navigator.clipboard.writeText(item.prompt).then(()=>{
+    const original = btn.textContent;
+    btn.textContent = "Copiado ✓";
+    btn.classList.add("copied");
+    showToast("Prompt copiado para a área de transferência");
+    setTimeout(()=>{btn.textContent=original;btn.classList.remove("copied");}, 1800);
+  });
+}
+
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+function resetAll(){
+  if(!confirm("Apagar o progresso de produção neste dispositivo?")) return;
+  Object.keys(state).forEach(k=>delete state[k]);
+  localStorage.removeItem(STORAGE_KEY);
+  updateProgress();
+  render();
+}
+
+document.querySelectorAll(".filter-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+updateProgress();
+render();
+</script>
+
+</body>
+</html>

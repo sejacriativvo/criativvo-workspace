@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Plano de Ação Multicanal — Fêffo Cortinas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'AVEstiana';
+  src: url('../../criativvo/marca/AVEstiana-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+:root {
+  --brown-dark: #4A2D1C;
+  --brown: #653E27;
+  --brown-mid: #86634A;
+  --brown-light: #E0B291;
+  --cream: #F5EDE4;
+  --cream-deep: #EBE0D2;
+  --gray: #A7A8AD;
+  --white: #FFFFFF;
+  --black: #1A1A1A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: #0E0908;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--black);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+  background: var(--white);
+  padding: 5vh 7vw;
+  overflow: hidden;
+}
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide.cream { background: var(--cream); }
+.slide.dark { background: var(--brown-dark); color: var(--white); }
+.slide.light-brown { background: var(--brown-light); }
+.slide.brown { background: var(--brown); color: var(--white); }
+
+/* TAG CRIATIVVO */
+.tag-criativvo {
+  position: absolute;
+  top: 4vh;
+  left: 7vw;
+  font-family: 'AVEstiana', 'Montserrat', sans-serif;
+  font-size: 1.3vw;
+  letter-spacing: -0.03em;
+  color: var(--brown-dark);
+  z-index: 10;
+}
+.slide.dark .tag-criativvo, .slide.brown .tag-criativvo { color: var(--white); }
+
+.slide-number {
+  position: absolute;
+  bottom: 4vh;
+  right: 7vw;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8vw;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--brown-mid);
+  z-index: 10;
+}
+.slide.dark .slide-number, .slide.brown .slide-number { color: var(--brown-light); }
+
+.slide-section {
+  position: absolute;
+  bottom: 4vh;
+  left: 7vw;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7vw;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--brown-mid);
+  z-index: 10;
+}
+.slide.dark .slide-section, .slide.brown .slide-section { color: var(--brown-light); }
+
+.eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85vw;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--brown-mid);
+  margin-bottom: 1.8vh;
+}
+.slide.dark .eyebrow, .slide.brown .eyebrow { color: var(--brown-light); }
+
+h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+
+.slide-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 4.8vw;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  color: var(--brown-dark);
+  margin-bottom: 2.5vh;
+}
+.slide-title em {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  color: var(--brown-mid);
+}
+.slide.dark .slide-title, .slide.brown .slide-title { color: var(--white); }
+.slide.dark .slide-title em, .slide.brown .slide-title em { color: var(--brown-light); }
+
+.lead {
+  font-size: 1.2vw;
+  line-height: 1.55;
+  color: #4A4A4A;
+  font-weight: 400;
+  max-width: 60vw;
+}
+.slide.dark .lead, .slide.brown .lead { color: var(--brown-light); }
+
+/* ========== SLIDE 1 — CAPA ========== */
+.cover {
+  background: var(--brown-dark);
+  background: radial-gradient(ellipse at top left, #5C3823 0%, #2C1B11 100%);
+  color: var(--white);
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 7vh 7vw;
+}
+.cover-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.cover-logo {
+  font-family: 'AVEstiana', 'Montserrat', sans-serif;
+  font-size: 2vw;
+  letter-spacing: -0.03em;
+  color: var(--white);
+}
+.cover-date {
+  font-size: 0.85vw;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+  text-align: right;
+}
+.cover-mid { margin-bottom: 5vh; }
+.cover-eyebrow {
+  font-size: 1vw;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+  margin-bottom: 3vh;
+}
+.cover-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 7vw;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin-bottom: 3vh;
+  color: var(--white);
+}
+.cover-title em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--brown-light);
+  letter-spacing: -0.02em;
+}
+.cover-sub {
+  font-size: 1.3vw;
+  font-weight: 300;
+  color: var(--brown-light);
+  max-width: 50vw;
+  line-height: 1.55;
+}
+.cover-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 3vh;
+  border-top: 1px solid rgba(224, 178, 145, 0.25);
+}
+.cover-client {
+  font-size: 0.75vw;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+}
+.cover-client strong {
+  display: block;
+  font-size: 1.4vw;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  margin-top: 0.8vh;
+  text-transform: none;
+}
+.cover-prep {
+  text-align: right;
+  font-size: 0.75vw;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+}
+.cover-prep strong {
+  display: block;
+  font-family: 'AVEstiana', 'Montserrat', sans-serif;
+  font-size: 1.5vw;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  text-transform: none;
+  margin-top: 0.8vh;
+}
+
+/* ========== SLIDE — DIAGNÓSTICO COM NÚMEROS GIGANTES ========== */
+.diag-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3vw;
+  align-items: center;
+  margin-top: 4vh;
+}
+.diag-text { padding-right: 2vw; }
+.diag-numbers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2vh 2vw;
+}
+.big-metric {
+  border-top: 1px solid rgba(101, 62, 39, 0.2);
+  padding-top: 2vh;
+}
+.big-metric.bad .num { color: #B33A1F; }
+.big-metric .label {
+  font-size: 0.75vw;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brown-mid);
+  margin-bottom: 1vh;
+}
+.big-metric .num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 5vw;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--brown-dark);
+}
+.big-metric .foot {
+  font-size: 0.85vw;
+  color: #6A6A6A;
+  margin-top: 1vh;
+  font-weight: 400;
+}
+
+/* ========== SLIDE — DIAGNÓSTICO EM UMA FRASE ========== */
+.statement-slide {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 7vh 12vw;
+}
+.statement-quote {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 4.2vw;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin-bottom: 5vh;
+  max-width: 72vw;
+}
+.statement-quote em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--brown-light);
+  letter-spacing: -0.015em;
+}
+.statement-quote strong {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  color: var(--brown-light);
+}
+.statement-attr {
+  font-size: 1vw;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+}
+
+/* ========== SLIDE — A VIRADA ========== */
+.flip-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4vw;
+  align-items: stretch;
+  margin-top: 4vh;
+}
+.flip-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4vw;
+  border-radius: 4px;
+}
+.flip-box.from {
+  background: var(--cream-deep);
+  color: var(--brown-mid);
+}
+.flip-box.to {
+  background: var(--brown-dark);
+  color: var(--white);
+}
+.flip-label {
+  font-size: 0.8vw;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  margin-bottom: 2vh;
+  opacity: 0.7;
+}
+.flip-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.6vw;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 2vh;
+}
+.flip-title strong { color: var(--brown-light); }
+.flip-box.from .flip-title { color: var(--brown); }
+.flip-desc {
+  font-size: 1vw;
+  line-height: 1.55;
+}
+.flip-box.to .flip-desc { color: var(--brown-light); }
+
+/* ========== SLIDE — 4 CANAIS ========== */
+.channels-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5vw;
+  margin-top: 4vh;
+}
+.channel-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--brown-dark);
+  color: var(--white);
+  min-height: 60vh;
+}
+.channel-card .bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.55) sepia(0.2) hue-rotate(-10deg);
+}
+.channel-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(74, 45, 28, 0.2) 0%, rgba(74, 45, 28, 0.95) 100%);
+}
+.channel-card-inner {
+  position: relative;
+  z-index: 2;
+  padding: 2vw 1.6vw;
+}
+.channel-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75vw;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--brown-light);
+  margin-bottom: 1vh;
+}
+.channel-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2vw;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  margin-bottom: 1.5vh;
+}
+.channel-desc {
+  font-size: 0.85vw;
+  line-height: 1.5;
+  color: var(--brown-light);
+  margin-bottom: 1.5vh;
+}
+.channel-bullets {
+  font-size: 0.8vw;
+  color: var(--white);
+  font-weight: 400;
+  line-height: 1.6;
+  padding-top: 1vh;
+  border-top: 1px solid rgba(224, 178, 145, 0.3);
+}
+.channel-bullets div {
+  position: relative;
+  padding-left: 1vw;
+  margin-bottom: 0.4vh;
+}
+.channel-bullets div::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7vh;
+  width: 0.5vw;
+  height: 1px;
+  background: var(--brown-light);
+}
+
+/* ========== SLIDE — CUSTOMIZAÇÃO LOJA ========== */
+.store-slide {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 4vw;
+  align-items: center;
+  padding: 8vh 7vw;
+}
+.store-text { }
+.store-mockup-wrap {
+  background: #DDD8D2;
+  border-radius: 8px;
+  padding: 1.5vw;
+  box-shadow: 0 30px 80px rgba(74, 45, 28, 0.25);
+}
+.store-mockup {
+  background: var(--white);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.store-mockup-header {
+  background: #F0EBE5;
+  padding: 0.8vw 1vw;
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  border-bottom: 1px solid #DDD8D2;
+}
+.dot {
+  width: 0.7vw;
+  height: 0.7vw;
+  border-radius: 50%;
+  background: var(--brown-light);
+}
+.dot:nth-child(2) { background: #C9C4BD; }
+.dot:nth-child(3) { background: #B5AFA7; }
+.mockup-url {
+  margin-left: 1vw;
+  font-size: 0.7vw;
+  color: var(--brown-mid);
+  font-weight: 500;
+}
+.mockup-banner {
+  background: linear-gradient(135deg, var(--brown-dark), var(--brown));
+  color: var(--white);
+  padding: 2vw;
+  position: relative;
+}
+.mockup-banner-tag {
+  font-size: 0.65vw;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--brown-light);
+  margin-bottom: 0.8vh;
+}
+.mockup-banner-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.6vw;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5vh;
+}
+.mockup-banner-sub {
+  font-size: 0.75vw;
+  color: var(--brown-light);
+  font-weight: 400;
+}
+.mockup-cats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5vw;
+  padding: 1vw;
+  background: var(--cream);
+}
+.mockup-cat {
+  background: var(--white);
+  border-radius: 3px;
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid rgba(101, 62, 39, 0.08);
+}
+.mockup-cat .img {
+  height: 5vw;
+  background-size: cover;
+  background-position: center;
+}
+.mockup-cat .label {
+  padding: 0.5vw;
+  font-size: 0.65vw;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--brown-dark);
+}
+.store-features {
+  margin-top: 3vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5vh 2vw;
+}
+.store-feat {
+  border-left: 2px solid var(--brown-mid);
+  padding-left: 1vw;
+}
+.store-feat h4 {
+  font-size: 0.95vw;
+  font-weight: 700;
+  color: var(--brown-dark);
+  margin-bottom: 0.3vh;
+}
+.store-feat p {
+  font-size: 0.8vw;
+  color: #5A5A5A;
+  line-height: 1.5;
+}
+
+/* ========== SLIDE — QR ========== */
+.qr-slide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4vw;
+  align-items: center;
+  padding: 8vh 7vw;
+}
+.qr-visual-big {
+  background: var(--white);
+  padding: 2vw;
+  border-radius: 8px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  width: 28vw;
+  height: 28vw;
+  margin: 0 auto;
+}
+.qr-visual-big svg {
+  width: 100%;
+  height: 100%;
+}
+.qr-steps {
+  margin-top: 4vh;
+  display: grid;
+  gap: 2vh;
+}
+.qr-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5vw;
+}
+.qr-step-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2vw;
+  font-weight: 800;
+  color: var(--brown-light);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  width: 3vw;
+  flex-shrink: 0;
+}
+.qr-step-text h4 {
+  font-size: 1.1vw;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5vh;
+}
+.qr-step-text p {
+  font-size: 0.9vw;
+  color: var(--brown-light);
+  line-height: 1.55;
+}
+
+/* ========== SLIDE — TIERS ========== */
+.tier-slide {
+  padding: 7vh 7vw;
+}
+.tier-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  margin-top: 4vh;
+}
+.tier-block {
+  background: var(--white);
+  border-radius: 4px;
+  padding: 2vh 2.5vw;
+  border-left: 4px solid var(--brown-light);
+  display: grid;
+  grid-template-columns: 8vw 14vw 1fr;
+  gap: 3vw;
+  align-items: center;
+}
+.tier-block.featured {
+  background: var(--brown-dark);
+  color: var(--white);
+  border-left-color: var(--brown-light);
+}
+.tier-block.featured .tier-num,
+.tier-block.featured .tier-range { color: var(--white); }
+.tier-block.featured .tier-range small { color: var(--brown-light); }
+.tier-block.featured .tier-benefit-amount { color: var(--brown-light); }
+.tier-block.featured .tier-benefit-extra { color: var(--brown-light); }
+.tier-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85vw;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  color: var(--brown-mid);
+  text-transform: uppercase;
+}
+.tier-range {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5vw;
+  font-weight: 700;
+  color: var(--brown-dark);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.tier-range small {
+  display: block;
+  font-size: 0.7vw;
+  font-weight: 500;
+  color: var(--brown-mid);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.3vh;
+}
+.tier-benefit-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5vw;
+}
+.tier-benefit-amount {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.6vw;
+  font-weight: 800;
+  color: var(--brown-dark);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+.tier-benefit-extra {
+  font-size: 1vw;
+  color: #5A5A5A;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+/* ========== SLIDE — CRONOGRAMA ========== */
+.timeline-slide { padding: 7vh 7vw; }
+.timeline-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5vw;
+  margin-top: 5vh;
+}
+.timeline-block {
+  background: var(--white);
+  border-radius: 4px;
+  padding: 2vw;
+  position: relative;
+  border-left: 3px solid var(--brown-mid);
+}
+.timeline-block.active {
+  background: var(--brown-dark);
+  color: var(--white);
+}
+.timeline-week {
+  font-size: 0.8vw;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brown-mid);
+  margin-bottom: 0.8vh;
+}
+.timeline-block.active .timeline-week { color: var(--brown-light); }
+.timeline-bloco {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 4vw;
+  font-weight: 800;
+  color: var(--brown-dark);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  margin-bottom: 2vh;
+}
+.timeline-block.active .timeline-bloco { color: var(--white); }
+.timeline-title {
+  font-size: 1.05vw;
+  font-weight: 700;
+  color: var(--brown-dark);
+  margin-bottom: 1.5vh;
+  line-height: 1.2;
+}
+.timeline-block.active .timeline-title { color: var(--white); }
+.timeline-desc {
+  font-size: 0.8vw;
+  color: #5A5A5A;
+  line-height: 1.55;
+}
+.timeline-block.active .timeline-desc { color: var(--brown-light); }
+
+/* ========== SLIDE — INVESTIMENTO ========== */
+.invest-slide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5vw;
+  align-items: center;
+  padding: 7vh 7vw;
+  background: var(--brown-dark);
+  color: var(--white);
+}
+.invest-left .invest-eyebrow {
+  color: var(--brown-light);
+}
+.invest-big {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10vw;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 2.5vh;
+  display: flex;
+  align-items: flex-end;
+  gap: 1.2vw;
+  flex-wrap: wrap;
+}
+.invest-big small {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-size: 1.3vw;
+  font-weight: 500;
+  color: var(--brown-light);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding-bottom: 2vh;
+  display: inline-block;
+}
+.invest-sub {
+  font-size: 1.2vw;
+  color: var(--brown-light);
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 30vw;
+}
+.invest-includes-box { }
+.invest-includes-box h4 {
+  font-size: 0.85vw;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+  margin-bottom: 2.5vh;
+}
+.invest-list-pres {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5vh 1.5vw;
+}
+.invest-item {
+  font-size: 1vw;
+  color: var(--white);
+  font-weight: 500;
+  line-height: 1.4;
+  padding-left: 1.2vw;
+  position: relative;
+}
+.invest-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7vh;
+  width: 0.6vw;
+  height: 2px;
+  background: var(--brown-light);
+}
+
+/* ========== SLIDE — RESULTADOS ========== */
+.results-slide {
+  flex-direction: column;
+  padding: 7vh 7vw;
+}
+.results-top {
+  margin-bottom: 4vh;
+}
+.results-grid-big {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2vw;
+}
+.result-big {
+  background: var(--cream);
+  border-radius: 4px;
+  padding: 3vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.result-big.dark {
+  background: var(--brown-dark);
+  color: var(--white);
+}
+.result-big-label {
+  font-size: 0.85vw;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brown-mid);
+  margin-bottom: 2vh;
+}
+.result-big.dark .result-big-label { color: var(--brown-light); }
+.result-big-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 7vw;
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--brown-dark);
+  margin-bottom: 2vh;
+}
+.result-big.dark .result-big-num { color: var(--white); }
+.result-big-num em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 4vw;
+  color: var(--brown-mid);
+}
+.result-big.dark .result-big-num em { color: var(--brown-light); }
+.result-big-desc {
+  font-size: 0.95vw;
+  line-height: 1.5;
+  color: #4A4A4A;
+}
+.result-big.dark .result-big-desc { color: var(--brown-light); }
+
+/* ========== SLIDE — FECHAMENTO ========== */
+.closing {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--cream);
+  padding: 10vh 12vw;
+}
+.closing-eyebrow {
+  font-size: 1vw;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--brown-mid);
+  margin-bottom: 4vh;
+}
+.closing-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 6.5vw;
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  color: var(--brown-dark);
+  margin-bottom: 4vh;
+}
+.closing-title em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--brown-mid);
+}
+.closing-sub {
+  font-size: 1.4vw;
+  line-height: 1.55;
+  color: #4A4A4A;
+  font-weight: 400;
+  max-width: 50vw;
+  margin: 0 auto 6vh;
+}
+.closing-foot {
+  margin-top: 6vh;
+  padding-top: 3vh;
+  border-top: 1px solid rgba(101, 62, 39, 0.2);
+  width: 30vw;
+  text-align: center;
+}
+.closing-foot .logo {
+  font-family: 'AVEstiana', 'Montserrat', sans-serif;
+  font-size: 2.5vw;
+  letter-spacing: -0.03em;
+  color: var(--brown-dark);
+  display: block;
+  margin-bottom: 1vh;
+}
+.closing-foot .meta {
+  font-size: 0.8vw;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--brown-mid);
+}
+
+/* ========== NAVEGAÇÃO ========== */
+.nav {
+  position: fixed;
+  bottom: 1.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+  z-index: 100;
+  padding: 0.6vh 1.2vw;
+  background: rgba(74, 45, 28, 0.92);
+  backdrop-filter: blur(20px);
+  border-radius: 100px;
+}
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--brown-light);
+  font-size: 1vw;
+  cursor: pointer;
+  padding: 0.5vh 1vw;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  transition: color 0.2s;
+}
+.nav-btn:hover { color: var(--white); }
+.nav-counter {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85vw;
+  font-weight: 500;
+  color: var(--brown-light);
+  letter-spacing: 0.2em;
+  min-width: 4vw;
+  text-align: center;
+}
+.nav-dots {
+  display: flex;
+  gap: 0.4vw;
+}
+.nav-dot {
+  width: 0.5vw;
+  height: 0.5vw;
+  border-radius: 50%;
+  background: rgba(224, 178, 145, 0.35);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-dot.active {
+  background: var(--brown-light);
+  transform: scale(1.3);
+}
+
+.hint {
+  position: fixed;
+  top: 2vh;
+  right: 2vw;
+  font-size: 0.7vw;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  z-index: 100;
+  font-weight: 500;
+}
+
+/* ========== PRINT (PDF) ========== */
+@page {
+  size: 1920px 1080px;
+  margin: 0;
+}
+
+@media print {
+  html, body {
+    background: #fff !important;
+    overflow: visible !important;
+    height: auto !important;
+    width: auto !important;
+  }
+  .deck {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .slide {
+    position: relative !important;
+    inset: auto !important;
+    width: 1920px !important;
+    height: 1080px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    page-break-after: always;
+    break-after: page;
+    overflow: hidden !important;
+    transition: none !important;
+  }
+  .slide:last-of-type {
+    page-break-after: auto;
+    break-after: auto;
+  }
+  .nav, .hint { display: none !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ============ SLIDE 1 — CAPA ============ -->
+  <div class="slide cover active">
+    <div class="cover-top">
+      <div class="cover-logo">criativvo</div>
+      <div class="cover-date">Maio · 2026</div>
+    </div>
+    <div class="cover-mid">
+      <div class="cover-eyebrow">Plano de Ação Estratégico</div>
+      <h1 class="cover-title">A próxima fase<br>da <em>Fêffo Cortinas</em>.</h1>
+      <p class="cover-sub">Uma virada de chave para deixar de competir pelo menor preço e começar a vender em todos os canais, com o mesmo investimento.</p>
+    </div>
+    <div class="cover-bottom">
+      <div class="cover-client">Preparado para<strong>Felipe Faria</strong></div>
+      <div class="cover-prep">Por<strong>criativvo</strong></div>
+    </div>
+  </div>
+
+  <!-- ============ SLIDE 2 — A VIRADA ============ -->
+  <div class="slide cream">
+    <div class="tag-criativvo">criativvo</div>
+    <div style="width: 100%; padding-top: 5vh; display: flex; flex-direction: column; height: 100%; justify-content: center;">
+      <div class="eyebrow" style="text-align: center;">01 · A virada</div>
+      <h2 class="slide-title" style="text-align: center; font-size: 6vw; margin-bottom: 4vh;">O mesmo design.<br>Os mesmos vídeos.<br><em>Em quatro lugares.</em></h2>
+
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5vw; margin: 3vh 0 4vh;">
+        <div style="background: var(--white); padding: 2.5vw 1vw; border-radius: 4px; text-align: center; border-top: 4px solid var(--brown-dark);">
+          <div style="font-size: 0.75vw; font-weight: 700; letter-spacing: 0.3em; color: var(--brown-mid); margin-bottom: 1vh;">CONSTRÓI</div>
+          <div style="font-family: 'Montserrat'; font-size: 1.8vw; font-weight: 800; color: var(--brown-dark); letter-spacing: -0.02em;">Instagram</div>
+        </div>
+        <div style="background: var(--white); padding: 2.5vw 1vw; border-radius: 4px; text-align: center; border-top: 4px solid var(--brown-dark);">
+          <div style="font-size: 0.75vw; font-weight: 700; letter-spacing: 0.3em; color: var(--brown-mid); margin-bottom: 1vh;">ACELERA</div>
+          <div style="font-family: 'Montserrat'; font-size: 1.8vw; font-weight: 800; color: var(--brown-dark); letter-spacing: -0.02em;">Mercado Livre</div>
+        </div>
+        <div style="background: var(--white); padding: 2.5vw 1vw; border-radius: 4px; text-align: center; border-top: 4px solid var(--brown-dark);">
+          <div style="font-size: 0.75vw; font-weight: 700; letter-spacing: 0.3em; color: var(--brown-mid); margin-bottom: 1vh;">ESCALA</div>
+          <div style="font-family: 'Montserrat'; font-size: 1.8vw; font-weight: 800; color: var(--brown-dark); letter-spacing: -0.02em;">Shopee</div>
+        </div>
+        <div style="background: var(--white); padding: 2.5vw 1vw; border-radius: 4px; text-align: center; border-top: 4px solid var(--brown-dark);">
+          <div style="font-size: 0.75vw; font-weight: 700; letter-spacing: 0.3em; color: var(--brown-mid); margin-bottom: 1vh;">FIDELIZA</div>
+          <div style="font-family: 'Montserrat'; font-size: 1.8vw; font-weight: 800; color: var(--brown-dark); letter-spacing: -0.02em;">Site Fêffo</div>
+        </div>
+      </div>
+
+      <div style="background: var(--brown-dark); color: var(--white); padding: 1.8vw 2.5vw; border-radius: 4px; display: flex; align-items: center; gap: 2vw;">
+        <div style="font-weight: 700; font-size: 1vw; letter-spacing: 0.3em; text-transform: uppercase; color: var(--brown-light); min-width: 13vw; line-height: 1.3;">Tráfego pago<br>segue no site</div>
+        <div style="font-size: 1.05vw; line-height: 1.5; color: var(--white); font-weight: 400;">A verba de mídia continua <strong style="font-weight: 700; color: var(--brown-light);">100% em Meta Ads, direcionada ao site da Fêffo.</strong> Mercado Livre e Shopee têm algoritmo próprio de impulsionamento dentro da plataforma, ranqueamento e patrocínio interno ajustam sozinhos. Não faz sentido duplicar custo lá, o foco é o canal que a Fêffo controla 100%.</div>
+      </div>
+    </div>
+    <div class="slide-section">A virada</div>
+    <div class="slide-number">02 / 08</div>
+  </div>
+
+  <!-- ============ SLIDE 5 — LOJA CUSTOMIZADA ============ -->
+  <div class="slide cream store-slide">
+    <div class="tag-criativvo">criativvo</div>
+    <div class="store-text">
+      <div class="eyebrow">02 · O que vai mudar</div>
+      <h2 class="slide-title" style="font-size: 4vw;">Sua loja no ML<br>e Shopee, <em>+ Premium</em>.</h2>
+
+      <div class="store-features" style="grid-template-columns: 1fr 1fr; gap: 2vh 1.8vw; margin-top: 4vh;">
+        <div class="store-feat" style="border-left-color: var(--brown-dark); border-left-width: 3px;">
+          <h4>Fotos profissionais <span style="font-size: 0.7vw; font-weight: 600; letter-spacing: 0.15em; color: var(--brown-dark); background: var(--brown-light); padding: 2px 8px; border-radius: 20px; margin-left: 6px; vertical-align: middle;">CONVERTE +</span></h4>
+          <p>Novos carrosséis padronizados em todos os anúncios. O ativo de maior peso na decisão de compra.</p>
+        </div>
+        <div class="store-feat" style="border-left-color: var(--brown-dark); border-left-width: 3px;">
+          <h4>Clips e Shopee Video <span style="font-size: 0.7vw; font-weight: 600; letter-spacing: 0.15em; color: var(--brown-dark); background: var(--brown-light); padding: 2px 8px; border-radius: 20px; margin-left: 6px; vertical-align: middle;">CONVERTE +</span></h4>
+          <p>Vídeo curto vertical, hoje o formato que mais converte em marketplace.</p>
+        </div>
+        <div class="store-feat">
+          <h4>Banner principal</h4>
+          <p>Capa editorial com posicionamento de marca.</p>
+        </div>
+        <div class="store-feat">
+          <h4>Sessões por categoria</h4>
+          <p>Cortinas, cama, decoração, comercial.</p>
+        </div>
+        <div class="store-feat">
+          <h4>Fichas e títulos</h4>
+          <p>Reescrita com palavras-chave estratégicas.</p>
+        </div>
+        <div class="store-feat">
+          <h4>Cupons e campanhas</h4>
+          <p>Configuração estratégica nas duas plataformas.</p>
+        </div>
+      </div>
+    </div>
+    <div class="store-mockup-wrap">
+      <div class="store-mockup">
+        <div class="store-mockup-header">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="mockup-url">mercadolivre.com.br/loja/feffocortinas</div>
+        </div>
+        <div class="mockup-banner">
+          <div class="mockup-banner-tag">FABRICAÇÃO PRÓPRIA · IBITINGA · DESDE 2017</div>
+          <div class="mockup-banner-title">Seu Ambiente + Aconchegante</div>
+          <div class="mockup-banner-sub">Cortinas, enxoval e decoração de fabricação própria</div>
+        </div>
+        <div class="mockup-cats">
+          <div class="mockup-cat">
+            <div class="img" style="background-image: url('https://feffocortinas.com.br/cdn/shop/files/hf_20260224_000849_9cba2f29-02af-4197-8dac-e725190eedcb.jpg?v=1771893204&width=400');"></div>
+            <div class="label">CORTINAS</div>
+          </div>
+          <div class="mockup-cat">
+            <div class="img" style="background-image: url('https://feffocortinas.com.br/cdn/shop/files/hf_20260222_230602_e61f9626-da5a-4edf-8f6a-cfce84ada062.jpg?v=1771801658&width=400');"></div>
+            <div class="label">CAMA</div>
+          </div>
+          <div class="mockup-cat">
+            <div class="img" style="background-image: url('https://feffocortinas.com.br/cdn/shop/files/be0530a5-17fe-4d9d-b92e-96b1871158e4.png?v=1766122298&width=400');"></div>
+            <div class="label">INFANTIL</div>
+          </div>
+          <div class="mockup-cat">
+            <div class="img" style="background-image: url('https://feffocortinas.com.br/cdn/shop/files/hf_20260222_225330_5387fde3-86dc-4d7b-aacf-6dd566264779.jpg?v=1771800996&width=400');"></div>
+            <div class="label">DECOR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-section">Lojas customizadas</div>
+    <div class="slide-number">03 / 08</div>
+  </div>
+
+  <!-- ============ SLIDE 7 — QR CODE ============ -->
+  <div class="slide dark qr-slide">
+    <div class="tag-criativvo">criativvo</div>
+    <div class="qr-visual-big">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" fill="white"/>
+        <g fill="#1A1A1A">
+          <rect x="6" y="6" width="22" height="22"/>
+          <rect x="10" y="10" width="14" height="14" fill="white"/>
+          <rect x="13" y="13" width="8" height="8"/>
+          <rect x="72" y="6" width="22" height="22"/>
+          <rect x="76" y="10" width="14" height="14" fill="white"/>
+          <rect x="79" y="13" width="8" height="8"/>
+          <rect x="6" y="72" width="22" height="22"/>
+          <rect x="10" y="76" width="14" height="14" fill="white"/>
+          <rect x="13" y="79" width="8" height="8"/>
+          <rect x="35" y="6" width="5" height="5"/>
+          <rect x="45" y="6" width="5" height="5"/>
+          <rect x="55" y="10" width="5" height="5"/>
+          <rect x="60" y="20" width="5" height="5"/>
+          <rect x="40" y="20" width="5" height="5"/>
+          <rect x="30" y="30" width="5" height="5"/>
+          <rect x="45" y="30" width="5" height="5"/>
+          <rect x="60" y="30" width="5" height="5"/>
+          <rect x="75" y="35" width="5" height="5"/>
+          <rect x="85" y="40" width="5" height="5"/>
+          <rect x="40" y="40" width="5" height="5"/>
+          <rect x="55" y="45" width="5" height="5"/>
+          <rect x="65" y="45" width="5" height="5"/>
+          <rect x="30" y="50" width="5" height="5"/>
+          <rect x="45" y="55" width="5" height="5"/>
+          <rect x="60" y="55" width="5" height="5"/>
+          <rect x="75" y="60" width="5" height="5"/>
+          <rect x="85" y="65" width="5" height="5"/>
+          <rect x="40" y="65" width="5" height="5"/>
+          <rect x="50" y="70" width="5" height="5"/>
+          <rect x="60" y="75" width="5" height="5"/>
+          <rect x="75" y="80" width="5" height="5"/>
+          <rect x="40" y="80" width="5" height="5"/>
+          <rect x="55" y="85" width="5" height="5"/>
+          <rect x="70" y="90" width="5" height="5"/>
+          <rect x="85" y="90" width="5" height="5"/>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <div class="eyebrow">03 · Estratégia de fidelização</div>
+      <h2 class="slide-title">Cada pedido virou<br>uma <em>nova venda</em>.</h2>
+      <p class="lead">O cliente compra no Mercado Livre ou Shopee, recebe em casa e encontra um convite. A partir daí, ele entra no jogo da Fêffo, não no do marketplace.</p>
+
+      <div class="qr-steps">
+        <div class="qr-step">
+          <div class="qr-step-num">01</div>
+          <div class="qr-step-text">
+            <h4>Escaneia o QR na embalagem</h4>
+            <p>Cartão dentro de toda caixa, com a identidade visual da Fêffo.</p>
+          </div>
+        </div>
+        <div class="qr-step">
+          <div class="qr-step-num">02</div>
+          <div class="qr-step-text">
+            <h4>Entra no Clube Fêffo</h4>
+            <p>Cadastra e-mail e WhatsApp em landing page exclusiva, ganha cupom de boas-vindas.</p>
+          </div>
+        </div>
+        <div class="qr-step">
+          <div class="qr-step-num">03</div>
+          <div class="qr-step-text">
+            <h4>Acumula crédito e recebe campanhas</h4>
+            <p>A cada compra, mais crédito. Campanhas exclusivas no WhatsApp via Reportana.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-section">Fidelização</div>
+    <div class="slide-number">04 / 08</div>
+  </div>
+
+  <!-- ============ SLIDE 8 — TIERS ============ -->
+  <div class="slide cream tier-slide">
+    <div class="tag-criativvo">criativvo</div>
+    <div>
+      <div class="eyebrow">04 · Programa progressivo</div>
+      <h2 class="slide-title">Quanto mais compra,<br><em>maior o benefício</em>.</h2>
+      <p class="lead">O site da Fêffo passa a ter motivo claro para ser usado, mesmo com preço acima do marketplace. Quatro faixas de crédito, acumulativas.</p>
+    </div>
+    <div class="tier-grid">
+      <div class="tier-block">
+        <div class="tier-num">Faixa I</div>
+        <div class="tier-range"><small>A partir de</small>R$ 100</div>
+        <div class="tier-benefit-row">
+          <div class="tier-benefit-amount">R$ 10</div>
+          <div class="tier-benefit-extra">Crédito para próxima compra no site</div>
+        </div>
+      </div>
+      <div class="tier-block">
+        <div class="tier-num">Faixa II</div>
+        <div class="tier-range"><small>A partir de</small>R$ 250</div>
+        <div class="tier-benefit-row">
+          <div class="tier-benefit-amount">R$ 30</div>
+          <div class="tier-benefit-extra">Crédito acumulável, válido por 90 dias</div>
+        </div>
+      </div>
+      <div class="tier-block featured">
+        <div class="tier-num">Faixa III</div>
+        <div class="tier-range"><small>A partir de</small>R$ 500</div>
+        <div class="tier-benefit-row">
+          <div class="tier-benefit-amount">R$ 80</div>
+          <div class="tier-benefit-extra">Crédito + brinde exclusivo Fêffo</div>
+        </div>
+      </div>
+      <div class="tier-block">
+        <div class="tier-num">Faixa IV</div>
+        <div class="tier-range"><small>A partir de</small>R$ 1.000</div>
+        <div class="tier-benefit-row">
+          <div class="tier-benefit-amount">R$ 180</div>
+          <div class="tier-benefit-extra">Crédito + frete grátis + brinde premium</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-section">Programa de descontos</div>
+    <div class="slide-number">05 / 08</div>
+  </div>
+
+  <!-- ============ SLIDE 9 — CRONOGRAMA ============ -->
+  <div class="slide timeline-slide">
+    <div class="tag-criativvo">criativvo</div>
+    <div>
+      <div class="eyebrow">05 · Ordem de execução</div>
+      <h2 class="slide-title">A sequência de<br>trabalho <em>por fases</em>.</h2>
+      <p class="lead">Quatro blocos em ordem. Cada um com entregas claras antes de passar pro próximo. Os prazos exatos a gente fecha juntos na call, com base na prioridade que você definir.</p>
+    </div>
+    <div class="timeline-grid">
+      <div class="timeline-block active">
+        <div class="timeline-week">Primeiro bloco</div>
+        <div class="timeline-bloco">01</div>
+        <div class="timeline-title">Auditoria e plano visual</div>
+        <div class="timeline-desc">Mapeamento completo das lojas Mercado Livre e Shopee. Análise de fotos, anúncios e gargalos. Aprovação da identidade visual nova.</div>
+      </div>
+      <div class="timeline-block">
+        <div class="timeline-week">Segundo bloco</div>
+        <div class="timeline-bloco">02</div>
+        <div class="timeline-title">Mercado Livre + fotos</div>
+        <div class="timeline-desc">Loja oficial reformulada. Produção fotográfica dos campeões. Reescrita de títulos e fichas dos principais anúncios.</div>
+      </div>
+      <div class="timeline-block">
+        <div class="timeline-week">Terceiro bloco</div>
+        <div class="timeline-bloco">03</div>
+        <div class="timeline-title">Shopee + Clips + QR</div>
+        <div class="timeline-desc">Loja Shopee reformulada. Clips no Mercado Livre. Embalagens com QR e landing do Clube Fêffo no ar.</div>
+      </div>
+      <div class="timeline-block">
+        <div class="timeline-week">Quarto bloco</div>
+        <div class="timeline-bloco">04</div>
+        <div class="timeline-title">Otimização + relatório</div>
+        <div class="timeline-desc">Meta Ads otimizado para o site com os novos criativos. Primeiro relatório consolidado mostrando vendas por canal (site, ML, Shopee, IG) e desempenho da nova estratégia.</div>
+      </div>
+    </div>
+    <div class="slide-section">Cronograma</div>
+    <div class="slide-number">06 / 08</div>
+  </div>
+
+  <!-- ============ SLIDE 11 — RESULTADOS ============ -->
+  <div class="slide results-slide">
+    <div class="tag-criativvo">criativvo</div>
+    <div class="results-top">
+      <div class="eyebrow">06 · Como vamos medir</div>
+      <h2 class="slide-title">Sem promessa.<br>Com <em>métrica clara</em>.</h2>
+      <p class="lead" style="font-weight: 500;">Três indicadores. Acompanhamos mês a mês.</p>
+    </div>
+    <div class="results-grid-big">
+      <div class="result-big dark">
+        <div>
+          <div class="result-big-label">Indicador 1</div>
+          <div class="result-big-num" style="font-size: 4vw; line-height: 1; letter-spacing: -0.03em;">Faturamento<br>por canal</div>
+        </div>
+        <div class="result-big-desc">Mercado Livre, Shopee, site e Instagram, separados. Saber qual canal puxa o resultado e qual precisa de ajuste.</div>
+      </div>
+      <div class="result-big">
+        <div>
+          <div class="result-big-label">Indicador 2</div>
+          <div class="result-big-num" style="font-size: 4vw; line-height: 1; letter-spacing: -0.03em;">ROAS<br>Meta Ads</div>
+        </div>
+        <div class="result-big-desc">Quanto cada real investido em mídia retorna em venda no site. Como toda a verba fica concentrada no Meta Ads, esse é o KPI puro de eficiência da mídia.</div>
+      </div>
+      <div class="result-big">
+        <div>
+          <div class="result-big-label">Indicador 3</div>
+          <div class="result-big-num" style="font-size: 4vw; line-height: 1; letter-spacing: -0.03em;">Base do<br>Clube Fêffo</div>
+        </div>
+        <div class="result-big-desc">Cadastros via QR e quantos deles voltam pra comprar de novo. Esse é o número que constrói o longo prazo da marca.</div>
+      </div>
+    </div>
+    <div class="slide-section">Resultados</div>
+    <div class="slide-number">07 / 08</div>
+  </div>
+
+  <!-- ============ SLIDE 12 — FECHAMENTO ============ -->
+  <div class="slide closing">
+    <div class="closing-eyebrow">Próximo passo</div>
+    <h2 class="closing-title">Vamos <em>conversar</em><br>e ajustar juntos.</h2>
+    <p class="closing-sub">Esse é um ponto de partida, não um plano fechado. Quero ouvir o que faz sentido pra você, o que ajustar, o que priorizar. A partir daí, a gente define ordem, ritmo e responsabilidades.</p>
+
+    <div class="closing-foot">
+      <span class="logo">criativvo</span>
+      <span class="meta">Matheus Vareschi · @sejacriativvo</span>
+    </div>
+    <div class="slide-section">Próximo passo</div>
+    <div class="slide-number">08 / 08</div>
+  </div>
+
+</div>
+
+<!-- NAVEGAÇÃO -->
+<div class="nav">
+  <button class="nav-btn" onclick="prevSlide()">‹</button>
+  <div class="nav-counter"><span id="current">1</span> / <span id="total">12</span></div>
+  <div class="nav-dots" id="dots"></div>
+  <button class="nav-btn" onclick="nextSlide()">›</button>
+</div>
+
+<div class="hint">← → Setas para navegar</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+const total = slides.length;
+
+document.getElementById('total').textContent = total;
+
+const dotsContainer = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+});
+
+function goToSlide(idx) {
+  slides[current].classList.remove('active');
+  current = idx;
+  slides[current].classList.add('active');
+  document.getElementById('current').textContent = current + 1;
+  document.querySelectorAll('.nav-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+}
+
+function nextSlide() {
+  if (current < total - 1) goToSlide(current + 1);
+}
+function prevSlide() {
+  if (current > 0) goToSlide(current - 1);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevSlide(); }
+  if (e.key === 'Home') goToSlide(0);
+  if (e.key === 'End') goToSlide(total - 1);
+});
+</script>
+
+</body>
+</html>

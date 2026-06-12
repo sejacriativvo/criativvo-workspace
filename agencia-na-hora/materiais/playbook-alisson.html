@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook Alisson - Agência na Hora</title>
+<style>
+  :root{ --cor:#16a36a; --tinta:#15171c; --suave:#6f757a; --linha:#e4ebe7; --leve:#f0faf5; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--tinta);background:#e8eeea;line-height:1.5;}
+  .page{max-width:800px;margin:20px auto;background:#fff;}
+
+  .hero{background:var(--cor);color:#fff;padding:46px 52px 40px;}
+  .hero .kicker{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;opacity:.85;}
+  .hero h1{font-size:62px;font-weight:800;letter-spacing:-2px;line-height:1;margin:8px 0 6px;}
+  .hero .role{font-size:19px;font-weight:600;opacity:.95;}
+  .hero .missao{margin-top:18px;font-size:16px;line-height:1.5;max-width:90%;opacity:.97;border-left:3px solid rgba(255,255,255,.55);padding-left:14px;}
+
+  .body{padding:34px 52px 46px;}
+
+  .oferta{background:var(--leve);border-radius:14px;padding:18px 22px;margin-bottom:30px;}
+  .oferta .t{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cor);margin-bottom:10px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{background:#fff;border:1px solid var(--linha);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;}
+  .oferta .preco{margin-top:10px;font-size:13px;color:var(--suave);}
+
+  .secao{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cor);margin:0 0 18px;}
+
+  .step{display:flex;gap:20px;align-items:flex-start;padding:0 0 22px;}
+  .step .num{flex:none;width:46px;height:46px;border-radius:14px;background:var(--cor);color:#fff;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .step .txt h3{font-size:19px;font-weight:800;letter-spacing:-.3px;margin-bottom:3px;}
+  .step .txt p{font-size:14.5px;color:var(--suave);line-height:1.5;}
+  .step .txt b{color:var(--tinta);}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .card{border:2px solid var(--linha);border-radius:16px;padding:18px 20px;}
+  .card .lbl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--suave);margin-bottom:6px;}
+  .card .val{font-size:16px;font-weight:700;line-height:1.35;}
+  .card.entrega{border-color:var(--cor);background:var(--leve);}
+  .card.entrega .val{color:var(--cor);}
+
+  .foot{margin-top:30px;padding-top:16px;border-top:1px solid var(--linha);font-size:12.5px;color:var(--suave);display:flex;justify-content:space-between;}
+  .logo{font-weight:800;color:var(--tinta);}
+
+  @media print{
+    body{background:#fff;}
+    .page{margin:0;max-width:100%;}
+    .step,.cards,.oferta{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="kicker">Agência na Hora · Playbook</div>
+    <h1>Alisson</h1>
+    <div class="role">Tráfego e operação</div>
+    <div class="missao">Sua missão: fazer o lead chegar no WhatsApp do cliente e manter a máquina girando sem travar. Você fecha o ciclo e é o dono do processo: nenhum cliente pode emperrar entre as etapas.</div>
+  </div>
+
+  <div class="body">
+
+    <div class="oferta">
+      <div class="t">Onde você entra na oferta</div>
+      <div class="chips">
+        <span class="chip">🎯 Tráfego automatizado (MCP)</span>
+        <span class="chip">🔁 Dono do pipeline</span>
+        <span class="chip">📈 Recorrência</span>
+      </div>
+      <div class="preco">Oferta única · ~R$ 2.000 · qualquer nicho · verba de anúncio por conta do cliente</div>
+    </div>
+
+    <div class="secao">Seu passo a passo</div>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div class="txt"><h3>Configurar o tráfego (MCP)</h3><p>Google Ads automatizado via <b>MCP</b>. Precisa da <b>BM habilitada</b> (o ponto mais chato, resolve primeiro). A verba é do cliente.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="txt"><h3>Montar os criativos</h3><p>Prioriza <b>vídeo de produto específico</b> (performa melhor) + um institucional. Takes do produto, sem fala, a edição incrementa. <b>Lead cai no WhatsApp.</b></p></div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="txt"><h3>Acompanhar e ajustar</h3><p>Olha as métricas, otimiza o que precisa e avisa o cliente sobre a verba. Referência: ~R$ 180/dia ≈ 15 leads/dia em concessionária.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="txt"><h3>Ser o dono do pipeline</h3><p>Mantém o <b>Notion</b> atualizado. Garante que <b>nenhum cliente trava</b> entre Victor → Produção → você, e que os prazos batem.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="txt"><h3>Abrir recorrência</h3><p>Quando fizer sentido, oferece <b>gestão contínua do tráfego</b>. É o que transforma venda única em receita recorrente.</p></div>
+    </div>
+
+    <div class="cards">
+      <div class="card entrega">
+        <div class="lbl">Você entrega</div>
+        <div class="val">Tráfego no ar gerando lead + pipeline em dia</div>
+      </div>
+      <div class="card">
+        <div class="lbl">Fecha o ciclo</div>
+        <div class="val">Victor cuida do follow-up e upsell</div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span><span class="logo">criativvo</span> · Agência na Hora</span>
+      <span>Playbook do Alisson · 29/05/2026</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

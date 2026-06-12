@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movisol — Energia Solar em Ibitinga e Região</title>
+<meta name="description" content="A Movisol instala energia solar em Ibitinga e região. Reduza até 95% da sua conta de luz com quem vive aqui e atende de verdade.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/logo/ICONE DA LOGO BRANCA.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/logo/ICONE DA LOGO BRANCA.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --azul:    #004CF1;
+  --azul-dk: #0036C8;
+  --preto:   #0A0A0A;
+  --cinza:   #F0F5FF;
+  --cinza-md:#D8E4FF;
+  --texto:   #1A1A2E;
+  --texto-lt: rgba(10,10,10,.55);
+  --branco:  #FFFFFF;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--texto);
+  background: var(--branco);
+  overflow-x: hidden;
+}
+
+img { display:block; max-width:100%; }
+a   { text-decoration:none; color:inherit; }
+
+.container {
+  width:100%; max-width:1200px;
+  margin:0 auto; padding:0 48px;
+}
+
+@media (max-width:768px) { .container { padding:0 24px; } }
+
+/* ─── BOTÕES ─── */
+.btn {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:18px 36px; border-radius:100px;
+  font-size:16px; font-weight:700; letter-spacing:.3px;
+  cursor:pointer; border:none; transition: all .2s ease;
+}
+.btn-primary { background:var(--azul); color:#fff; }
+.btn-primary:hover { background:var(--azul-dk); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,76,241,.35); }
+.btn-ghost   { background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.4); }
+.btn-ghost:hover { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.7); }
+.btn-white   { background:#fff; color:var(--azul); }
+.btn-white:hover { background:var(--cinza); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.15); }
+
+/* ─── NAV ─── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:20px 0;
+  transition: background .3s, box-shadow .3s;
+}
+nav.scrolled {
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(12px);
+  box-shadow:0 1px 0 rgba(0,0,0,.06);
+}
+.nav-inner {
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav-logo { height:34px; }
+.nav-logo-dark { display:none; }
+
+nav.scrolled .nav-logo-light { display:none; }
+nav.scrolled .nav-logo-dark  { display:block; }
+
+.nav-links {
+  display:flex; align-items:center; gap:36px;
+  list-style:none;
+}
+.nav-links a {
+  font-size:15px; font-weight:500;
+  color:rgba(255,255,255,.8);
+  transition:color .2s;
+}
+.nav-links a:hover { color:#fff; }
+nav.scrolled .nav-links a { color:rgba(10,10,10,.6); }
+nav.scrolled .nav-links a:hover { color:var(--preto); }
+
+.nav-cta { font-size:15px !important; padding:12px 24px !important; }
+nav .nav-cta { background:var(--azul) !important; color:#fff !important; border-radius:100px; font-weight:700; transition:all .2s; }
+nav .nav-cta:hover { background:var(--azul-dk) !important; transform:translateY(-1px); box-shadow:0 4px 16px rgba(0,76,241,.35); }
+
+.nav-hamburger {
+  display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px;
+}
+.nav-hamburger span {
+  display:block; width:24px; height:2px; border-radius:2px;
+  background:#fff; transition:all .25s;
+}
+nav.scrolled .nav-hamburger span { background:var(--preto); }
+
+.nav-mobile {
+  display:none; flex-direction:column; gap:0;
+  background:#fff; position:absolute; top:100%; left:0; right:0;
+  box-shadow:0 8px 32px rgba(0,0,0,.1);
+  padding:16px 0;
+}
+.nav-mobile.open { display:flex; }
+.nav-mobile a {
+  padding:14px 24px;
+  font-size:16px; font-weight:500; color:var(--texto);
+}
+.nav-mobile .btn-primary { margin:8px 24px 8px; padding:14px 24px; justify-content:center; border-radius:100px; }
+
+@media (max-width:768px) {
+  .nav-links { display:none; }
+  .nav-hamburger { display:flex; }
+  nav:not(.scrolled) .nav-hamburger span { background:#fff; }
+}
+
+/* ─── HERO ─── */
+.hero {
+  position:relative; overflow:hidden;
+  height:90vh; min-height:640px;
+  padding:0;
+}
+.hero picture {
+  display:block;
+  position:absolute; inset:0;
+  overflow:hidden;
+}
+@media (min-width:769px) {
+  .hero { height:90vh; min-height:640px; aspect-ratio:unset; }
+}
+@media (max-width:768px) {
+  .hero {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 680px;
+    aspect-ratio: unset;
+  }
+}
+
+.hero-bg {
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:center center;
+}
+
+.hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,.22) 0%,
+    rgba(0,0,0,.18) 30%,
+    rgba(0,0,0,.72) 70%,
+    rgba(0,0,0,.92) 100%
+  );
+}
+@media (max-width:768px) {
+  .hero-overlay {
+    background:linear-gradient(
+      to bottom,
+      rgba(0,0,0,.45) 0%,
+      rgba(0,0,0,.30) 25%,
+      rgba(0,0,0,.65) 60%,
+      rgba(0,0,0,.92) 100%
+    );
+  }
+}
+
+.hero-content {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  justify-content:flex-end;
+  padding-bottom:80px;
+}
+@media (max-width:768px) { .hero-content { padding-bottom:60px; } }
+
+.hero-pill {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 20px; border-radius:100px;
+  font-size:12px; font-weight:700; letter-spacing:3.5px; text-transform:uppercase;
+  background:rgba(255,255,255,.13); color:#fff;
+  border:1px solid rgba(255,255,255,.22);
+  width:fit-content; margin-bottom:24px;
+}
+.hero-pill::before {
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:#fff; opacity:.7; flex-shrink:0;
+}
+
+.hero-headline {
+  font-size:80px; font-weight:900; line-height:.93;
+  color:#fff; letter-spacing:-3px;
+  max-width:800px; margin-bottom:24px;
+}
+@media (max-width:1024px) { .hero-headline { font-size:64px; } }
+@media (max-width:768px)  { .hero-headline { font-size:46px; letter-spacing:-1.5px; max-width:100%; } }
+
+.hero-sub {
+  font-size:22px; font-weight:400; line-height:1.55;
+  color:rgba(255,255,255,.7); max-width:560px;
+  margin-bottom:40px;
+}
+@media (max-width:768px) { .hero-sub { font-size:18px; } }
+
+.hero-actions {
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+}
+@media (max-width:480px) {
+  .hero-actions { flex-direction:column; align-items:stretch; }
+  .hero-actions .btn { justify-content:center; width:100%; }
+}
+
+.hero-scroll {
+  position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  color:rgba(255,255,255,.45); font-size:11px; font-weight:600;
+  letter-spacing:3px; text-transform:uppercase;
+  animation: bounce 2.5s infinite;
+}
+.hero-scroll::after {
+  content:''; width:1px; height:36px;
+  background:rgba(255,255,255,.25);
+}
+@keyframes bounce {
+  0%,100% { transform:translateX(-50%) translateY(0); }
+  50%      { transform:translateX(-50%) translateY(6px); }
+}
+@media (max-width:768px) { .hero-scroll { display:none; } }
+
+/* ─── STATS BAR ─── */
+.stats {
+  background:var(--azul);
+  padding:56px 0;
+}
+@media (max-width:640px) { .stats { padding:0; } }
+.stats-grid {
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:1px; background:rgba(255,255,255,.15);
+}
+@media (max-width:640px) { .stats-grid { grid-template-columns:1fr; } }
+
+.stat-item {
+  background:var(--azul);
+  padding:40px 36px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.stat-number {
+  font-size:56px; font-weight:900; color:#fff;
+  line-height:1; letter-spacing:-2px;
+}
+.stat-label {
+  font-size:16px; font-weight:400; color:rgba(255,255,255,.65);
+  line-height:1.4; max-width:200px;
+}
+@media (max-width:768px) {
+  .stat-number { font-size:46px; }
+  .stat-item   { padding:32px 24px; }
+}
+
+/* ─── SECTION BASE ─── */
+section { padding:100px 0; scroll-margin-top:80px; }
+@media (max-width:768px) { section { padding:64px 0; } }
+@media (max-width:480px) { section { padding:52px 0; } }
+
+.section-label {
+  font-size:12px; font-weight:700; letter-spacing:4px; text-transform:uppercase;
+  color:var(--azul); margin-bottom:16px;
+}
+.section-title {
+  font-size:56px; font-weight:900; line-height:1.0;
+  color:var(--preto); letter-spacing:-2px;
+  margin-bottom:20px; max-width:700px;
+}
+@media (max-width:1024px) { .section-title { font-size:44px; } }
+@media (max-width:768px)  { .section-title { font-size:34px; letter-spacing:-1px; } }
+
+.section-sub {
+  font-size:20px; font-weight:400; line-height:1.6;
+  color:var(--texto-lt); max-width:560px;
+}
+@media (max-width:768px) { .section-sub { font-size:17px; } }
+
+/* ─── COMO FUNCIONA ─── */
+.como { background:var(--cinza); }
+
+.como-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:80px; align-items:center;
+  margin-top:64px;
+}
+@media (max-width:960px) { .como-grid { grid-template-columns:1fr; gap:48px; } }
+
+.como-steps { display:flex; flex-direction:column; gap:0; }
+
+.step {
+  display:flex; gap:24px;
+  padding:28px 0; border-bottom:1px solid rgba(0,76,241,.1);
+}
+.step:last-child { border-bottom:none; }
+
+.step-num {
+  font-size:13px; font-weight:700; letter-spacing:2px;
+  color:var(--azul); opacity:.5;
+  min-width:28px; padding-top:4px;
+}
+.step-body { display:flex; flex-direction:column; gap:6px; }
+.step-title { font-size:22px; font-weight:700; color:var(--preto); }
+.step-desc  { font-size:16px; font-weight:400; line-height:1.6; color:var(--texto-lt); }
+@media (max-width:768px) {
+  .step-title { font-size:19px; }
+  .step-desc  { font-size:15px; }
+}
+
+.como-photo {
+  border-radius:20px; overflow:hidden;
+  aspect-ratio:4/5;
+}
+.como-photo img {
+  width:100%; height:100%; object-fit:cover;
+}
+@media (max-width:960px) { .como-photo { aspect-ratio:16/9; } }
+
+/* ─── DIFERENCIAIS ─── */
+.diferenciais-header {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:64px; align-items:end;
+  margin-bottom:64px;
+}
+@media (max-width:768px) { .diferenciais-header { grid-template-columns:1fr; gap:24px; } }
+
+.diferenciais-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+@media (max-width:960px) { .diferenciais-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:640px) { .diferenciais-grid { grid-template-columns:1fr; } }
+
+.diferencial-card {
+  background:var(--cinza);
+  border-radius:20px; padding:36px 32px;
+  display:flex; flex-direction:column; gap:16px;
+  transition:box-shadow .2s;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+.diferencial-card:hover {
+  box-shadow:0 20px 48px rgba(0,76,241,.18);
+}
+.diferencial-icon {
+  width:48px; height:48px; border-radius:14px;
+  background:var(--azul); display:flex; align-items:center; justify-content:center;
+  font-size:22px;
+}
+.diferencial-title { font-size:22px; font-weight:700; color:var(--preto); line-height:1.2; }
+.diferencial-desc  { font-size:16px; font-weight:400; line-height:1.65; color:var(--texto-lt); }
+
+/* ─── SOBRE ─── */
+.sobre { background:var(--preto); overflow:hidden; }
+
+.sobre-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:80px; align-items:center;
+}
+@media (max-width:900px) { .sobre-grid { grid-template-columns:1fr; gap:48px; } }
+@media (max-width:768px) { .sobre-photo { aspect-ratio:4/3; } }
+
+.sobre-photo {
+  border-radius:20px; overflow:hidden;
+  aspect-ratio:3/4; position:relative;
+}
+.sobre-photo img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+
+.sobre-photo-badge {
+  position:absolute; bottom:24px; left:24px; right:24px;
+  background:rgba(0,76,241,.92); backdrop-filter:blur(8px);
+  border-radius:14px; padding:20px 24px;
+  display:flex; flex-direction:column; gap:4px;
+}
+.sobre-badge-name  { font-size:18px; font-weight:700; color:#fff; }
+.sobre-badge-title { font-size:13px; font-weight:500; color:rgba(255,255,255,.65); letter-spacing:.5px; }
+
+.sobre-content { display:flex; flex-direction:column; gap:32px; }
+
+.sobre-label { color:rgba(0,76,241,.8); }
+
+.sobre-title {
+  font-size:52px; font-weight:900; line-height:1.0;
+  color:#fff; letter-spacing:-2px; max-width:560px;
+}
+@media (max-width:1024px) { .sobre-title { font-size:40px; } }
+@media (max-width:768px)  { .sobre-title { font-size:32px; letter-spacing:-1px; } }
+
+.sobre-quote {
+  font-size:22px; font-weight:400; line-height:1.65;
+  color:rgba(255,255,255,.65); max-width:480px;
+}
+@media (max-width:768px) { .sobre-quote { font-size:18px; } }
+
+.sobre-destaque {
+  padding:28px 32px;
+  background:rgba(255,255,255,.05);
+  border-left:3px solid var(--azul);
+  border-radius:0 12px 12px 0;
+}
+.sobre-destaque p {
+  font-size:20px; font-weight:600; line-height:1.5;
+  color:#fff; font-style:italic;
+}
+@media (max-width:768px) { .sobre-destaque p { font-size:17px; } }
+
+/* ─── PORTFOLIO ─── */
+.portfolio { background:var(--cinza); }
+
+.portfolio-header { margin-bottom:48px; }
+
+.portfolio-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+@media (max-width:640px) { .portfolio-grid { grid-template-columns:1fr; } }
+
+.portfolio-item {
+  border-radius:20px; overflow:hidden;
+  position:relative;
+}
+.portfolio-item:first-child {
+  grid-column:span 2; aspect-ratio:16/7;
+}
+@media (max-width:640px) { .portfolio-item:first-child { grid-column:span 1; aspect-ratio:4/3; } }
+
+.portfolio-item:not(:first-child) { aspect-ratio:4/3; }
+
+.portfolio-item img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .4s ease;
+}
+.portfolio-item:hover img { transform:scale(1.03); }
+
+/* ─── FAQ ─── */
+.faq-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:24px; margin-top:64px;
+}
+@media (max-width:768px) { .faq-grid { grid-template-columns:1fr; } }
+
+details {
+  background:var(--cinza);
+  border-radius:16px; overflow:hidden;
+}
+details[open] { background:#fff; box-shadow:0 4px 24px rgba(0,76,241,.08); }
+
+summary {
+  padding:28px 32px;
+  font-size:18px; font-weight:600; color:var(--preto);
+  cursor:pointer; list-style:none;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  user-select:none;
+}
+summary::-webkit-details-marker { display:none; }
+summary::after {
+  content:'+'; font-size:24px; font-weight:300;
+  color:var(--azul); flex-shrink:0;
+  transition:transform .2s;
+}
+details[open] summary::after { transform:rotate(45deg); }
+
+.faq-answer {
+  padding:0 32px 28px;
+  font-size:16px; font-weight:400; line-height:1.7;
+  color:var(--texto-lt);
+  overflow:hidden;
+}
+@media (max-width:768px) {
+  summary       { font-size:16px; padding:22px 22px; }
+  .faq-answer   { padding:0 22px 22px; }
+}
+
+/* ─── CTA FINAL ─── */
+.cta-final {
+  background:var(--azul);
+  text-align:center; padding:120px 0;
+}
+@media (max-width:768px) { .cta-final { padding:80px 0; } }
+
+.cta-final .section-label { color:rgba(255,255,255,.6); }
+
+.cta-title {
+  font-size:64px; font-weight:900; line-height:.95;
+  color:#fff; letter-spacing:-2.5px;
+  margin-bottom:24px;
+}
+@media (max-width:1024px) { .cta-title { font-size:48px; } }
+@media (max-width:768px)  { .cta-title { font-size:36px; letter-spacing:-1px; } }
+
+.cta-sub {
+  font-size:20px; font-weight:400; line-height:1.6;
+  color:rgba(255,255,255,.65); max-width:480px;
+  margin:0 auto 48px;
+}
+@media (max-width:768px) { .cta-sub { font-size:17px; } }
+
+/* ─── FOOTER ─── */
+footer {
+  background:var(--preto);
+  padding:64px 0 40px;
+}
+.footer-grid {
+  display:grid; grid-template-columns:2fr 1fr 1fr;
+  gap:64px; margin-bottom:56px;
+}
+@media (max-width:900px) { .footer-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:600px) { .footer-grid { grid-template-columns:1fr; gap:40px; } }
+
+.footer-logo { height:32px; margin-bottom:20px; }
+
+.footer-desc {
+  font-size:15px; font-weight:400; line-height:1.7;
+  color:rgba(255,255,255,.4); max-width:300px;
+}
+.footer-col-title {
+  font-size:13px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+  color:rgba(255,255,255,.3); margin-bottom:20px;
+}
+.footer-links { display:flex; flex-direction:column; gap:12px; }
+.footer-links a {
+  font-size:15px; font-weight:400; color:rgba(255,255,255,.55);
+  transition:color .2s;
+}
+.footer-links a:hover { color:#fff; }
+
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,.07);
+  padding-top:32px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+@media (max-width:640px) { .footer-bottom { flex-direction:column; gap:12px; text-align:center; } }
+
+.footer-copy { font-size:13px; color:rgba(255,255,255,.25); }
+
+/* ─── WHATSAPP FLOAT ─── */
+.wa-float {
+  position:fixed; bottom:28px; right:28px; z-index:200;
+  width:60px; height:60px; border-radius:50%;
+  background:#25D366; color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,.45);
+  transition:transform .2s, box-shadow .2s;
+  font-size:26px;
+}
+.wa-float:hover {
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(37,211,102,.55);
+}
+@media (max-width:768px) {
+  .wa-float { bottom:20px; right:20px; width:54px; height:54px; font-size:24px; }
+}
+
+/* ─── ECONOMIZÔMETRO ─── */
+.econo { background:#fff; }
+
+.econo-wrapper {
+  margin-top:64px;
+  background:var(--cinza);
+  border-radius:28px;
+  padding:56px;
+  display:flex; flex-direction:column; gap:48px;
+}
+@media (max-width:768px) { .econo-wrapper { padding:32px 24px; gap:36px; } }
+
+.econo-input-section { display:flex; flex-direction:column; gap:20px; }
+
+.econo-label {
+  font-size:13px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+  color:rgba(10,10,10,.4);
+}
+
+.econo-bill-display {
+  font-size:80px; font-weight:900; line-height:1;
+  color:var(--preto); letter-spacing:-3px;
+}
+.econo-bill-display span { color:var(--azul); }
+@media (max-width:768px) { .econo-bill-display { font-size:48px; } }
+@media (max-width:400px) { .econo-bill-display { font-size:40px; } }
+
+.econo-slider {
+  -webkit-appearance:none; appearance:none;
+  width:100%; height:6px; border-radius:3px;
+  background:var(--cinza-md); outline:none; cursor:pointer;
+}
+.econo-slider::-webkit-slider-thumb {
+  -webkit-appearance:none;
+  width:32px; height:32px; border-radius:50%;
+  background:var(--azul); cursor:pointer;
+  box-shadow:0 2px 12px rgba(0,76,241,.4);
+  transition:transform .15s;
+}
+.econo-slider::-webkit-slider-thumb:hover { transform:scale(1.1); }
+.econo-slider::-moz-range-thumb {
+  width:32px; height:32px; border-radius:50%;
+  background:var(--azul); cursor:pointer; border:none;
+  box-shadow:0 2px 12px rgba(0,76,241,.4);
+}
+
+.econo-range-labels {
+  display:flex; justify-content:space-between;
+  font-size:13px; font-weight:500; color:rgba(10,10,10,.35);
+  margin-top:4px;
+}
+
+.econo-results {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+}
+@media (max-width:900px) { .econo-results { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:480px) { .econo-results { grid-template-columns:1fr 1fr; gap:10px; } }
+@media (max-width:420px) { .econo-results { grid-template-columns:1fr; } }
+@media (max-width:480px) {
+  .econo-wrapper { padding:28px 20px; gap:28px; }
+  .econo-amount  { font-size:22px; }
+  .econo-period  { font-size:11px; }
+  .econo-note    { font-size:12px; }
+  .econo-result  { padding:18px 14px; }
+  .econo-cta-text { font-size:16px; }
+}
+
+.econo-result {
+  background:#fff; border-radius:18px; padding:24px 20px;
+  display:flex; flex-direction:column; gap:8px;
+  border:1.5px solid rgba(0,76,241,.08);
+}
+.econo-result.destaque { background:var(--azul); border-color:var(--azul); }
+
+.econo-period {
+  font-size:12px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+  color:rgba(10,10,10,.35);
+}
+.econo-result.destaque .econo-period { color:rgba(255,255,255,.6); }
+
+.econo-amount {
+  font-size:32px; font-weight:900; color:var(--preto);
+  letter-spacing:-1px; line-height:1;
+}
+.econo-result.destaque .econo-amount { color:#fff; }
+@media (max-width:480px) { .econo-amount { font-size:24px; } }
+
+.econo-note {
+  font-size:13px; font-weight:400; color:rgba(10,10,10,.45); line-height:1.4;
+}
+.econo-result.destaque .econo-note { color:rgba(255,255,255,.65); }
+
+.econo-bar-section { display:flex; flex-direction:column; gap:14px; }
+
+.econo-bar-labels {
+  display:flex; gap:24px; align-items:center;
+  font-size:13px; font-weight:600; color:rgba(10,10,10,.45);
+}
+.econo-bar-dot {
+  width:10px; height:10px; border-radius:50%; flex-shrink:0;
+}
+
+.econo-bars { display:flex; flex-direction:column; gap:10px; }
+
+.econo-bar-row { display:flex; align-items:center; gap:16px; }
+
+.econo-bar-track {
+  flex:1; height:14px; background:rgba(0,0,0,.06); border-radius:7px; overflow:hidden;
+}
+.econo-bar-fill {
+  height:100%; border-radius:7px; transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+.econo-bar-fill.sem-solar { background:rgba(10,10,10,.2); }
+.econo-bar-fill.com-solar { background:var(--azul); }
+
+.econo-bar-pct {
+  font-size:14px; font-weight:700; color:rgba(10,10,10,.5); min-width:40px; text-align:right;
+}
+.econo-bar-row:last-child .econo-bar-pct { color:var(--azul); }
+
+.econo-disclaimer {
+  font-size:13px; color:rgba(10,10,10,.3); line-height:1.6;
+  border-top:1px solid rgba(0,76,241,.1); padding-top:24px;
+}
+
+.econo-cta-row {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+}
+.econo-cta-text { font-size:20px; font-weight:600; color:var(--preto); line-height:1.4; max-width:480px; }
+.econo-cta-text span { color:var(--azul); }
+@media (max-width:768px) {
+  .econo-cta-row { flex-direction:column; align-items:flex-start; }
+  .econo-cta-text { font-size:17px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <img src="../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol" class="nav-logo nav-logo-light">
+      <img src="../assets/logo/ICONE + ESCRITA LOGO AZUL.png"  alt="Movisol" class="nav-logo nav-logo-dark">
+
+      <ul class="nav-links">
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#faq">Dúvidas</a></li>
+        <li><a href="https://wa.me/5516997850202?text=Ol%C3%A1!%20Quero%20uma%20simula%C3%A7%C3%A3o%20gratuita." class="btn nav-cta">Falar no WhatsApp</a></li>
+      </ul>
+
+      <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="#como-funciona" onclick="toggleMenu()">Como funciona</a>
+      <a href="#sobre"         onclick="toggleMenu()">Sobre</a>
+      <a href="#faq"           onclick="toggleMenu()">Dúvidas</a>
+      <a href="https://wa.me/5516997850202?text=Ol%C3%A1!%20Quero%20uma%20simula%C3%A7%C3%A3o%20gratuita." class="btn btn-primary">Falar no WhatsApp</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <picture>
+    <source media="(max-width:768px)" srcset="../assets/foto da faixada da empresa.jpg">
+    <source media="(min-width:769px)" srcset="../assets/foto da faixada da empresa.webp">
+    <img
+      class="hero-bg"
+      src="../assets/foto da faixada da empresa.webp"
+      alt="Movisol — Energia Solar em Ibitinga"
+    >
+  </picture>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="container">
+      <div class="hero-pill">Ibitinga · SP</div>
+      <h1 class="hero-headline">O sol bate no<br>seu telhado<br>todo dia.</h1>
+      <p class="hero-sub">E você ainda paga por ele. A Movisol instala energia solar em Ibitinga e região com o pós-venda que nenhum concorrente oferece.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5516997850202?text=Ol%C3%A1!%20Quero%20uma%20simula%C3%A7%C3%A3o%20gratuita." class="btn btn-primary">Quero uma simulação gratuita</a>
+        <a href="#como-funciona" class="btn btn-ghost">Como funciona</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">Rolar</div>
+</section>
+
+<!-- ─── STATS ─── -->
+<div class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">95%</span>
+        <span class="stat-label">de redução possível na conta de luz todo mês</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">3 anos</span>
+        <span class="stat-label">prazo médio de retorno do investimento</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── COMO FUNCIONA ─── -->
+<section class="como" id="como-funciona">
+  <div class="container">
+    <p class="section-label">Processo</p>
+    <h2 class="section-title">Da simulação à economia. Em menos de 30 dias.</h2>
+
+    <div class="como-grid">
+      <div class="como-steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <div class="step-body">
+            <p class="step-title">Simulação gratuita</p>
+            <p class="step-desc">Analisamos sua conta de luz e calculamos exatamente quanto você vai economizar. Sem compromisso.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <div class="step-body">
+            <p class="step-title">Projeto personalizado</p>
+            <p class="step-desc">Dimensionamos o sistema para o seu consumo real. Nada de painel a mais nem a menos.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <div class="step-body">
+            <p class="step-title">Instalação profissional</p>
+            <p class="step-desc">Nossa equipe instala com segurança e organização. Cuidamos de tudo, incluindo a aprovação na concessionária.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">04</span>
+          <div class="step-body">
+            <p class="step-title">Economia todo mês</p>
+            <p class="step-desc">A partir do primeiro mês, a diferença aparece na conta. Você só acompanha os créditos acumulando.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="como-photo">
+        <img src="../assets/foto-painel-solar.png" alt="Instalação de painel solar">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DIFERENCIAIS ─── -->
+<section id="diferenciais">
+  <div class="container">
+    <div class="diferenciais-header">
+      <div>
+        <p class="section-label">Por que a Movisol</p>
+        <h2 class="section-title">Você não compra um painel. Você ganha um parceiro.</h2>
+      </div>
+      <p class="section-sub">Qualquer empresa instala painel. A diferença está no que acontece depois. E é aí que a Movisol se separa de todos.</p>
+    </div>
+
+    <div class="diferenciais-grid">
+      <div class="diferencial-card">
+        <div class="diferencial-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <p class="diferencial-title">Pós-venda de verdade</p>
+        <p class="diferencial-desc">Se surgiu um problema, o Marcelo aparece. A Movisol resolve qualquer dor de cabeça do cliente com o mesmo cuidado de quem instalou. Sem sumir, sem enrolar.</p>
+      </div>
+      <div class="diferencial-card">
+        <div class="diferencial-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <p class="diferencial-title">Somos daqui</p>
+        <p class="diferencial-desc">Empresa local, equipe local. Atendimento rápido porque estamos a poucos quilômetros de você. Sem terceirizar, sem sumir.</p>
+      </div>
+      <div class="diferencial-card">
+        <div class="diferencial-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+        <p class="diferencial-title">Resultado com dado real</p>
+        <p class="diferencial-desc">Calculamos sua economia antes de fechar. Você sabe exatamente o que vai economizar antes de gastar um centavo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ECONOMIZÔMETRO ─── -->
+<section class="econo" id="economizometro">
+  <div class="container">
+    <p class="section-label">Economizômetro <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-left:6px"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></p>
+    <h2 class="section-title">Quanto fica no seu<br>bolso todo mês?</h2>
+    <p class="section-sub">Arraste o controle e veja os números do seu caso.</p>
+
+    <div class="econo-wrapper">
+
+      <!-- Input -->
+      <div class="econo-input-section">
+        <p class="econo-label">Valor médio da sua conta de luz</p>
+        <div class="econo-bill-display">R$&nbsp;<span id="econoBillDisplay">400</span></div>
+        <input class="econo-slider" type="range" min="100" max="3000" value="400" step="50" id="econoSlider">
+        <div class="econo-range-labels"><span>R$ 100</span><span>R$ 3.000</span></div>
+      </div>
+
+      <!-- Results -->
+      <div class="econo-results">
+        <div class="econo-result">
+          <span class="econo-period">Você pagaria/mês</span>
+          <span class="econo-amount" id="econoRemaining">R$ 50</span>
+          <span class="econo-note">taxa de disponibilidade</span>
+        </div>
+        <div class="econo-result destaque">
+          <span class="econo-period">Economia/mês</span>
+          <span class="econo-amount" id="econoMonthly">R$ 340</span>
+          <span class="econo-note">fica no seu bolso</span>
+        </div>
+        <div class="econo-result">
+          <span class="econo-period">Em 1 ano</span>
+          <span class="econo-amount" id="econoYearly">R$ 4.080</span>
+          <span class="econo-note">de economia acumulada</span>
+        </div>
+        <div class="econo-result">
+          <span class="econo-period">Em 25 anos</span>
+          <span class="econo-amount" id="econoLifetime">R$ 102.000</span>
+          <span class="econo-note">vida útil do sistema</span>
+        </div>
+      </div>
+
+      <!-- Barra visual -->
+      <div class="econo-bar-section">
+        <div class="econo-bar-labels">
+          <span><span class="econo-bar-dot" style="background:rgba(10,10,10,.2);display:inline-block;margin-right:6px;"></span>Sem solar</span>
+          <span><span class="econo-bar-dot" style="background:var(--azul);display:inline-block;margin-right:6px;"></span>Com solar</span>
+        </div>
+        <div class="econo-bars">
+          <div class="econo-bar-row">
+            <div class="econo-bar-track"><div class="econo-bar-fill sem-solar" style="width:100%"></div></div>
+            <span class="econo-bar-pct">100%</span>
+          </div>
+          <div class="econo-bar-row">
+            <div class="econo-bar-track"><div class="econo-bar-fill com-solar" id="econoBarFill" style="width:15%"></div></div>
+            <span class="econo-bar-pct" id="econoBarPct">15%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="econo-cta-row">
+        <p class="econo-cta-text">Esses são os números <span>aproximados</span> do seu caso.<br>A Movisol confirma os reais, de graça.</p>
+        <a href="https://wa.me/5516997850202?text=Ol%C3%A1!%20Fiz%20a%20simula%C3%A7%C3%A3o%20no%20site%20e%20quero%20confirmar%20os%20n%C3%BAmeros%20do%20meu%20caso." class="btn btn-primary">Confirmar meus números</a>
+      </div>
+
+      <p class="econo-disclaimer">* Cálculo baseado no modelo de compensação de energia (net metering). Durante o dia, o sistema cobre o consumo diretamente, sem passar pelo medidor. À noite, os créditos acumulados cobrem o restante. O único valor cobrado é a taxa de disponibilidade da distribuidora (mín. 30 kWh × tarifa local, aprox. R$&nbsp;52). Valores reais variam conforme consumo, tarifa e dimensionamento do sistema.</p>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── SOBRE ─── -->
+<section class="sobre" id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-photo">
+        <img src="../assets/foto do dono da empresa.jpg" alt="Marcelo Pereira — Fundador da Movisol">
+        <div class="sobre-photo-badge">
+          <span class="sobre-badge-name">Marcelo Pereira</span>
+          <span class="sobre-badge-title">Fundador · Movisol</span>
+        </div>
+      </div>
+
+      <div class="sobre-content">
+        <p class="section-label sobre-label">Sobre nós</p>
+        <h2 class="sobre-title">Energia solar feita com responsabilidade.</h2>
+        <p class="sobre-quote">A Movisol nasceu em Ibitinga com um único propósito: instalar energia solar do jeito certo e cuidar do cliente depois. Não somos uma empresa que aparece na instalação e some. Somos parceiros de longo prazo.</p>
+        <div class="sobre-destaque">
+          <p>"Se tem um problema, a gente resolve. Cada dor de cabeça do cliente vira nossa prioridade. É o mínimo que alguém merece."</p>
+        </div>
+        <a href="https://wa.me/5516999619883?text=Ol%C3%A1%20Marcelo!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20energia%20solar." class="btn btn-primary" style="align-self:flex-start">Falar com o Marcelo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PORTFOLIO ─── -->
+<section class="portfolio">
+  <div class="container">
+    <div class="portfolio-header">
+      <p class="section-label">Nosso trabalho</p>
+      <h2 class="section-title">Cada instalação, uma história de economia.</h2>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-item">
+        <img src="../assets/foto da faixada da empresa.webp" alt="Movisol — sede em Ibitinga">
+      </div>
+      <div class="portfolio-item">
+        <img src="../assets/Foto instaladores.jpg" alt="Equipe de instalação Movisol">
+      </div>
+      <div class="portfolio-item">
+        <img src="../assets/foto-painel-solar.png" alt="Instalação de painel solar">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section id="faq">
+  <div class="container">
+    <p class="section-label">Dúvidas frequentes</p>
+    <h2 class="section-title">O que todo mundo pergunta antes de instalar.</h2>
+
+    <div class="faq-grid">
+      <details>
+        <summary>Funciona em dias nublados e com chuva?</summary>
+        <p class="faq-answer">Sim. O sistema solar funciona com luz, não com calor. Em dias nublados, ele ainda gera entre 10% e 25% da capacidade total. Em Ibitinga, com mais de 300 dias de sol por ano, a produção anual é alta o suficiente para garantir sua economia mesmo com dias de chuva.</p>
+      </details>
+
+      <details>
+        <summary>Em quanto tempo o investimento se paga?</summary>
+        <p class="faq-answer">Em média, entre 4 e 6 anos. Depois disso, cada real que você não paga na conta de luz é economia pura no seu bolso, por décadas. Um sistema bem instalado dura 25 a 30 anos.</p>
+      </details>
+
+      <details>
+        <summary>E com o Fio B aumentando, ainda vale a pena?</summary>
+        <p class="faq-answer">Sim. Mesmo com o Fio B em 60%, quem tem solar ainda economiza entre 74% e 87% na conta de luz. E quanto antes você instalar, melhor: em 2027 o Fio B sobe para 75%. Quem instalar agora sai na frente.</p>
+      </details>
+
+      <details>
+        <summary>Preciso fazer alguma coisa para manter o sistema?</summary>
+        <p class="faq-answer">Muito pouco. Uma limpeza nos painéis a cada 6 a 12 meses é suficiente. O sistema é praticamente autônomo. E se surgir qualquer dúvida ou problema, é só ligar para a Movisol.</p>
+      </details>
+
+      <details>
+        <summary>A instalação exige obras na minha casa?</summary>
+        <p class="faq-answer">Não. A instalação é feita no telhado e não exige quebrar paredes ou reformas. O processo é limpo, rápido e em média concluído em 1 a 2 dias.</p>
+      </details>
+
+      <details>
+        <summary>A Movisol cuida da aprovação na concessionária?</summary>
+        <p class="faq-answer">Sim. Cuidamos de toda a documentação e aprovação junto à concessionária local. Você não precisa entrar em contato com ninguém. A gente resolve tudo.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA FINAL ─── -->
+<section class="cta-final">
+  <div class="container">
+    <p class="section-label">Simulação gratuita</p>
+    <h2 class="cta-title">Quanto você economizaria<br>por mês em Ibitinga?</h2>
+    <p class="cta-sub">Fazemos a simulação gratuitamente. Você recebe o número exato antes de tomar qualquer decisão.</p>
+    <a href="https://wa.me/5516997850202?text=Ol%C3%A1!%20Quero%20uma%20simula%C3%A7%C3%A3o%20gratuita%20de%20energia%20solar." class="btn btn-white">
+      Falar agora no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol" class="footer-logo">
+        <p class="footer-desc">Instalação de energia solar em Ibitinga e região. Atendimento local, resultado garantido e pós-venda de verdade.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Navegação</p>
+        <div class="footer-links">
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#diferenciais">Por que a Movisol</a>
+          <a href="#sobre">Sobre nós</a>
+          <a href="#faq">Dúvidas</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title">Contato</p>
+        <div class="footer-links">
+          <a href="https://wa.me/5516997850202">WhatsApp</a>
+          <a href="https://instagram.com/movisol.se" target="_blank">@movisol.se</a>
+          <span style="color:rgba(255,255,255,.55)">Ibitinga, SP</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Movisol Energia Solar. Todos os direitos reservados.</p>
+      <p class="footer-copy">Ibitinga, SP</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── WHATSAPP FLOAT ─── -->
+<a class="wa-float" href="https://wa.me/5516997850202?text=Ol%C3%A1!%20Quero%20uma%20simula%C3%A7%C3%A3o%20gratuita." title="Falar no WhatsApp" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ─── JS ─── -->
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Menu mobile
+  function toggleMenu() {
+    document.getElementById('navMobile').classList.toggle('open');
+  }
+
+  // Fechar menu ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#nav')) {
+      document.getElementById('navMobile').classList.remove('open');
+    }
+  });
+  // Economizômetro
+  const slider      = document.getElementById('econoSlider');
+  const billDisplay = document.getElementById('econoBillDisplay');
+  const remaining   = document.getElementById('econoRemaining');
+  const monthly     = document.getElementById('econoMonthly');
+  const yearly      = document.getElementById('econoYearly');
+  const lifetime    = document.getElementById('econoLifetime');
+  const barFill     = document.getElementById('econoBarFill');
+  const barPct      = document.getElementById('econoBarPct');
+
+  function fmt(n) {
+    return 'R$\u00a0' + Math.round(n).toLocaleString('pt-BR');
+  }
+
+  function updateEcono() {
+    const bill      = parseInt(slider.value);
+    const TAXA_MIN  = 52; // taxa de disponibilidade CPFL (mín. 30 kWh × tarifa local, ~2026)
+    const remain    = TAXA_MIN;
+    const saving    = bill - remain;
+    const annual    = saving * 12;
+    const life      = annual * 25;
+    const pct       = Math.round((remain / bill) * 100);
+
+    billDisplay.textContent = bill.toLocaleString('pt-BR');
+    remaining.textContent   = fmt(remain);
+    monthly.textContent     = fmt(saving);
+    yearly.textContent      = fmt(annual);
+    lifetime.textContent    = fmt(life);
+    barFill.style.width     = pct + '%';
+    barPct.textContent      = pct + '%';
+  }
+
+  slider.addEventListener('input', updateEcono);
+  updateEcono();
+
+  // ── FAQ: animação fluida com Web Animations API ──
+  document.querySelectorAll('details').forEach(el => {
+    const summary = el.querySelector('summary');
+
+    summary.addEventListener('click', e => {
+      e.preventDefault();
+      const body = el.querySelector('.faq-answer');
+      const cfg  = { duration: 300, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' };
+
+      if (el.open) {
+        body.animate(
+          [{ height: body.offsetHeight + 'px' }, { height: '0px' }],
+          { ...cfg, fill: 'forwards' }
+        ).onfinish = () => { el.removeAttribute('open'); body.style.height = ''; };
+      } else {
+        el.setAttribute('open', '');
+        body.animate(
+          [{ height: '0px' }, { height: body.scrollHeight + 'px' }],
+          { ...cfg, fill: 'backwards' }
+        ).onfinish = () => { body.style.height = ''; };
+      }
+    });
+  });
+
+  // ── Tilt 3D nos cards de diferenciais ──
+  document.querySelectorAll('.diferencial-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transition = 'transform .08s ease, box-shadow .2s';
+      card.style.transform  = `perspective(700px) rotateX(${-y * 10}deg) rotateY(${x * 10}deg) translateZ(6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform .45s ease, box-shadow .2s';
+      card.style.transform  = '';
+    });
+  });
+
+</script>
+
+</body>
+</html>

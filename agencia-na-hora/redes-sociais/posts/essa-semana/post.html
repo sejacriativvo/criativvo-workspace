@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>
+@font-face{font-family:'Display';font-weight:800;src:url("../../../marca/fonts/bricolage-800.woff2") format("woff2");}
+@font-face{font-family:'UI';font-weight:400;src:url("../../../marca/fonts/geist-400.woff2") format("woff2");}
+@font-face{font-family:'UI';font-weight:600;src:url("../../../marca/fonts/geist-600.woff2") format("woff2");}
+@font-face{font-family:'UI';font-weight:700;src:url("../../../marca/fonts/geist-700.woff2") format("woff2");}
+:root{--escuro:#071016;--branco:#F4F2EC;--lima:#EFFF7A;--cinza:#5b656d;--display:'Display','Arial Black',sans-serif;--ui:'UI','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#22272b;font-family:var(--ui);}
+.slide{position:relative;width:1080px;height:1440px;overflow:hidden;}
+.slide.cream{background:var(--branco);color:var(--escuro);}
+.layer{position:relative;z-index:2;width:100%;height:100%;padding:88px;display:flex;flex-direction:column;}
+.head{display:flex;align-items:center;gap:14px;}
+.head .logo{width:58px;height:58px;flex:none;}
+.wm{display:flex;flex-direction:column;line-height:.9;letter-spacing:-.4px;}
+.wm .l1{font-weight:400;font-size:25px;} .wm .l2{font-weight:800;font-size:26px;}
+.wm .tm{font-size:11px;vertical-align:super;opacity:.55;font-weight:500;}
+.body{flex:1;display:flex;flex-direction:column;min-height:0;}
+.body.bottom{justify-content:flex-end;padding-bottom:8px;}
+.tag{display:inline-block;background:var(--escuro);color:var(--lima);font-weight:700;font-size:18px;letter-spacing:2px;text-transform:uppercase;padding:12px 22px;border-radius:999px;margin-bottom:28px;}
+.title{font-family:var(--display);font-weight:800;font-size:92px;line-height:.96;letter-spacing:-3px;}
+.title .hl{color:#1f8f4a;}
+.sub{font-size:31px;line-height:1.34;margin-top:30px;max-width:82%;font-weight:500;color:#2a343b;}
+.foot{display:flex;justify-content:space-between;align-items:center;padding-top:22px;}
+.foot .handle{font-weight:700;font-size:22px;}
+.icons{display:flex;gap:19px;} .icons svg{width:28px;height:28px;display:block;}
+</style></head>
+<body><section class="slide cream"><div class="layer"><div class="head"><img class="logo" src="../../../marca/logo-escura.png" alt=""><span class="wm" style="color:#071016;"><span class="l1">agência</span><span class="l2">na hora<span class="tm">™</span></span></span></div>
+<div class="body bottom"><div><span class="tag">O nome não é à toa</span><h1 class="title">Sua marca no ar essa semana. Não ano que vem.</h1><p class="sub">Enquanto a concorrência ainda tá pedindo orçamento, o seu já tá rodando e vendendo.</p></div></div>
+<div class="foot"><span class="handle" style="color:#071016;">@agencianahora</span><div class="icons"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.9 2.2 5.5 5.5 5.5c2 0 3.4 1.2 4.5 2.7 1.1-1.5 2.5-2.7 4.5-2.7 3.3 0 4.9 3.4 3.5 6.2C19.5 16.4 12 21 12 21z" stroke="#071016" stroke-width="1.6"/></svg><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" stroke="#071016" stroke-width="1.6"/></svg></div></div></div></section></body></html>

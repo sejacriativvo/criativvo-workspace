@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:800px;height:800px;overflow:hidden;font-family:'Jost',sans-serif}
+.tile{position:relative;width:800px;height:800px;
+  background:repeating-linear-gradient(45deg,#DDD4C8,#DDD4C8 24px,#D6CCBE 24px,#D6CCBE 48px)}
+.ph{position:absolute;top:42%;left:0;right:0;transform:translateY(-50%);text-align:center;color:#8C7E6C}
+.ph .t{font-size:20px;letter-spacing:3px;text-transform:uppercase}
+.ph .s{font-size:15px;margin-top:8px}
+.bar{position:absolute;left:0;right:0;bottom:0;height:190px;
+  background:linear-gradient(0deg,rgba(60,35,21,.92) 0%,rgba(60,35,21,.55) 55%,rgba(60,35,21,0) 100%);
+  display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:40px}
+.cat{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:40px;color:#fff;letter-spacing:.5px}
+.see{margin-top:8px;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#E0B291}
+</style></head>
+<body>
+<div class="tile">
+  <div class="ph"><div class="t">Área da foto</div><div class="s">produto centralizado</div></div>
+  <div class="bar">
+    <div class="cat">Cortinas Blackout</div>
+    <div class="see">Ver produtos</div>
+  </div>
+</div>
+</body></html>

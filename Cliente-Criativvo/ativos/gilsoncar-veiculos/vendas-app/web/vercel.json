@@ -1,0 +1,13 @@
+{
+  "regions": ["gru1"],
+  "crons": [
+    {
+      "path": "/api/sync-shopify",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/sync-meta",
+      "schedule": "0 12 * * *"
+    }
+  ]
+}

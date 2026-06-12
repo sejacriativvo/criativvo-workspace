@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Maccari Store x Castellinho's — Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700;9..144,800;9..144,900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #2b2b2b; }
+    body { display: flex; justify-content: center; padding: 30px; }
+
+    .card {
+      width: 1080px;
+      height: 1920px;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      overflow: hidden;
+      color: #faf6f0;
+    }
+
+    .bg {
+      position: absolute; inset: 0;
+      background-image: url('../../../assets/bg-stories.png');
+      background-size: cover;
+      background-position: center top;
+    }
+
+    .scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg,
+        rgba(8,4,2,0.45) 0%,
+        rgba(8,4,2,0.18) 12%,
+        rgba(8,4,2,0.20) 28%,
+        rgba(8,4,2,0.65) 50%,
+        rgba(6,3,1,0.95) 72%,
+        rgba(6,3,1,1) 100%);
+    }
+
+    .topbar {
+      position: absolute;
+      top: 110px; left: 70px; right: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 5;
+    }
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+    }
+    .brand-lockup .maccari {
+      height: 110px;
+      filter: drop-shadow(0 4px 20px rgba(0,0,0,0.7));
+    }
+    .date-chip {
+      font-family: 'Inter';
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #ED7D17;
+      background: rgba(10,5,2,0.55);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(237,125,23,0.5);
+      padding: 14px 24px;
+      border-radius: 100px;
+    }
+
+    .eyebrow {
+      position: absolute;
+      top: 380px;
+      left: 70px;
+      font-family: 'Inter';
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 11px;
+      color: #ED7D17;
+      text-transform: uppercase;
+      z-index: 5;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.95);
+    }
+
+    .headline {
+      position: absolute;
+      top: 460px;
+      left: 70px; right: 70px;
+      font-family: 'Fraunces';
+      font-weight: 700;
+      font-size: 168px;
+      line-height: 0.96;
+      letter-spacing: -5px;
+      color: #faf6f0;
+      font-variation-settings: 'opsz' 144, 'SOFT' 50;
+      text-shadow: 0 4px 36px rgba(0,0,0,0.9);
+      z-index: 5;
+    }
+    .headline em {
+      font-style: italic;
+      color: #FF9A3D;
+      font-weight: 600;
+    }
+
+    .sub {
+      position: absolute;
+      top: 1010px;
+      left: 70px; right: 70px;
+      font-family: 'Inter';
+      font-size: 38px;
+      font-weight: 500;
+      color: #f0e8d8;
+      line-height: 1.35;
+      z-index: 5;
+      text-shadow: 0 2px 18px rgba(0,0,0,0.95);
+    }
+    .sub b { color: #FF9A3D; font-weight: 700; }
+
+    /* ══════════════ STEPS HEADER ══════════════ */
+    .steps-head {
+      position: absolute;
+      top: 1090px;
+      left: 70px; right: 70px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      z-index: 5;
+    }
+    .steps-head .line {
+      flex: 1; height: 1.5px;
+      background: rgba(237,125,23,0.55);
+    }
+    .steps-head .txt {
+      font-family: 'Inter';
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 7px;
+      color: #ED7D17;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ══════════════ STEPS (linhas full-width) ══════════════ */
+    .steps {
+      position: absolute;
+      top: 1180px;
+      left: 70px; right: 70px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      z-index: 5;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      background: rgba(20,12,5,0.55);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(237,125,23,0.22);
+      border-radius: 22px;
+      padding: 22px 32px;
+    }
+    .step .n {
+      font-family: 'Fraunces';
+      font-size: 72px;
+      font-weight: 700;
+      color: #ED7D17;
+      letter-spacing: -1px;
+      min-width: 96px;
+      font-variation-settings: 'opsz' 144;
+      line-height: 1;
+    }
+    .step .body { flex: 1; }
+    .step .verb {
+      font-family: 'Fraunces';
+      font-size: 64px;
+      font-weight: 700;
+      color: #faf6f0;
+      letter-spacing: -1px;
+      margin-bottom: 4px;
+      font-variation-settings: 'opsz' 144, 'SOFT' 50;
+      line-height: 1;
+    }
+    .step .desc {
+      font-family: 'Inter';
+      font-size: 34px;
+      font-weight: 500;
+      color: #e5dcc6;
+      line-height: 1.35;
+    }
+    .step .desc b { color: #faf6f0; font-weight: 700; }
+    .step .desc .tag { color: #FF9A3D; font-weight: 700; }
+
+    .rule {
+      position: absolute;
+      bottom: 150px;
+      left: 70px; right: 70px;
+      text-align: center;
+      font-family: 'Inter';
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: #ED7D17;
+      text-transform: uppercase;
+      z-index: 5;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 85px;
+      left: 70px; right: 70px;
+      text-align: center;
+      font-family: 'Inter';
+      font-size: 19px;
+      font-weight: 600;
+      color: #8a7e64;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="bg"></div>
+    <div class="scrim"></div>
+
+    <div class="topbar">
+      <div class="brand-lockup">
+        <img class="maccari" src="../../../assets/logo.png" alt="Maccari Store">
+      </div>
+      <div class="date-chip">23.05 · SAB</div>
+    </div>
+
+    <div class="eyebrow">PROMO RELÂMPAGO</div>
+    <div class="headline">
+      o chope é<br>
+      <em>por nossa</em><br>
+      <em>conta.</em>
+    </div>
+
+    <div class="sub">
+      Hoje, no <b>Castellinho's</b>.
+    </div>
+
+    <div class="steps-head">
+      <div class="line"></div>
+      <div class="txt">PRA GANHAR, FAÇA ISSO</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="n">01</div>
+        <div class="body">
+          <div class="verb">pede</div>
+          <div class="desc">Teu <b>chope</b> ou <b>drink</b> no Castellinho's.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <div class="body">
+          <div class="verb">marca</div>
+          <div class="desc">No story: <span class="tag">@storemaccari</span> + <span class="tag">@castellinhos</span>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <div class="body">
+          <div class="verb">ganha</div>
+          <div class="desc">Retira teu <b>chope cortesia</b> com o garçom.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule">⚡ válido só hoje · 1 por pessoa ⚡</div>
+    <div class="footer">maccaristore.com.br · @storemaccari</div>
+  </div>
+</body>
+</html>

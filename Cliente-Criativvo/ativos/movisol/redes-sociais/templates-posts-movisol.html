@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Templates Movisol — Instagram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --azul:    #004CF1;
+    --azul-dk: #0036C8;
+    --azul-lt: #1A63FF;
+    --branco:  #FFFFFF;
+    --preto:   #0A0A0A;
+    --cinza:   #F0F5FF;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+    padding: 80px 40px 120px;
+  }
+
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .group-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  /* ─── BASE ─── */
+  .post { width:1080px; height:1350px; position:relative; overflow:hidden; flex-shrink:0; }
+
+  /* ─── LOGO ─── */
+  .logo-branca { height:38px; max-width:180px; object-fit:contain; object-position:left center; }
+  .logo-azul   { height:38px; max-width:180px; object-fit:contain; object-position:left center; }
+
+  /* ─── PILL ─── */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 30px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .pill::before { content:''; width:7px; height:7px; border-radius:50%; background:currentColor; opacity:.7; flex-shrink:0; }
+  .pill-glass  { background:rgba(255,255,255,.13); color:#fff; border:1px solid rgba(255,255,255,.22); }
+  .pill-solid  { background:#fff; color:var(--azul); }
+  .pill-blue   { background:var(--azul); color:#fff; }
+  .pill-outline{ background:transparent; color:var(--azul); border:1.5px solid var(--azul); }
+  .pill-news  { background:#E8232A; color:#fff; }
+
+  /* ══════════════════════════════════════
+     TEMPLATE A — FOTO CAPA
+     Uso: abertura de carrossel, prova social
+  ══════════════════════════════════════ */
+  .ta { background: #000; }
+
+  .ta-img {
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    opacity:1;
+  }
+
+  .ta-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,.08) 0%,
+      rgba(0,0,0,.12) 35%,
+      rgba(0,0,0,.78) 68%,
+      rgba(0,0,0,.97) 100%
+    );
+  }
+
+  .ta-content {
+    position:absolute; inset:0;
+    padding: 68px 64px;
+    display:flex; flex-direction:column;
+    justify-content:space-between;
+  }
+
+  .ta-top {
+    display:flex; align-items:center; justify-content:space-between;
+  }
+
+  .ta-handle { font-size:16px; font-weight:500; color:rgba(255,255,255,.4); letter-spacing:.5px; }
+
+  .ta-body { display:flex; flex-direction:column; gap:28px; }
+
+  .ta-headline {
+    font-size:84px; font-weight:900; line-height:.93;
+    color:#fff; letter-spacing:-2.5px;
+  }
+
+  .ta-sub {
+    font-size:38px; font-weight:400; line-height:1.45;
+    color:rgba(255,255,255,.62); max-width:720px;
+  }
+
+  .ta-footer {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(255,255,255,.1);
+    padding-top:30px; margin-top:8px;
+  }
+
+  .ta-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,.28); }
+
+  /* ══════════════════════════════════════
+     TEMPLATE B — ARTE AZUL
+     Uso: dicas, educação, CTAs fortes
+  ══════════════════════════════════════ */
+  .tb { background:var(--azul); }
+
+  .tb-grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .tb-content {
+    position:absolute; inset:0;
+    padding:72px 64px;
+    display:flex; flex-direction:column;
+  }
+
+  .tb-top { display:flex; align-items:center; justify-content:space-between; }
+  .tb-handle { font-size:16px; font-weight:500; color:rgba(255,255,255,.38); letter-spacing:.5px; }
+
+  .tb-mid {
+    flex:1; display:flex; flex-direction:column;
+    justify-content:center; gap:28px;
+    padding:60px 0;
+  }
+
+  .tb-headline {
+    font-size:92px; font-weight:900; line-height:.9;
+    color:#fff; letter-spacing:-3px;
+  }
+
+  .tb-divider { width:60px; height:3px; border-radius:2px; background:rgba(255,255,255,.28); }
+
+  .tb-sub {
+    font-size:38px; font-weight:400; line-height:1.45;
+    color:rgba(255,255,255,.62); max-width:700px;
+  }
+
+  .tb-bottom {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(255,255,255,.12); padding-top:30px;
+  }
+
+  .tb-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,.25); }
+
+  /* ══════════════════════════════════════
+     TEMPLATE C — ARTE BRANCA
+     Uso: dúvidas, conteúdo leve, notícias
+  ══════════════════════════════════════ */
+  .tc { background:#F0F5FF; }
+
+  .tc-grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(0,76,241,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,76,241,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .tc-content {
+    position:absolute; inset:0;
+    padding:72px;
+    display:flex; flex-direction:column;
+  }
+
+  .tc-top { display:flex; align-items:center; justify-content:space-between; }
+  .tc-handle { font-size:16px; font-weight:500; color:rgba(0,76,241,.45); letter-spacing:.5px; }
+
+  .tc-mid {
+    flex:1; display:flex; flex-direction:column;
+    justify-content:center; gap:32px;
+    padding:80px 0;
+  }
+
+  .tc-headline {
+    font-size:80px; font-weight:900; line-height:.93;
+    color:var(--preto); letter-spacing:-2.5px;
+  }
+
+  .tc-headline em { font-style:normal; color:var(--azul); }
+
+  .tc-sub {
+    font-size:36px; font-weight:400; line-height:1.45;
+    color:rgba(10,10,10,.52); max-width:700px;
+  }
+
+  .tc-list {
+    display:flex; flex-direction:column; gap:18px;
+    margin-top:8px;
+  }
+
+  .tc-item {
+    display:flex; align-items:flex-start; gap:16px;
+    font-size:34px; font-weight:500; color:rgba(10,10,10,.72); line-height:1.4;
+  }
+
+  .tc-dot {
+    width:10px; height:10px; border-radius:50%;
+    background:var(--azul); margin-top:8px; flex-shrink:0;
+  }
+
+  .tc-bottom {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(0,76,241,.12); padding-top:28px;
+  }
+
+  .tc-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(0,0,0,.2); }
+
+  /* ══════════════════════════════════════
+     TEMPLATE D — FOTO TOPO
+     Uso: bastidores, pós-venda, equipe
+  ══════════════════════════════════════ */
+  .td { background:var(--preto); }
+
+  .td-photo-top {
+    position:absolute; top:0; left:0; right:0;
+    height:640px; overflow:hidden;
+  }
+
+  .td-photo-top img {
+    width:100%; height:100%;
+    object-fit:cover; display:block;
+  }
+
+  .td-photo-overlay {
+    position:absolute; inset:0;
+    background:linear-gradient(to bottom, rgba(0,0,0,.45) 0%, transparent 45%, rgba(10,10,10,.85) 100%);
+  }
+
+  .td-photo-header {
+    position:absolute; top:0; left:0; right:0;
+    padding:48px 56px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+
+  .td-handle { font-size:16px; font-weight:500; color:rgba(255,255,255,.5); letter-spacing:.5px; }
+
+  .td-text-section {
+    position:absolute;
+    top:640px; left:0; right:0; bottom:0;
+    padding:48px 64px 52px;
+    display:flex; flex-direction:column;
+    justify-content:space-between;
+  }
+
+  .td-text-body { display:flex; flex-direction:column; gap:20px; }
+
+  .td-headline {
+    font-size:72px; font-weight:900; line-height:.93;
+    color:#fff; letter-spacing:-2.5px;
+  }
+
+  .td-sub {
+    font-size:34px; font-weight:400; line-height:1.45;
+    color:rgba(255,255,255,.5);
+  }
+
+  .td-bottom {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(255,255,255,.07); padding-top:28px;
+  }
+
+  .td-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,.2); }
+
+  /* ══════════════════════════════════════
+     TEMPLATE E — NÚMERO DESTAQUE
+     Uso: economia, ROI, dados do setor
+  ══════════════════════════════════════ */
+  .te { background:#fff; }
+
+  .te-content {
+    position:absolute; inset:0;
+    padding:72px;
+    display:flex; flex-direction:column;
+  }
+
+  .te-top { display:flex; align-items:center; justify-content:space-between; }
+  .te-handle { font-size:16px; font-weight:500; color:rgba(0,76,241,.4); letter-spacing:.5px; }
+
+  .te-mid {
+    flex:1; display:flex; flex-direction:column;
+    justify-content:center; gap:12px;
+  }
+
+  .te-context {
+    font-size:16px; font-weight:700;
+    letter-spacing:4px; text-transform:uppercase;
+    color:rgba(0,0,0,.28); margin-bottom:8px;
+  }
+
+  .te-number-wrap { display:flex; align-items:baseline; gap:4px; line-height:1; }
+
+  .te-number {
+    font-size:230px; font-weight:900;
+    line-height:.85; color:var(--azul);
+    letter-spacing:-8px;
+  }
+
+  .te-unit {
+    font-size:72px; font-weight:700;
+    color:rgba(0,76,241,.35); letter-spacing:-2px;
+    align-self:flex-end; margin-bottom:20px;
+  }
+
+  .te-desc {
+    font-size:40px; font-weight:700;
+    color:var(--preto); line-height:1.25;
+    max-width:700px; margin-top:20px;
+  }
+
+  .te-sub {
+    font-size:30px; font-weight:400; line-height:1.45;
+    color:rgba(10,10,10,.45); max-width:620px;
+    margin-top:10px;
+  }
+
+  .te-source {
+    font-size:13px; font-weight:500;
+    color:rgba(0,0,0,.2); letter-spacing:.5px;
+    margin-top:20px;
+  }
+
+  .te-bottom {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(0,76,241,.1); padding-top:28px;
+  }
+
+  .te-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(0,0,0,.18); }
+
+  /* ══════════════════════════════════════
+     TEMPLATE F — NÚMERO DESTAQUE AZUL
+     Uso: dados/notícias em fundo azul
+  ══════════════════════════════════════ */
+  .tf { background:var(--azul); }
+
+  .tf-content {
+    position:absolute; inset:0;
+    padding:72px;
+    display:flex; flex-direction:column;
+  }
+
+  .tf-top { display:flex; align-items:center; justify-content:space-between; }
+  .tf-handle { font-size:16px; font-weight:500; color:rgba(255,255,255,.4); letter-spacing:.5px; }
+
+  .tf-mid {
+    flex:1; display:flex; flex-direction:column;
+    justify-content:center; gap:12px;
+  }
+
+  .tf-context {
+    font-size:16px; font-weight:700;
+    letter-spacing:4px; text-transform:uppercase;
+    color:rgba(255,255,255,.4); margin-bottom:8px;
+  }
+
+  .tf-number-wrap { display:flex; align-items:baseline; gap:4px; line-height:1; }
+
+  .tf-number {
+    font-size:230px; font-weight:900;
+    line-height:.85; color:#fff;
+    letter-spacing:-8px;
+  }
+
+  .tf-unit {
+    font-size:72px; font-weight:700;
+    color:rgba(255,255,255,.35); letter-spacing:-2px;
+    align-self:flex-end; margin-bottom:20px;
+  }
+
+  .tf-desc {
+    font-size:40px; font-weight:700;
+    color:#fff; line-height:1.25;
+    max-width:700px; margin-top:20px;
+  }
+
+  .tf-sub {
+    font-size:30px; font-weight:400; line-height:1.45;
+    color:rgba(255,255,255,.55); max-width:620px;
+    margin-top:10px;
+  }
+
+  .tf-source {
+    font-size:13px; font-weight:500;
+    color:rgba(255,255,255,.25); letter-spacing:.5px;
+    margin-top:20px;
+  }
+
+  .tf-bottom {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(255,255,255,.12); padding-top:28px;
+  }
+
+  .tf-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,.25); }
+
+  /* ══════════════════════════════════════
+     TEMPLATE G — NÚMERO DESTAQUE FOTO
+     Uso: dados/notícias com imagem de fundo
+  ══════════════════════════════════════ */
+  .tg { background:#000; }
+
+  .tg-img {
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover; opacity:1;
+  }
+
+  .tg-overlay {
+    position:absolute; inset:0;
+    background:linear-gradient(
+      to bottom,
+      rgba(0,0,0,.08) 0%,
+      rgba(0,0,0,.12) 35%,
+      rgba(0,0,0,.78) 68%,
+      rgba(0,0,0,.97) 100%
+    );
+  }
+
+  .tg-content {
+    position:absolute; inset:0;
+    padding:68px 64px;
+    display:flex; flex-direction:column;
+    justify-content:space-between;
+  }
+
+  .tg-top { display:flex; align-items:center; justify-content:space-between; }
+  .tg-handle { font-size:16px; font-weight:500; color:rgba(255,255,255,.4); letter-spacing:.5px; }
+
+  .tg-body { display:flex; flex-direction:column; gap:12px; }
+
+  .tg-context {
+    font-size:16px; font-weight:700;
+    letter-spacing:4px; text-transform:uppercase;
+    color:rgba(255,255,255,.4); margin-bottom:8px;
+  }
+
+  .tg-number-wrap { display:flex; align-items:baseline; gap:4px; line-height:1; }
+
+  .tg-number {
+    font-size:200px; font-weight:900;
+    line-height:.85; color:#fff;
+    letter-spacing:-6px;
+  }
+
+  .tg-unit {
+    font-size:60px; font-weight:700;
+    color:rgba(255,255,255,.35); letter-spacing:-2px;
+    align-self:flex-end; margin-bottom:16px;
+  }
+
+  .tg-desc {
+    font-size:40px; font-weight:700;
+    color:#fff; line-height:1.25;
+    max-width:700px; margin-top:20px;
+  }
+
+  .tg-sub {
+    font-size:30px; font-weight:400; line-height:1.45;
+    color:rgba(255,255,255,.55); max-width:620px;
+    margin-top:8px;
+  }
+
+  .tg-source {
+    font-size:13px; font-weight:500;
+    color:rgba(255,255,255,.25); letter-spacing:.5px;
+    margin-top:16px;
+  }
+
+  .tg-footer {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(255,255,255,.1); padding-top:28px;
+  }
+
+  .tg-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,.28); }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     A — FOTO CAPA
+     Quando usar: capa de carrossel, prova social,
+     posts de impacto com foto real
+════════════════════════════════════════════════ -->
+<div class="group">
+  <p class="group-label">A — Foto Capa &nbsp;|&nbsp; carrossel / prova social / impacto</p>
+  <div class="post ta">
+    <img class="ta-img" src="../assets/foto da faixada da empresa.jpg" alt="">
+    <div class="ta-overlay"></div>
+    <div class="ta-content">
+      <div class="ta-top">
+        <img class="logo-branca" src="../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol">
+        <span class="ta-handle">@movisol.se</span>
+      </div>
+      <div class="ta-body">
+        <span class="pill pill-glass">Prova social</span>
+        <h1 class="ta-headline">Cliente economizou<br>R$ 180 por mês<br>em Ibitinga.</h1>
+        <p class="ta-sub">Em menos de 5 anos o sistema se paga. O resto é lucro direto no bolso.</p>
+        <div class="ta-footer">
+          <span class="ta-city">Ibitinga · SP</span>
+          <span class="pill pill-glass" style="font-size:10px; padding:6px 16px;">Ver mais ↓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     B — ARTE AZUL
+     Quando usar: dicas, educação, CTA forte,
+     notícias com ângulo positivo
+════════════════════════════════════════════════ -->
+<div class="group">
+  <p class="group-label">B — Arte Azul &nbsp;|&nbsp; dica / educação / CTA</p>
+  <div class="post tb">
+    <div class="tb-grid"></div>
+    <div class="tb-content">
+      <div class="tb-top">
+        <img class="logo-branca" src="../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol">
+        <span class="tb-handle">@movisol.se</span>
+      </div>
+      <div class="tb-mid">
+        <span class="pill pill-glass">Você sabia?</span>
+        <h1 class="tb-headline">Painel solar<br>funciona em<br>dia nublado?</h1>
+        <div class="tb-divider"></div>
+        <p class="tb-sub">A luz solar não precisa ser direta para gerar energia. Em dias nublados, o sistema ainda gera entre 10% e 25% da capacidade total. O céu fechado não para a sua economia.</p>
+      </div>
+      <div class="tb-bottom">
+        <span class="tb-city">Ibitinga · SP</span>
+        <img src="../assets/logo/ICONE DA LOGO BRANCA.png" alt="" style="height:32px; max-width:32px; object-fit:contain; opacity:.85;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     C — ARTE BRANCA
+     Quando usar: dúvidas, conteúdo informativo leve,
+     listas, notícias do setor
+════════════════════════════════════════════════ -->
+<div class="group">
+  <p class="group-label">C — Arte Branca &nbsp;|&nbsp; dúvida / informativo / lista</p>
+  <div class="post tc">
+    <div class="tc-grid"></div>
+    <div class="tc-content">
+      <div class="tc-top">
+        <img class="logo-azul" src="../assets/logo/ICONE + ESCRITA LOGO AZUL.png" alt="Movisol">
+        <span class="tc-handle">@movisol.se</span>
+      </div>
+      <div class="tc-mid">
+        <span class="pill pill-outline">Dúvida frequente</span>
+        <h1 class="tc-headline">Minha conta<br>vai a <em>zero?</em></h1>
+        <p class="tc-sub">Não exatamente. Mas pode cair até 95%. Entenda:</p>
+        <div class="tc-list">
+          <div class="tc-item"><div class="tc-dot"></div><span>A concessionária cobra uma taxa mínima mesmo com geração solar.</span></div>
+          <div class="tc-item"><div class="tc-dot"></div><span>Essa taxa gira em torno de R$ 30 a R$ 60 por mês.</span></div>
+          <div class="tc-item"><div class="tc-dot"></div><span>Todo o consumo acima disso é coberto pela sua geração.</span></div>
+          <div class="tc-item"><div class="tc-dot"></div><span>O restante vira crédito para os meses seguintes.</span></div>
+        </div>
+      </div>
+      <div class="tc-bottom">
+        <span class="tc-city">Ibitinga · SP</span>
+        <span class="pill pill-blue" style="font-size:10px; padding:8px 20px;">Quer simular? Fala com a gente.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     D — FOTO LATERAL
+     Quando usar: bastidores, pós-venda, equipe em obra,
+     humanização da marca
+════════════════════════════════════════════════ -->
+<div class="group">
+  <p class="group-label">D — Foto Topo &nbsp;|&nbsp; bastidores / pós-venda / equipe</p>
+  <div class="post td">
+    <div class="td-photo-top">
+      <img src="../assets/Foto instaladores.jpg" alt="">
+      <div class="td-photo-overlay"></div>
+      <div class="td-photo-header">
+        <img class="logo-branca" src="../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol">
+        <span class="td-handle">@movisol.se</span>
+      </div>
+    </div>
+    <div class="td-text-section">
+      <div class="td-text-body">
+        <span class="pill pill-glass">Pós-venda</span>
+        <h2 class="td-headline">Fomos lá mesmo sem ter nada a ver.</h2>
+        <p class="td-sub">O cliente ligou com um problema no quadro elétrico. Não era da nossa instalação. Fomos assim mesmo, diagnosticamos e resolvemos na hora.</p>
+      </div>
+      <div class="td-bottom">
+        <span class="td-city">Ibitinga · SP</span>
+        <img src="../assets/logo/ICONE DA LOGO BRANCA.png" alt="" style="height:32px; max-width:32px; object-fit:contain; opacity:.85;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     E — NÚMERO DESTAQUE
+     Quando usar: dados de economia, ROI, notícias
+     com dado impactante, Fio B, crescimento do setor
+════════════════════════════════════════════════ -->
+<div class="group">
+  <p class="group-label">E — Número Destaque &nbsp;|&nbsp; economia / ROI / dados do setor</p>
+  <div class="post te">
+    <div class="tc-grid"></div>
+    <div class="te-content">
+      <div class="te-top">
+        <img class="logo-azul" src="../assets/logo/ICONE + ESCRITA LOGO AZUL.png" alt="Movisol">
+        <span class="te-handle">@movisol.se</span>
+      </div>
+      <div class="te-mid">
+        <p class="te-context">Economia real em 2026</p>
+        <div class="te-number-wrap">
+          <span class="te-number">74</span>
+          <span class="te-unit">%</span>
+        </div>
+        <p class="te-desc">ainda economizado na conta de luz, mesmo com o Fio B em 60%.</p>
+        <p class="te-sub">Com o Fio B subindo, muita gente achou que não valia mais. Os dados mostram o contrário: um sistema bem dimensionado ainda reduz até 82% da sua fatura.</p>
+        <p class="te-source">Fonte: ABSOLAR · OPS Energia, maio 2026</p>
+      </div>
+      <div class="te-bottom">
+        <span class="te-city">Ibitinga · SP</span>
+        <span class="pill pill-blue" style="font-size:10px; padding:8px 18px;">Quer simular? Fala com a gente.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     F — NÚMERO DESTAQUE AZUL
+     Quando usar: dados/notícias com ângulo forte,
+     fundo azul para maior impacto visual
+════════════════════════════════════════════════ -->
+<div class="group">
+  <p class="group-label">F — Número Destaque Azul &nbsp;|&nbsp; dado / notícia / impacto</p>
+  <div class="post tf">
+    <div class="tb-grid"></div>
+    <div class="tf-content">
+      <div class="tf-top">
+        <img class="logo-branca" src="../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol">
+        <span class="tf-handle">@movisol.se</span>
+      </div>
+      <div class="tf-mid">
+        <p class="tf-context">Crescimento do setor solar</p>
+        <div class="tf-number-wrap">
+          <span class="tf-number">300</span>
+          <span class="tf-unit">bi</span>
+        </div>
+        <p class="tf-desc">investidos em energia solar no Brasil. Um marco histórico que muda o mercado.</p>
+        <p class="tf-sub">O Brasil se consolidou como um dos maiores mercados solares do mundo. E Ibitinga ainda está no começo dessa curva.</p>
+        <p class="tf-source">Fonte: ABSOLAR, maio 2026</p>
+      </div>
+      <div class="tf-bottom">
+        <span class="tf-city">Ibitinga · SP</span>
+        <span class="pill pill-glass" style="font-size:10px; padding:8px 20px;">Quer simular? Fala com a gente.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     G — NÚMERO DESTAQUE FOTO
+     Quando usar: dados com foto de impacto no fundo,
+     posts de alta visualização no feed
+════════════════════════════════════════════════ -->
+<div class="group">
+  <p class="group-label">G — Número Destaque Foto &nbsp;|&nbsp; dado / notícia / alto impacto</p>
+  <div class="post tg">
+    <img class="tg-img" src="../assets/FOTO placa solar com mão de instalador.png" alt="">
+    <div class="tg-overlay"></div>
+    <div class="tg-content">
+      <div class="tg-top">
+        <img class="logo-branca" src="../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol">
+        <span class="tg-handle">@movisol.se</span>
+      </div>
+      <div class="tg-body">
+        <span class="pill pill-glass">Fio B 2026</span>
+        <p class="tg-context">Economia real mesmo assim</p>
+        <div class="tg-number-wrap">
+          <span class="tg-number">82</span>
+          <span class="tg-unit">%</span>
+        </div>
+        <p class="tg-desc">de redução na conta de luz em sistemas bem dimensionados, mesmo com o Fio B em 60%.</p>
+        <p class="tg-sub">Mudou a regra, mas não mudou a conta. Quem instalou ou vai instalar agora ainda sai na frente.</p>
+        <p class="tg-source">Fonte: OPS Energia · ABSOLAR, maio 2026</p>
+      </div>
+      <div class="tg-footer">
+        <span class="tg-city">Ibitinga · SP</span>
+        <span class="pill pill-glass" style="font-size:10px; padding:8px 20px;">Quer simular? Fala com a gente.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

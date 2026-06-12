@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O sistema operacional de uma loja de veículos — Apresentação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF7F2;
+    --bg-alt:#F3EFE8;
+    --bg-card:#FFFFFF;
+    --bg-dark:#1C1917;
+    --bg-terminal:#0D0D0D;
+    --primary:#C96442;
+    --primary-light:#E8A88C;
+    --primary-glow:rgba(201,100,66,.08);
+    --primary-border:rgba(201,100,66,.25);
+    --text:#1C1917;
+    --text-mid:#57534E;
+    --text-muted:#A8A29E;
+    --border:#E7E5E4;
+    --border-warm:#D6D3D1;
+    --green:#4CAF50;
+    --sans:'Bricolage Grotesque',-apple-system,system-ui,sans-serif;
+    --serif:'Instrument Serif',Georgia,serif;
+    --mono:'SF Mono','Fira Code','Courier New',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+
+  /* Serif accent word */
+  .s{font-family:var(--serif);font-style:italic;color:var(--primary);font-weight:400;letter-spacing:.005em}
+
+  /* Claude sunburst */
+  .claude-mark{display:block;color:var(--primary)}
+  .claude-mark.lg{width:58px;height:58px;margin-bottom:30px}
+  .claude-mark.md{width:40px;height:40px;margin-bottom:22px}
+
+  /* Stage + slides */
+  .stage{position:fixed;inset:0;z-index:1}
+  .slide{
+    position:absolute;inset:0;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    padding:8vh 8vw;opacity:0;transform:translateY(12px);
+    transition:opacity .45s ease,transform .45s ease;pointer-events:none;
+  }
+  .slide.active{opacity:1;transform:none;pointer-events:auto}
+  .slide.dark{background:var(--bg-dark);color:#FAF7F2}
+  .slide.dark .lead{color:rgba(250,247,242,.62)}
+  .slide.dark .eyebrow{color:var(--primary-light)}
+  .slide.dark .s{color:var(--primary-light)}
+  .wrap{width:100%;max-width:1080px}
+  .center{text-align:center;display:flex;flex-direction:column;align-items:center}
+
+  /* Type */
+  .eyebrow{font-size:clamp(11px,1.1vw,13px);font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--primary);margin-bottom:24px;display:inline-block}
+  h1{font-size:clamp(38px,5.8vw,74px);font-weight:800;line-height:1.05;letter-spacing:-.015em}
+  .big{font-size:clamp(29px,4.8vw,58px);font-weight:700;line-height:1.12;letter-spacing:-.01em}
+  h1 .s,.big .s{font-weight:400;letter-spacing:0}
+  .lead{margin-top:24px;font-size:clamp(17px,1.95vw,23px);line-height:1.65;color:var(--text-mid);font-weight:400;max-width:60ch}
+  .center .lead{margin-left:auto;margin-right:auto}
+
+  .titlefoot{margin-top:40px;font-size:14px;color:var(--text-muted);letter-spacing:.02em;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center;font-weight:500}
+  .slide.dark .titlefoot{color:rgba(250,247,242,.5)}
+  .titlefoot b{color:inherit;font-weight:700}
+  .slide.dark .titlefoot b{color:#FAF7F2}
+  .dot{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.5}
+
+  /* Divider (dark) */
+  .divnum{font-family:var(--mono);font-weight:600;font-size:clamp(48px,11vw,150px);line-height:.9;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.16);margin-bottom:14px}
+  .divtitle{font-size:clamp(30px,5.2vw,64px);font-weight:800;letter-spacing:-.02em;line-height:1.08}
+  .divtitle .s{font-weight:400}
+  .divrule{width:54px;height:3px;background:var(--primary);border-radius:2px;margin:26px auto 0}
+  .divsub{margin-top:22px;font-size:clamp(15px,1.8vw,21px);color:rgba(250,247,242,.6)}
+
+  /* Cards */
+  .grid{display:grid;gap:16px;margin-top:6px}
+  .grid.c2{grid-template-columns:repeat(2,1fr)}
+  .grid.c3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:26px 26px;text-align:left}
+  .card .ic{width:28px;height:28px;color:var(--primary);margin-bottom:15px}
+  .card .k{font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--primary);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+  .card .badge{width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;letter-spacing:0}
+  .card h3{font-size:clamp(18px,2vw,25px);font-weight:700;letter-spacing:-.01em;margin-bottom:9px;line-height:1.25}
+  .card p{font-size:clamp(14px,1.5vw,17px);color:var(--text-mid);line-height:1.5}
+  .card.soft{background:var(--primary-glow);border-color:var(--primary-border);border-left:4px solid var(--primary)}
+  .card.muted{background:var(--bg-alt)}
+  .card.muted .k,.card.muted .ic{color:var(--text-muted)}
+
+  /* Feature list */
+  ul.feat{list-style:none;margin-top:30px;display:inline-flex;flex-direction:column;gap:18px;text-align:left}
+  ul.feat li{font-size:clamp(18px,2.05vw,25px);font-weight:600;line-height:1.3;display:flex;align-items:center;gap:18px;color:var(--text)}
+  ul.feat li .ic{width:26px;height:26px;color:var(--primary);flex:none}
+
+  /* Pain questions */
+  ul.qs{list-style:none;margin-top:6px;display:flex;flex-direction:column;gap:22px;text-align:left;max-width:26ch}
+  ul.qs li{font-size:clamp(21px,2.7vw,33px);font-weight:600;line-height:1.25;letter-spacing:-.01em;display:flex;gap:16px;align-items:flex-start;color:var(--text)}
+  ul.qs li .q{font-family:var(--serif);font-style:italic;color:var(--primary);font-weight:400;font-size:1.15em;line-height:1;flex:none}
+
+  /* Quiz / enquete (slide da dor) */
+  .quiz{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;width:100%;margin:10px 0 44px}
+  .qcard{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px 22px 22px;text-align:left;box-shadow:0 12px 34px rgba(28,25,23,.06)}
+  .qcard:nth-child(2){transform:translateY(32px)}
+  .qmark{font-family:var(--serif);font-style:italic;color:var(--primary);font-size:48px;line-height:.7;display:block;margin-bottom:14px}
+  .qtext{font-size:clamp(16px,1.65vw,20px);font-weight:600;line-height:1.32;color:var(--text);margin-bottom:18px;min-height:2.6em}
+  .qpoll{display:flex;flex-direction:column;gap:9px;border-top:1px solid var(--border);padding-top:16px}
+  .opt{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:var(--text-muted)}
+  .opt::before{content:"";width:15px;height:15px;border-radius:50%;border:2px solid var(--border-warm);flex:none;box-sizing:border-box}
+  .opt.hit{color:var(--primary)}
+  .opt.hit::before{border-color:var(--primary);background:var(--primary);box-shadow:inset 0 0 0 3px var(--bg-card)}
+  @media (max-width:760px){.quiz{grid-template-columns:1fr}.qcard:nth-child(2){transform:none}}
+
+  /* Roles */
+  .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:42px}
+  .role{border:1px solid var(--border);background:var(--bg-card);border-radius:12px;padding:24px 22px;text-align:left}
+  .role .ic{width:26px;height:26px;color:var(--primary);margin-bottom:14px}
+  .role .who{font-weight:700;font-size:clamp(17px,1.85vw,22px);margin-bottom:7px}
+  .role .sees{font-size:clamp(13px,1.4vw,16px);color:var(--text-mid);line-height:1.45}
+  .role.no{background:var(--primary-glow);border-color:var(--primary-border);border-top:3px solid var(--primary)}
+
+  /* Terminal (Mac) */
+  .terminal{background:var(--bg-terminal);border-radius:12px;overflow:hidden;margin:30px auto 0;max-width:680px;text-align:left;box-shadow:0 24px 60px rgba(28,25,23,.18)}
+  .tbar{background:#2A2A2A;padding:12px 16px;display:flex;align-items:center;gap:8px}
+  .tdot{width:12px;height:12px;border-radius:50%}
+  .tdot.red{background:#FF5F57}.tdot.yellow{background:#FFBD2E}.tdot.green{background:#28C840}
+  .ttitle{font-size:.8rem;color:#888;margin-left:8px;font-family:var(--sans)}
+  .tbody{padding:22px 24px;display:flex;flex-direction:column;gap:12px;font-family:var(--mono)}
+  .tline{display:flex;align-items:flex-start;gap:12px}
+  .tprompt{color:var(--primary-light);font-size:1rem;flex-shrink:0}
+  .tcmd{color:#E8E8E8;font-size:1rem;line-height:1.5}
+  .tcmd .cy{color:#79D5FF}
+  .tout{color:var(--green);font-size:.9rem;padding-left:24px;line-height:1.5}
+
+  /* App mockup (por dentro do painel) */
+  .appwin{width:100%;max-width:880px;margin:6px auto 0;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 30px 70px rgba(28,25,23,.16);text-align:left}
+  .appbar{background:var(--bg-alt);padding:11px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+  .appbar .d{width:11px;height:11px;border-radius:50%}
+  .appbar .d.r{background:#FF5F57}.appbar .d.y{background:#FFBD2E}.appbar .d.g{background:#28C840}
+  .appbar .t{margin-left:8px;font-size:12.5px;font-weight:700;color:var(--text-mid)}
+  .appbody{display:flex;min-height:286px}
+  .side{width:176px;flex:none;background:#FBFAF6;border-right:1px solid var(--border);padding:14px 12px;display:flex;flex-direction:column;gap:3px}
+  .nav-i{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--text-mid)}
+  .nav-i svg{width:17px;height:17px;color:var(--text-muted);flex:none}
+  .nav-i.on{background:var(--primary-glow);color:var(--primary)}
+  .nav-i.on svg{color:var(--primary)}
+  .appmain{flex:1;padding:20px;display:flex;flex-direction:column;gap:14px;background:var(--bg)}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .kpi{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 15px}
+  .kpi .l{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:7px}
+  .kpi .v{font-size:clamp(20px,2.3vw,27px);font-weight:800;color:var(--text);letter-spacing:-.01em}
+  .kpi .v small{font-size:.6em;color:var(--primary);font-weight:700;letter-spacing:.05em}
+  .panelcard{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .panelcard .l{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px}
+  .bars{display:flex;align-items:flex-end;gap:12px;height:84px}
+  .bars .bar{flex:1;background:linear-gradient(180deg,var(--primary-light),var(--primary));border-radius:5px 5px 0 0}
+  .caption{margin-top:18px;font-size:clamp(14px,1.5vw,18px);color:var(--text-mid);text-align:center}
+  .caption strong{color:var(--text);font-weight:700}
+  @media (max-width:680px){.side{display:none}.kpis{grid-template-columns:1fr 1fr}}
+
+  /* HUD */
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--primary);width:0;z-index:6;transition:width .4s ease}
+  .hud{position:fixed;bottom:24px;right:30px;z-index:6;display:flex;align-items:center;gap:14px;font-size:13px;color:var(--text-muted);font-weight:600}
+  .hud .count b{color:var(--text-mid)}
+  .nav{display:flex;gap:8px}
+  .nav button{width:34px;height:34px;border-radius:9px;border:1px solid var(--border-warm);background:rgba(255,255,255,.6);color:var(--text-mid);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .nav button:hover{color:#fff;border-color:var(--primary);background:var(--primary)}
+  .hint{position:fixed;bottom:26px;left:30px;z-index:6;font-size:12px;color:var(--text-muted);letter-spacing:.03em;transition:opacity .4s;font-weight:600}
+  .syncdot{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:7;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--primary-light);background:rgba(201,100,66,.16);border:1px solid var(--primary-border);padding:5px 13px;border-radius:20px;display:none}
+  .syncdot.on{display:inline-block}
+
+  /* Notes */
+  .notes{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--bg-dark);border-top:3px solid var(--primary);padding:22px 30px 24px;transform:translateY(110%);transition:transform .3s ease}
+  .notes.show{transform:none}
+  .notes .lbl{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--primary-light);margin-bottom:8px}
+  .notes p{font-size:clamp(15px,1.5vw,19px);line-height:1.55;color:#FAF7F2;max-width:94ch}
+
+  @media (max-width:760px){.grid.c2,.grid.c3,.roles{grid-template-columns:1fr}.slide{padding:8vh 7vw}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="stage" id="stage">
+
+  <!-- 1 — TITLE (dark) -->
+  <section class="slide dark active">
+    <div class="wrap center">
+      <svg class="claude-mark lg" viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor"><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(30 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(60 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(90 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(120 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(150 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(180 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(210 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(240 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(270 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(300 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(330 50 50)"/></g></svg>
+      <span class="eyebrow">Feito com Claude Code</span>
+      <h1>O sistema que faz uma<br><span class="s">loja de carros</span> rodar sozinha</h1>
+      <p class="lead">Uma concessionária inteira, com 2 lojas, dentro de um app que eu construí só conversando com a inteligência artificial.</p>
+      <div class="titlefoot"><b>Matheus Vareschi</b><span class="dot"></span>@matheusvareschi<span class="dot"></span>→ avança · N para notas</div>
+    </div>
+  </section>
+
+  <!-- 2 — HOOK -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">O que cabe aqui dentro</span>
+      <div class="big">Estoque, vendas, agenda, metas,<br>anúncios e <span class="s">lucro.</span> Tudo num lugar só.</div>
+      <p class="lead">Uma loja inteira. Um sistema. E começou conversando com uma IA, sem escrever código.</p>
+    </div>
+  </section>
+
+  <!-- 3 — PAIN (enquete) -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">Responde de cabeça, agora</span>
+      <div class="quiz">
+        <div class="qcard">
+          <span class="qmark">?</span>
+          <p class="qtext">Qual carro tá parado há mais de 90 dias na sua loja?</p>
+          <div class="qpoll"><span class="opt">Sei de cabeça</span><span class="opt hit">Tenho que procurar</span></div>
+        </div>
+        <div class="qcard">
+          <span class="qmark">?</span>
+          <p class="qtext">Quanto custou pra vender o carro do mês passado?</p>
+          <div class="qpoll"><span class="opt">Sei de cabeça</span><span class="opt hit">Tenho que procurar</span></div>
+        </div>
+        <div class="qcard">
+          <span class="qmark">?</span>
+          <p class="qtext">Cadê o contato do cliente que queria uma caminhonete?</p>
+          <div class="qpoll"><span class="opt">Sei de cabeça</span><span class="opt hit">Tenho que procurar</span></div>
+        </div>
+      </div>
+      <p class="lead">Travou em alguma? Então esse vídeo é <span class="s">pra você.</span></p>
+    </div>
+  </section>
+
+  <!-- 4 — DIVIDER 01 -->
+  <section class="slide dark">
+    <div class="wrap center">
+      <div class="divnum">01</div>
+      <div class="divtitle">O que é um <span class="s">sistema operacional</span></div>
+      <div class="divrule"></div>
+    </div>
+  </section>
+
+  <!-- 5 — WHAT IS OS -->
+  <section class="slide">
+    <div class="wrap center">
+      <div class="big">Pensa no seu celular.<br>Um <span class="s">lugar só</span> onde você faz tudo.</div>
+      <p class="lead">Esse sistema é isso pra loja: o lugar de onde a loja inteira é tocada.</p>
+    </div>
+  </section>
+
+  <!-- 6 — DEFAULT SHIFT -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">A virada de chave</span>
+      <div class="big">Antes de abrir a planilha ou o caderno, o time abre <span class="s">esse app.</span></div>
+      <p class="lead">Quando vira o primeiro lugar pra onde todo mundo olha, ele vira o cérebro da loja.</p>
+    </div>
+  </section>
+
+  <!-- 7 — DIVIDER 02 -->
+  <section class="slide dark">
+    <div class="wrap center">
+      <div class="divnum">02</div>
+      <div class="divtitle">O segredo não é a <span class="s">inteligência artificial</span></div>
+      <div class="divrule"></div>
+    </div>
+  </section>
+
+  <!-- 8 — CONTEXT -->
+  <section class="slide">
+    <div class="wrap center">
+      <div class="big">A mesma IA tá na mão de todo mundo.<br>O que muda é ela conhecer a <span class="s">sua loja.</span></div>
+      <p class="lead">De nada adianta a tecnologia se ela não sabe como você vende, quanto custa cada carro e quem é cada cliente.</p>
+    </div>
+  </section>
+
+  <!-- 9 — GENERIC VS CUSTOM -->
+  <section class="slide">
+    <div class="wrap">
+      <span class="eyebrow">Por que não um sistema pronto de prateleira</span>
+      <div class="grid c2">
+        <div class="card muted"><div class="k">Sistema genérico</div><h3>É alugado</h3><p>Caro, cheio de coisa que você não usa e te obriga a trabalhar do jeito dele.</p></div>
+        <div class="card soft"><div class="k">Feito sob medida</div><h3>É seu</h3><p>Conhece as suas 2 lojas, os seus custos e o seu jeito de vender. Ele trabalha do seu jeito.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 — DIVIDER 03 -->
+  <section class="slide dark">
+    <div class="wrap center">
+      <div class="divnum">03</div>
+      <div class="divtitle">As 4 partes de um sistema que <span class="s">funciona</span></div>
+      <div class="divrule"></div>
+    </div>
+  </section>
+
+  <!-- 11 — 4 PARTS -->
+  <section class="slide">
+    <div class="wrap">
+      <span class="eyebrow">Simples assim</span>
+      <div class="grid c2">
+        <div class="card"><div class="k"><span class="badge">1</span> Conhecer</div><h3>Ele conhece a loja</h3><p>Sabe que são 2 lojas, quem trabalha e quanto custa cada carro.</p></div>
+        <div class="card"><div class="k"><span class="badge">2</span> Conectar</div><h3>Se liga nas suas ferramentas</h3><p>Puxa os carros do seu site e os números dos seus anúncios sozinho.</p></div>
+        <div class="card"><div class="k"><span class="badge">3</span> Fazer</div><h3>Faz o trabalho</h3><p>Controla estoque, clientes, agenda, metas e relatórios.</p></div>
+        <div class="card"><div class="k"><span class="badge">4</span> Sozinho</div><h3>Trabalha sozinho</h3><p>Atualiza tudo todo dia, sem ninguém precisar pedir.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 — CONNECTIONS -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">Parte 2 · Se conectar</span>
+      <div class="big">No que o sistema se liga <span class="s">sozinho</span></div>
+      <ul class="feat">
+        <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9"/><path d="M3 9h18"/><path d="M9 20v-6h6v6"/></svg> O seu site de carros</li>
+        <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l14-5v12L3 14z"/><path d="M3 11v3"/><path d="M11 17.5a3 3 0 01-5-1"/></svg> Os seus anúncios (quanto investe e quantas conversas)</li>
+        <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg> O banco de dados (a memória da loja)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 13 — ESTOQUE AUTO -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">Exemplo 1 · Estoque</span>
+      <div class="big">O estoque se atualiza sozinho.<br><span class="s">Ninguém cadastra carro na mão.</span></div>
+      <p class="lead">Vendeu um carro no site? Ele some do sistema. Entrou um novo? Aparece. Todo dia, automático.</p>
+    </div>
+  </section>
+
+  <!-- 14 — VISUAL PLATFORM MOCKUP -->
+  <section class="slide">
+    <div class="wrap">
+      <span class="eyebrow">Parte 3 · Por dentro do painel</span>
+      <div class="appwin">
+        <div class="appbar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span class="t">Painel da loja</span></div>
+        <div class="appbody">
+          <div class="side">
+            <div class="nav-i on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="11" width="7" height="10" rx="1"/><rect x="3" y="15" width="7" height="6" rx="1"/></svg> Painel</div>
+            <div class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7.5" cy="17" r="1.8"/><circle cx="16.5" cy="17" r="1.8"/><path d="M9.3 17h5.4"/></svg> Estoque</div>
+            <div class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><rect x="6.5" y="7.5" width="3.5" height="9"/><rect x="14" y="7.5" width="3.5" height="5"/></svg> Clientes</div>
+            <div class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg> Agenda</div>
+            <div class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/></svg> Metas</div>
+            <div class="nav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="7"/><rect x="12" y="7" width="3" height="11"/><rect x="17" y="4" width="3" height="14"/></svg> Relatórios</div>
+          </div>
+          <div class="appmain">
+            <div class="kpis">
+              <div class="kpi"><div class="l">Vendas no mês</div><div class="v">14</div></div>
+              <div class="kpi"><div class="l">Carros no estoque</div><div class="v">52</div></div>
+              <div class="kpi"><div class="l">Custo p/ vender 1</div><div class="v">R$ <small>•••</small></div></div>
+            </div>
+            <div class="panelcard">
+              <div class="l">Vendas por semana</div>
+              <div class="bars"><span class="bar" style="height:42%"></span><span class="bar" style="height:68%"></span><span class="bar" style="height:54%"></span><span class="bar" style="height:86%"></span><span class="bar" style="height:60%"></span><span class="bar" style="height:100%"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="caption">Estoque, clientes, agenda, metas e relatórios. Tudo num painel só. <strong>No próximo vídeo eu abro cada um por dentro.</strong></p>
+    </div>
+  </section>
+
+  <!-- 15 — ADAPTABILITY -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">Feito pra sua loja</span>
+      <div class="big">Cada loja é diferente.<br>O <span class="s">sistema</span> também.</div>
+      <p class="lead">Dependendo da sua loja, eu crio painel novo, campo novo, tela nova. Se o seu atendimento é de um jeito, se os seus vendedores trabalham diferente, o sistema se molda nisso. Ele acompanha o diferencial da sua loja.</p>
+    </div>
+  </section>
+
+  <!-- 16 — DIVIDER 04 -->
+  <section class="slide dark">
+    <div class="wrap center">
+      <div class="divnum">04</div>
+      <div class="divtitle">E o <span class="s">sigilo</span> das informações?</div>
+      <div class="divrule"></div>
+    </div>
+  </section>
+
+  <!-- 17 — ROLES -->
+  <section class="slide">
+    <div class="wrap center">
+      <div class="big">Cada pessoa vê <span class="s">só o que é dela.</span></div>
+      <div class="roles">
+        <div class="role"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><div class="who">Você (dono)</div><div class="sees">Vê tudo: custo, lucro e os resultados.</div></div>
+        <div class="role no"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><div class="who">Vendedor</div><div class="sees">Vê o carro e o cliente. Nunca o seu lucro.</div></div>
+        <div class="role"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="7"/><rect x="12" y="7" width="3" height="11"/><rect x="17" y="4" width="3" height="14"/></svg><div class="who">Marketing</div><div class="sees">Vê só os relatórios de anúncio.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 — SECURITY -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">Segurança de verdade</span>
+      <div class="big">É como um <span class="s">cofre.</span><br>O vendedor tem a chave da loja, não a do seu lucro.</div>
+      <p class="lead">O seu lucro não fica escondido num canto da tela, esperando alguém achar. Ele nem chega no celular do vendedor. Sem a chave do cofre, não tem o que abrir. Nem se ele quiser.</p>
+    </div>
+  </section>
+
+  <!-- 19 — HONESTY / BIKE -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">Falando a verdade</span>
+      <div class="big">Não saiu <span class="s">perfeito de primeira.</span></div>
+      <p class="lead">Sistema bom é igual ensinar alguém a andar de bicicleta: no começo você segura o selim, ajeita aqui e ali, e vai soltando a mão aos poucos. A cada semana de uso ele fica mais redondo. Hoje roda firme, todo dia, na mão do time.</p>
+    </div>
+  </section>
+
+  <!-- 20 — CADENCE -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">Parte 4 · Trabalhar sozinho</span>
+      <div class="big">O que acontece sem ninguém mexer</div>
+      <ul class="feat">
+        <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0115-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg> O estoque atualiza todo dia</li>
+        <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="7"/><rect x="12" y="7" width="3" height="11"/><rect x="17" y="4" width="3" height="14"/></svg> O relatório se monta sozinho</li>
+        <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l14-5v12L3 14z"/><path d="M11 17.5a3 3 0 01-5-1"/></svg> Os números do anúncio entram automático</li>
+      </ul>
+      <p class="lead">É trabalho feito enquanto a loja tá fechada.</p>
+    </div>
+  </section>
+
+  <!-- 21 — HOW I BUILT (terminal) -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">Como foi feito</span>
+      <div class="big">Eu não escrevo código.<br>Eu escrevo em <span class="s">português.</span></div>
+      <div class="terminal">
+        <div class="tbar"><span class="tdot red"></span><span class="tdot yellow"></span><span class="tdot green"></span><span class="ttitle">Terminal · Claude Code</span></div>
+        <div class="tbody">
+          <div class="tline"><span class="tprompt">&gt;</span><span class="tcmd">cria um relatório que mostra <span class="cy">quanto custa pra vender um carro</span> em cada loja</span></div>
+          <div class="tout">✓ relatório criado, separado por loja e publicado no sistema.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21b — IA NÃO SUBSTITUI O DEV -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">A verdade sobre IA e código</span>
+      <div class="big">A IA não substitui o desenvolvedor.<br>Ela <span class="s">turbina.</span></div>
+      <p class="lead">Comecei sozinho, conversando. Quando entrou dado sigiloso de cliente, peguei dicas com amigos desenvolvedores pra reforçar a segurança. A IA não tira o lugar do dev, ela turbina. <span class="s">É dev e tá vendo? Me manda uma dica, toda ajuda é bem-vinda.</span></p>
+    </div>
+  </section>
+
+  <!-- 22 — THE NUMBER -->
+  <section class="slide">
+    <div class="wrap center">
+      <span class="eyebrow">O número que importa</span>
+      <div class="big">Quanto custa pra <span class="s">vender 1 carro?</span></div>
+      <p class="lead">Você não precisa entender de tecnologia. Precisa de um número na cara, loja por loja. O sistema te dá esse número todo dia.</p>
+    </div>
+  </section>
+
+  <!-- 23 — CLOSING (dark) -->
+  <section class="slide dark">
+    <div class="wrap center">
+      <svg class="claude-mark md" viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor"><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(30 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(60 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(90 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(120 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(150 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(180 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(210 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(240 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(270 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(300 50 50)"/><path d="M50 7 L52.6 26 L50 41 L47.4 26 Z" transform="rotate(330 50 50)"/></g></svg>
+      <div class="big">Tem uma loja de carros?<br><span class="s">Isso pode ser seu.</span></div>
+      <p class="lead">Não é coisa de empresa grande nem de gênio da informática. É um sistema feito pra vender mais e perder menos tempo.</p>
+      <div class="titlefoot"><b>Comenta o que você automatizaria primeiro</b><span class="dot"></span>@matheusvareschi</div>
+    </div>
+  </section>
+
+</div>
+
+<div class="notes" id="notes">
+  <div class="lbl">Nota de apresentador</div>
+  <p id="noteText"></p>
+</div>
+
+<div class="syncdot" id="syncdot">● decks sincronizados</div>
+<div class="hint" id="hint">← → navegar · N notas · F tela cheia · T teleprompter</div>
+<div class="hud">
+  <div class="count">slide <b id="cur">1</b> / <span id="total">23</span></div>
+  <div class="nav"><button id="prev" aria-label="anterior">‹</button><button id="next" aria-label="próximo">›</button></div>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let i = 0;
+
+  const notes = [
+    "Capa. Deixa no ar enquanto te apresenta. A frase que segura: uma loja de carros inteira rodando num sistema que eu comecei só conversando com a IA. Já adianta, com honestidade, que reforçou a segurança com dicas de amigos desenvolvedores.",
+    "Hook. Lista tudo que cabe dentro: estoque, vendas, agenda, metas, anúncios e lucro. Um lugar só, e começou conversando com uma IA. Esse contraste é o gancho do vídeo.",
+    "Slide da dor, em formato de enquete. Faz as três perguntas como um quiz, devagar, olhando pra câmera. O dono responde de cabeça, e na maioria a resposta honesta é 'tenho que procurar' (que já tá marcada). Fecha: travou em alguma? Então esse vídeo é pra você. É aqui que ele pensa 'é exatamente o que eu preciso'.",
+    "Divisória. Primeiro bloco. Vamos explicar o que é um sistema operacional, sem termo técnico.",
+    "A analogia mais simples: o celular. Um lugar só de onde você faz tudo. O sistema é isso pra loja. Qualquer pessoa entende essa comparação.",
+    "A virada de chave. Vira sistema operacional quando o time abre ele antes da planilha ou do caderno. Quando é o primeiro lugar pra onde todos olham, ele vira o cérebro da loja.",
+    "Divisória. Segundo bloco, e o ponto mais importante: o segredo não é a inteligência artificial.",
+    "A mesma IA tá na mão de todo mundo. O que faz a diferença é ela conhecer a SUA loja: como você vende, quanto custa cada carro, quem é cada cliente. Tecnologia sem contexto não resolve nada.",
+    "Por que não comprei um sistema pronto. O genérico é alugado: caro, cheio de coisa que não usa, e te obriga a trabalhar do jeito dele. O sob medida é seu: conhece as 2 lojas e trabalha do seu jeito.",
+    "Divisória. Agora as 4 partes que todo sistema desses precisa ter. Mantém simples, são só quatro palavras: conhecer, conectar, fazer e trabalhar sozinho.",
+    "Mostra as 4 partes juntas. Conhecer a loja, se ligar nas suas ferramentas, fazer o trabalho e rodar sozinho. Os próximos slides mostram cada uma funcionando de verdade.",
+    "Parte 2, conexões. No que o sistema se liga sozinho: o seu site de carros, os seus anúncios e o banco de dados. Você lista onde a informação da loja mora hoje e conecta uma por uma.",
+    "O primeiro exemplo que impressiona. O estoque se atualiza sozinho, puxando do seu site todo dia. Vendeu no site, some. Entrou carro novo, aparece. Ninguém digita nada.",
+    "Por dentro do painel, de forma visual. Mostra a tela: a barra lateral com as seções (painel, estoque, clientes, agenda, metas, relatórios) e os números no meio. Dá o gostinho do que tem dentro, sem se aprofundar. Fecha lembrando: no próximo vídeo eu abro cada parte por dentro.",
+    "Adaptação por cliente, o ponto que fecha. Cada loja é diferente, então o sistema também é. Dependendo do cliente eu crio painel novo, campo novo, tela nova. Se o atendimento é de um jeito, se os vendedores trabalham diferente, o sistema se molda. É o diferencial da loja virando software.",
+    "Divisória. A pergunta que todo dono faz: e o sigilo? Quem vê o quê?",
+    "Cada um vê só o que é dele. Mostra ao vivo: o dono vê tudo, o vendedor vê o carro e o cliente mas nunca o lucro, e o marketing vê só os relatórios. Esse é o momento 'uau' do vídeo.",
+    "Analogia do cofre, pra ele entender a segurança sem termo técnico. O vendedor tem a chave da loja, mas não a do cofre onde fica o seu lucro. Não é um número escondido na tela que dá pra achar procurando: ele nem chega no celular do vendedor. Sem a chave, não tem o que abrir, nem se ele quiser.",
+    "Honestidade que gera confiança, sem assustar. Não saiu perfeito de primeira, e tá tudo bem: é igual ensinar a andar de bicicleta, você segura o selim e vai soltando a mão aos poucos. Fecha tranquilizando: hoje roda firme, todo dia, na mão do time. Não fale em perder dados.",
+    "Parte 4, cadência. O que acontece sem ninguém mexer: estoque atualiza, relatório se monta, números do anúncio entram. É trabalho feito enquanto a loja tá fechada.",
+    "Como foi feito. Mostra o terminal: eu escrevo em português, igual mensagem de WhatsApp, e a IA constrói. Eu mando, ela executa. Mas emenda no próximo slide, que tem um detalhe importante.",
+    "O ponto que faz o desenvolvedor te respeitar e protege a sua credibilidade. Comecei sozinho conversando, mas quando entrou dado sigiloso de cliente eu peguei dicas com amigos desenvolvedores pra reforçar a segurança. A IA não substitui um bom programador, ela deixa ele muito mais rápido. Convida quem é dev a te mandar dicas, toda ajuda é bem-vinda. Nunca diga que dispensou dev.",
+    "O número que resume tudo, pro dono não-técnico. Quanto custa pra vender 1 carro? Você não precisa entender de tecnologia, precisa desse número na cara, loja por loja. O sistema entrega todo dia.",
+    "Fechamento, falando direto com o dono de loja. Tem uma loja de carros? Isso pode ser seu. Não é coisa de empresa grande nem de gênio da informática. Chama pra comentar e pra seguir o canal."
+  ];
+
+  const progress = document.getElementById('progress');
+  const cur = document.getElementById('cur');
+  const noteBox = document.getElementById('notes');
+  const noteText = document.getElementById('noteText');
+  const hint = document.getElementById('hint');
+  document.getElementById('total').textContent = total;
+
+  function show(n){
+    i = Math.max(0, Math.min(total-1, n));
+    slides.forEach((s,k)=>s.classList.toggle('active', k===i));
+    progress.style.width = (i/(total-1))*100 + '%';
+    cur.textContent = i+1;
+    noteText.textContent = notes[i] || '';
+    hint.style.opacity = i>0 ? '0' : '1';
+    if(window.__deckBroadcast) window.__deckBroadcast();
+  }
+  function next(){ show(i+1) }
+  function prev(){ show(i-1) }
+
+  document.addEventListener('keydown', e=>{
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); next(); }
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prev(); }
+    else if(e.key==='Home'){ show(0) }
+    else if(e.key==='End'){ show(total-1) }
+    else if(e.key.toLowerCase()==='n'){ noteBox.classList.toggle('show') }
+    else if(e.key.toLowerCase()==='f'){
+      if(!document.fullscreenElement){ document.documentElement.requestFullscreen?.(); }
+      else { document.exitFullscreen?.(); }
+    }
+    else if(e.key.toLowerCase()==='t'){ window.__child = window.open('roteiro-slides.html','tele','width=780,height=940'); }
+  });
+
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', prev);
+  document.getElementById('stage').addEventListener('click', e=>{
+    if(e.target.closest('.nav')) return;
+    const x = e.clientX / window.innerWidth;
+    if(x > 0.35) next(); else prev();
+  });
+
+  /* ===== SINCRONIZACAO ENTRE OS DOIS DECKS ===== */
+  (function(){
+    const KEY='gc-deck-sync';
+    let suppress=false, ready=false;
+    let bc=null; try{ bc=new BroadcastChannel(KEY); }catch(e){}
+    const dot=document.getElementById('syncdot');
+    function connected(){ if(dot) dot.classList.add('on'); }
+    function post(p){
+      try{ bc&&bc.postMessage(p); }catch(e){}
+      try{ localStorage.setItem(KEY, Date.now()+'~'+JSON.stringify(p)); }catch(e){}
+      try{ window.opener&&window.opener.postMessage({__deck:p},'*'); }catch(e){}
+      try{ window.__child&&window.__child.postMessage({__deck:p},'*'); }catch(e){}
+    }
+    function recv(p){
+      if(!p) return;
+      connected();
+      if(p.req){ post({idx:i}); return; }
+      if(typeof p.idx==='number' && p.idx!==i){ suppress=true; show(p.idx); suppress=false; }
+    }
+    if(bc) bc.onmessage=e=>recv(e.data);
+    window.addEventListener('storage',e=>{ if(e.key===KEY && e.newValue){ try{ recv(JSON.parse(e.newValue.split('~').slice(1).join('~'))); }catch(_){} } });
+    window.addEventListener('message',e=>{ const d=e.data; if(d&&d.__deck) recv(d.__deck); });
+    window.__deckBroadcast=function(){ if(ready&&!suppress) post({idx:i}); };
+    setTimeout(()=>{ ready=true; post({req:1}); }, 250);
+  })();
+
+  show(0);
+</script>
+</body>
+</html>

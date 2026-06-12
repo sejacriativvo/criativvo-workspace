@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Nova Estética — criativvo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family:'AVEstiana'; src:url('../marca/AVEstiana-Black.otf') format('opentype'); font-weight:900; }
+  *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --ink:   #050505;
+    --paper: #F7F7F2;
+    --gl:    #EDEDE8;
+    --gd:    #1B1B1B;
+    --org:   #FF5A1F;
+    --orl:   #FF8A4C;
+  }
+
+  body {
+    font-family:'Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif;
+    background:#0A0A0A;
+    display:flex; flex-direction:column; align-items:center;
+    gap:64px; padding:64px 32px;
+  }
+
+  .wrap { display:flex; flex-direction:column; gap:12px; }
+  .lbl { font-size:10px; font-weight:700; letter-spacing:5px; text-transform:uppercase; color:#2a2a2a; }
+
+  /* CANVAS */
+  .post { width:1080px; height:1440px; position:relative; overflow:hidden; }
+
+  /* BLOBS */
+  .blob { position:absolute; border-radius:50%; pointer-events:none; }
+
+  /* TOPBAR */
+  .topbar {
+    position:absolute; top:0; left:0; right:0;
+    padding:44px 56px;
+    display:flex; align-items:center; gap:20px;
+    z-index:20;
+  }
+  .tb-brand { display:flex; flex-direction:column; gap:4px; flex-shrink:0; }
+  .tb-name { font-size:13px; font-weight:600; letter-spacing:0.3px; }
+  .tb-sub { font-size:10px; font-weight:400; letter-spacing:2.5px; text-transform:uppercase; }
+  .tb-line { flex:1; height:1px; }
+  .tb-arrow {
+    width:38px; height:38px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; flex-shrink:0;
+  }
+  /* dark bg topbar */
+  .tb-dk .tb-name  { color:rgba(247,247,242,.85); }
+  .tb-dk .tb-sub   { color:rgba(247,247,242,.28); }
+  .tb-dk .tb-line  { background:rgba(247,247,242,.1); }
+  .tb-dk .tb-arrow { border:1px solid rgba(247,247,242,.18); color:rgba(247,247,242,.5); }
+  /* light bg topbar */
+  .tb-lt .tb-name  { color:rgba(5,5,5,.75); }
+  .tb-lt .tb-sub   { color:rgba(5,5,5,.3); }
+  .tb-lt .tb-line  { background:rgba(5,5,5,.1); }
+  .tb-lt .tb-arrow { border:1px solid rgba(5,5,5,.15); color:rgba(5,5,5,.4); }
+
+  /* CONTENT AREA */
+  .cnt {
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    padding:160px 56px 64px;
+    display:flex; flex-direction:column;
+    z-index:10;
+  }
+  .cnt-end     { justify-content:flex-end; }
+  .cnt-between { justify-content:space-between; }
+  .cnt-center  { justify-content:center; }
+
+  /* PILL LABEL */
+  .pill {
+    display:inline-flex; align-items:center; gap:8px;
+    border-radius:100px; padding:7px 18px;
+    font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase;
+    margin-bottom:36px; width:fit-content;
+  }
+  .pill-org { background:rgba(255,90,31,.15); border:1px solid rgba(255,90,31,.4); color:var(--org); }
+  .pill-wh  { background:rgba(247,247,242,.08); border:1px solid rgba(247,247,242,.18); color:rgba(247,247,242,.65); }
+  .pill-dk  { background:rgba(5,5,5,.06); border:1px solid rgba(5,5,5,.14); color:rgba(5,5,5,.45); }
+  .pill-dot { width:5px; height:5px; border-radius:50%; background:currentColor; flex-shrink:0; }
+
+  /* HEADLINES */
+  .h {
+    font-weight:300; letter-spacing:-3px; line-height:0.93;
+    margin-bottom:44px;
+  }
+  .h b  { font-weight:800; }
+  .h .o { color:var(--org); }
+
+  /* GLASS CARD — dark variant */
+  .glass {
+    background:rgba(5,5,5,.5);
+    backdrop-filter:blur(28px);
+    -webkit-backdrop-filter:blur(28px);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:40px;
+    box-shadow:0 8px 64px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.07);
+    padding:44px 48px;
+    margin-bottom:36px;
+  }
+  /* GLASS CARD — light variant */
+  .glass-lt {
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    border:1px solid rgba(5,5,5,.08);
+    border-radius:40px;
+    box-shadow:0 8px 48px rgba(0,0,0,.07), inset 0 1px 0 rgba(255,255,255,.9);
+    padding:44px 48px;
+    margin-bottom:36px;
+  }
+
+  .g-lbl {
+    font-size:10px; font-weight:700; letter-spacing:4px; text-transform:uppercase;
+    color:var(--org); margin-bottom:16px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .g-lbl::before { content:''; width:22px; height:1px; background:var(--org); }
+  .g-title { font-size:26px; font-weight:600; letter-spacing:-.5px; line-height:1.25; }
+  .g-body  { font-size:17px; font-weight:400; line-height:1.6; margin-top:12px; }
+
+  /* CTA */
+  .cta {
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--org); border-radius:100px;
+    padding:16px 16px 16px 40px;
+    font-size:19px; font-weight:600; color:#fff;
+    letter-spacing:-.3px; width:100%; cursor:default; border:none;
+  }
+  .cta-ic {
+    width:54px; height:54px; border-radius:50%; background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; color:var(--ink); flex-shrink:0;
+  }
+
+  /* DIVIDER */
+  .div-dk { height:1px; background:rgba(247,247,242,.08); margin:32px 0; }
+  .div-lt { height:1px; background:rgba(5,5,5,.08); margin:32px 0; }
+
+  /* NUMBERED LIST ITEM */
+  .ni {
+    display:flex; align-items:center; gap:24px;
+    padding:22px 0; border-top:1px solid rgba(247,247,242,.07);
+  }
+  .ni-lt {
+    display:flex; align-items:center; gap:24px;
+    padding:22px 0; border-top:1px solid rgba(5,5,5,.08);
+  }
+  .ni-lt:last-child { border-bottom:1px solid rgba(5,5,5,.08); }
+  .ni-num { font-size:11px; font-weight:700; letter-spacing:3px; color:var(--org); min-width:28px; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     POST 1 — POSICIONAMENTO · dark
+═══════════════════════════════════════════ -->
+<div class="wrap">
+  <span class="lbl">01 · Posicionamento · dark</span>
+  <div class="post" style="background:#050505">
+
+    <!-- Blobs -->
+    <div class="blob" style="width:900px;height:900px;top:-340px;right:-280px;
+      background:radial-gradient(circle,#FF5A1F 0%,transparent 60%);
+      filter:blur(120px);opacity:.38"></div>
+    <div class="blob" style="width:380px;height:380px;bottom:80px;left:-80px;
+      background:radial-gradient(circle,#FF8A4C 0%,transparent 70%);
+      filter:blur(90px);opacity:.2"></div>
+
+    <!-- SVG: curved arrow top-right -->
+    <svg style="position:absolute;top:50px;right:0;opacity:.13;pointer-events:none;z-index:3"
+         width="300" height="420" viewBox="0 0 300 420" fill="none">
+      <path d="M 280 10 C 280 220 20 220 20 420"
+            stroke="#FF5A1F" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M 0 396 L 20 420 L 40 396"
+            stroke="#FF5A1F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <!-- Topbar -->
+    <header class="topbar tb-dk">
+      <div class="tb-brand">
+        <span class="tb-name">criativvo</span>
+        <span class="tb-sub">Marketing, IA & Automação</span>
+      </div>
+      <div class="tb-line"></div>
+      <div class="tb-arrow">↗</div>
+    </header>
+
+    <!-- Content -->
+    <div class="cnt cnt-end">
+      <div class="pill pill-org"><span class="pill-dot"></span>Posicionamento</div>
+      <h1 class="h" style="font-size:92px;color:#F7F7F2">
+        Sua empresa<br>não tem um<br>problema de<br><b class="o">atenção.</b>
+      </h1>
+      <div class="glass">
+        <div class="g-lbl">Sistema Criativvo</div>
+        <div class="g-title" style="color:#F7F7F2">Você tem um problema de oferta.</div>
+        <div class="g-body" style="color:rgba(247,247,242,.45)">
+          Presença digital sem posicionamento claro é ruído. A gente constrói os dois juntos.
+        </div>
+      </div>
+      <button class="cta">Ver estratégia <span class="cta-ic">↗</span></button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     POST 2 — DADO 73% · dark gray
+═══════════════════════════════════════════ -->
+<div class="wrap">
+  <span class="lbl">02 · Dado · dark gray</span>
+  <div class="post" style="background:#0D0D0B">
+
+    <div class="blob" style="width:700px;height:700px;top:80px;left:-200px;
+      background:radial-gradient(circle,#FF5A1F 0%,transparent 60%);
+      filter:blur(110px);opacity:.3"></div>
+    <div class="blob" style="width:300px;height:300px;bottom:100px;right:-60px;
+      background:radial-gradient(circle,#FF8A4C 0%,transparent 70%);
+      filter:blur(80px);opacity:.22"></div>
+
+    <!-- SVG: large arc corner -->
+    <svg style="position:absolute;top:-80px;right:-80px;opacity:.06;pointer-events:none;z-index:3"
+         width="520" height="520" viewBox="0 0 520 520" fill="none">
+      <circle cx="520" cy="0" r="440" stroke="#F7F7F2" stroke-width="1.5"/>
+    </svg>
+
+    <header class="topbar tb-dk">
+      <div class="tb-brand">
+        <span class="tb-name">criativvo</span>
+        <span class="tb-sub">Marketing, IA & Automação</span>
+      </div>
+      <div class="tb-line"></div>
+      <div class="tb-arrow">↗</div>
+    </header>
+
+    <div class="cnt cnt-between" style="padding-top:160px">
+
+      <!-- Top: big number -->
+      <div>
+        <div class="pill pill-wh"><span class="pill-dot"></span>Dado de mercado</div>
+        <div style="display:flex;align-items:flex-end;gap:6px;margin-bottom:24px">
+          <span style="font-size:240px;font-weight:800;color:#F7F7F2;letter-spacing:-14px;line-height:.82">73</span>
+          <span style="font-size:96px;font-weight:800;color:#FF5A1F;line-height:.82;letter-spacing:-4px;padding-bottom:14px">%</span>
+        </div>
+        <p style="font-size:26px;font-weight:300;color:rgba(247,247,242,.4);line-height:1.5;
+                  letter-spacing:-.5px;max-width:700px">
+          dos compradores de carro pesquisam online antes de entrar numa concessionária.
+        </p>
+      </div>
+
+      <!-- Bottom -->
+      <div>
+        <div class="div-dk"></div>
+        <div class="glass">
+          <div class="g-lbl">O que isso significa</div>
+          <div class="g-title" style="color:#F7F7F2">A decisão começa no celular, não no showroom.</div>
+          <div class="g-body" style="color:rgba(247,247,242,.45)">
+            Quem não aparece nessa pesquisa não existe para o comprador.
+          </div>
+        </div>
+        <button class="cta">Entender o porquê <span class="cta-ic">↗</span></button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     POST 3 — MÉTODO · light
+═══════════════════════════════════════════ -->
+<div class="wrap">
+  <span class="lbl">03 · Método · light</span>
+  <div class="post" style="background:#F7F7F2">
+
+    <div class="blob" style="width:600px;height:600px;bottom:-80px;right:-80px;
+      background:radial-gradient(circle,#FF8A4C 0%,transparent 65%);
+      filter:blur(100px);opacity:.22"></div>
+    <div class="blob" style="width:350px;height:350px;top:60px;left:-80px;
+      background:radial-gradient(circle,#EDEDE8 0%,transparent 70%);
+      filter:blur(60px);opacity:.6"></div>
+
+    <header class="topbar tb-lt">
+      <div class="tb-brand">
+        <span class="tb-name">criativvo</span>
+        <span class="tb-sub">Marketing, IA & Automação</span>
+      </div>
+      <div class="tb-line"></div>
+      <div class="tb-arrow">↗</div>
+    </header>
+
+    <div class="cnt cnt-between" style="padding-top:180px">
+
+      <div>
+        <div class="pill pill-dk"><span class="pill-dot"></span>O Método</div>
+        <h1 class="h" style="font-size:84px;color:#050505">
+          O sistema<br>que <b>vende</b><br>todo dia.
+        </h1>
+
+        <!-- 4 items -->
+        <div>
+          <div class="ni-lt">
+            <span class="ni-num">01</span>
+            <div>
+              <div style="font-size:22px;font-weight:600;color:#050505;letter-spacing:-.4px">Branding que posiciona</div>
+              <div style="font-size:15px;color:rgba(5,5,5,.35);margin-top:3px">Identidade que cria desejo</div>
+            </div>
+          </div>
+          <div class="ni-lt">
+            <span class="ni-num">02</span>
+            <div>
+              <div style="font-size:22px;font-weight:600;color:#050505;letter-spacing:-.4px">Conteúdo que converte</div>
+              <div style="font-size:15px;color:rgba(5,5,5,.35);margin-top:3px">Posts que geram autoridade</div>
+            </div>
+          </div>
+          <div class="ni-lt">
+            <span class="ni-num">03</span>
+            <div>
+              <div style="font-size:22px;font-weight:600;color:#050505;letter-spacing:-.4px">Tráfego que qualifica</div>
+              <div style="font-size:15px;color:rgba(5,5,5,.35);margin-top:3px">Leads chegando todo dia</div>
+            </div>
+          </div>
+          <div class="ni-lt">
+            <span class="ni-num">04</span>
+            <div>
+              <div style="font-size:22px;font-weight:600;color:#050505;letter-spacing:-.4px">Automação que não dorme</div>
+              <div style="font-size:15px;color:rgba(5,5,5,.35);margin-top:3px">Atendimento rápido, sempre</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="glass-lt">
+          <div class="g-lbl">Resultado</div>
+          <div class="g-title" style="color:#050505">Previsibilidade de crescimento, todo mês.</div>
+          <div class="g-body" style="color:rgba(5,5,5,.45)">Sem depender de indicação. Sem sorte.</div>
+        </div>
+        <button class="cta">Aplicar agora <span class="cta-ic">↗</span></button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     POST 4 — CASE GILSONCAR · dark
+═══════════════════════════════════════════ -->
+<div class="wrap">
+  <span class="lbl">04 · Case · dark</span>
+  <div class="post" style="background:#050505">
+
+    <div class="blob" style="width:800px;height:800px;top:60px;left:-200px;
+      background:radial-gradient(circle,#FF5A1F 0%,transparent 58%);
+      filter:blur(110px);opacity:.35"></div>
+    <div class="blob" style="width:400px;height:400px;bottom:-60px;right:-60px;
+      background:radial-gradient(circle,#FF8A4C 0%,transparent 70%);
+      filter:blur(90px);opacity:.2"></div>
+
+    <!-- SVG: arc top-right in orange -->
+    <svg style="position:absolute;top:-100px;right:-100px;opacity:.08;pointer-events:none;z-index:3"
+         width="500" height="500" viewBox="0 0 500 500" fill="none">
+      <circle cx="500" cy="0" r="400" stroke="#FF5A1F" stroke-width="2.5"/>
+    </svg>
+
+    <header class="topbar tb-dk">
+      <div class="tb-brand">
+        <span class="tb-name">criativvo</span>
+        <span class="tb-sub">Marketing, IA & Automação</span>
+      </div>
+      <div class="tb-line"></div>
+      <div class="tb-arrow">↗</div>
+    </header>
+
+    <div class="cnt cnt-between" style="padding-top:160px">
+
+      <div>
+        <div class="pill pill-org"><span class="pill-dot"></span>Case · GilsonCar</div>
+        <div style="display:flex;align-items:flex-end;gap:14px;margin-bottom:16px">
+          <span style="font-size:220px;font-weight:800;color:#FF5A1F;letter-spacing:-12px;line-height:.82">60</span>
+          <span style="font-size:38px;font-weight:300;color:rgba(247,247,242,.32);margin-bottom:18px;letter-spacing:-1px">dias.</span>
+        </div>
+        <h1 class="h" style="font-size:74px;color:#F7F7F2;margin-bottom:0">
+          Maior fatura-<br>mento da <b class="o">história.</b>
+        </h1>
+      </div>
+
+      <div>
+        <div class="glass">
+          <div class="g-lbl">Resultados</div>
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="width:6px;height:6px;border-radius:50%;background:#FF5A1F;flex-shrink:0"></span>
+              <span style="font-size:20px;font-weight:500;color:#F7F7F2;letter-spacing:-.3px">Maior faturamento da história</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="width:6px;height:6px;border-radius:50%;background:#FF5A1F;flex-shrink:0"></span>
+              <span style="font-size:20px;font-weight:500;color:#F7F7F2;letter-spacing:-.3px">2 novas unidades abertas</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="width:6px;height:6px;border-radius:50%;background:#FF5A1F;flex-shrink:0"></span>
+              <span style="font-size:20px;font-weight:500;color:#F7F7F2;letter-spacing:-.3px">Leads qualificados todo dia</span>
+            </div>
+          </div>
+        </div>
+        <button class="cta">Ver o case completo <span class="cta-ic">↗</span></button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     POST 5 — EDUCATIVO · dark
+═══════════════════════════════════════════ -->
+<div class="wrap">
+  <span class="lbl">05 · Educativo · dark</span>
+  <div class="post" style="background:#0A0A08">
+
+    <div class="blob" style="width:600px;height:600px;top:-80px;left:-80px;
+      background:radial-gradient(circle,#FF5A1F 0%,transparent 62%);
+      filter:blur(100px);opacity:.3"></div>
+    <div class="blob" style="width:420px;height:420px;bottom:120px;right:-100px;
+      background:radial-gradient(circle,#FF8A4C 0%,transparent 70%);
+      filter:blur(90px);opacity:.18"></div>
+
+    <!-- SVG: S-curve right -->
+    <svg style="position:absolute;right:-10px;top:180px;opacity:.11;pointer-events:none;z-index:3"
+         width="200" height="520" viewBox="0 0 200 520" fill="none">
+      <path d="M 200 0 C 200 260 0 260 0 520"
+            stroke="#FF5A1F" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+
+    <header class="topbar tb-dk">
+      <div class="tb-brand">
+        <span class="tb-name">criativvo</span>
+        <span class="tb-sub">Marketing, IA & Automação</span>
+      </div>
+      <div class="tb-line"></div>
+      <div class="tb-arrow">↗</div>
+    </header>
+
+    <div class="cnt cnt-between">
+
+      <div>
+        <div class="pill pill-wh"><span class="pill-dot"></span>Estratégia de conteúdo</div>
+        <h1 class="h" style="font-size:88px;color:#F7F7F2;margin-bottom:40px">
+          Quem<br>ensina,<br><b class="o">vende.</b>
+        </h1>
+
+        <div>
+          <div class="ni">
+            <span class="ni-num">01</span>
+            <div>
+              <div style="font-size:21px;font-weight:600;color:#F7F7F2;letter-spacing:-.3px">Bastidores</div>
+              <div style="font-size:14px;color:rgba(247,247,242,.3);margin-top:3px">Transparência gera confiança</div>
+            </div>
+          </div>
+          <div class="ni">
+            <span class="ni-num">02</span>
+            <div>
+              <div style="font-size:21px;font-weight:600;color:#F7F7F2;letter-spacing:-.3px">Entrega do carro</div>
+              <div style="font-size:14px;color:rgba(247,247,242,.3);margin-top:3px">Prova social que fecha venda</div>
+            </div>
+          </div>
+          <div class="ni">
+            <span class="ni-num">03</span>
+            <div>
+              <div style="font-size:21px;font-weight:600;color:#F7F7F2;letter-spacing:-.3px">Educativo</div>
+              <div style="font-size:14px;color:rgba(247,247,242,.3);margin-top:3px">Quem ensina, se torna referência</div>
+            </div>
+          </div>
+          <div class="ni" style="border-bottom:1px solid rgba(247,247,242,.07)">
+            <span class="ni-num">04</span>
+            <div>
+              <div style="font-size:21px;font-weight:600;color:#F7F7F2;letter-spacing:-.3px">Comparativos</div>
+              <div style="font-size:14px;color:rgba(247,247,242,.3);margin-top:3px">Ajuda a decisão, posiciona como expert</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="glass">
+          <div class="g-lbl">Resultado</div>
+          <div class="g-title" style="color:#F7F7F2">Autoridade que posiciona e fecha venda.</div>
+          <div class="g-body" style="color:rgba(247,247,242,.45)">
+            O especialista não precisa convencer. Ele simplesmente é a referência.
+          </div>
+        </div>
+        <button class="cta">Montar estratégia <span class="cta-ic">↗</span></button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     POST 6 — CTA FINAL · dark
+═══════════════════════════════════════════ -->
+<div class="wrap">
+  <span class="lbl">06 · CTA Final · dark</span>
+  <div class="post" style="background:#050505">
+
+    <div class="blob" style="width:700px;height:700px;top:-200px;right:-150px;
+      background:radial-gradient(circle,#FF5A1F 0%,transparent 60%);
+      filter:blur(120px);opacity:.3"></div>
+    <div class="blob" style="width:500px;height:500px;bottom:-80px;left:-80px;
+      background:radial-gradient(circle,#FF8A4C 0%,transparent 65%);
+      filter:blur(100px);opacity:.18"></div>
+
+    <!-- faint center circle -->
+    <svg style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+                opacity:.04;pointer-events:none;z-index:3"
+         width="800" height="800" viewBox="0 0 800 800" fill="none">
+      <circle cx="400" cy="400" r="380" stroke="#FF5A1F" stroke-width="2"/>
+      <circle cx="400" cy="400" r="280" stroke="#F7F7F2" stroke-width="1"/>
+    </svg>
+
+    <header class="topbar tb-dk">
+      <div class="tb-brand">
+        <span class="tb-name">criativvo</span>
+        <span class="tb-sub">Marketing, IA & Automação</span>
+      </div>
+      <div class="tb-line"></div>
+      <div class="tb-arrow">↗</div>
+    </header>
+
+    <div class="cnt cnt-center">
+      <div class="pill pill-org" style="margin-bottom:44px"><span class="pill-dot"></span>Próximo passo</div>
+
+      <h1 class="h" style="font-size:88px;color:#F7F7F2;margin-bottom:44px">
+        Pronto<br>pra crescer<br>no <b class="o">digital?</b>
+      </h1>
+
+      <p style="font-size:22px;font-weight:300;color:rgba(247,247,242,.38);
+                line-height:1.6;letter-spacing:-.3px;margin-bottom:56px;max-width:700px">
+        Comenta AGORA e a gente te mostra como construir uma presença digital que vende de verdade.
+      </p>
+
+      <div class="glass" style="margin-bottom:36px">
+        <div class="g-lbl">Sistema Criativvo</div>
+        <div class="g-title" style="color:#F7F7F2">Instagram · Tráfego · WhatsApp · Automação</div>
+        <div class="g-body" style="color:rgba(247,247,242,.45)">
+          Tudo integrado. Tudo funcionando junto. Resultados todos os dias.
+        </div>
+      </div>
+
+      <button class="cta">Comenta AGORA <span class="cta-ic">↗</span></button>
+    </div>
+
+    <!-- logo bottom -->
+    <div style="position:absolute;bottom:52px;left:56px;right:56px;
+                display:flex;align-items:center;justify-content:space-between;z-index:10">
+      <span style="font-family:'AVEstiana','Inter',sans-serif;font-size:22px;
+                   color:rgba(247,247,242,.18);letter-spacing:0">criativvo</span>
+      <span style="font-size:10px;font-weight:400;color:rgba(247,247,242,.15);
+                   letter-spacing:3px;text-transform:uppercase">@sejacriativvo</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     POST 7 — LARANJA INTEIRO · orange
+═══════════════════════════════════════════ -->
+<div class="wrap">
+  <span class="lbl">07 · Marca · orange</span>
+  <div class="post" style="background:#FF5A1F">
+
+    <!-- Blobs: laranja claro + brilho branco -->
+    <div class="blob" style="width:800px;height:800px;top:-250px;left:-200px;
+      background:radial-gradient(circle,#FF8A4C 0%,transparent 60%);
+      filter:blur(100px);opacity:.55"></div>
+    <div class="blob" style="width:500px;height:500px;bottom:-80px;right:-80px;
+      background:radial-gradient(circle,#fff 0%,transparent 70%);
+      filter:blur(120px);opacity:.1"></div>
+    <div class="blob" style="width:280px;height:280px;top:420px;right:180px;
+      background:radial-gradient(circle,#FF8A4C 0%,transparent 70%);
+      filter:blur(60px);opacity:.5"></div>
+
+    <!-- SVG: arco branco canto inferior esquerdo -->
+    <svg style="position:absolute;bottom:-80px;left:-80px;opacity:.1;pointer-events:none;z-index:3"
+         width="520" height="520" viewBox="0 0 520 520" fill="none">
+      <circle cx="0" cy="520" r="400" stroke="#fff" stroke-width="2"/>
+    </svg>
+
+    <!-- Topbar (branco no laranja) -->
+    <header class="topbar tb-dk">
+      <div class="tb-brand">
+        <span class="tb-name">criativvo</span>
+        <span class="tb-sub">Marketing, IA & Automação</span>
+      </div>
+      <div class="tb-line"></div>
+      <div class="tb-arrow">↗</div>
+    </header>
+
+    <div class="cnt cnt-center">
+      <div class="pill" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);color:#fff;margin-bottom:44px">
+        <span class="pill-dot"></span>Posicionamento
+      </div>
+
+      <h1 class="h" style="font-size:90px;color:#fff;margin-bottom:44px">
+        Seu negócio<br>não anuncia.<br><b style="color:#050505">Vira marca.</b>
+      </h1>
+
+      <p style="font-size:22px;font-weight:300;color:rgba(255,255,255,.7);
+                line-height:1.6;letter-spacing:-.3px;margin-bottom:56px;max-width:700px">
+        A diferença entre quem briga por preço e quem é procurado por valor está no posicionamento.
+      </p>
+
+      <div class="glass" style="background:rgba(5,5,5,.28);border-color:rgba(255,255,255,.15);margin-bottom:36px">
+        <div class="g-lbl">Sistema Criativvo</div>
+        <div class="g-title" style="color:#fff">Digital que vende, não digital que existe.</div>
+        <div class="g-body" style="color:rgba(255,255,255,.55)">
+          Branding, conteúdo, tráfego e automação. Tudo funcionando junto.
+        </div>
+      </div>
+
+      <!-- CTA invertido: fundo branco, seta preta -->
+      <div style="display:flex;align-items:center;justify-content:space-between;
+                  background:#F7F7F2;border-radius:100px;padding:16px 16px 16px 40px;width:100%">
+        <span style="font-size:19px;font-weight:600;color:#050505;letter-spacing:-.3px">Ver estratégia</span>
+        <span style="width:54px;height:54px;border-radius:50%;background:#050505;
+                     display:flex;align-items:center;justify-content:center;
+                     font-size:20px;color:#F7F7F2;flex-shrink:0">↗</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

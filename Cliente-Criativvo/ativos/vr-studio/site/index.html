@@ -1,0 +1,2880 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>VR Studio — Remoção de Tatuagem e Micropigmentação a Laser | Curvelo + Corinto</title>
+<meta name="description" content="Único estúdio de remoção a laser de tatuagem e micropigmentação em Curvelo + Corinto. Resultado definitivo em 3 a 6 sessões. Avaliação gratuita." />
+<meta name="theme-color" content="#0B0B0B" />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B0B0B'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-style='italic' font-weight='500' fill='%2356C28E' text-anchor='middle'%3EVR%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+
+<style>
+/* ============ FONTE CRIATIVVO ============ */
+@font-face {
+  font-family: 'AVEstiana';
+  src: url('assets/AVEstiana-Black.otf') format('opentype');
+  font-weight: 900;
+  font-display: swap;
+}
+
+/* ============ TOKENS ============ */
+:root {
+  --black: #0B0B0B;
+  --ink-900: #131313;
+  --ink-800: #1B1B1B;
+  --ink-700: #242424;
+  --gray-600: #5C5C5C;
+  --gray-500: #7D7D7D;
+  --gray-400: #A2A2A2;
+  --gray-300: #C8C8C8;
+  --line-d: rgba(255,255,255,0.08);
+  --line-l: rgba(11,11,11,0.08);
+  --paper: #F6F4EE;
+  --paper-2: #ECE7DB;
+  --paper-3: #DED7C5;
+  --silver-900: #1A1A21;
+  --silver-700: #4A4A55;
+  --silver-600: #7A7A85;
+  --silver-500: #B5B5C0;
+  --silver-400: #D4D4DC;
+  --silver-300: #E0E0E8;
+  --silver-100: #F0F0F5;
+  /* gradiente metálico */
+  --metal: linear-gradient(180deg, #F2F2F5 0%, #C8C8D0 48%, #9A9AA4 100%);
+  --metal-hover: linear-gradient(180deg, #FFFFFF 0%, #DCDCE2 48%, #AEAEB8 100%);
+
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --serif: "Newsreader", Georgia, serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--paper);
+  color: var(--ink-900);
+  font-family: var(--display);
+  font-size: 16.5px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  font-weight: 400;
+}
+
+/* Anti-zoom iOS + sem highlight no tap */
+button, a, input, select, textarea, .sim-option-large, .case-card, .serv-card, .reel-card, .faq-q, .proc-icon, .nav-burger {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Inputs/forms (caso adicione no futuro) precisam font-size 16px+ no mobile pra não dar zoom */
+input, textarea, select { font-size: 16px; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--silver-400); color: var(--black); }
+.container { max-width: 1320px; margin: 0 auto; padding: 0 40px; }
+@media (max-width: 700px) { .container { padding: 0 20px; } }
+
+.serif { font-family: var(--serif); }
+.italic { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.micro {
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ============ REVEAL ============ */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+.reveal-stagger > * { opacity: 0; transform: translateY(22px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.reveal-stagger.in-view > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger.in-view > *:nth-child(2) { transition-delay: 0.12s; }
+.reveal-stagger.in-view > *:nth-child(3) { transition-delay: 0.19s; }
+.reveal-stagger.in-view > *:nth-child(4) { transition-delay: 0.26s; }
+.reveal-stagger.in-view > *:nth-child(5) { transition-delay: 0.33s; }
+.reveal-stagger.in-view > *:nth-child(6) { transition-delay: 0.40s; }
+.reveal-stagger.in-view > * { opacity: 1; transform: translateY(0); }
+
+@keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes floatY2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+@keyframes pulse-soft { 0%,100% { opacity: 0.55; } 50% { opacity: 0.9; } }
+
+/* ============ NAV ============ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 22px 0;
+  transition: background 0.45s var(--ease), padding 0.45s var(--ease), box-shadow 0.4s;
+  background: transparent;
+}
+.nav.scrolled {
+  background: rgba(11, 11, 11, 0.86);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line-d);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.nav-logo { display: inline-flex; align-items: center; }
+.nav-logo img { height: 26px; width: auto; display: block; mix-blend-mode: screen; transition: opacity 0.25s; }
+.nav-logo:hover img { opacity: 0.85; }
+.nav-menu { display: flex; gap: 32px; align-items: center; }
+.nav-menu a {
+  color: var(--paper);
+  font-size: 13px; font-weight: 500;
+  letter-spacing: -0.005em;
+  opacity: 0.85;
+  transition: opacity 0.25s, color 0.25s;
+  position: relative;
+}
+.nav-menu a:hover { opacity: 1; color: var(--silver-300); }
+.nav-cta {
+  background: var(--metal);
+  color: var(--black) !important;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  opacity: 1 !important;
+  border: 1px solid #8C8C97;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 8px 22px rgba(0,0,0,0.32);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.45);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s, background 0.25s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.nav-cta:hover { background: var(--metal-hover); transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 14px 30px rgba(0,0,0,0.42); }
+@media (max-width: 800px) {
+  .nav-logo img { height: 22px; }
+}
+
+/* ============ BURGER + MENU MOBILE ============ */
+.nav-burger {
+  display: none;
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  z-index: 110;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  transition: background 0.3s;
+}
+.nav-burger:hover { background: rgba(255,255,255,0.1); }
+.nav-burger span {
+  display: block;
+  width: 18px; height: 1.5px;
+  background: var(--paper);
+  border-radius: 2px;
+  transition: transform 0.4s var(--ease), opacity 0.4s, width 0.4s;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; width: 0; }
+.nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, var(--black) 0%, var(--ink-900) 100%);
+  z-index: 99;
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: center;
+  padding: 100px 32px 40px;
+  transform: translateY(-100%);
+  transition: transform 0.5s var(--ease);
+  visibility: hidden;
+  overflow-y: auto;
+}
+.mobile-overlay.open { transform: translateY(0); visibility: visible; }
+.mobile-overlay a {
+  display: block;
+  font-family: var(--display);
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  width: 100%;
+  transition: color 0.3s, padding 0.3s;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.mobile-overlay.open a {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), color 0.3s, padding 0.3s;
+}
+.mobile-overlay.open a:nth-child(1) { transition-delay: 0.15s; }
+.mobile-overlay.open a:nth-child(2) { transition-delay: 0.22s; }
+.mobile-overlay.open a:nth-child(3) { transition-delay: 0.29s; }
+.mobile-overlay.open a:nth-child(4) { transition-delay: 0.36s; }
+.mobile-overlay.open a:nth-child(5) { transition-delay: 0.43s; }
+.mobile-overlay a:hover { color: var(--silver-300); padding-left: 12px; }
+.mobile-overlay a .it { font-family: var(--serif); font-style: italic; color: var(--silver-400); }
+.mobile-overlay-cta {
+  margin-top: 32px;
+  padding: 18px 28px !important;
+  border: 1px solid var(--silver-400) !important;
+  border-bottom-color: var(--silver-400) !important;
+  border-radius: 999px;
+  font-size: 16px !important;
+  display: inline-block !important;
+  width: auto !important;
+  text-align: center;
+}
+.mobile-overlay-meta {
+  margin-top: auto;
+  padding-top: 36px;
+  font-family: var(--display);
+  font-size: 12px; color: var(--gray-400);
+  letter-spacing: 0.1em;
+  opacity: 0;
+  transition: opacity 0.6s 0.5s var(--ease);
+}
+.mobile-overlay.open .mobile-overlay-meta { opacity: 1; }
+
+@media (max-width: 800px) {
+  .nav-menu a:not(.mobile-only) { display: none; }
+  .nav-burger { display: flex; }
+  .nav.scrolled .nav-burger { background: rgba(255,255,255,0.05); }
+}
+body.menu-open { overflow: hidden; }
+
+/* ============ HERO TIPOGRÁFICO + 3D CARDS ============ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 75% 30%, #2A2A33 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 70%, #1E1E26 0%, transparent 55%),
+    linear-gradient(180deg, #0A0A0C 0%, #14141A 45%, #1B1B22 100%);
+  color: var(--paper);
+  overflow: hidden;
+  padding: 130px 0 80px;
+  display: flex; align-items: center;
+  perspective: 1600px;
+}
+/* grade sutil */
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 90px 90px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+/* glow verde de fundo */
+.hero-glow {
+  position: absolute;
+  width: 1100px; height: 1100px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,180,192,0.18) 0%, rgba(180,180,192,0.05) 35%, transparent 60%);
+  filter: blur(20px);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  animation: pulse-soft 6s ease-in-out infinite;
+  pointer-events: none;
+}
+/* Samuel cutout — direita, dentro do hero (não na borda) */
+.hero-samuel {
+  position: absolute;
+  right: 2vw;
+  bottom: 0;
+  height: 88%;
+  width: auto;
+  max-width: 44vw;
+  z-index: 3;
+  pointer-events: none;
+  mix-blend-mode: lighten;
+  opacity: 0.92;
+  filter: contrast(1.08) brightness(1.05);
+}
+@media (max-width: 900px) { .hero-samuel { opacity: 0.32; right: -16vw; max-width: 90vw; height: 70%; } }
+
+/* Pistola PNG à esquerda — menor, mais pra fora, atrás do texto */
+.hero-pistola {
+  position: absolute;
+  left: -8vw;
+  bottom: 16%;
+  height: 58%;
+  width: auto;
+  max-width: 26vw;
+  z-index: 3;
+  pointer-events: none;
+  mix-blend-mode: lighten;
+  opacity: 0.92;
+  filter: drop-shadow(0 24px 50px rgba(0,0,0,0.5));
+  animation: floatY 9s ease-in-out infinite;
+}
+@media (max-width: 900px) { .hero-pistola { display: none; } }
+
+.hero-grid {
+  position: relative; z-index: 5;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  transform-style: preserve-3d;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 14px;
+  color: var(--silver-300);
+  margin-bottom: 32px;
+}
+.hero-eyebrow::before {
+  content: ""; width: 40px; height: 1px;
+  background: var(--silver-400);
+}
+.hero-eyebrow::after {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--silver-400); box-shadow: 0 0 12px var(--silver-400);
+}
+
+.hero-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(60px, 11vw, 200px);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  margin-bottom: 0;
+  max-width: 1200px;
+}
+.hero-title .it {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--silver-400);
+  letter-spacing: -0.035em;
+  font-size: 0.92em;
+}
+.hero-title .line { display: block; }
+.hero-title .line-2 { padding-left: clamp(40px, 10vw, 200px); }
+.hero-title .line-3 { color: var(--gray-400); font-weight: 300; }
+
+.hero-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-top: 60px;
+}
+.hero-sub {
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.6vw, 22px);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--gray-300);
+  max-width: 520px;
+}
+.hero-sub strong { color: var(--paper); font-weight: 500; }
+.hero-actions {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 17px 28px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.3s var(--ease), background 0.3s, box-shadow 0.3s, color 0.3s, border-color 0.3s;
+}
+.btn-primary {
+  background: var(--metal);
+  color: var(--black);
+  border: 1px solid #8C8C97;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    inset 0 -2px 1px rgba(0,0,0,0.10),
+    0 14px 32px rgba(0,0,0,0.45);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.45);
+}
+.btn-primary:hover {
+  background: var(--metal-hover);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    inset 0 -2px 1px rgba(0,0,0,0.12),
+    0 22px 48px rgba(0,0,0,0.55);
+}
+.btn-ghost-dark {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(255,255,255,0.24);
+}
+.btn-ghost-dark:hover { border-color: var(--silver-300); color: var(--silver-300); }
+.btn-ghost-light {
+  background: transparent;
+  color: var(--ink-900);
+  border: 1px solid var(--line-l);
+}
+.btn-ghost-light:hover { border-color: var(--silver-600); color: var(--silver-700); }
+.btn svg { width: 16px; height: 16px; }
+
+/* CARDS FLUTUANDO 3D */
+.float-card {
+  position: absolute;
+  background: var(--ink-800);
+  border: 1px solid var(--line-d);
+  border-radius: 16px;
+  padding: 18px 22px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease), box-shadow 0.6s;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  z-index: 6;
+}
+.float-card .top {
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--silver-300);
+  margin-bottom: 8px;
+}
+.float-card .big {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  line-height: 1;
+}
+.float-card .small { font-size: 12px; color: var(--gray-400); margin-top: 6px; }
+
+.fc-photo {
+  top: 22%; left: 3vw;
+  width: 260px;
+  padding: 14px;
+  background: linear-gradient(180deg, #F4F4F8 0%, #D8D8E0 100%);
+  border-color: #9C9CA6;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    0 30px 60px rgba(0,0,0,0.6);
+  transform: perspective(1200px) rotateY(8deg) rotateX(-3deg) rotateZ(-2deg) translateZ(50px);
+  animation: floatY 7s ease-in-out infinite;
+}
+.fc-photo img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 8px;
+}
+.fc-photo .tag {
+  margin-top: 10px;
+  font-family: var(--display);
+  font-size: 10.5px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink-900);
+  text-align: center;
+  font-weight: 600;
+}
+.fc-photo .tag em { font-family: var(--serif); font-style: italic; color: var(--silver-700); text-transform: lowercase; letter-spacing: -0.01em; font-size: 13px; font-weight: 500; }
+
+.fc-stat-1 {
+  /* canto inferior esquerdo, abaixo do CTA, sobre a base da pistola */
+  bottom: 40px; left: 2vw;
+  transform: perspective(1200px) rotateY(8deg) rotateX(-3deg) rotateZ(-3deg) translateZ(40px);
+  animation: floatY2 8s ease-in-out infinite;
+}
+.fc-stat-2 {
+  /* entre a palavra "Tatuagem" e o Samuel — meio-direita, na altura do título */
+  top: 32%; right: 36vw;
+  transform: perspective(1200px) rotateY(-6deg) rotateX(2deg) rotateZ(-2deg) translateZ(30px);
+  animation: floatY 9s ease-in-out infinite 0.6s;
+}
+@media (max-width: 1200px) { .fc-stat-2 { right: 30vw; top: 28%; } }
+.float-card:hover {
+  transform: perspective(1200px) rotateY(0) rotateX(0) rotateZ(0) translateZ(80px) scale(1.05);
+  animation-play-state: paused;
+}
+
+@media (max-width: 1100px) {
+  .fc-photo { top: 90px; right: 2vw; width: 160px; }
+  .fc-stat-2 { top: 230px; }
+}
+@media (max-width: 900px) {
+  .hero { padding: 110px 0 70px; min-height: 90vh; }
+  .hero-title .line-2 { padding-left: 0; }
+  .hero-title { font-size: clamp(48px, 14vw, 90px); margin-bottom: 24px; }
+  .hero-eyebrow { margin-bottom: 24px; }
+  .hero-row { grid-template-columns: 1fr; gap: 28px; margin-top: 36px; }
+  .hero-actions { justify-content: flex-start; }
+  .hero-sub { font-size: 16px; }
+  .float-card { display: none; }
+  .hero-pistola { display: none; }
+  .hero-samuel { display: none; }
+}
+@media (max-width: 600px) {
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn { justify-content: center; }
+}
+
+/* MARQUEE escuro */
+.marquee {
+  background: var(--black);
+  color: var(--paper);
+  border-top: 1px solid var(--line-d);
+  border-bottom: 1px solid var(--line-d);
+  overflow: hidden;
+  padding: 20px 0;
+}
+.marquee-track {
+  display: flex; gap: 64px;
+  animation: marquee 42s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+  align-items: center;
+}
+.marquee-item {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(15px, 1.4vw, 19px);
+  color: var(--paper);
+  letter-spacing: 0.02em;
+  display: inline-flex; align-items: center; gap: 14px;
+  text-transform: none;
+}
+.marquee-item svg { width: 20px; height: 20px; color: var(--silver-300); flex-shrink: 0; }
+.marquee-sep { width: 5px; height: 5px; border-radius: 50%; background: var(--silver-600); margin-left: 50px; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ============ SECTION BASE ============ */
+section { padding: clamp(80px, 10vw, 140px) 0; position: relative; }
+.s-head { margin-bottom: clamp(48px, 6vw, 80px); }
+.s-head.center { text-align: center; max-width: 760px; margin-left: auto; margin-right: auto; }
+.s-head .micro { color: var(--silver-700); margin-bottom: 14px; display: inline-block; }
+.s-head-after-quiz { margin-top: 88px; }
+@media (max-width: 768px) { .s-head-after-quiz { margin-top: 32px; } }
+.s-head.dark .micro { color: var(--silver-300); }
+.s-head h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5.4vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.s-head h2 .it { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--silver-700); letter-spacing: -0.025em; font-size: 0.94em; }
+.s-head.dark h2 .it { color: var(--silver-400); }
+.s-head p { color: var(--gray-600); font-size: 17px; line-height: 1.65; max-width: 620px; margin-top: 20px; }
+.s-head.dark p { color: var(--gray-300); }
+.s-head.center p { margin-left: auto; margin-right: auto; }
+
+/* ============ SOBRE / MANIFESTO ============ */
+.sobre { background: var(--paper); }
+.sobre-row {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+}
+.sobre-photo {
+  position: relative;
+  border-radius: 14px;
+  animation: floatY 7s ease-in-out infinite;
+}
+.sobre-photo::before {
+  /* moldura decorativa que aparece no hover */
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border: 1px solid var(--silver-600);
+  border-radius: 18px;
+  opacity: 0;
+  transform: translate(8px, 8px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  pointer-events: none;
+}
+.sobre-photo:hover::before {
+  opacity: 0.55;
+  transform: translate(14px, 14px);
+}
+.sobre-photo img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 40px 90px rgba(11,11,11,0.32);
+  display: block;
+  transition: transform 0.8s var(--ease), filter 0.8s var(--ease), box-shadow 0.6s;
+}
+.sobre-photo:hover img {
+  transform: scale(1.025);
+  filter: brightness(1.06) contrast(1.04);
+  box-shadow: 0 50px 110px rgba(11,11,11,0.42);
+}
+.sobre-photo-tag {
+  position: absolute;
+  bottom: -22px; right: -22px;
+  background: var(--black);
+  color: var(--paper);
+  padding: 16px 22px;
+  border-radius: 14px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  max-width: 260px;
+  line-height: 1.4;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  border: 1px solid var(--line-d);
+}
+.sobre-photo-tag em { color: var(--silver-300); }
+.sobre-text h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin: 18px 0 28px;
+}
+.sobre-text h2 .it { font-family: var(--serif); font-style: italic; color: var(--silver-700); font-weight: 400; }
+.sobre-text p {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--ink-700);
+  margin-bottom: 18px;
+}
+.sobre-creds {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  margin-top: 38px;
+  padding-top: 30px;
+  border-top: 1px solid var(--paper-3);
+}
+.sobre-cred .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--silver-700);
+  letter-spacing: -0.025em;
+}
+.sobre-cred .lbl {
+  font-size: 12px;
+  color: var(--gray-500);
+  letter-spacing: 0.02em;
+  margin-top: 8px;
+  max-width: 130px;
+  line-height: 1.4;
+}
+@media (max-width: 900px) {
+  .sobre-row { grid-template-columns: 1fr; gap: 56px; }
+  .sobre-photo { max-width: 340px; margin: 0 auto; width: 100%; }
+}
+
+/* ============ A MÁQUINA (DIFERENCIAL VISUAL 3D) ============ */
+.maquina {
+  background: var(--black);
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.maquina::before {
+  content: ""; position: absolute;
+  top: 50%; right: -15%;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,180,192,0.14) 0%, transparent 60%);
+  transform: translateY(-50%);
+  filter: blur(40px);
+  pointer-events: none;
+  animation: pulse-soft 8s ease-in-out infinite;
+}
+.maquina-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 80px;
+  align-items: center;
+  perspective: 1600px;
+}
+.maquina-text h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin: 14px 0 24px;
+}
+.maquina-text h2 .it { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--silver-400); }
+.maquina-text p {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--gray-300);
+  margin-bottom: 18px;
+  max-width: 540px;
+}
+.maquina-compare {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 22px; align-items: stretch;
+  margin-top: 32px;
+}
+.compare-box {
+  background: var(--ink-800);
+  border: 1px solid var(--line-d);
+  border-radius: 14px;
+  padding: 22px;
+  text-align: center;
+}
+.compare-box.us { background: var(--silver-700); border-color: var(--silver-400); }
+.compare-box .top { font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--gray-400); font-weight: 500; }
+.compare-box.us .top { color: var(--silver-100); }
+.compare-box .num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--paper);
+  margin: 8px 0 4px;
+}
+.compare-box .lbl { font-size: 12px; color: var(--gray-400); }
+.compare-box.us .lbl { color: var(--silver-100); }
+.compare-vs {
+  align-self: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--silver-400);
+}
+
+/* Visual da máquina — foto dentro de orb circular metálico + anéis orbitais */
+.maq-visual {
+  position: relative;
+  aspect-ratio: 1/1;
+  display: grid; place-items: center;
+}
+.maq-orb {
+  position: relative;
+  width: 78%; aspect-ratio: 1/1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #2A2A33 0%, #1A1A21 35%, #0D0D11 70%, #050507 100%);
+  box-shadow:
+    inset -40px -40px 100px rgba(0,0,0,0.85),
+    inset 30px 30px 60px rgba(255,255,255,0.05),
+    0 60px 120px rgba(0,0,0,0.65),
+    0 0 80px rgba(180,180,192,0.16);
+  overflow: hidden;
+  z-index: 3;
+  animation: floatY 8s ease-in-out infinite;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.maq-orb::before {
+  /* highlight de vidro no topo */
+  content: ""; position: absolute;
+  top: 6%; left: 18%;
+  width: 42%; height: 22%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.22) 0%, transparent 70%);
+  filter: blur(10px);
+  z-index: 2;
+  pointer-events: none;
+}
+.maq-orb::after {
+  /* reflexo inferior sutil */
+  content: ""; position: absolute;
+  bottom: 8%; left: 50%;
+  transform: translateX(-50%);
+  width: 60%; height: 14%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(180,180,192,0.18) 0%, transparent 70%);
+  filter: blur(8px);
+  z-index: 2;
+  pointer-events: none;
+}
+.maq-photo {
+  position: relative;
+  z-index: 1;
+  width: 105%;
+  height: 105%;
+  object-fit: cover;
+  object-position: center 45%;
+  filter: contrast(1.05) brightness(0.95) drop-shadow(0 0 20px rgba(255,90,40,0.25));
+}
+.maq-glow {
+  position: absolute;
+  width: 88%; aspect-ratio: 1/1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,180,192,0.22) 0%, rgba(180,180,192,0.08) 40%, transparent 70%);
+  filter: blur(50px);
+  z-index: 1;
+  animation: pulse-soft 6s ease-in-out infinite;
+}
+.maq-ring {
+  position: absolute;
+  width: 92%; aspect-ratio: 1/1;
+  border: 1px dashed rgba(180,180,192,0.36);
+  border-radius: 50%;
+  animation: spin 32s linear infinite;
+  z-index: 4;
+  pointer-events: none;
+}
+.maq-ring::before {
+  content: ""; position: absolute;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--silver-300);
+  box-shadow: 0 0 16px var(--silver-300);
+  top: -5px; left: 50%; transform: translateX(-50%);
+}
+.maq-ring-2 {
+  position: absolute;
+  width: 108%; aspect-ratio: 1/1;
+  border: 1px solid rgba(180,180,192,0.18);
+  border-radius: 50%;
+  animation: spin 60s linear infinite reverse;
+  z-index: 4;
+  pointer-events: none;
+}
+@keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+.maq-tags {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+.maq-tag {
+  position: absolute;
+  background: rgba(11,11,11,0.88);
+  border: 1px solid rgba(255,255,255,0.14);
+  backdrop-filter: blur(10px);
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+  font-weight: 500;
+  z-index: 6;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+}
+.maq-tag.t1 { top: 8%; right: -4%; }
+.maq-tag.t2 { top: 38%; right: -8%; }
+.maq-tag.t3 { bottom: 22%; right: -4%; }
+.maq-tag.t4 { bottom: 6%; left: -2%; }
+.maq-tag b { color: var(--silver-300); font-family: var(--serif); font-style: italic; font-weight: 500; text-transform: lowercase; letter-spacing: -0.01em; font-size: 13px; }
+@media (max-width: 900px) {
+  .maquina-grid { grid-template-columns: 1fr; gap: 48px; }
+  .maq-visual {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    justify-self: center;
+    aspect-ratio: 1/1;
+  }
+  .maquina-compare { grid-template-columns: 1fr; gap: 14px; }
+  .compare-vs { transform: none; justify-self: center; }
+}
+
+/* ============ SIMULADOR ============ */
+.servicos { background: var(--paper); }
+.simulator {
+  background: var(--paper-2);
+  border: 1px solid var(--paper-3);
+  border-radius: 24px;
+  padding: clamp(32px, 4vw, 56px);
+  margin-bottom: 64px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 30px 70px rgba(11,11,11,0.06);
+}
+.simulator::before {
+  content: ""; position: absolute;
+  top: -100px; right: -100px;
+  width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,180,192,0.1) 0%, transparent 65%);
+  pointer-events: none;
+}
+.sim-head { margin-bottom: 24px; position: relative; z-index: 2; }
+.sim-head .micro { color: var(--silver-700); margin-bottom: 12px; display: inline-block; }
+.sim-head h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin-bottom: 8px;
+}
+.sim-head h3 .it { font-family: var(--serif); font-style: italic; color: var(--silver-700); font-weight: 400; }
+.sim-head p { color: var(--gray-600); font-size: 15px; max-width: 560px; }
+
+/* Progresso */
+.sim-progress { position: relative; z-index: 2; margin-bottom: 28px; }
+.sim-progress-info {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  margin-bottom: 12px;
+  font-family: var(--display);
+  font-size: 12px;
+  color: var(--gray-600);
+  letter-spacing: 0.04em;
+}
+.sim-progress-info strong { color: var(--ink-900); font-weight: 700; }
+.sim-back {
+  background: transparent; border: 1px solid var(--paper-3); cursor: pointer;
+  font-family: var(--display);
+  font-size: 12px; font-weight: 500; color: var(--ink-900);
+  padding: 7px 14px;
+  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: all 0.25s var(--ease);
+  letter-spacing: 0.01em;
+}
+.sim-back:hover { background: var(--ink-900); color: var(--paper); border-color: var(--ink-900); }
+.sim-back:disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+.sim-back svg { width: 14px; height: 14px; }
+
+.sim-progress-bar {
+  height: 4px; border-radius: 999px;
+  background: var(--paper-3);
+  overflow: hidden;
+}
+.sim-progress-fill {
+  height: 100%; width: 25%;
+  background: linear-gradient(90deg, var(--silver-700) 0%, var(--ink-900) 100%);
+  border-radius: 999px;
+  transition: width 0.5s var(--ease);
+}
+
+/* Estágios — transição estilo Duolingo (slide horizontal) */
+.sim-stages {
+  position: relative;
+  min-height: 340px;
+  z-index: 2;
+  overflow: hidden;
+  transition: min-height 0.45s var(--ease), opacity 0.35s var(--ease), margin 0.35s var(--ease);
+}
+.simulator.final-mode .sim-stages {
+  min-height: 0;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.simulator.final-mode .sim-stage { display: none; }
+.sim-stage {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transform: translateX(40px);
+  pointer-events: none;
+  transition: opacity 0.45s var(--ease), transform 0.5s var(--ease);
+}
+.sim-stage.active {
+  position: relative;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+.sim-stage.leaving-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  pointer-events: none;
+}
+.sim-stage.entering-from-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+.sim-label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--ink-900);
+  margin-bottom: 24px;
+}
+.sim-options-large {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.sim-option-large {
+  background: var(--paper);
+  border: 2px solid var(--paper-3);
+  border-radius: 16px;
+  padding: 22px 22px 24px;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--display);
+  color: var(--ink-900);
+  transition: transform 0.25s var(--ease), box-shadow 0.3s, border-color 0.3s, background 0.3s, color 0.3s;
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.sim-option-large::after {
+  content: "→";
+  position: absolute;
+  top: 18px; right: 22px;
+  font-size: 16px;
+  color: var(--gray-400);
+  transition: transform 0.3s var(--ease), color 0.3s, opacity 0.2s;
+}
+.sim-option-large:hover {
+  border-color: var(--ink-900);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 32px rgba(11,11,11,0.08);
+}
+.sim-option-large:hover::after { transform: translateX(4px); color: var(--ink-900); }
+.sim-option-large.selected {
+  background: var(--ink-900);
+  color: var(--paper);
+  border-color: var(--ink-900);
+  animation: optionPop 0.35s var(--ease-snap);
+}
+.sim-option-large.selected::after {
+  content: "✓";
+  color: var(--silver-100);
+  font-size: 18px;
+  font-weight: 700;
+  animation: checkPop 0.4s 0.05s var(--ease-snap) both;
+}
+@keyframes optionPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.035); }
+  100% { transform: scale(1); }
+}
+@keyframes checkPop {
+  0%   { transform: scale(0) rotate(-25deg); opacity: 0; }
+  60%  { transform: scale(1.3) rotate(8deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.opt-num {
+  font-family: var(--display);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--silver-600);
+  margin-bottom: 14px;
+}
+.sim-option-large.selected .opt-num { color: var(--silver-300); }
+.opt-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin-bottom: 6px;
+}
+.opt-desc {
+  font-size: 13px;
+  color: var(--gray-600);
+  line-height: 1.4;
+}
+.sim-option-large.selected .opt-desc { color: var(--silver-300); }
+
+/* Resultado final */
+.sim-final {
+  position: relative; z-index: 2;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 40px;
+  background: linear-gradient(180deg, var(--black) 0%, var(--ink-900) 100%);
+  color: var(--paper);
+  border-radius: 18px;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: max-height 0.55s var(--ease), padding 0.5s var(--ease), opacity 0.5s 0.1s var(--ease), transform 0.5s 0.1s var(--ease), margin 0.45s var(--ease);
+  margin: 0;
+}
+.sim-final.show {
+  max-height: 600px;
+  opacity: 1;
+  transform: scale(1);
+  padding: 48px 40px;
+}
+.sim-final-tag {
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--silver-300);
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.sim-final-num {
+  font-family: var(--serif);
+  font-style: italic; font-weight: 500;
+  font-size: clamp(72px, 12vw, 140px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--silver-100);
+  margin-bottom: 8px;
+}
+.sim-final-num em {
+  font-style: normal;
+  font-size: 0.55em;
+  color: var(--silver-600);
+  margin: 0 8px;
+  vertical-align: middle;
+}
+.sim-final-label {
+  font-family: var(--serif);
+  font-size: 18px; font-weight: 300;
+  font-style: italic;
+  color: var(--silver-300);
+  margin-bottom: 32px;
+}
+.sim-final-actions {
+  display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+}
+.sim-final-actions .btn-ghost-light {
+  background: transparent;
+  border-color: rgba(255,255,255,0.2);
+  color: var(--paper);
+}
+.sim-final-actions .btn-ghost-light:hover { border-color: var(--silver-400); color: var(--silver-300); }
+
+@media (max-width: 600px) {
+  .sim-options-large { grid-template-columns: 1fr; }
+  .sim-final { padding: 32px 24px; }
+  .sim-final-num { font-size: 80px; }
+  .sim-final-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* ============ SERVIÇOS CARDS VARIADOS ============ */
+.serv-bento {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 18px;
+  position: relative; z-index: 2;
+  perspective: 1400px;
+  perspective-origin: center;
+}
+.serv-card {
+  position: relative;
+  background: var(--paper-2);
+  border: 1px solid var(--paper-3);
+  border-radius: 18px;
+  padding: clamp(28px, 3.2vw, 44px);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.55s var(--ease), box-shadow 0.45s, border-color 0.45s, background 0.4s;
+}
+.serv-card.tilting { transition: border-color 0.45s, background 0.4s; }
+.serv-card:hover { border-color: var(--silver-400); }
+.serv-card > * { transform: translateZ(14px); }
+.serv-card .serv-link { transform: translateZ(24px); }
+@media (hover: none), (pointer: coarse) { .serv-card { transform: none !important; } }
+
+/* Card 01 — destaque, fundo preto, dois rows altura */
+.serv-card.feat {
+  grid-row: span 2;
+  background: var(--black);
+  color: var(--paper);
+  border-color: var(--ink-700);
+  /* clipping suave assimétrico */
+  border-radius: 18px 18px 18px 64px;
+}
+.serv-card.feat::after {
+  content: ""; position: absolute;
+  bottom: -30%; right: -15%;
+  width: 60%; aspect-ratio: 1/1; border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,180,192,0.14) 0%, transparent 60%);
+  pointer-events: none;
+}
+.serv-card .num {
+  font-family: var(--display);
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--silver-700);
+  font-weight: 600;
+}
+.serv-card.feat .num { color: var(--silver-300); }
+.serv-card h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(24px, 2.4vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin: 18px 0 14px;
+}
+.serv-card.feat h3 { font-size: clamp(32px, 3.4vw, 56px); }
+.serv-card h3 .it { font-family: var(--serif); font-style: italic; color: var(--silver-700); font-weight: 400; }
+.serv-card.feat h3 .it { color: var(--silver-400); }
+.serv-card p {
+  font-family: var(--serif);
+  font-size: 15.5px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--gray-600);
+  margin-bottom: 18px;
+  max-width: 480px;
+}
+.serv-card.feat p { color: var(--gray-300); }
+.serv-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px; }
+.serv-list li {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--display);
+  font-size: 13.5px;
+  color: var(--gray-600);
+  font-weight: 400;
+}
+.serv-card.feat .serv-list li { color: var(--gray-300); }
+.serv-list li::before { content: ""; width: 14px; height: 1px; background: var(--silver-600); flex-shrink: 0; }
+.serv-card.feat .serv-list li::before { background: var(--silver-400); }
+.serv-link {
+  margin-top: auto;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--silver-700);
+  position: relative; z-index: 2;
+}
+.serv-card.feat .serv-link { color: var(--silver-300); }
+.serv-link svg { width: 14px; height: 14px; transition: transform 0.3s; }
+.serv-link:hover svg { transform: translateX(4px); }
+
+/* segundo card (top-right) */
+.serv-card.c2 { border-radius: 64px 18px 18px 18px; }
+/* terceiro card (bottom-right) */
+.serv-card.c3 {
+  background: var(--paper);
+  border-radius: 18px 64px 18px 18px;
+}
+@media (max-width: 900px) {
+  .serv-bento { grid-template-columns: 1fr; }
+  .serv-card.feat { grid-row: auto; border-radius: 18px 18px 18px 32px; }
+  .serv-card.c2, .serv-card.c3 { border-radius: 18px; }
+}
+
+/* ============ ANTES/DEPOIS + CASES ============ */
+.cases { background: var(--black); color: var(--paper); position: relative; overflow: hidden; }
+.cases::before {
+  content: ""; position: absolute;
+  top: 20%; left: -10%;
+  width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,180,192,0.1) 0%, transparent 65%);
+  filter: blur(20px); pointer-events: none;
+}
+
+.ba-block { margin-bottom: 64px; position: relative; z-index: 2; }
+.ba-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 22px;
+  overflow: hidden;
+  cursor: col-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  background: var(--ink-800);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  border: 1px solid var(--line-d);
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
+.ba-img { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+.ba-img img { width: 100%; height: 100%; object-fit: cover; object-position: center; pointer-events: none; display: block; }
+.ba-after { clip-path: inset(0 0 0 50%); }
+.ba-label {
+  position: absolute; top: 18px;
+  padding: 7px 14px;
+  background: rgba(11,11,11,0.78);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  font-family: var(--display);
+  font-size: 10.5px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--paper);
+  z-index: 3;
+  pointer-events: none;
+}
+.ba-label.l-a { left: 18px; }
+.ba-label.l-b { right: 18px; border-color: rgba(212,212,220,0.4); color: var(--silver-300); }
+.ba-handle {
+  position: absolute; top: 0; bottom: 0; left: 50%;
+  width: 2px; background: var(--paper);
+  box-shadow: 0 0 22px rgba(0,0,0,0.5);
+  z-index: 4; pointer-events: none;
+}
+.ba-knob {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--paper);
+  color: var(--black);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+  z-index: 5;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.ba-knob svg { width: 22px; height: 22px; }
+.ba-meta {
+  margin-top: 26px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 24px; flex-wrap: wrap;
+}
+.ba-meta h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.ba-meta h3 .it { font-family: var(--serif); font-style: italic; color: var(--silver-400); }
+.ba-meta-info {
+  display: flex; gap: 22px;
+  font-family: var(--display);
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gray-400); font-weight: 500;
+}
+.ba-meta-info strong { color: var(--silver-300); font-weight: 600; }
+
+.cases-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  max-width: 760px; margin-inline: auto;
+  position: relative; z-index: 2;
+}
+.case-card {
+  background: var(--ink-800);
+  border: 1px solid var(--line-d);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform 0.5s var(--ease), border-color 0.5s;
+}
+.case-card:hover { transform: translateY(-6px); border-color: var(--silver-600); }
+.case-photo {
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  position: relative;
+  background: var(--ink-900);
+}
+.case-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.case-card:hover .case-photo img { transform: scale(1.05); }
+.case-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(11,11,11,0.55) 100%); }
+.case-tag {
+  position: absolute; top: 16px; left: 16px;
+  background: rgba(11,11,11,0.72);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212,212,220,0.4);
+  color: var(--silver-300);
+  padding: 6px 12px; border-radius: 999px;
+  font-family: var(--display);
+  font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600;
+  z-index: 2;
+}
+.case-body { padding: 24px 24px 28px; }
+.case-meta {
+  display: flex; gap: 18px;
+  font-family: var(--display);
+  font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gray-400); font-weight: 500;
+  margin-bottom: 12px;
+}
+.case-meta strong { color: var(--silver-300); font-weight: 600; }
+.case-body h3 {
+  font-family: var(--serif);
+  font-weight: 400; font-style: italic;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.case-body p { font-family: var(--display); font-size: 14px; line-height: 1.55; color: var(--gray-300); }
+@media (max-width: 900px) { .cases-grid { grid-template-columns: 1fr; gap: 16px; } }
+
+/* ============ PROCESSO TIMELINE HORIZONTAL ============ */
+.processo { background: var(--paper); }
+.proc-rail {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+.proc-item { position: relative; }
+
+/* ícone do passo — agora é o destaque, no topo */
+.proc-icon {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--paper-2) 0%, var(--paper) 100%);
+  border: 1px solid var(--paper-3);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-900);
+  box-shadow: 0 8px 22px rgba(11,11,11,0.08);
+  transition: transform 0.5s var(--ease), background 0.5s, color 0.5s, box-shadow 0.5s, border-color 0.5s;
+  margin-bottom: 24px;
+}
+.proc-icon svg {
+  width: 32px; height: 32px;
+  stroke-width: 1.5;
+  transition: transform 0.5s var(--ease);
+}
+.proc-item:hover .proc-icon {
+  background: linear-gradient(180deg, var(--ink-800) 0%, var(--black) 100%);
+  border-color: var(--ink-800);
+  color: var(--silver-100);
+  transform: rotate(-4deg) translateY(-4px);
+  box-shadow: 0 18px 38px rgba(11,11,11,0.32);
+}
+
+/* animação individual por ícone */
+.proc-item:hover .ico-01 .ic-lens { animation: zoomLens 0.9s var(--ease) both; }
+.proc-item:hover .ico-02 .ic-line { stroke-dasharray: 20; animation: drawLine 0.7s var(--ease) both; }
+.proc-item:hover .ico-02 .ic-line-2 { stroke-dasharray: 20; animation: drawLine 0.7s 0.15s var(--ease) both; }
+.proc-item:hover .ico-02 .ic-line-3 { stroke-dasharray: 20; animation: drawLine 0.7s 0.3s var(--ease) both; }
+.proc-item:hover .ico-03 svg { animation: zapPulse 0.8s var(--ease) both; }
+.proc-item:hover .ico-04 .ic-chart { stroke-dasharray: 60; animation: drawLine 0.9s var(--ease) both; }
+.proc-item:hover .ico-04 .ic-dot { animation: dotPop 0.6s 0.4s var(--ease-snap) both; }
+.proc-item:hover .ico-04 .ic-dot-2 { animation: dotPop 0.6s 0.6s var(--ease-snap) both; }
+
+@keyframes zoomLens {
+  0% { transform: scale(0.6); }
+  50% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+@keyframes drawLine {
+  from { stroke-dashoffset: 20; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes zapPulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+  50% { transform: scale(1.18) rotate(-6deg); filter: drop-shadow(0 0 14px rgba(255,200,120,0.7)); }
+  100% { transform: scale(1) rotate(0); filter: drop-shadow(0 0 0 transparent); }
+}
+@keyframes dotPop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+.ic-dot, .ic-dot-2 { transform-origin: center; transform-box: fill-box; }
+.proc-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--silver-700);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.proc-item h4 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin-bottom: 10px;
+}
+.proc-item p { font-size: 14px; line-height: 1.55; color: var(--gray-600); }
+@media (max-width: 900px) {
+  .proc-rail { grid-template-columns: 1fr 1fr; gap: 24px; }
+}
+@media (max-width: 560px) {
+  .proc-rail { grid-template-columns: 1fr; }
+}
+
+/* ============ FAQ ============ */
+.faq { background: var(--paper); border-top: 1px solid var(--paper-3); }
+.faq-list { margin-top: 24px; max-width: 920px; margin-left: auto; margin-right: auto; border-top: 1px solid var(--paper-3); }
+.faq-item { border-bottom: 1px solid var(--paper-3); transition: background 0.3s; }
+.faq-item:hover { background: var(--paper-2); }
+.faq-q {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 26px 8px;
+  text-align: left;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(19px, 2vw, 26px);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink-900);
+  transition: color 0.3s;
+}
+.faq-q:hover { color: var(--silver-700); }
+.faq-q .toggle {
+  width: 36px; height: 36px; border: 1px solid var(--paper-3);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.4s var(--ease); position: relative;
+}
+.faq-q .toggle::before, .faq-q .toggle::after {
+  content: ""; position: absolute;
+  width: 12px; height: 1.5px; background: var(--ink-900);
+  transition: all 0.4s var(--ease);
+}
+.faq-q .toggle::after { transform: rotate(90deg); }
+.faq-item.open .faq-q .toggle { background: var(--silver-700); border-color: var(--silver-700); }
+.faq-item.open .faq-q .toggle::before, .faq-item.open .faq-q .toggle::after { background: var(--paper); }
+.faq-item.open .faq-q .toggle::after { transform: rotate(0); }
+.faq-item.open .faq-q { color: var(--silver-700); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease); }
+.faq-a-inner {
+  padding: 0 60px 28px 8px;
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--gray-600);
+}
+.faq-item.open .faq-a { max-height: 360px; }
+
+/* ============ CONTATO ============ */
+.contato {
+  background: var(--black);
+  color: var(--paper);
+  position: relative; overflow: hidden;
+}
+.contato::before {
+  content: ""; position: absolute;
+  top: -10%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,180,192,0.14) 0%, transparent 60%);
+  filter: blur(30px); pointer-events: none;
+  animation: pulse-soft 8s ease-in-out infinite;
+}
+.contato-inner { position: relative; z-index: 2; text-align: center; max-width: 920px; margin: 0 auto; }
+.contato .micro { color: var(--silver-300); margin-bottom: 22px; display: inline-block; }
+.contato h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(40px, 6.4vw, 96px);
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+}
+.contato h2 .it { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--silver-400); letter-spacing: -0.03em; }
+.contato .sub {
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.4vw, 21px);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--gray-300);
+  margin: 26px auto 38px;
+  max-width: 560px;
+}
+.contato .btns { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.contato-info {
+  margin-top: 64px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  text-align: left;
+}
+.contato-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 24px;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+  display: block;
+}
+.contato-card:hover { border-color: var(--silver-600); background: rgba(180,180,192,0.04); transform: translateY(-3px); }
+.contato-card .lbl {
+  font-family: var(--display);
+  font-size: 10.5px; letter-spacing: 0.20em; text-transform: uppercase;
+  color: var(--silver-300); margin-bottom: 12px; font-weight: 600;
+  display: flex; align-items: center; gap: 10px;
+}
+.contato-card .lbl svg { width: 14px; height: 14px; }
+.contato-card .val {
+  font-family: var(--serif);
+  font-style: italic; font-weight: 500;
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--paper);
+}
+.contato-card .val small {
+  display: block;
+  font-family: var(--display);
+  font-style: normal;
+  font-size: 12.5px;
+  color: var(--gray-400);
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+.mapa-block {
+  margin-top: 70px;
+  background: var(--ink-900);
+  border: 1px solid var(--line-d);
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative; z-index: 2;
+}
+.mapa-head {
+  display: flex; justify-content: space-between; align-items: end;
+  gap: 24px; flex-wrap: wrap;
+  padding: 26px 30px;
+  border-bottom: 1px solid var(--line-d);
+  text-align: left;
+}
+.mapa-head .micro { color: var(--silver-300); }
+.mapa-head h4 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin-top: 6px;
+}
+.mapa-head h4 .it { font-family: var(--serif); font-style: italic; color: var(--silver-400); font-weight: 400; }
+.mapa-head-side { display: flex; gap: 32px; font-family: var(--display); font-size: 12px; letter-spacing: 0.06em; color: var(--gray-300); }
+.mapa-head-side b { display: block; color: var(--paper); font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 18px; margin-top: 4px; }
+.mapa-frame { width: 100%; aspect-ratio: 21/9; background: var(--ink-700); filter: grayscale(0.55) contrast(1.05) brightness(0.85); }
+.mapa-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+@media (max-width: 700px) { .contato-info { grid-template-columns: 1fr; } .contato .btns .btn { flex: 1; justify-content: center; } .mapa-frame { aspect-ratio: 4/3; } }
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--ink-900);
+  color: var(--gray-400);
+  padding: 56px 0 32px;
+  border-top: 1px solid var(--line-d);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 48px; margin-bottom: 48px;
+}
+.footer-logo-img { height: 30px; width: auto; display: block; mix-blend-mode: screen; margin-bottom: 16px; }
+.footer-brand p { max-width: 320px; font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.6; }
+.footer-col h5 {
+  font-family: var(--display);
+  font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase;
+  color: var(--silver-300); font-weight: 600;
+  margin-bottom: 16px;
+}
+.footer-col a, .footer-col p { display: block; font-size: 14px; line-height: 1.85; color: var(--gray-400); transition: color 0.25s; font-family: var(--display); }
+.footer-col a:hover { color: var(--paper); }
+.footer-bottom {
+  padding-top: 24px; border-top: 1px solid var(--line-d);
+  display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  font-family: var(--display);
+  font-size: 12px; letter-spacing: 0.04em;
+}
+.footer-bottom .foot-credit {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  color: var(--gray-400);
+}
+.footer-bottom .foot-credit .brand-criativvo {
+  font-family: 'AVEstiana', var(--display);
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: -0.03em;
+  color: var(--silver-300);
+  transition: color 0.25s;
+}
+.footer-bottom .foot-credit .brand-criativvo:hover { color: var(--paper); }
+
+/* ============ MADE-BY (badge flutuante criativvo) ============ */
+.made-by {
+  position: fixed;
+  bottom: 30px; left: 24px;
+  z-index: 79;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 14px 9px 12px;
+  background: rgba(11, 11, 11, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 999px;
+  color: var(--paper);
+  text-decoration: none;
+  line-height: 1;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.32);
+  transition: transform 0.3s var(--ease), background 0.3s, border-color 0.3s, box-shadow 0.3s, opacity 0.4s;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+.made-by.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.made-by:hover {
+  background: rgba(11,11,11,0.95);
+  border-color: var(--silver-500);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.45);
+}
+.made-by .label {
+  font-family: var(--display);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  font-weight: 500;
+}
+.made-by .brand {
+  font-family: 'AVEstiana', var(--display);
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--silver-300);
+  transition: color 0.3s;
+}
+.made-by:hover .brand { color: var(--paper); }
+@media (max-width: 700px) {
+  .made-by { bottom: 26px; left: 18px; padding: 8px 12px 8px 10px; }
+  .made-by .label { font-size: 8px; letter-spacing: 0.14em; }
+  .made-by .brand { font-size: 13px; }
+}
+body.menu-open .made-by { opacity: 0; pointer-events: none; }
+@media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr; gap: 32px; } .footer-bottom { flex-direction: column; align-items: flex-start; } }
+
+/* ============ MOBILE OVERRIDES (proporções e refinamentos) ============ */
+@media (max-width: 768px) {
+  body { font-size: 15.5px; }
+  .container { padding: 0 18px; }
+  section { padding: 64px 0; }
+  .s-head { margin-bottom: 40px; }
+  .s-head h2 { font-size: clamp(28px, 8.5vw, 40px); line-height: 1.05; }
+  .s-head p { font-size: 15px; line-height: 1.6; }
+
+  /* Hero */
+  .hero h1 { font-size: clamp(44px, 13vw, 72px); line-height: 0.95; }
+  .hero-sub { font-size: 15px; max-width: none; }
+  .hero-stats { gap: 22px; padding-top: 28px; }
+  .hero-stat .n { font-size: 36px; }
+  .hero-stat .l { font-size: 10px; letter-spacing: 0.18em; }
+
+  /* Sobre */
+  .sobre-text h2 { font-size: clamp(28px, 8vw, 38px); }
+  .sobre-text p { font-size: 16px; line-height: 1.7; }
+  .sobre-creds { grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 26px; padding-top: 22px; }
+  .sobre-cred { min-width: 0; }
+  .sobre-cred .num { font-size: 24px; }
+  .sobre-cred .lbl { font-size: 10.5px; line-height: 1.3; letter-spacing: 0.005em; max-width: none; }
+  .sobre-photo-tag { bottom: 14px; right: 14px; left: 14px; padding: 14px 16px; font-size: 14px; }
+
+  /* Máquina */
+  .maquina-grid { grid-template-columns: 1fr; gap: 40px; }
+  .maquina-text h2 { font-size: clamp(28px, 8vw, 40px); }
+  .maquina-text p { font-size: 15px; }
+  .maq-visual {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    justify-self: center;
+  }
+  .maq-orb { width: 80%; }
+  .maq-ring { width: 94%; }
+  .maq-ring-2 { width: 110%; }
+  .maq-glow { width: 90%; }
+  .maq-tag { font-size: 8.5px; padding: 6px 10px; letter-spacing: 0.14em; }
+  .maq-tag b { font-size: 10px; }
+  .maq-tag { max-width: 60%; }
+  .maq-tag.t1 { top: 4%; right: 0; }
+  .maq-tag.t2 { top: 36%; right: -2%; }
+  .maq-tag.t3 { bottom: 22%; right: 0; }
+  .maq-tag.t4 { bottom: 4%; left: 0; }
+  .compare-box .num { font-size: 40px; }
+  .compare-box .top { font-size: 10px; }
+  .compare-box .lbl { font-size: 11px; }
+  .compare-vs { font-size: 20px; transform: none; }
+
+  /* Simulador mobile */
+  .simulator { padding: 26px 20px; border-radius: 18px; margin-bottom: 48px; }
+  .sim-head { margin-bottom: 22px; }
+  .sim-head h3 { font-size: 23px; line-height: 1.15; }
+  .sim-head p { font-size: 13.5px; }
+  .sim-progress { margin-bottom: 22px; }
+  .sim-progress-info { font-size: 11.5px; margin-bottom: 10px; }
+  .sim-back { padding: 6px 11px; font-size: 11px; }
+  .sim-back svg { width: 12px; height: 12px; }
+  .sim-stages { min-height: 380px; }
+  .sim-label { font-size: 20px; margin-bottom: 18px; line-height: 1.25; }
+  .sim-options-large { grid-template-columns: 1fr; gap: 10px; }
+  .sim-option-large { padding: 16px 18px; }
+  .sim-option-large::after { top: 16px; right: 18px; font-size: 14px; }
+  .sim-option-large.selected::after { font-size: 16px; }
+  .opt-num { font-size: 9.5px; margin-bottom: 10px; }
+  .opt-title { font-size: 19px; }
+  .opt-desc { font-size: 12.5px; line-height: 1.5; }
+  .simulator.final-mode .sim-stages { min-height: 0; }
+  .sim-final.show { padding: 36px 22px; }
+  .sim-final-tag { font-size: 10px; margin-bottom: 14px; }
+  .sim-final-num { font-size: 74px; }
+  .sim-final-num em { font-size: 0.45em; margin: 0 4px; }
+  .sim-final-label { font-size: 15px; margin-bottom: 22px; }
+  .sim-final-actions { flex-direction: column; width: 100%; gap: 10px; }
+  .sim-final-actions .btn { width: 100%; justify-content: center; }
+
+  /* Serviços bento */
+  .serv-card { padding: 26px 22px; }
+  .serv-card h3 { font-size: 24px; line-height: 1.1; }
+  .serv-card.feat h3 { font-size: 30px; }
+  .serv-card p { font-size: 15px; }
+  .serv-list li { font-size: 13px; }
+
+  /* Cases */
+  .ba-frame { aspect-ratio: 4/3; border-radius: 14px; }
+  .ba-label { font-size: 9.5px; padding: 5px 11px; top: 12px; }
+  .ba-label.l-a { left: 12px; } .ba-label.l-b { right: 12px; }
+  .ba-knob { width: 44px; height: 44px; }
+  .ba-meta { gap: 14px; margin-top: 18px; }
+  .ba-meta h3 { font-size: 20px; }
+  .ba-meta-info { font-size: 10px; gap: 14px; flex-wrap: wrap; }
+  .case-card { border-radius: 14px; }
+  .case-body { padding: 20px; }
+  .case-body h3 { font-size: 20px; }
+  .case-body p { font-size: 13.5px; }
+
+  /* Processo */
+  .proc-icon { width: 56px; height: 56px; border-radius: 14px; }
+  .proc-icon svg { width: 28px; height: 28px; }
+  .proc-item h4 { font-size: 21px; }
+  .proc-item p { font-size: 14px; }
+
+  /* FAQ */
+  .faq-q { padding: 22px 4px; font-size: 18px; }
+  .faq-q .toggle { width: 30px; height: 30px; }
+  .faq-a-inner { padding: 0 30px 22px 4px; font-size: 15px; }
+
+  /* Contato */
+  .contato h2 { font-size: clamp(34px, 9.5vw, 50px); line-height: 1.0; }
+  .contato .sub { font-size: 15px; margin: 22px auto 30px; }
+  .contato-card { padding: 20px; }
+  .contato-card .val { font-size: 19px; }
+  .contato-card .val small { font-size: 12px; }
+  .mapa-head { padding: 20px; gap: 14px; }
+  .mapa-head h4 { font-size: 19px; }
+  .mapa-head-side { font-size: 11px; gap: 18px; flex-wrap: wrap; }
+  .mapa-head-side b { font-size: 15px; }
+
+  /* Footer */
+  .footer-brand p { font-size: 14px; }
+  .footer-col h5 { font-size: 10.5px; }
+  .footer-col a, .footer-col p { font-size: 13.5px; }
+  .footer-bottom { font-size: 11px; }
+
+  /* Botões em mobile */
+  .btn { padding: 15px 22px; font-size: 14px; }
+}
+
+/* FLOATING WHATSAPP */
+.fab-wa {
+  position: fixed; bottom: 24px; right: 24px;
+  z-index: 80;
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 22px 14px 16px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 600; font-size: 13px;
+  box-shadow: 0 12px 32px rgba(37, 211, 102, 0.32);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s, background 0.3s;
+  opacity: 0; transform: translateY(20px); pointer-events: none;
+}
+.fab-wa.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.fab-wa:hover { background: #1ebe5d; transform: translateY(-3px); box-shadow: 0 18px 40px rgba(37, 211, 102, 0.42); }
+.fab-wa svg { width: 22px; height: 22px; }
+@media (max-width: 600px) { .fab-wa { bottom: 16px; right: 16px; padding: 12px; } .fab-wa-label { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#hero" class="nav-logo">
+      <img src="assets/logo-horizontal.png" alt="VR Studio" />
+    </a>
+    <div class="nav-menu">
+      <a href="#sobre">Sobre</a>
+      <a href="#maquina">A Máquina</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#cases">Antes/Depois</a>
+      <a href="https://wa.me/5531995957380?text=Ol%C3%A1%20Samuel%2C%20vim%20pelo%20site." target="_blank" rel="noopener" class="nav-cta">
+        Agendar
+      </a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MENU MOBILE OVERLAY -->
+<aside class="mobile-overlay" id="mobileOverlay" aria-hidden="true">
+  <a href="#sobre">Quem <span class="it">atende</span></a>
+  <a href="#maquina">A <span class="it">máquina</span></a>
+  <a href="#servicos">Serviços</a>
+  <a href="#cases">Antes <span class="it">/ Depois</span></a>
+  <a href="https://wa.me/5531995957380?text=Ol%C3%A1%20Samuel%2C%20vim%20pelo%20site." target="_blank" rel="noopener" class="mobile-overlay-cta">Agendar avaliação →</a>
+  <div class="mobile-overlay-meta">VR Studio · Curvelo + Corinto · MG</div>
+</aside>
+
+<!-- HERO TIPOGRÁFICO + 3D CARDS -->
+<header class="hero" id="hero">
+  <div class="hero-glow"></div>
+  <img class="hero-samuel" src="assets/samuel-cutout.png" alt="Samuel — VR Studio" />
+
+  <!-- PISTOLA PNG À ESQUERDA -->
+  <img class="hero-pistola" src="assets/pistola.png" alt="Pistola laser Omer — VR Studio" />
+
+  <!-- CARDS 3D FLUTUANTES -->
+  <div class="float-card fc-stat-1">
+    <div class="top">Sessões</div>
+    <div class="big">3 a 6</div>
+    <div class="small">contra ~12 dos comuns</div>
+  </div>
+  <div class="float-card fc-stat-2">
+    <div class="top">Equipamento</div>
+    <div class="big">R$85k</div>
+    <div class="small">laser de alta potência</div>
+  </div>
+
+  <div class="container">
+    <div class="hero-grid reveal">
+      <div class="hero-eyebrow">
+        <span class="micro">VR Studio · Curvelo + Corinto · MG</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line">Tatuagem</span>
+        <span class="line line-2"><span class="it">some.</span></span>
+        <span class="line line-3">A pele continua.</span>
+      </h1>
+
+      <div class="hero-row">
+        <p class="hero-sub">
+          Único estúdio de remoção a laser de <strong>tatuagem e micropigmentação</strong> em Curvelo e Corinto. Resultado definitivo, avaliação gratuita, em menos da metade do tempo da concorrência.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary"
+             href="https://wa.me/5531995957380?text=Ol%C3%A1%20Samuel%2C%20vim%20pelo%20site%20e%20queria%20uma%20avalia%C3%A7%C3%A3o."
+             target="_blank" rel="noopener">
+            Avaliação gratuita
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn-ghost-dark" href="#cases">Ver antes e depois</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>
+      Laser de alta potência
+    </span><span class="marquee-sep"></span>
+    <span class="marquee-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Sem cicatriz
+    </span><span class="marquee-sep"></span>
+    <span class="marquee-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      3 a 6 sessões
+    </span><span class="marquee-sep"></span>
+    <span class="marquee-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Curvelo + Corinto
+    </span><span class="marquee-sep"></span>
+    <span class="marquee-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>
+      Laser de alta potência
+    </span><span class="marquee-sep"></span>
+    <span class="marquee-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Sem cicatriz
+    </span><span class="marquee-sep"></span>
+    <span class="marquee-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      3 a 6 sessões
+    </span><span class="marquee-sep"></span>
+    <span class="marquee-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Curvelo + Corinto
+    </span><span class="marquee-sep"></span>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="container">
+    <div class="sobre-row">
+      <div class="sobre-photo reveal">
+        <img src="assets/samuel-com-maquina.png" alt="Samuel Araújo segurando o laser Omer no estúdio" />
+        <div class="sobre-photo-tag">"Cada pele é uma. O plano <em>nunca</em> é igual."</div>
+      </div>
+      <div class="sobre-text">
+        <span class="micro reveal">Quem atende</span>
+        <h2 class="reveal">Samuel Araújo. <span class="it">Especialista</span> em fazer pele voltar ao zero.</h2>
+        <p class="reveal">Aos 20 anos, Samuel é o único profissional da região que opera com laser de alta potência. Aplica caso a caso, sem fórmula pronta, sem promessa vazia.</p>
+        <p class="reveal">Enquanto os equipamentos comuns por aí pedem ~12 sessões pra remover uma tatuagem, o do VR resolve em menos da metade. Faz a conta.</p>
+        <div class="sobre-creds reveal-stagger">
+          <div class="sobre-cred">
+            <div class="num">+850</div>
+            <div class="lbl">Procedimentos<br>realizados</div>
+          </div>
+          <div class="sobre-cred">
+            <div class="num">30</div>
+            <div class="lbl">Dias entre<br>sessões</div>
+          </div>
+          <div class="sobre-cred">
+            <div class="num">2</div>
+            <div class="lbl">Cidades<br>atendidas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- A MÁQUINA -->
+<section class="maquina" id="maquina">
+  <div class="container">
+    <div class="maquina-grid">
+      <div class="maquina-text">
+        <span class="micro reveal" style="color: var(--silver-300);">A tecnologia</span>
+        <h2 class="reveal">R$85 mil em <span class="it">laser</span>. Por isso a tatuagem sai antes.</h2>
+        <p class="reveal">O laser fragmenta o pigmento em micropartículas que o próprio organismo absorve. Sem corte, sem queimadura, sem cicatriz. Quanto mais potente o equipamento, menos sessões. Simples assim.</p>
+
+        <div class="maquina-compare reveal">
+          <div class="compare-box">
+            <div class="top">Equipamentos comuns</div>
+            <div class="num">~12</div>
+            <div class="lbl">sessões médias</div>
+          </div>
+          <div class="compare-vs">vs.</div>
+          <div class="compare-box us">
+            <div class="top">VR Studio</div>
+            <div class="num">3–6</div>
+            <div class="lbl">sessões médias</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="maq-visual reveal">
+        <div class="maq-glow"></div>
+        <div class="maq-orb">
+          <img class="maq-photo" src="assets/maquina-mesa.png" alt="Máquina laser Omer disparando" />
+        </div>
+        <div class="maq-ring-2"></div>
+        <div class="maq-ring"></div>
+        <div class="maq-tags">
+          <span class="maq-tag t1">Q-Switched · <b>nd:yag</b></span>
+          <span class="maq-tag t2">1064 <b>nm</b> · preto + marrom</span>
+          <span class="maq-tag t3">532 <b>nm</b> · colorido</span>
+          <span class="maq-tag t4">Nanosegundos · <b>pulso</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS + SIMULADOR -->
+<section class="servicos" id="servicos">
+  <div class="container">
+    <!-- SIMULADOR (quiz progressivo) -->
+    <div class="simulator reveal">
+      <header class="sim-head">
+        <span class="micro">Simulador</span>
+        <h3>Quantas sessões <span class="it">sua</span> tatuagem precisa?</h3>
+        <p>Responde 4 perguntas rápidas e tem uma estimativa na hora.</p>
+      </header>
+
+      <div class="sim-progress">
+        <div class="sim-progress-info">
+          <span>Pergunta <strong id="simStepNow">1</strong> de 4</span>
+          <button class="sim-back" id="simBack" type="button" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Voltar
+          </button>
+        </div>
+        <div class="sim-progress-bar"><div class="sim-progress-fill" id="simFill"></div></div>
+      </div>
+
+      <div class="sim-stages" id="simStages">
+        <div class="sim-stage active" data-q="size">
+          <div class="sim-label">Qual o <em>tamanho</em> da sua tatuagem?</div>
+          <div class="sim-options-large">
+            <button class="sim-option-large" data-v="1" data-text="pequena (até 5cm)">
+              <div class="opt-num">01</div>
+              <div class="opt-title">Pequena</div>
+              <div class="opt-desc">Até 5cm — símbolo, palavra curta</div>
+            </button>
+            <button class="sim-option-large" data-v="2" data-text="média (5 a 15cm)">
+              <div class="opt-num">02</div>
+              <div class="opt-title">Média</div>
+              <div class="opt-desc">5 a 15cm — antebraço, panturrilha</div>
+            </button>
+            <button class="sim-option-large" data-v="3" data-text="grande (mais de 15cm)">
+              <div class="opt-num">03</div>
+              <div class="opt-title">Grande</div>
+              <div class="opt-desc">15cm+ — braço inteiro, costas</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="sim-stage" data-q="color">
+          <div class="sim-label">Qual a <em>cor</em> da tinta?</div>
+          <div class="sim-options-large">
+            <button class="sim-option-large" data-v="0" data-text="só preto">
+              <div class="opt-num">01</div>
+              <div class="opt-title">Só preto</div>
+              <div class="opt-desc">Tinta preta apenas</div>
+            </button>
+            <button class="sim-option-large" data-v="1" data-text="multicolorida">
+              <div class="opt-num">02</div>
+              <div class="opt-title">Multicolorida</div>
+              <div class="opt-desc">Cores variadas — vermelho, azul, verde</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="sim-stage" data-q="age">
+          <div class="sim-label">Há <em>quanto tempo</em> você fez?</div>
+          <div class="sim-options-large">
+            <button class="sim-option-large" data-v="1" data-text="recente (menos de 2 anos)">
+              <div class="opt-num">01</div>
+              <div class="opt-title">Recente</div>
+              <div class="opt-desc">Menos de 2 anos</div>
+            </button>
+            <button class="sim-option-large" data-v="0" data-text="antiga (mais de 2 anos)">
+              <div class="opt-num">02</div>
+              <div class="opt-title">Antiga</div>
+              <div class="opt-desc">Mais de 2 anos</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="sim-stage" data-q="skin">
+          <div class="sim-label">Como é o <em>tom</em> da sua pele?</div>
+          <div class="sim-options-large">
+            <button class="sim-option-large" data-v="0" data-text="clara a média">
+              <div class="opt-num">01</div>
+              <div class="opt-title">Clara a média</div>
+              <div class="opt-desc">Sem restrição de potência</div>
+            </button>
+            <button class="sim-option-large" data-v="1" data-text="negra (avaliação prévia)">
+              <div class="opt-num">02</div>
+              <div class="opt-title">Pele negra</div>
+              <div class="opt-desc">Precisa de avaliação prévia</div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULTADO -->
+      <div class="sim-final" id="simFinal" aria-hidden="true">
+        <div class="sim-final-tag">Sua estimativa</div>
+        <div class="sim-final-num"><span id="simMin">3</span><em>—</em><span id="simMax">6</span></div>
+        <div class="sim-final-label">sessões pra remover a tatuagem</div>
+        <div class="sim-final-actions">
+          <a id="simCta" class="btn btn-primary" href="https://wa.me/5531995957380" target="_blank" rel="noopener">
+            Agendar com essa info
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <button class="btn btn-ghost-light" id="simReset" type="button">Refazer simulação</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BENTO DE SERVIÇOS -->
+    <div class="s-head s-head-after-quiz">
+      <span class="micro reveal">Serviços</span>
+      <h2 class="reveal">Três jeitos de a tatuagem <span class="it">parar de te incomodar</span>.</h2>
+    </div>
+
+    <div class="serv-bento">
+      <article class="serv-card feat reveal">
+        <div class="num">01 · Carro-chefe</div>
+        <h3>Remoção de <span class="it">tatuagem</span></h3>
+        <p>Tinta preta, azul, verde ou vermelha. O laser quebra o pigmento, seu corpo elimina, a pele volta ao normal. Sem cicatriz, resultado definitivo.</p>
+        <ul class="serv-list">
+          <li>3 a 6 sessões · 30 dias entre cada</li>
+          <li>Pele clara a média sem restrição</li>
+          <li>Pele negra com avaliação prévia</li>
+        </ul>
+        <a href="https://wa.me/5531995957380?text=Ol%C3%A1%20Samuel%2C%20queria%20avalia%C3%A7%C3%A3o%20para%20remo%C3%A7%C3%A3o%20de%20tatuagem%20a%20laser." target="_blank" rel="noopener" class="serv-link">
+          Quero avaliar minha tatuagem
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <article class="serv-card c2 reveal">
+        <div class="num">02</div>
+        <h3>Remoção de <span class="it">micropigmentação</span></h3>
+        <p>O mesmo laser remove pigmento da pele. Resultado definitivo, não é retoque.</p>
+        <a href="https://wa.me/5531995957380?text=Ol%C3%A1%20Samuel%2C%20queria%20remover%20uma%20micropigmenta%C3%A7%C3%A3o%20de%20sobrancelha." target="_blank" rel="noopener" class="serv-link">
+          Quero remover
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <article class="serv-card c3 reveal">
+        <div class="num">03 · Novo</div>
+        <h3>Cover-up <span class="it">fading</span></h3>
+        <p>Clarear a tatuagem antiga pra um tatuador cobrir com algo novo. 2 a 3 sessões e o desenho fica mais leve, pronto pra cobertura.</p>
+        <ul class="serv-list">
+          <li>Pra quem quer cobrir, não apagar</li>
+          <li>Parceria com o seu tatuador</li>
+        </ul>
+        <a href="https://wa.me/5531995957380?text=Ol%C3%A1%20Samuel%2C%20queria%20saber%20sobre%20cover-up%20fading." target="_blank" rel="noopener" class="serv-link">
+          Saber mais
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases" id="cases">
+  <div class="container">
+    <div class="s-head dark">
+      <span class="micro reveal">Antes e depois</span>
+      <h2 class="reveal">Resultado <span class="it">de verdade</span>. Sem filtro, sem retoque.</h2>
+    </div>
+
+    <!-- SLIDER ANTES/DEPOIS DESTAQUE -->
+    <div class="ba-block reveal">
+      <div class="ba-frame" id="baFrame">
+        <div class="ba-img ba-before">
+          <img src="assets/slider-antes.jpg" alt="Antes — tatuagem de notas musicais no pulso" />
+        </div>
+        <div class="ba-img ba-after" id="baAfter">
+          <img src="assets/slider-depois.jpg" alt="Depois — tatuagem removida a laser, pele limpa" />
+        </div>
+        <span class="ba-label l-a">Antes</span>
+        <span class="ba-label l-b">Depois</span>
+        <div class="ba-handle" id="baHandle">
+          <div class="ba-knob">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6L2 12l6 6M16 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="ba-meta">
+        <h3>Arrasta o cursor: a tatuagem <span class="it">some</span>.</h3>
+        <div class="ba-meta-info">
+          <span><strong>5 sessões</strong></span>
+          <span>Tinta preta</span>
+          <span>Sem cicatriz</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cases-grid reveal-stagger">
+      <article class="case-card">
+        <div class="case-photo">
+          <span class="case-tag">Remoção · Micro</span>
+          <img src="assets/caso-sobrancelha-1.jpg" alt="Remoção de micropigmentação de sobrancelha — antes e depois" />
+        </div>
+        <div class="case-body">
+          <div class="case-meta"><span><strong>3 sessões</strong></span><span>Sobrancelha</span></div>
+          <h3>Sobrancelha esverdeada, de volta ao natural.</h3>
+          <p>Pigmento antigo que puxou pro verde. Removido em três sessões, fio e tom natural de volta.</p>
+        </div>
+      </article>
+      <article class="case-card">
+        <div class="case-photo">
+          <span class="case-tag">Remoção · Micro</span>
+          <img src="assets/caso-sobrancelha-2.jpg" alt="Remoção de micropigmentação de sobrancelha — antes e depois" />
+        </div>
+        <div class="case-body">
+          <div class="case-meta"><span><strong>4 sessões</strong></span><span>Sobrancelha</span></div>
+          <h3>Bloco escuro removido, traço suave.</h3>
+          <p>Micropigmentação pesada e fechada. Quatro sessões depois, sobrancelha leve e natural.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO TIMELINE HORIZONTAL -->
+<section class="processo">
+  <div class="container">
+    <div class="s-head">
+      <span class="micro reveal">Como funciona</span>
+      <h2 class="reveal">Do <span class="it">primeiro WhatsApp</span> à última sessão.</h2>
+    </div>
+
+    <div class="proc-rail reveal-stagger">
+      <div class="proc-item">
+        <div class="proc-icon ico-01" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7" width="26" height="20" rx="3"/>
+            <path d="M11 7 L13 4 L19 4 L21 7"/>
+            <circle class="ic-lens" cx="16" cy="17" r="6"/>
+            <circle class="ic-lens" cx="16" cy="17" r="2.5"/>
+          </svg>
+        </div>
+        <div class="proc-num">passo 01</div>
+        <h4>Manda uma foto</h4>
+        <p>Foto da tatuagem ou da área pelo WhatsApp. Sem formulário, sem cadastro.</p>
+      </div>
+      <div class="proc-item">
+        <div class="proc-icon ico-02" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="6" y="5" width="20" height="23" rx="2"/>
+            <path d="M11 2 h10 v4 h-10z" fill="currentColor" opacity="0.15"/>
+            <path d="M11 2 h10 v4 h-10z"/>
+            <line class="ic-line"   x1="11" y1="13" x2="21" y2="13"/>
+            <line class="ic-line-2" x1="11" y1="17" x2="21" y2="17"/>
+            <line class="ic-line-3" x1="11" y1="21" x2="17" y2="21"/>
+          </svg>
+        </div>
+        <div class="proc-num">passo 02</div>
+        <h4>Recebe o plano</h4>
+        <p>Faixa de sessões, intervalo e valor. Tudo claro antes de marcar nada.</p>
+      </div>
+      <div class="proc-item">
+        <div class="proc-icon ico-03" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 3 L7 18 H14 L12 29 L25 13 H17 L19 3 Z"/>
+          </svg>
+        </div>
+        <div class="proc-num">passo 03</div>
+        <h4>Vem fazer</h4>
+        <p>Sessão de poucos minutos no estúdio em Curvelo. Todo acompanhamento necessário no pós.</p>
+      </div>
+      <div class="proc-item">
+        <div class="proc-icon ico-04" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline class="ic-chart" points="4 24 11 17 16 21 28 7"/>
+            <polyline points="22 7 28 7 28 13"/>
+            <circle class="ic-dot"   cx="11" cy="17" r="2"/>
+            <circle class="ic-dot-2" cx="16" cy="21" r="2"/>
+          </svg>
+        </div>
+        <div class="proc-num">passo 04</div>
+        <h4>Acompanhamento</h4>
+        <p>A cada 30 dias, o resultado vai aparecendo. Plano ajustado conforme sua pele.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="s-head center">
+      <span class="micro reveal">Dúvidas frequentes</span>
+      <h2 class="reveal">A gente <span class="it">já te conta</span> antes de você perguntar.</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-q">Em quantas sessões a tatuagem sai?<span class="toggle"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">De 3 a 6 na maioria dos casos. O número exato depende do tamanho, cor, idade da tatuagem e do seu tipo de pele. Definido na primeira conversa.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Dói?<span class="toggle"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Sensação parecida com pequenos elásticos batendo. Pra mais conforto, aplicamos pomada anestésica em todas as sessões. Tudo dura poucos minutos.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Fica cicatriz?<span class="toggle"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Não. O laser quebra só o pigmento da tinta. Não corta, não queima. A pele volta ao normal em alguns dias.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Funciona em pele negra?<span class="toggle"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim, com avaliação prévia. Pra fototipos mais altos, a potência é ajustada pra preservar a pele e evitar manchas. Samuel avalia caso a caso.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Onde atendemos em Corinto?<span class="toggle"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Uma vez por mês realizamos atendimentos em Corinto, no Espaço Bruna Lícia, oferecendo mais comodidade para quem prefere não se deslocar até Curvelo.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Quanto custa?<span class="toggle"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Sessão avulsa ou pacote, definido na avaliação. Preço competitivo mesmo com equipamento superior. Tudo combinado antes da primeira sessão.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO + MAPA -->
+<section class="contato" id="contato">
+  <div class="container">
+    <div class="contato-inner">
+      <span class="micro reveal">Vamos começar</span>
+      <h2 class="reveal">Manda <span class="it">a foto</span>. O resto a gente resolve.</h2>
+      <p class="sub reveal">Avaliação gratuita pelo WhatsApp. Em poucas horas você recebe estimativa de sessões e valor.</p>
+      <div class="btns reveal">
+        <a class="btn btn-primary"
+           href="https://wa.me/5531995957380?text=Ol%C3%A1%20Samuel%2C%20vim%20pelo%20site%20e%20queria%20avalia%C3%A7%C3%A3o%20gratuita."
+           target="_blank" rel="noopener">
+          Mandar foto agora
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-ghost-dark" href="https://www.instagram.com/vrstudio.cvo/" target="_blank" rel="noopener">@vrstudio.cvo</a>
+      </div>
+
+      <div class="contato-info reveal-stagger">
+        <a class="contato-card" href="https://wa.me/5531995957380" target="_blank" rel="noopener">
+          <div class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16.5v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.86 19.86 0 011.12 3.82 2 2 0 013.11 1.64h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L7.09 9.55a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0121 16.5z"/></svg> WhatsApp</div>
+          <div class="val">(31) 99595-7380<small>Direto com o Samuel</small></div>
+        </a>
+        <a class="contato-card" href="https://www.instagram.com/vrstudio.cvo/" target="_blank" rel="noopener">
+          <div class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"/></svg> Instagram</div>
+          <div class="val">@vrstudio.cvo<small>Cases novos toda semana</small></div>
+        </a>
+        <a class="contato-card" href="https://maps.google.com/?q=Rua+Vinte+e+Um+de+Abril+11+Curvelo+MG" target="_blank" rel="noopener">
+          <div class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Endereço</div>
+          <div class="val">R. 21 de Abril, 11<small>Curvelo · MG</small></div>
+        </a>
+      </div>
+
+      <!-- MAPA -->
+      <div class="mapa-block reveal">
+        <div class="mapa-head">
+          <div>
+            <span class="micro">Onde ficamos</span>
+            <h4>Estúdio em Curvelo, <span class="it">atende</span> Corinto também.</h4>
+          </div>
+          <div class="mapa-head-side">
+            <div>Distância<b>~30 min</b></div>
+            <div>Endereço<b>R. 21 de Abril, 11</b></div>
+          </div>
+        </div>
+        <div class="mapa-frame">
+          <iframe src="https://www.google.com/maps?q=Rua%20Vinte%20e%20Um%20de%20Abril%2C%2011%2C%20Curvelo%20-%20MG&z=10&output=embed"
+                  loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa Curvelo e Corinto"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo-horizontal.png" alt="VR Studio" class="footer-logo-img" />
+        <p>Remoção de tatuagem e micropigmentação a laser. Curvelo + Corinto · MG.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Serviços</h5>
+        <a href="#servicos">Remoção de tatuagem</a>
+        <a href="#servicos">Remoção de micropigmentação</a>
+        <a href="#servicos">Cover-up fading</a>
+        <a href="#cases">Antes e depois</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contato</h5>
+        <a href="https://wa.me/5531995957380" target="_blank" rel="noopener">(31) 99595-7380</a>
+        <a href="https://www.instagram.com/vrstudio.cvo/" target="_blank" rel="noopener">@vrstudio.cvo</a>
+        <p>R. 21 de Abril, 11<br>Curvelo · MG</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> VR Studio · Samuel Araújo</p>
+      <div class="foot-credit">
+        site por
+        <a href="https://instagram.com/sejacriativvo" target="_blank" rel="noopener noreferrer" class="brand-criativvo">criativvo</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- BADGE CRIATIVVO (made-by) -->
+<a href="https://instagram.com/sejacriativvo" target="_blank" rel="noopener noreferrer" class="made-by" id="madeBy" aria-label="Site feito por Criativvo">
+  <span class="label">site por</span>
+  <span class="brand">criativvo</span>
+</a>
+
+<!-- WHATSAPP FAB (logo oficial) -->
+<a href="https://wa.me/5531995957380?text=Ol%C3%A1%20Samuel%2C%20vim%20pelo%20site."
+   target="_blank" rel="noopener" class="fab-wa" id="fabWa" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+    <path d="M27.317 4.633A15.876 15.876 0 0 0 16.001 0C7.18 0 .005 7.175.001 16c-.001 2.821.736 5.574 2.137 8.001L0 32l8.235-2.155a15.99 15.99 0 0 0 7.661 1.951h.007C24.722 31.796 31.998 24.62 32 15.795a15.88 15.88 0 0 0-4.683-11.162Zm-11.316 24.5h-.005a13.295 13.295 0 0 1-6.776-1.853l-.486-.288-5.034 1.32 1.343-4.907-.317-.504a13.272 13.272 0 0 1-2.034-7.099C2.696 8.516 8.665 2.55 16.005 2.55c3.561.002 6.908 1.39 9.425 3.91a13.215 13.215 0 0 1 3.901 9.421c-.003 7.34-5.973 13.252-13.33 13.252Zm7.275-9.928c-.398-.2-2.358-1.164-2.722-1.297-.365-.133-.63-.2-.896.2-.265.398-1.027 1.296-1.26 1.561-.232.266-.464.299-.862.1-.398-.2-1.682-.62-3.204-1.978-1.184-1.057-1.983-2.361-2.215-2.759-.232-.398-.025-.612.175-.811.18-.179.398-.464.597-.696.2-.232.266-.398.398-.664.133-.265.067-.498-.033-.696-.1-.2-.896-2.16-1.227-2.957-.323-.777-.65-.672-.896-.685-.232-.012-.498-.013-.764-.013s-.696.1-1.061.498c-.365.398-1.394 1.36-1.394 3.32 0 1.96 1.428 3.85 1.627 4.116.2.266 2.81 4.293 6.808 6.022.951.411 1.694.656 2.273.84.954.303 1.823.26 2.51.158.766-.114 2.358-.964 2.69-1.895.332-.93.332-1.728.232-1.895-.099-.166-.365-.265-.764-.464Z"/>
+  </svg>
+  <span class="fab-wa-label">Falar com o Samuel</span>
+</a>
+
+<script>
+  // NAV scroll
+  const nav = document.getElementById('nav');
+  const fab = document.getElementById('fabWa');
+  const madeBy = document.getElementById('madeBy');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+      fab.classList.add('show');
+      if (madeBy) madeBy.classList.add('show');
+    } else {
+      nav.classList.remove('scrolled');
+      fab.classList.remove('show');
+      if (madeBy) madeBy.classList.remove('show');
+    }
+  });
+
+  // ============ Reveal on scroll (bidirecional em mobile, one-shot em desktop) ============
+  const isMobile = window.matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+  if (isMobile) {
+    // Mobile: anima conforme o dedo (entra ao descer, desfaz ao subir, acompanha a posição)
+    const targets = Array.from(document.querySelectorAll('.reveal, .reveal-stagger'));
+    function updateReveals() {
+      const vh = window.innerHeight;
+      const enterTop = vh * 0.92; // topo do elemento precisa estar abaixo disso pra começar a aparecer
+      targets.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const top = rect.top;
+        const bottom = rect.bottom;
+        // está visível na tela (com folga)
+        const visible = top < enterTop && bottom > 0;
+        el.classList.toggle('in-view', visible);
+      });
+    }
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => { updateReveals(); ticking = false; });
+        ticking = true;
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateReveals);
+    window.addEventListener('orientationchange', updateReveals);
+    updateReveals();
+  } else {
+    // Desktop: one-shot via IntersectionObserver
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => io.observe(el));
+  }
+
+  // FAQ
+  document.querySelectorAll('.faq-item .faq-q').forEach((q) => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      document.querySelectorAll('.faq-item').forEach((i) => { if (i !== item) i.classList.remove('open'); });
+      item.classList.toggle('open');
+    });
+  });
+
+  // ============ SIMULADOR — QUIZ PROGRESSIVO ============
+  (function initQuiz() {
+    const stages = Array.from(document.querySelectorAll('.sim-stage'));
+    if (!stages.length) return;
+    const simEl    = document.querySelector('.simulator');
+    const stepNowEl = document.getElementById('simStepNow');
+    const stepLabelEl = document.querySelector('.sim-progress-info > span');
+    const fillEl    = document.getElementById('simFill');
+    const backEl    = document.getElementById('simBack');
+    const finalEl   = document.getElementById('simFinal');
+    const ctaEl     = document.getElementById('simCta');
+    const resetEl   = document.getElementById('simReset');
+    const minEl     = document.getElementById('simMin');
+    const maxEl     = document.getElementById('simMax');
+    const order = ['size', 'color', 'age', 'skin'];
+    const state = { size: null, color: null, age: null, skin: null };
+    const text  = { size: null, color: null, age: null, skin: null };
+    let current = 0;
+
+    function setStepLabel(text) {
+      if (stepLabelEl) stepLabelEl.innerHTML = text;
+    }
+    function showStep(idx, dir) {
+      simEl.classList.remove('final-mode');
+      stages.forEach((st, i) => {
+        st.classList.remove('active', 'leaving-left', 'entering-from-left');
+        if (i === idx) {
+          if (dir === 'back') st.classList.add('entering-from-left');
+          requestAnimationFrame(() => {
+            st.classList.remove('entering-from-left');
+            st.classList.add('active');
+          });
+        } else if (i < idx) {
+          st.classList.add('leaving-left');
+        }
+      });
+      setStepLabel(`Pergunta <strong>${idx + 1}</strong> de ${order.length}`);
+      fillEl.style.width = ((idx + 1) / order.length) * 100 + '%';
+      backEl.disabled = idx === 0;
+      current = idx;
+    }
+    function showFinal() {
+      const base = 2 + state.size + state.color + state.age;
+      const min = base;
+      const max = base + (state.skin ? 2 : 1);
+      minEl.textContent = min;
+      maxEl.textContent = max;
+      const msg = `Olá Samuel, vim pelo simulador do site.%0A%0ATamanho: ${text.size}%0ACores: ${text.color}%0AIdade: ${text.age}%0APele: ${text.skin}%0A%0AEstimativa: ${min} a ${max} sessões. Queria sua avaliação.`;
+      ctaEl.href = `https://wa.me/5531995957380?text=${msg}`;
+      stages.forEach((st) => st.classList.remove('active'));
+      fillEl.style.width = '100%';
+      setStepLabel('Concluído <strong>✓</strong>');
+      backEl.disabled = false;
+      // colapsa os stages e abre o final no mesmo bloco
+      simEl.classList.add('final-mode');
+      finalEl.classList.add('show');
+      finalEl.setAttribute('aria-hidden', 'false');
+      // 🎉 confetti silver
+      setTimeout(() => confettiBurst(), 250);
+    }
+    function reset() {
+      order.forEach((k) => { state[k] = null; text[k] = null; });
+      finalEl.classList.remove('show');
+      finalEl.setAttribute('aria-hidden', 'true');
+      simEl.classList.remove('final-mode');
+      document.querySelectorAll('.sim-option-large.selected').forEach((b) => b.classList.remove('selected'));
+      showStep(0);
+    }
+
+    stages.forEach((stage, idx) => {
+      const q = stage.dataset.q;
+      stage.querySelectorAll('.sim-option-large').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          stage.querySelectorAll('.sim-option-large').forEach((b) => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          state[q] = parseInt(btn.dataset.v, 10);
+          text[q]  = btn.dataset.text;
+          setTimeout(() => {
+            if (idx === order.length - 1) showFinal();
+            else showStep(idx + 1);
+          }, 280);
+        });
+      });
+    });
+    if (backEl) backEl.addEventListener('click', () => {
+      if (finalEl.classList.contains('show')) {
+        finalEl.classList.remove('show');
+        finalEl.setAttribute('aria-hidden', 'true');
+        showStep(order.length - 1, 'back');
+      } else if (current > 0) {
+        showStep(current - 1, 'back');
+      }
+    });
+    if (resetEl) resetEl.addEventListener('click', reset);
+  })();
+
+  // ============ CONFETTI PRATA (Duolingo style) ============
+  function confettiBurst() {
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.scale(dpr, dpr);
+    const colors = ['#FFFFFF', '#F4F4F8', '#E8E8EF', '#D4D4DC', '#B5B5C0', '#9C9CA8'];
+    const particles = [];
+    const N = 180;
+    const ox = w / 2;
+    const oy = h * 0.62;
+    for (let i = 0; i < N; i++) {
+      const angle = (Math.random() - 0.5) * Math.PI * 0.85 - Math.PI / 2;
+      const power = 8 + Math.random() * 18;
+      particles.push({
+        x: ox + (Math.random() - 0.5) * 80,
+        y: oy,
+        vx: Math.cos(angle) * power + (Math.random() - 0.5) * 6,
+        vy: Math.sin(angle) * power - Math.random() * 4,
+        g: 0.4,
+        size: 5 + Math.random() * 8,
+        rot: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.3,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        shape: Math.random() > 0.55 ? 'rect' : (Math.random() > 0.5 ? 'circle' : 'streamer'),
+        life: 1,
+        decay: 0.0045 + Math.random() * 0.005,
+      });
+    }
+    const start = performance.now();
+    function frame(now) {
+      ctx.clearRect(0, 0, w, h);
+      let alive = false;
+      for (const p of particles) {
+        p.vy += p.g;
+        p.vx *= 0.992;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vRot;
+        p.life -= p.decay;
+        if (p.life > 0 && p.y < h + 60) {
+          alive = true;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.globalAlpha = Math.max(p.life, 0);
+          ctx.fillStyle = p.color;
+          if (p.shape === 'circle') {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (p.shape === 'streamer') {
+            ctx.fillRect(-p.size * 0.18, -p.size * 0.9, p.size * 0.36, p.size * 1.8);
+          } else {
+            ctx.fillRect(-p.size * 0.5, -p.size * 0.32, p.size, p.size * 0.64);
+          }
+          ctx.restore();
+        }
+      }
+      if (alive && now - start < 7000) {
+        requestAnimationFrame(frame);
+      } else {
+        canvas.remove();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // ANTES/DEPOIS SLIDER (touch sem mexer a página)
+  const baFrame = document.getElementById('baFrame');
+  const baAfter = document.getElementById('baAfter');
+  const baHandle = document.getElementById('baHandle');
+  if (baFrame && baAfter && baHandle) {
+    let drag = false;
+    function setPos(x) {
+      const r = baFrame.getBoundingClientRect();
+      let pct = ((x - r.left) / r.width) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      baAfter.style.clipPath = `inset(0 0 0 ${pct}%)`;
+      baHandle.style.left = `${pct}%`;
+    }
+    // Mouse
+    baFrame.addEventListener('mousedown', (e) => { drag = true; setPos(e.clientX); });
+    window.addEventListener('mouseup', () => { drag = false; });
+    window.addEventListener('mousemove', (e) => { if (drag) setPos(e.clientX); });
+    // Touch — passive:false e preventDefault pra bloquear scroll
+    baFrame.addEventListener('touchstart', (e) => {
+      drag = true;
+      setPos(e.touches[0].clientX);
+      e.preventDefault();
+    }, { passive: false });
+    baFrame.addEventListener('touchmove', (e) => {
+      if (drag) {
+        setPos(e.touches[0].clientX);
+        e.preventDefault();
+      }
+    }, { passive: false });
+    window.addEventListener('touchend', () => { drag = false; });
+    window.addEventListener('touchcancel', () => { drag = false; });
+  }
+
+  // 3D parallax sutil nos float-cards
+  const floatCards = document.querySelectorAll('.float-card');
+  const hero = document.querySelector('.hero');
+  if (hero && floatCards.length) {
+    hero.addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      floatCards.forEach((c, i) => {
+        const dx = (i % 2 === 0 ? -1 : 1) * x * 14;
+        const dy = (i % 2 === 0 ? -1 : 1) * y * 10;
+        c.style.translate = `${dx}px ${dy}px`;
+      });
+    });
+    hero.addEventListener('mouseleave', () => {
+      floatCards.forEach((c) => { c.style.translate = ''; });
+    });
+  }
+
+  // ============ TILT 3D INTERATIVO (cards de serviços + sobre-photo) ============
+  (function initTilt() {
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+    const targets = document.querySelectorAll('.serv-card');
+    const MAX_TILT = 10;
+    const LIFT = 12;
+    const LERP = 0.18;
+
+    targets.forEach((card) => {
+      const s = { rotX: 0, rotY: 0, lift: 0, tRotX: 0, tRotY: 0, tLift: 0, running: false, inside: false };
+
+      function apply() {
+        const shX = -(s.rotY / MAX_TILT) * 24;
+        const shY = -(s.rotX / MAX_TILT) * 24;
+        card.style.transform =
+          `rotateX(${s.rotX.toFixed(2)}deg) rotateY(${s.rotY.toFixed(2)}deg) ` +
+          `translateY(${(-s.lift).toFixed(2)}px)`;
+        if (s.inside || s.lift > 0.5) {
+          card.style.boxShadow =
+            `${shX.toFixed(0)}px ${(34 + shY).toFixed(0)}px 70px rgba(0,0,0,0.32)`;
+        }
+      }
+      function loop() {
+        s.rotX += (s.tRotX - s.rotX) * LERP;
+        s.rotY += (s.tRotY - s.rotY) * LERP;
+        s.lift += (s.tLift - s.lift) * LERP;
+        apply();
+        const diff = Math.abs(s.tRotX - s.rotX) + Math.abs(s.tRotY - s.rotY) + Math.abs(s.tLift - s.lift);
+        if (diff > 0.05) {
+          requestAnimationFrame(loop);
+        } else {
+          s.running = false;
+          if (!s.inside && s.tRotX === 0 && s.tRotY === 0 && s.tLift === 0) {
+            card.style.transform = '';
+            card.style.boxShadow = '';
+            card.classList.remove('tilting');
+          }
+        }
+      }
+      function startLoop() { if (!s.running) { s.running = true; requestAnimationFrame(loop); } }
+
+      card.addEventListener('mouseenter', () => { s.inside = true; card.classList.add('tilting'); });
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        s.tRotY = ((x - cx) / cx) * MAX_TILT;
+        s.tRotX = -((y - cy) / cy) * MAX_TILT;
+        s.tLift = LIFT;
+        startLoop();
+      });
+      card.addEventListener('mouseleave', () => {
+        s.inside = false;
+        s.tRotX = 0; s.tRotY = 0; s.tLift = 0;
+        startLoop();
+      });
+    });
+  })();
+
+  // ============ BURGER MENU MOBILE ============
+  const burger = document.getElementById('navBurger');
+  const overlay = document.getElementById('mobileOverlay');
+  function toggleMenu(force) {
+    const willOpen = typeof force === 'boolean' ? force : !burger.classList.contains('open');
+    burger.classList.toggle('open', willOpen);
+    overlay.classList.toggle('open', willOpen);
+    overlay.setAttribute('aria-hidden', willOpen ? 'false' : 'true');
+    burger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    document.body.classList.toggle('menu-open', willOpen);
+  }
+  if (burger && overlay) {
+    burger.addEventListener('click', () => toggleMenu());
+    overlay.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => toggleMenu(false)));
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggleMenu(false); });
+  }
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

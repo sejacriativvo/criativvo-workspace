@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A·P·A Previdenciário — Marcio Albrechete | Advogado Previdenciário</title>
+<meta name="description" content="Marcio Albrechete, advogado previdenciário OAB/SP 341.644. 13 anos atuando contra o INSS. Atendimento online em todo o Brasil + presencial em Ibitinga.">
+<meta name="theme-color" content="#142638">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ TOKENS ============ */
+  :root {
+    --navy-950: #142638;
+    --navy-900: #1B3045;
+    --navy-800: #243B54;
+    --navy-700: #2D465F;
+    --blue-gray: #6F8190;
+    --blue-gray-light: #A9B4BC;
+    --beige-500: #CDB28E;
+    --beige-400: #D7C0A0;
+    --beige-300: #E5D5BE;
+    --offwhite: #F5F4EF;
+    --warm-light: #ECE7DE;
+    --white-soft: #FAFAF7;
+
+    --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--offwhite);
+    color: var(--navy-900);
+    font-family: "Inter", sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+  /* ============ TIPOGRAFIA UTIL ============ */
+  .serif { font-family: "Cormorant Garamond", Georgia, serif; }
+  .micro {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.30em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .italic { font-style: italic; }
+
+  /* linha 2 cores (igual templates) */
+  .line-two {
+    display: inline-flex;
+    width: 110px;
+    height: 3px;
+    vertical-align: middle;
+  }
+  .line-two span { flex: 1; }
+  .line-two .a { background: var(--offwhite); }
+  .line-two .b { background: var(--beige-500); }
+  .line-two.dark .a { background: var(--navy-900); }
+
+  /* ============ ANIMATION CLASSES ============ */
+  .reveal {
+    opacity: 0; transform: translateY(34px);
+    transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft);
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-stagger > * {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s var(--ease-soft), transform 0.8s var(--ease-soft);
+  }
+  .reveal-stagger.in-view > *:nth-child(1) { transition-delay: 0.05s; }
+  .reveal-stagger.in-view > *:nth-child(2) { transition-delay: 0.12s; }
+  .reveal-stagger.in-view > *:nth-child(3) { transition-delay: 0.19s; }
+  .reveal-stagger.in-view > *:nth-child(4) { transition-delay: 0.26s; }
+  .reveal-stagger.in-view > *:nth-child(5) { transition-delay: 0.33s; }
+  .reveal-stagger.in-view > *:nth-child(6) { transition-delay: 0.40s; }
+  .reveal-stagger.in-view > *:nth-child(7) { transition-delay: 0.47s; }
+  .reveal-stagger.in-view > *:nth-child(8) { transition-delay: 0.54s; }
+  .reveal-stagger.in-view > *:nth-child(9) { transition-delay: 0.61s; }
+  .reveal-stagger.in-view > * { opacity: 1; transform: translateY(0); }
+
+  /* ============ NAV ============ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 22px 0;
+    transition: background 0.45s var(--ease-soft), padding 0.45s var(--ease-soft), box-shadow 0.45s var(--ease-soft);
+    background: transparent;
+  }
+  .nav.scrolled {
+    background: rgba(20, 38, 56, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 14px 0;
+    box-shadow: 0 12px 40px rgba(20, 38, 56, 0.22);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .nav-logo { color: var(--offwhite); display: flex; flex-direction: column; align-items: flex-start; line-height: 1; }
+  .nav-logo .mark {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-size: 26px; letter-spacing: 0.16em;
+  }
+  .nav-logo .tag {
+    font-family: "Inter", sans-serif;
+    font-size: 8px; letter-spacing: 0.40em; text-transform: uppercase;
+    margin-top: 6px; color: var(--beige-400);
+  }
+  .nav-menu { display: flex; gap: 38px; align-items: center; }
+  .nav-menu a {
+    color: var(--offwhite); font-size: 14px; font-weight: 400;
+    letter-spacing: -0.01em; opacity: 0.85;
+    transition: opacity 0.25s, color 0.25s;
+    position: relative;
+  }
+  .nav-menu a:hover { opacity: 1; color: var(--beige-400); }
+  .nav-menu a::after {
+    content: ""; position: absolute; left: 0; bottom: -6px;
+    width: 0; height: 1px; background: var(--beige-400);
+    transition: width 0.3s var(--ease-soft);
+  }
+  .nav-menu a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--beige-400);
+    color: var(--navy-950) !important;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: -0.01em;
+    opacity: 1 !important;
+    transition: transform 0.25s var(--ease-soft), background 0.25s, box-shadow 0.25s;
+    box-shadow: 0 8px 22px rgba(215, 192, 160, 0.20);
+  }
+  .nav-cta:hover {
+    background: var(--beige-500); transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(215, 192, 160, 0.34);
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-burger { display: none; }
+
+  /* ============ HERO (REFEITO — foto desktop full BG + gradient L→R) ============ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    color: var(--offwhite);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 160px clamp(40px, 6vw, 100px) 100px clamp(40px, 7vw, 120px);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url("../assets/fotos-posts/foto-1-desktop.png");
+    background-size: cover;
+    background-position: 78% center;
+    z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg,
+        rgba(20, 38, 56, 0.97) 0%,
+        rgba(20, 38, 56, 0.93) 28%,
+        rgba(20, 38, 56, 0.62) 55%,
+        rgba(20, 38, 56, 0.20) 82%,
+        rgba(20, 38, 56, 0.00) 100%
+      ),
+      linear-gradient(180deg, rgba(20,38,56,0.45) 0%, transparent 25%, transparent 75%, rgba(20,38,56,0.50) 100%);
+    z-index: 1;
+  }
+  /* (arcos do hero removidos — substituídos pelo gradient overlay) */
+  .hero-arc-bl1, .hero-arc-bl2 { display: none; }
+  /* linha decorativa vertical à esquerda */
+  .hero-vline {
+    position: absolute; left: 40px; top: 35%; bottom: 35%;
+    width: 1px; background: rgba(215, 192, 160, 0.30);
+    z-index: 2; pointer-events: none;
+  }
+  .hero-vline::before {
+    content: ""; position: absolute;
+    top: 30%; left: -3px; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--beige-400);
+  }
+  .hero-vline::after {
+    content: ""; position: absolute;
+    bottom: 25%; left: -3px; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--beige-400);
+    opacity: 0.5;
+  }
+  .hero-content {
+    position: relative; z-index: 5;
+    max-width: 720px;
+    text-align: left;
+    margin: 0;
+  }
+  .hero .micro-pre {
+    color: var(--beige-400);
+    margin-bottom: 28px;
+    display: inline-block;
+  }
+  .hero .micro-pre .hero-name,
+  .hero .micro-pre .hero-oab,
+  .hero .micro-pre .hero-sep { display: inline; }
+  .hero h1 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: 84px;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    margin-bottom: 36px;
+  }
+  .hero h1 em {
+    color: var(--beige-400); font-style: italic; font-weight: 500;
+  }
+  .hero h1 .destaque {
+    display: block;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--beige-400);
+    letter-spacing: -0.04em;
+    margin-top: 4px;
+    text-transform: none !important;
+  }
+  .hero .sub {
+    font-size: 20px; line-height: 1.6;
+    color: var(--blue-gray-light);
+    max-width: 540px; margin-bottom: 44px;
+    font-weight: 400;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 64px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 19px 32px; border-radius: 999px;
+    font-family: "Inter", sans-serif;
+    font-size: 15px; font-weight: 600; letter-spacing: -0.01em;
+    cursor: pointer; border: none;
+    transition: transform 0.25s var(--ease-soft), background 0.25s, box-shadow 0.25s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--beige-400);
+    color: var(--navy-950);
+    box-shadow: 0 16px 34px rgba(215, 192, 160, 0.22);
+  }
+  .btn-primary:hover {
+    background: var(--beige-500);
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px rgba(215, 192, 160, 0.32);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--offwhite);
+    border: 1px solid rgba(245, 244, 239, 0.32);
+  }
+  .btn-ghost:hover {
+    border-color: var(--beige-400);
+    color: var(--beige-400);
+  }
+  .btn .icon { width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; }
+  .btn svg { width: 100%; height: 100%; }
+
+  .hero-stats {
+    display: flex; gap: 50px;
+    border-top: 1px solid rgba(215, 192, 160, 0.22);
+    padding-top: 32px;
+  }
+  .hero-stat .n {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500; font-style: italic;
+    font-size: 56px; line-height: 1;
+    color: var(--beige-400);
+  }
+  .hero-stat .l {
+    font-family: "Inter", sans-serif;
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--blue-gray-light);
+    margin-top: 10px; font-weight: 500;
+  }
+
+  /* ============ MARQUEE (scrolling text infinito) ============ */
+  .marquee {
+    background: var(--navy-950);
+    border-top: 1px solid rgba(215, 192, 160, 0.18);
+    border-bottom: 1px solid rgba(215, 192, 160, 0.18);
+    overflow: hidden;
+    padding: 28px 0;
+    position: relative;
+  }
+  /* fade nas bordas pra navy (não branco) */
+  .marquee::before,
+  .marquee::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 120px;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .marquee::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--navy-950) 0%, transparent 100%);
+  }
+  .marquee::after {
+    right: 0;
+    background: linear-gradient(270deg, var(--navy-950) 0%, transparent 100%);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 38s linear infinite;
+    will-change: transform;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-group {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    padding-right: 60px;
+    flex-shrink: 0;
+  }
+  .marquee-item {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--offwhite);
+    white-space: nowrap;
+    letter-spacing: -0.025em;
+  }
+  .marquee-item em { color: var(--beige-400); font-style: italic; font-weight: 500; }
+  .marquee-sep {
+    color: var(--beige-500);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 30px;
+    opacity: 0.75;
+    line-height: 1;
+  }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ============ SECTION HEAD PATTERN ============ */
+  .sec-head { margin-bottom: 70px; }
+  .sec-head.center { text-align: center; }
+  .sec-head .micro { color: var(--beige-500); margin-bottom: 22px; display: inline-block; }
+  .sec-head h2 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: 60px; line-height: 1.04;
+    letter-spacing: -0.035em;
+    margin-bottom: 22px;
+    max-width: 780px;
+  }
+  .sec-head.center h2 { margin: 0 auto 22px; }
+  .sec-head h2 em { color: var(--beige-500); font-style: italic; }
+  .sec-head .lead {
+    font-size: 18px;
+    color: var(--blue-gray);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+  .sec-head.center .lead { margin: 0 auto; }
+  .sec-head .line-two { margin-top: 30px; }
+
+  /* ============ SOBRE (REFEITO — bloco curvo estilo T3) ============ */
+  .sobre {
+    padding: 140px 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 100% 30%, rgba(215, 192, 160, 0.18) 0%, transparent 55%),
+      var(--offwhite);
+    position: relative;
+    overflow: hidden;
+  }
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 90px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  /* foto com moldura bege offset + linha decorativa + selo de assinatura */
+  .sobre-photo-wrap {
+    position: relative;
+    aspect-ratio: 4 / 5;
+  }
+  /* moldura bege offset (atrás da foto) */
+  .sobre-photo-frame {
+    position: absolute;
+    top: -28px; left: -28px;
+    width: 100%; height: 100%;
+    border-radius: 18px;
+    background: var(--beige-400);
+    z-index: 1;
+  }
+  /* linha vertical decorativa no canto superior direito */
+  .sobre-photo-line {
+    position: absolute;
+    top: 32px; right: -14px;
+    width: 1px; height: 90px;
+    background: var(--beige-500);
+    z-index: 4;
+  }
+  .sobre-photo-line::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -3px;
+    width: 7px; height: 7px;
+    background: var(--beige-500);
+    border-radius: 50%;
+  }
+  .sobre-photo {
+    position: relative;
+    z-index: 3;
+    width: 100%; height: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 50px 90px rgba(20, 38, 56, 0.28);
+  }
+  .sobre-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    transition: transform 1.2s var(--ease-soft);
+  }
+  .sobre-photo:hover img { transform: scale(1.05); }
+  .sobre-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(20,38,56,0.35));
+  }
+  /* selo premium no canto inferior direito (com texto curvo girando) */
+  .sobre-photo-seal {
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 230px; height: 230px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(215, 192, 160, 0.20), transparent 50%),
+      linear-gradient(160deg, var(--navy-800), var(--navy-950));
+    box-shadow: 0 30px 60px rgba(20, 38, 56, 0.36);
+    z-index: 4;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--offwhite);
+    text-align: center;
+    border: 1px solid rgba(215, 192, 160, 0.28);
+    padding-bottom: 14px;
+  }
+  /* anel decorativo interno (estático) */
+  .sobre-photo-seal::before {
+    content: "";
+    position: absolute;
+    inset: 26px;
+    border: 1px solid rgba(215, 192, 160, 0.22);
+    border-radius: 50%;
+    z-index: 1;
+  }
+  /* SVG com texto curvo girando — anel exterior */
+  .seal-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .seal-svg text {
+    font-family: "Inter", sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.38em;
+    fill: var(--beige-400);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .sobre-photo-seal .num {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500; font-style: italic;
+    font-size: 96px; line-height: 0.9;
+    color: var(--beige-400);
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 3;
+  }
+  .sobre-photo-seal .label {
+    font-family: "Inter", sans-serif;
+    font-size: 11px; letter-spacing: 0.38em; text-transform: uppercase;
+    color: var(--blue-gray-light);
+    font-weight: 500;
+    line-height: 1.4;
+    position: relative;
+    z-index: 3;
+  }
+
+  .sobre-content .micro { color: var(--beige-500); margin-bottom: 22px; display: inline-block; }
+  .sobre-content h2 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: 58px; line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin-bottom: 32px;
+  }
+  .sobre-content h2 em { color: var(--beige-500); font-style: italic; }
+  .sobre-content p {
+    font-size: 17px; line-height: 1.7;
+    color: var(--navy-700);
+    margin-bottom: 22px;
+  }
+  .sobre-content .signature {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--warm-light);
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--navy-900);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .sobre-content .signature .label-oab {
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--blue-gray);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .sobre-content .signature .pipe { color: var(--beige-500); font-style: normal; }
+
+  /* ============ ÁREAS DE ATUAÇÃO (cards premium) ============ */
+  .atuacao {
+    padding: 140px 0;
+    background:
+      radial-gradient(ellipse 90% 50% at 80% 0%, rgba(215, 192, 160, 0.32) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 40% at 10% 100%, rgba(205, 178, 142, 0.22) 0%, transparent 60%),
+      linear-gradient(180deg, var(--warm-light) 0%, var(--offwhite) 50%, var(--warm-light) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .atuacao .container { position: relative; z-index: 2; }
+  .atuacao-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+    perspective: 1400px;
+    perspective-origin: center;
+  }
+  .area-card {
+    background: var(--white-soft);
+    border-radius: 22px;
+    padding: 40px 34px;
+    box-shadow: 0 16px 34px rgba(20, 38, 56, 0.06);
+    border-left: 3px solid transparent;
+    transition: transform 0.55s var(--ease-soft), box-shadow 0.45s, border-color 0.45s;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .area-card > * { transform: translateZ(20px); }
+  .area-card:hover {
+    box-shadow: 0 36px 70px rgba(20, 38, 56, 0.18);
+    border-left-color: var(--beige-400);
+  }
+  /* tilt JS controla transform e shadow via lerp, sem transition durante */
+  .area-card.tilting {
+    transition: border-color 0.45s;
+  }
+  /* desabilita tilt no mobile */
+  @media (hover: none), (pointer: coarse) {
+    .area-card { transform: none !important; }
+  }
+  .area-card .num {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic; font-weight: 500;
+    font-size: 34px; color: var(--beige-500);
+    margin-bottom: 20px; line-height: 1;
+    position: relative;
+  }
+  .area-card h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: 27px; line-height: 1.12;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  .area-card p {
+    font-size: 15px; line-height: 1.6;
+    color: var(--navy-700);
+    position: relative;
+  }
+
+  /* ============ COMO FUNCIONA ============ */
+  .como {
+    padding: 140px 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 100%, rgba(215, 192, 160, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 40% at 80% 0%, rgba(111, 129, 144, 0.18) 0%, transparent 55%),
+      linear-gradient(180deg, var(--navy-800) 0%, var(--navy-950) 100%);
+    color: var(--offwhite);
+    position: relative;
+    overflow: hidden;
+  }
+  .como .container { position: relative; z-index: 2; }
+  .como .sec-head h2 { color: var(--offwhite); }
+  .como .sec-head .lead { color: var(--blue-gray-light); }
+
+  .como-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 28px;
+    position: relative;
+  }
+  .step {
+    position: relative;
+    padding: 36px 28px;
+    background: rgba(245, 244, 239, 0.03);
+    border: 1px solid rgba(215, 192, 160, 0.14);
+    border-radius: 18px;
+    transition: transform 0.45s var(--ease-soft), background 0.45s, border-color 0.45s;
+  }
+  .step:hover {
+    transform: translateY(-6px);
+    background: rgba(215, 192, 160, 0.08);
+    border-color: rgba(215, 192, 160, 0.30);
+  }
+  .step .step-num {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic; font-weight: 500;
+    font-size: 76px; color: var(--beige-400);
+    line-height: 1; margin-bottom: 20px;
+  }
+  .step h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: 26px;
+    margin-bottom: 14px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .step p {
+    font-size: 15px; line-height: 1.6;
+    color: var(--blue-gray-light);
+  }
+  .step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 70px; right: -24px;
+    width: 24px; height: 1px;
+    background: rgba(215, 192, 160, 0.40);
+    z-index: 1;
+  }
+
+  /* ============ DIFERENCIAIS (estilo T9 — card duplo inspirado) ============ */
+  .diferenciais {
+    padding: 140px 0;
+    background: var(--offwhite);
+    position: relative;
+    overflow: hidden;
+  }
+  .dif-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  /* CARD foto estilo T9 com fade pra bege embaixo */
+  .dif-image-card {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 50px 90px rgba(20, 38, 56, 0.25);
+  }
+  .dif-image-card img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    transition: transform 1.2s var(--ease-soft);
+  }
+  .dif-image-card:hover img { transform: scale(1.05); }
+  .dif-image-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+      rgba(20,38,56,0.10) 0%,
+      transparent 30%,
+      rgba(20,38,56,0.30) 70%,
+      var(--navy-950) 100%);
+    z-index: 2;
+  }
+  .dif-image-card .quote {
+    position: absolute;
+    bottom: 36px; left: 36px; right: 36px;
+    z-index: 3;
+    color: var(--offwhite);
+  }
+  .dif-image-card .quote .line-two { margin-bottom: 18px; }
+  .dif-image-card .quote .text {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 30px;
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+  }
+  .dif-image-card .quote .text em { color: var(--beige-400); font-style: italic; }
+
+  .dif-content .micro { color: var(--beige-500); margin-bottom: 22px; display: inline-block; }
+  .dif-content h2 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500;
+    font-size: 54px; line-height: 1.04;
+    letter-spacing: -0.035em;
+    margin-bottom: 44px;
+  }
+  .dif-content h2 em { color: var(--beige-500); font-style: italic; }
+  .dif-list { display: flex; flex-direction: column; gap: 30px; }
+  .dif-item {
+    display: flex; gap: 22px; align-items: flex-start;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--warm-light);
+  }
+  .dif-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dif-item .num {
+    flex-shrink: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500; font-style: italic;
+    font-size: 38px;
+    color: var(--beige-500);
+    line-height: 1;
+    width: 70px;
+  }
+  .dif-item h4 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 8px;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+  }
+  .dif-item p {
+    font-size: 16px;
+    color: var(--navy-700);
+    line-height: 1.6;
+  }
+
+  /* ============ FAQ ============ */
+  .faq {
+    padding: 140px 0;
+    background: var(--warm-light);
+  }
+  .faq-list {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .faq-item {
+    background: var(--white-soft);
+    border-radius: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(20, 38, 56, 0.04);
+    border-left: 3px solid transparent;
+    transition: box-shadow 0.35s, border-color 0.35s;
+  }
+  .faq-item:hover { box-shadow: 0 14px 32px rgba(20, 38, 56, 0.08); }
+  .faq-item.open { border-left-color: var(--beige-400); }
+  .faq-q {
+    width: 100%;
+    background: transparent; border: none;
+    padding: 30px 34px;
+    text-align: left; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: 23px;
+    color: var(--navy-900);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .faq-q .toggle {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--offwhite);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--navy-900);
+    font-size: 20px;
+    transition: transform 0.4s var(--ease-soft), background 0.3s, color 0.3s;
+  }
+  .faq-item.open .faq-q .toggle {
+    transform: rotate(45deg);
+    background: var(--beige-400);
+  }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.5s var(--ease-soft), padding 0.5s var(--ease-soft);
+    padding: 0 34px;
+    color: var(--navy-700);
+    font-size: 16px; line-height: 1.7;
+  }
+  .faq-item.open .faq-a {
+    max-height: 420px;
+    padding: 0 34px 32px;
+  }
+
+  /* ============ CONTATO ============ */
+  .contato {
+    padding: 140px 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 90% 10%, rgba(215, 192, 160, 0.16) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 50% at 10% 100%, rgba(111, 129, 144, 0.20) 0%, transparent 55%),
+      linear-gradient(180deg, var(--navy-800) 0%, var(--navy-950) 100%);
+    color: var(--offwhite);
+    position: relative;
+    overflow: hidden;
+  }
+  .contato .container { position: relative; z-index: 2; }
+  .contato .sec-head h2 { color: var(--offwhite); }
+  .contato .sec-head .lead { color: var(--blue-gray-light); }
+  .contato-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 30px;
+  }
+  .contato-info {
+    background: rgba(245, 244, 239, 0.04);
+    border: 1px solid rgba(215, 192, 160, 0.20);
+    border-radius: 22px;
+    padding: 48px;
+  }
+  .contato-info h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: 32px;
+    margin-bottom: 10px;
+    letter-spacing: -0.025em;
+  }
+  .contato-info .info-sub {
+    font-size: 15px;
+    color: var(--blue-gray-light);
+    margin-bottom: 36px;
+  }
+  .info-block {
+    display: flex; gap: 18px; align-items: flex-start;
+    margin-bottom: 26px; padding-bottom: 26px;
+    border-bottom: 1px solid rgba(215, 192, 160, 0.14);
+  }
+  .info-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .info-block .ico {
+    flex-shrink: 0;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: rgba(215, 192, 160, 0.15);
+    color: var(--beige-400);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-block .ico svg { width: 19px; height: 19px; }
+  .info-block .info-label {
+    font-family: "Inter", sans-serif;
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--blue-gray-light); margin-bottom: 6px;
+  }
+  .info-block .info-val {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px; color: var(--offwhite);
+    line-height: 1.3;
+  }
+  .info-block .info-val a:hover { color: var(--beige-400); }
+
+  .contato-form {
+    background: var(--offwhite);
+    border-radius: 22px;
+    padding: 48px;
+    color: var(--navy-900);
+  }
+  .contato-form h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: 32px;
+    margin-bottom: 10px;
+    letter-spacing: -0.025em;
+  }
+  .contato-form .form-sub {
+    font-size: 15px;
+    color: var(--navy-700);
+    margin-bottom: 32px;
+  }
+  .field { margin-bottom: 20px; position: relative; }
+  .field label {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--blue-gray);
+    margin-bottom: 10px; font-weight: 500;
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    background: var(--white-soft);
+    border: 1px solid var(--warm-light);
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    color: var(--navy-900);
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .field textarea { resize: vertical; min-height: 120px; font-family: "Inter", sans-serif; }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--beige-500);
+    box-shadow: 0 0 0 4px rgba(215, 192, 160, 0.18);
+  }
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+    background: var(--navy-900);
+    color: var(--offwhite);
+    padding: 19px;
+    border-radius: 999px;
+    border: none; cursor: pointer;
+    font-family: "Inter", sans-serif;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 0.04em;
+    transition: background 0.25s, transform 0.25s var(--ease-soft);
+  }
+  .form-submit:hover {
+    background: var(--navy-950);
+    transform: translateY(-2px);
+  }
+  .form-disclaimer {
+    font-size: 12px;
+    color: var(--blue-gray);
+    margin-top: 16px;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--navy-950);
+    color: var(--blue-gray-light);
+    padding: 80px 0 30px;
+    font-size: 14px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+  .footer-brand .mark {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600; font-size: 32px;
+    color: var(--offwhite);
+    letter-spacing: 0.16em;
+    margin-bottom: 10px;
+  }
+  .footer-brand .tag {
+    font-size: 9px; letter-spacing: 0.40em; text-transform: uppercase;
+    color: var(--beige-400);
+    margin-bottom: 24px;
+  }
+  .footer-brand p {
+    font-size: 14px; line-height: 1.6;
+    max-width: 320px;
+  }
+  .footer-col h5 {
+    font-family: "Inter", sans-serif;
+    font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--offwhite);
+    margin-bottom: 22px; font-weight: 500;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 11px; font-size: 14px; line-height: 1.5; }
+  .footer-col a { transition: color 0.25s; }
+  .footer-col a:hover { color: var(--beige-400); }
+  .footer-bottom {
+    border-top: 1px solid rgba(215, 192, 160, 0.10);
+    padding-top: 26px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 22px;
+    font-size: 12px;
+    color: rgba(169, 180, 188, 0.7);
+  }
+  .footer-bottom .oab-notice {
+    max-width: 660px;
+    line-height: 1.5;
+  }
+
+  /* ============ LOADER (splash inicial A·P·A) ============ */
+  .loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(215,192,160,0.10), transparent 50%),
+      linear-gradient(180deg, var(--navy-800) 0%, var(--navy-950) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.65s var(--ease-soft), visibility 0.65s;
+  }
+  .loader.hidden { opacity: 0; visibility: hidden; }
+  .loader-mark {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    font-size: 88px;
+    letter-spacing: 0.16em;
+    color: var(--offwhite);
+    opacity: 0;
+    transform: translateY(14px);
+    animation: loader-up 0.7s var(--ease-soft) 0.10s forwards;
+    line-height: 1;
+  }
+  .loader-tag {
+    margin-top: 14px;
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--beige-400);
+    opacity: 0;
+    transform: translateY(8px);
+    animation: loader-up 0.6s var(--ease-soft) 0.45s forwards;
+  }
+  .loader-line {
+    margin-top: 28px;
+    width: 0;
+    height: 1px;
+    background: var(--beige-400);
+    animation: loader-line 0.7s var(--ease-soft) 0.70s forwards;
+  }
+  @keyframes loader-up {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes loader-line {
+    to { width: 140px; }
+  }
+  /* trava scroll enquanto loader ativo */
+  body.loading { overflow: hidden; height: 100vh; }
+
+  /* ============ CURSOR PERSONALIZADO (dot + ring) ============ */
+  @media (hover: hover) and (pointer: fine) {
+    html, body { cursor: none; }
+    a, button, input, textarea, select, label, [role="button"] { cursor: none; }
+  }
+  .cursor-dot, .cursor-ring {
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate3d(-100px, -100px, 0);
+    mix-blend-mode: difference;
+  }
+  .cursor-dot {
+    width: 8px; height: 8px;
+    background: var(--beige-400);
+    border-radius: 50%;
+    transition: transform 0.10s var(--ease-soft), width 0.25s, height 0.25s, opacity 0.25s;
+    margin-left: -4px; margin-top: -4px;
+  }
+  .cursor-ring {
+    width: 44px; height: 44px;
+    border: 1.5px solid var(--beige-400);
+    border-radius: 50%;
+    transition: width 0.30s var(--ease-soft), height 0.30s var(--ease-soft),
+                border-color 0.30s, opacity 0.30s, background 0.30s;
+    margin-left: -22px; margin-top: -22px;
+    opacity: 0.85;
+  }
+  .cursor-dot.hover {
+    width: 0; height: 0; opacity: 0;
+  }
+  .cursor-ring.hover {
+    width: 76px; height: 76px;
+    margin-left: -38px; margin-top: -38px;
+    border-color: var(--beige-400);
+    background: rgba(215, 192, 160, 0.12);
+  }
+  /* esconde cursor no mobile */
+  @media (hover: none), (pointer: coarse) {
+    .cursor-dot, .cursor-ring { display: none !important; }
+  }
+
+  /* ============ WHATSAPP FLUTUANTE ============ */
+  .wa-float {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    z-index: 99;
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: #25D366;
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 14px 34px rgba(37, 211, 102, 0.40);
+    transition: transform 0.3s var(--ease-snap);
+    animation: wa-pulse 2.5s infinite;
+  }
+  .wa-float:hover { transform: scale(1.10); }
+  .wa-float svg { width: 32px; height: 32px; }
+  @keyframes wa-pulse {
+    0%   { box-shadow: 0 14px 34px rgba(37, 211, 102, 0.40), 0 0 0 0 rgba(37, 211, 102, 0.6); }
+    70%  { box-shadow: 0 14px 34px rgba(37, 211, 102, 0.40), 0 0 0 22px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 14px 34px rgba(37, 211, 102, 0.40), 0 0 0 0 rgba(37, 211, 102, 0); }
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 900px) {
+    .nav-menu { display: none; }
+    .nav-burger {
+      display: flex; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 8px;
+    }
+    .nav-burger span { width: 26px; height: 2px; background: var(--offwhite); transition: 0.3s; }
+    .nav-menu.mobile-open {
+      display: flex; flex-direction: column; gap: 20px;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--navy-950); padding: 24px 32px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    /* ===== HERO MOBILE — foto vertical + overlay mais denso (texto não cola no rosto) ===== */
+    .hero { padding: 140px 28px 40px; min-height: 0; align-items: flex-start; }
+    .hero-ctas { margin-bottom: 0; }
+    .hero-bg {
+      background-image: url("../assets/fotos-posts/foto-1-mobile.png");
+      background-position: center 18%;
+      background-size: cover;
+    }
+    .hero-overlay {
+      background:
+        linear-gradient(180deg,
+          rgba(20,38,56,0.55) 0%,
+          rgba(20,38,56,0.20) 22%,
+          rgba(20,38,56,0.40) 42%,
+          rgba(20,38,56,0.85) 65%,
+          rgba(20,38,56,0.97) 100%);
+    }
+    .hero-vline { display: none; }
+    .hero-arc-bl1, .hero-arc-bl2 { display: none; }
+    .hero h1 { font-size: 60px; }
+    .hero-content { max-width: 100%; padding-top: 380px; }
+    .hero .sub { font-size: 18px; max-width: 100%; }
+    .hero-ctas { gap: 12px; }
+
+    /* ===== MARQUEE MOBILE — aumentar fonte ===== */
+    .marquee { padding: 28px 0; }
+    .marquee-item { font-size: 38px; }
+    .marquee-sep { font-size: 28px; }
+    .marquee-group { gap: 50px; padding-right: 50px; }
+    .marquee::before, .marquee::after { width: 60px; }
+
+    /* ===== SOBRE MOBILE — selo menor pra caber, frame ajustado ===== */
+    .sobre-grid, .dif-grid, .contato-grid { grid-template-columns: 1fr; gap: 80px; }
+    .sec-head h2, .sobre-content h2, .dif-content h2 { font-size: 42px; }
+    .sobre-photo-frame { top: -18px; left: -18px; border-radius: 16px; }
+    .sobre-photo-line { top: 20px; right: -10px; height: 70px; }
+    .sobre-photo-seal {
+      width: 190px; height: 190px;
+      bottom: -26px; right: -26px;
+      padding-bottom: 10px;
+    }
+    .sobre-photo-seal::before { inset: 20px; }
+    .sobre-photo-seal .num { font-size: 78px; margin-bottom: 4px; }
+    .sobre-photo-seal .label { font-size: 8.5px; letter-spacing: 0.32em; }
+    /* texto curvo: tamanho de fonte maior, textLength no SVG cuida do encaixe perfeito */
+    .seal-svg text { font-size: 11px; letter-spacing: 0.34em; }
+
+    /* ===== ÁREAS / CARDS / STEPS — animação 3D individual ao entrar na viewport (padrão Mariana) ===== */
+    .atuacao-grid { grid-template-columns: 1fr; perspective: 1000px; }
+    .como-steps { grid-template-columns: 1fr 1fr; gap: 24px; perspective: 1000px; }
+    .step:not(:last-child)::after { display: none; }
+  }
+  /* aplica em touch devices (mobile/tablet) — cada card observado individualmente via JS */
+  @media (hover: none), (pointer: coarse) {
+    .area-card, .step {
+      opacity: 0;
+      transform: perspective(900px) rotateX(14deg) translateY(28px);
+      transform-origin: center bottom;
+      transition: opacity 0.9s var(--ease-soft), transform 0.9s var(--ease-soft), box-shadow 0.4s;
+    }
+    .area-card.entered, .step.entered {
+      opacity: 1;
+      transform: perspective(900px) rotateX(0deg) translateY(0);
+    }
+    /* tap feedback — quando toca no card, dá uma mini 3D pra confirmar a interação */
+    .area-card.tap-active, .step.tap-active {
+      transform: perspective(900px) rotateX(-3deg) translateY(-4px) scale(1.01);
+      box-shadow: 0 28px 56px rgba(20, 38, 56, 0.20);
+    }
+  }
+  @media (max-width: 900px) {
+
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    .container { padding: 0 24px; }
+    .hero-stats { flex-wrap: wrap; gap: 28px; }
+    .hero-stat .n { font-size: 42px; }
+    .nav { padding: 16px 0; }
+    .nav.scrolled { padding: 12px 0; }
+    /* ===== CONTATO MOBILE — cards proporcionais, não cortam ===== */
+    .contato { padding: 100px 0; }
+    .contato-grid { gap: 24px; margin-top: 16px; }
+    .contato-info, .contato-form {
+      padding: 32px 24px;
+      border-radius: 18px;
+    }
+    .contato-info h3, .contato-form h3 { font-size: 26px; }
+    .contato-info .info-sub, .contato-form .form-sub {
+      font-size: 14px; margin-bottom: 24px;
+    }
+    .info-block {
+      gap: 14px; margin-bottom: 18px; padding-bottom: 18px;
+    }
+    .info-block .ico { width: 40px; height: 40px; }
+    .info-block .ico svg { width: 16px; height: 16px; }
+    .info-block .info-val { font-size: 17px; }
+    .info-block .info-label { font-size: 10px; letter-spacing: 0.22em; }
+    .field { margin-bottom: 14px; }
+    .field label { font-size: 10px; margin-bottom: 6px; }
+    .field input, .field textarea {
+      padding: 14px 14px;
+      font-size: 16px; /* >=16px previne auto-zoom do iOS Safari ao focar input */
+    }
+    .field textarea { min-height: 100px; }
+    .form-submit { padding: 16px; font-size: 13px; }
+    .form-disclaimer { font-size: 11px; }
+  }
+
+  @media (max-width: 560px) {
+    .como-steps { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 46px; }
+    .hero .sub { font-size: 17px; }
+    .hero-content { padding-top: 340px; }
+    /* OAB vai pra linha de baixo no mobile pra ficar mais clean */
+    .hero .micro-pre { display: block; line-height: 1.6; }
+    .hero .micro-pre .hero-sep { display: none; }
+    .hero .micro-pre .hero-oab {
+      display: block;
+      padding-left: 14px;
+      opacity: 0.85;
+      letter-spacing: 0.30em;
+    }
+    .sec-head h2, .sobre-content h2, .dif-content h2 { font-size: 34px; }
+    .marquee { padding: 22px 0; }
+    .marquee-item { font-size: 30px; }
+    .marquee-sep { font-size: 22px; }
+    .marquee-group { gap: 40px; padding-right: 40px; }
+    .area-card { padding: 32px 28px; }
+    .wa-float { width: 58px; height: 58px; bottom: 22px; right: 22px; }
+    .wa-float svg { width: 28px; height: 28px; }
+    .btn { padding: 16px 24px; font-size: 14px; }
+    .sobre-photo-seal {
+      width: 160px; height: 160px;
+      bottom: -20px; right: -20px;
+    }
+    .sobre-photo-seal::before { inset: 16px; }
+    .sobre-photo-seal .num { font-size: 64px; }
+    .sobre-photo-seal .label { font-size: 7.5px; letter-spacing: 0.30em; }
+    .seal-svg text { font-size: 9.5px; letter-spacing: 0.32em; }
+  }
+</style>
+</head>
+
+<body class="loading">
+
+<!-- ============ LOADER (splash A·P·A) ============ -->
+<div class="loader" id="loader">
+  <div class="loader-mark">A·P·A</div>
+  <div class="loader-tag">Previdenciário</div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#hero" class="nav-logo">
+      <span class="mark">A·P·A</span>
+      <span class="tag">Previdenciário</span>
+    </a>
+    <div class="nav-menu" id="navMenu">
+      <a href="#sobre">Sobre</a>
+      <a href="#atuacao">Atuação</a>
+      <a href="#como">Como funciona</a>
+      <a href="#faq">Dúvidas</a>
+      <a href="#contato" class="nav-cta">Falar com o escritório</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ HERO (foto desktop como BG + gradient L→R) ============ -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-arc-bl1"></div>
+  <div class="hero-arc-bl2"></div>
+  <div class="hero-vline"></div>
+
+  <div class="hero-content">
+      <span class="micro micro-pre">
+        <span class="hero-name">— Marcio Albrechete</span>
+        <span class="hero-sep"> · </span>
+        <span class="hero-oab">OAB/SP 341.644</span>
+      </span>
+      <h1 class="reveal">
+        O INSS negou<br>
+        seu benefício?<br>
+        <span class="destaque">Dá pra recorrer.</span>
+      </h1>
+      <p class="sub reveal">
+        Há 13 anos atendo segurados em ações contra o INSS. Cada caso analisado com técnica, em linguagem que você entende. Online em todo o Brasil, presencial em Ibitinga.
+      </p>
+      <div class="hero-ctas reveal">
+        <a href="https://wa.me/5516981428957?text=Ol%C3%A1%20Dr.%20Marcio%2C%20gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20meu%20caso." class="btn btn-primary" target="_blank" rel="noopener">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.94 11.94 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 5.99L0 24l6.16-1.61A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.22-3.48-8.52zM12 22a9.93 9.93 0 01-5.06-1.38l-.36-.21-3.66.96.98-3.56-.24-.37A9.96 9.96 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.45-7.45c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.11 3.22 5.12 4.51.72.31 1.27.49 1.71.63.72.23 1.37.2 1.89.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/></svg>
+          </span>
+          Tirar dúvida no WhatsApp
+        </a>
+        <a href="#sobre" class="btn btn-ghost">Conhecer o escritório</a>
+      </div>
+    </div>
+</section>
+
+<!-- ============ MARQUEE (scrolling text infinito) ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <!-- grupo 1 -->
+    <div class="marquee-group">
+      <span class="marquee-item"><em>13 anos</em> de carreira</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Atendimento online em <em>todo o Brasil</em></span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Auxílio-doença</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Aposentadoria por invalidez</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">BPC / LOAS</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Recurso administrativo</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Sem <em>juridiquês</em></span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">OAB / SP 341.644</span>
+      <span class="marquee-sep">◆</span>
+    </div>
+    <!-- grupo 2 (duplicado para loop infinito sem corte) -->
+    <div class="marquee-group" aria-hidden="true">
+      <span class="marquee-item"><em>13 anos</em> de carreira</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Atendimento online em <em>todo o Brasil</em></span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Auxílio-doença</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Aposentadoria por invalidez</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">BPC / LOAS</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Recurso administrativo</span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">Sem <em>juridiquês</em></span>
+      <span class="marquee-sep">◆</span>
+      <span class="marquee-item">OAB / SP 341.644</span>
+      <span class="marquee-sep">◆</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SOBRE ============ -->
+<section class="sobre" id="sobre">
+  <div class="container sobre-grid">
+    <div class="sobre-photo-wrap reveal">
+      <div class="sobre-photo-frame"></div>
+      <div class="sobre-photo">
+        <img src="../assets/fotos-posts/foto-2.png" alt="Marcio Albrechete, advogado previdenciário em Ibitinga">
+      </div>
+      <div class="sobre-photo-line"></div>
+      <div class="sobre-photo-seal">
+        <svg class="seal-svg" viewBox="0 0 230 230" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- círculo em raio 100; circunferência = 2π × 100 ≈ 628.32 -->
+            <path id="seal-circle" d="M 115, 115 m -100, 0 a 100,100 0 1,1 200,0 a 100,100 0 1,1 -200,0" />
+          </defs>
+          <!-- texto curvo girando — textLength=628 força encaixe exato em 360° sem sobreposição -->
+          <g>
+            <text>
+              <textPath href="#seal-circle" startOffset="0" textLength="628" lengthAdjust="spacing">A·P·A PREVIDENCIÁRIO · OAB/SP 341.644 · ESPECIALISTA EM INSS · </textPath>
+            </text>
+            <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+              from="0 115 115" to="360 115 115" dur="32s" repeatCount="indefinite"/>
+          </g>
+        </svg>
+        <span class="num">13</span>
+        <span class="label">Anos de<br>carreira</span>
+      </div>
+    </div>
+    <div class="sobre-content reveal">
+      <span class="micro">— Quem te atende</span>
+      <h2>Direito previdenciário, <em>sem juridiquês.</em></h2>
+      <p>
+        Sou Marcio Albrechete, advogado há 13 anos com prática dedicada a ações contra o INSS. Atendo principalmente quem teve benefício por incapacidade negado: auxílio-doença, aposentadoria por invalidez e BPC.
+      </p>
+      <p>
+        Atendo de Ibitinga (SP), onde também sou Procurador Municipal há mais de 9 anos, e online em todo o Brasil. Acredito que cada negativa do INSS carrega uma pessoa esperando uma resposta. Por isso meu trabalho é técnico, estratégico e direto, sem promessas vazias.
+      </p>
+      <div class="signature">
+        <span>Marcio Albrechete</span>
+        <span class="pipe">·</span>
+        <span class="label-oab">OAB / SP 341.644<br>Direito Previdenciário</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ÁREAS DE ATUAÇÃO ============ -->
+<section class="atuacao" id="atuacao">
+  <div class="container">
+    <div class="sec-head center reveal">
+      <span class="micro">— Áreas de atuação</span>
+      <h2>Cuido de <em>cada tipo</em> de benefício.</h2>
+      <p class="lead">Atuação focada no segurado do INSS, do primeiro pedido até a ação judicial. Veja qual área se encaixa no seu caso.</p>
+      <span class="line-two dark"><span class="a"></span><span class="b"></span></span>
+    </div>
+
+    <div class="atuacao-grid reveal-stagger">
+      <div class="area-card">
+        <div class="num">01</div>
+        <h3>Auxílio-doença</h3>
+        <p>Para quem está afastado do trabalho por doença ou acidente. Hoje chamado de auxílio por incapacidade temporária.</p>
+      </div>
+      <div class="area-card">
+        <div class="num">02</div>
+        <h3>Aposentadoria por invalidez</h3>
+        <p>Para quem não tem mais condição de voltar ao trabalho. Hoje chamada de aposentadoria por incapacidade permanente.</p>
+      </div>
+      <div class="area-card">
+        <div class="num">03</div>
+        <h3>BPC / LOAS</h3>
+        <p>Benefício mensal de um salário mínimo para idosos (65+) e pessoas com deficiência em situação de vulnerabilidade.</p>
+      </div>
+      <div class="area-card">
+        <div class="num">04</div>
+        <h3>Aposentadoria por idade</h3>
+        <p>Análise das regras atuais e das regras de transição da reforma de 2019 que se aplicam ao seu caso.</p>
+      </div>
+      <div class="area-card">
+        <div class="num">05</div>
+        <h3>Aposentadoria por tempo de contribuição</h3>
+        <p>Cálculo do seu tempo (incluindo períodos rurais e especiais) e definição da melhor data pra dar entrada.</p>
+      </div>
+      <div class="area-card">
+        <div class="num">06</div>
+        <h3>Pensão por morte</h3>
+        <p>Quando o segurado morre, dependentes podem ter direito ao benefício mensal. Orientação sobre prazos e habilitação.</p>
+      </div>
+      <div class="area-card">
+        <div class="num">07</div>
+        <h3>Recurso administrativo</h3>
+        <p>Para quem teve o benefício negado. Você tem 30 dias da notificação pra recorrer dentro do próprio INSS.</p>
+      </div>
+      <div class="area-card">
+        <div class="num">08</div>
+        <h3>Ação judicial contra o INSS</h3>
+        <p>Quando o pedido e o recurso não resolvem. Inclui perícia judicial e acompanhamento de todo o processo.</p>
+      </div>
+      <div class="area-card">
+        <div class="num">09</div>
+        <h3>Revisão de benefício</h3>
+        <p>Quando o INSS calculou seu benefício de forma errada, dá pra revisar e corrigir o valor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section class="como" id="como">
+  <div class="container">
+    <div class="sec-head center reveal">
+      <span class="micro" style="color: var(--beige-400);">— Como funciona o atendimento</span>
+      <h2>Sem mistério, <em>sem juridiquês.</em></h2>
+      <p class="lead">Cada etapa explicada, cada decisão combinada com você. Online ou presencial em Ibitinga.</p>
+      <span class="line-two"><span class="a"></span><span class="b"></span></span>
+    </div>
+
+    <div class="como-steps reveal-stagger">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Você me conta</h3>
+        <p>Envia uma mensagem com o resumo do seu caso. Nessa primeira conversa eu já te digo se há caminho jurídico.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Análise técnica</h3>
+        <p>Reunimos seus documentos, laudos e o histórico no INSS. Avalio qual caminho faz mais sentido: administrativo ou judicial.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Estratégia</h3>
+        <p>Definimos juntos o melhor caminho: pedido, recurso ou ação judicial. Cada passo explicado em linguagem clara.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Acompanhamento</h3>
+        <p>Você é avisado a cada movimentação. Sem te deixar sem notícia, sem perguntas sem resposta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIFERENCIAIS (estilo card foto T9 inspirado) ============ -->
+<section class="diferenciais" id="diferenciais">
+  <div class="container dif-grid">
+    <div class="dif-image-card reveal">
+      <img src="../assets/fotos-posts/foto-1-mobile.png" alt="Marcio Albrechete em atendimento">
+      <div class="quote">
+        <div class="line-two"><span class="a"></span><span class="b"></span></div>
+        <div class="text">
+          Toda negativa do INSS carrega uma <em>pessoa esperando resposta.</em>
+        </div>
+      </div>
+    </div>
+    <div class="dif-content reveal">
+      <span class="micro">— Por que A·P·A Previdenciário</span>
+      <h2>Atendimento técnico, <em>direto ao ponto.</em></h2>
+      <div class="dif-list">
+        <div class="dif-item">
+          <div class="num">01</div>
+          <div>
+            <h4>Só direito previdenciário</h4>
+            <p>Não atendo outras áreas. Minha prática é INSS desde o primeiro dia, há 13 anos.</p>
+          </div>
+        </div>
+        <div class="dif-item">
+          <div class="num">02</div>
+          <div>
+            <h4>Online em todo o Brasil</h4>
+            <p>Reuniões por vídeo, documentos digitais. Você é atendido de qualquer cidade, sem precisar se deslocar.</p>
+          </div>
+        </div>
+        <div class="dif-item">
+          <div class="num">03</div>
+          <div>
+            <h4>Linguagem clara</h4>
+            <p>Cada termo técnico explicado. Você sabe o que está acontecendo no seu processo, em cada passo.</p>
+          </div>
+        </div>
+        <div class="dif-item">
+          <div class="num">04</div>
+          <div>
+            <h4>Estratégia caso a caso</h4>
+            <p>Pedido, recurso ou ação judicial: o caminho é decidido com base no seu caso, não em fórmula pronta.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="sec-head center reveal">
+      <span class="micro">— Dúvidas frequentes</span>
+      <h2>Antes de me chamar, <em>vale ler.</em></h2>
+      <span class="line-two dark"><span class="a"></span><span class="b"></span></span>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q">Você atende online ou só em Ibitinga?<span class="toggle">+</span></button>
+        <div class="faq-a">Os dois. Atendo online em todo o Brasil (reuniões por vídeo, documentos digitais) e presencialmente no escritório em Ibitinga, na Rua José Custódio, 557, Centro.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">O INSS negou meu pedido. O que faço?<span class="toggle">+</span></button>
+        <div class="faq-a">A negativa não é o fim. Você tem 30 dias da data em que foi avisado para recorrer dentro do próprio INSS (chamado recurso administrativo). Se o recurso também for negado, ainda dá pra entrar com ação judicial. O melhor caminho depende do seu caso: laudo, CID, tempo de contribuição, motivo da negativa.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">Que documentos preciso reunir?<span class="toggle">+</span></button>
+        <div class="faq-a">Depende do benefício. Em geral: documento com foto, comprovante de endereço, CNIS (o extrato com todas suas contribuições no INSS, dá pra baixar no app Meu INSS), e para benefícios por incapacidade: laudo médico com CID, exames e relatórios dos últimos 6 meses. Na primeira conversa eu te digo exatamente o que falta.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">Quanto tempo demora um processo contra o INSS?<span class="toggle">+</span></button>
+        <div class="faq-a">Varia muito. O pedido inicial no INSS tem prazo legal de 90 dias para resposta (na prática, costuma demorar mais). O recurso administrativo leva meses. Já a ação judicial pode levar de meses a anos, dependendo da complexidade. Cada caso eu estimo individualmente após a análise.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">Você atende outras áreas além de INSS?<span class="toggle">+</span></button>
+        <div class="faq-a">Não. Minha prática é dedicada exclusivamente ao direito previdenciário: ações contra o INSS, benefícios por incapacidade, aposentadorias, pensão por morte, BPC. Para outras áreas, posso indicar profissionais de confiança.</div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">Em quais cidades você atua?<span class="toggle">+</span></button>
+        <div class="faq-a">Online, em todo o Brasil. Presencialmente, em Ibitinga e região, com possibilidade de deslocamento para outras cidades de São Paulo quando o caso pedir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTATO ============ -->
+<section class="contato" id="contato">
+  <div class="container">
+    <div class="sec-head center reveal">
+      <span class="micro" style="color: var(--beige-400);">— Fale com o escritório</span>
+      <h2>Conte seu caso. <em>A gente analisa.</em></h2>
+      <p class="lead">A primeira conversa é técnica e direta. Você sai sabendo se faz sentido seguir.</p>
+      <span class="line-two"><span class="a"></span><span class="b"></span></span>
+    </div>
+
+    <div class="contato-grid">
+      <div class="contato-info reveal">
+        <h3>Canais de atendimento</h3>
+        <p class="info-sub">Resposta em horário comercial, de segunda a sexta.</p>
+
+        <div class="info-block">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.94 11.94 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 5.99L0 24l6.16-1.61A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.22-3.48-8.52zM12 22a9.93 9.93 0 01-5.06-1.38l-.36-.21-3.66.96.98-3.56-.24-.37A9.96 9.96 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10z"/></svg></div>
+          <div>
+            <div class="info-label">WhatsApp</div>
+            <div class="info-val"><a href="https://wa.me/5516981428957?text=Ol%C3%A1%20Dr.%20Marcio%2C%20gostaria%20de%20tirar%20uma%20d%C3%BAvida." target="_blank" rel="noopener">Tirar dúvida agora →</a></div>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div>
+            <div class="info-label">Email</div>
+            <div class="info-val"><a href="mailto:contato@apaprevidenciario.com.br">contato@apaprevidenciario.com.br</a></div>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div>
+            <div class="info-label">Endereço</div>
+            <div class="info-val">Rua José Custódio, 557<br>Centro · Ibitinga – SP · 14.940-100</div>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+          <div>
+            <div class="info-label">Instagram</div>
+            <div class="info-val"><a href="https://www.instagram.com/marcio.albrechete/" target="_blank" rel="noopener">@marcio.albrechete</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contato-form reveal">
+        <h3>Conte seu caso</h3>
+        <p class="form-sub">Resposta em até 1 dia útil. Sem compromisso.</p>
+        <form id="contactForm" onsubmit="return enviarViaWhats(event)">
+          <div class="field">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required placeholder="Seu nome completo">
+          </div>
+          <div class="field">
+            <label for="mensagem">Conte seu caso</label>
+            <textarea id="mensagem" name="mensagem" required placeholder="Descreva brevemente sua situação: tipo de benefício, status no INSS, há quanto tempo..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Enviar pelo WhatsApp</button>
+          <p class="form-disclaimer">Ao enviar, você concorda em ser contatado por WhatsApp. Em conformidade com o Provimento 205/2021 do CFOAB.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="mark">A·P·A</div>
+        <div class="tag">Previdenciário</div>
+        <p>Albrechete, Pisanelli e Aguilheira Sociedade de Advogados. Defesa técnica em direito previdenciário, atendimento online em todo o Brasil.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navegação</h5>
+        <ul>
+          <li><a href="#sobre">Sobre o escritório</a></li>
+          <li><a href="#atuacao">Áreas de atuação</a></li>
+          <li><a href="#como">Como funciona</a></li>
+          <li><a href="#faq">Dúvidas frequentes</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contato</h5>
+        <ul>
+          <li>Rua José Custódio, 557</li>
+          <li>Centro · Ibitinga – SP</li>
+          <li>14.940-100</li>
+          <li><a href="mailto:contato@apaprevidenciario.com.br">contato@apaprevidenciario.com.br</a></li>
+          <li><a href="https://www.instagram.com/marcio.albrechete/" target="_blank" rel="noopener">@marcio.albrechete</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Registro</h5>
+        <ul>
+          <li>Marcio Albrechete</li>
+          <li>OAB / SP 341.644</li>
+          <li>CNPJ 55.090.199/0001-88</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 Albrechete, Pisanelli e Aguilheira Sociedade de Advogados. Todos os direitos reservados.</div>
+      <div class="oab-notice">
+        Em conformidade com o Provimento 205/2021 do CFOAB e Código de Ética da OAB. Este site não substitui análise técnica individual do caso.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CURSOR PERSONALIZADO ============ -->
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- ============ WHATSAPP FLUTUANTE ============ -->
+<a href="https://wa.me/5516981428957?text=Ol%C3%A1%20Dr.%20Marcio%2C%20gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20meu%20caso." class="wa-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.94 11.94 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 5.99L0 24l6.16-1.61A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.22-3.48-8.52zM12 22a9.93 9.93 0 01-5.06-1.38l-.36-.21-3.66.96.98-3.56-.24-.37A9.96 9.96 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.45-7.45c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01s-.52.07-.79.37c-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.11 3.22 5.12 4.51.72.31 1.27.49 1.71.63.72.23 1.37.2 1.89.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/></svg>
+</a>
+
+<!-- ============ SCRIPTS ============ -->
+<script>
+  // ====== Loader (splash inicial) ======
+  (function initLoader() {
+    const loader = document.getElementById('loader');
+    if (!loader) { document.body.classList.remove('loading'); return; }
+    const MIN_DURATION = 1400; // ms mínimo do splash
+    const start = performance.now();
+    window.addEventListener('load', () => {
+      const elapsed = performance.now() - start;
+      const wait = Math.max(0, MIN_DURATION - elapsed);
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        document.body.classList.remove('loading');
+        // remove do DOM após a transição
+        setTimeout(() => loader.remove(), 800);
+      }, wait);
+    });
+    // fallback: se load não dispara em 4s, esconde mesmo assim
+    setTimeout(() => {
+      if (loader && !loader.classList.contains('hidden')) {
+        loader.classList.add('hidden');
+        document.body.classList.remove('loading');
+      }
+    }, 4000);
+  })();
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  const burger = document.getElementById('navBurger');
+  const menu = document.getElementById('navMenu');
+  burger?.addEventListener('click', () => menu.classList.toggle('mobile-open'));
+  menu?.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => menu.classList.remove('mobile-open'))
+  );
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  function enviarViaWhats(e) {
+    e.preventDefault();
+    const nome = document.getElementById('nome').value.trim();
+    const msg = document.getElementById('mensagem').value.trim();
+    const texto = `Olá Dr. Marcio, meu nome é ${nome}.%0A%0A${encodeURIComponent(msg)}`;
+    window.open(`https://wa.me/5516981428957?text=${texto}`, '_blank');
+    return false;
+  }
+
+  // ====== Cursor personalizado (dot + ring follower) ======
+  (function initCursor() {
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    if (!dot || !ring) return;
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+    });
+
+    function loop() {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    const hoverables = 'a, button, input, textarea, [role="button"], .area-card, .step, .faq-q, .nav-cta, .btn, .wa-float';
+    document.querySelectorAll(hoverables).forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        dot.classList.add('hover');
+        ring.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        dot.classList.remove('hover');
+        ring.classList.remove('hover');
+      });
+    });
+
+    // some quando sai da janela
+    document.addEventListener('mouseleave', () => {
+      dot.style.opacity = '0'; ring.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+      dot.style.opacity = ''; ring.style.opacity = '';
+    });
+  })();
+
+  // ====== Tilt 3D nos cards (lerp suave, entrada/saída fluida) ======
+  (function initTilt() {
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+    const cards = document.querySelectorAll('.area-card');
+    const MAX_TILT = 12;   // graus
+    const LIFT = 14;       // px de elevação
+    const LERP = 0.18;     // velocidade do easing (0.10 = mais lento, 0.30 = mais rápido)
+
+    cards.forEach(card => {
+      const s = {
+        rotX: 0, rotY: 0, lift: 0,
+        tRotX: 0, tRotY: 0, tLift: 0,
+        running: false,
+        inside: false,
+      };
+
+      function apply() {
+        const shX = -(s.rotY / MAX_TILT) * 28;
+        const shY = -(s.rotX / MAX_TILT) * 28;
+        card.style.transform =
+          `rotateX(${s.rotX.toFixed(2)}deg) rotateY(${s.rotY.toFixed(2)}deg) ` +
+          `translateY(${(-s.lift).toFixed(2)}px) translateZ(20px)`;
+        if (s.inside || s.lift > 0.5) {
+          card.style.boxShadow =
+            `${shX.toFixed(0)}px ${(40 + shY).toFixed(0)}px 80px rgba(20, 38, 56, 0.22)`;
+        }
+      }
+
+      function loop() {
+        s.rotX += (s.tRotX - s.rotX) * LERP;
+        s.rotY += (s.tRotY - s.rotY) * LERP;
+        s.lift += (s.tLift - s.lift) * LERP;
+        apply();
+
+        const diff =
+          Math.abs(s.tRotX - s.rotX) +
+          Math.abs(s.tRotY - s.rotY) +
+          Math.abs(s.tLift - s.lift);
+
+        if (diff > 0.05) {
+          requestAnimationFrame(loop);
+        } else {
+          s.running = false;
+          if (!s.inside && s.tRotX === 0 && s.tRotY === 0 && s.tLift === 0) {
+            // chegou no neutro, limpa inline
+            card.style.transform = '';
+            card.style.boxShadow = '';
+            card.classList.remove('tilting');
+          }
+        }
+      }
+
+      function startLoop() {
+        if (!s.running) {
+          s.running = true;
+          requestAnimationFrame(loop);
+        }
+      }
+
+      card.addEventListener('mouseenter', () => {
+        s.inside = true;
+        card.classList.add('tilting');
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        s.tRotY = ((x - cx) / cx) * MAX_TILT;
+        s.tRotX = -((y - cy) / cy) * MAX_TILT;
+        s.tLift = LIFT;
+        startLoop();
+      });
+
+      card.addEventListener('mouseleave', () => {
+        s.inside = false;
+        s.tRotX = 0;
+        s.tRotY = 0;
+        s.tLift = 0;
+        startLoop();
+      });
+    });
+  })();
+
+  // ====== Mobile/touch: cards animam ao entrar E desfazem ao sair da viewport (bidirecional) ======
+  (function initMobileCardScroll() {
+    if (!window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+    const cards = document.querySelectorAll('.area-card, .step');
+    if (!cards.length) return;
+
+    // rootMargin assimétrico: dispara cedo ao descer (-80px no top, +120px no bottom)
+    // assim a animação é fluida e bidirecional — ao subir, sai antes do card encostar no topo
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('entered');
+        } else {
+          e.target.classList.remove('entered');
+        }
+      });
+    }, { threshold: 0, rootMargin: '-80px 0px 120px 0px' });
+
+    cards.forEach(c => io.observe(c));
+
+    // tap feedback (responde ao toque com mini 3D)
+    cards.forEach(c => {
+      c.addEventListener('touchstart', () => c.classList.add('tap-active'), { passive: true });
+      const remove = () => c.classList.remove('tap-active');
+      c.addEventListener('touchend', remove, { passive: true });
+      c.addEventListener('touchcancel', remove, { passive: true });
+    });
+  })();
+</script>
+
+</body>
+</html>

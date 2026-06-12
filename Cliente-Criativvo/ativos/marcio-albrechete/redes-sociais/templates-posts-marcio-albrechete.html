@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Templates A·P·A Previdenciário — v6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy-950: #142638;
+    --navy-900: #1B3045;
+    --navy-800: #243B54;
+    --navy-700: #2D465F;
+    --blue-gray: #6F8190;
+    --blue-gray-light: #A9B4BC;
+    --beige-500: #CDB28E;
+    --beige-400: #D7C0A0;
+    --beige-300: #E5D5BE;
+    --offwhite: #F5F4EF;
+    --warm-light: #ECE7DE;
+    --white-soft: #FAFAF7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d0d0d; padding: 48px 40px; font-family: "Inter", sans-serif; color: #fff; }
+
+  .gallery-title {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500; font-size: 38px; margin-bottom: 8px; letter-spacing: -0.02em;
+  }
+  .gallery-sub { color: #999; font-size: 14px; line-height: 1.5; margin-bottom: 48px; max-width: 820px; }
+  .template-label { font-size: 17px; font-weight: 600; margin: 48px 0 6px; display: flex; align-items: baseline; gap: 14px; }
+  .template-label .tag {
+    background: var(--beige-400); color: var(--navy-950);
+    padding: 3px 10px; border-radius: 4px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .template-label .tag.new { background: #2c5530; color: #d4f0d6; }
+  .template-desc { color: #888; font-size: 13px; margin-bottom: 18px; max-width: 720px; line-height: 1.5; }
+
+  .post {
+    width: 1080px; height: 1350px;
+    position: relative; overflow: hidden;
+    padding: 56px;
+    color: var(--navy-900);
+    border-radius: 6px;
+    box-shadow: 0 40px 90px rgba(0,0,0,0.45);
+    transform: scale(0.5); transform-origin: top left;
+    margin-bottom: -680px;
+  }
+
+  .bg-light {
+    background:
+      radial-gradient(circle at 82% 88%, rgba(215,192,160,0.18), transparent 34%),
+      linear-gradient(180deg, var(--offwhite) 0%, var(--warm-light) 100%);
+    color: var(--navy-900);
+  }
+  .bg-dark {
+    background:
+      radial-gradient(circle at 86% 16%, rgba(255,255,255,0.10), transparent 34%),
+      linear-gradient(180deg, var(--navy-800) 0%, var(--navy-950) 100%);
+    color: var(--offwhite);
+  }
+  .bg-ice-clean {
+    background: linear-gradient(180deg, #FAFAF7 0%, #F0EDE5 100%);
+    color: var(--navy-900);
+  }
+
+  .header {
+    position: absolute; top: 52px; left: 56px; right: 56px;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    z-index: 20;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 32px; font-style: italic;
+    opacity: 0.92;
+  }
+  .header .corner { padding-top: 14px; }
+  .header .logo { text-align: center; font-style: normal; }
+  .header .logo .mark {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-size: 44px;
+    letter-spacing: 0.16em; line-height: 1;
+  }
+  .header .logo .tagline {
+    display: block; margin-top: 10px;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 12px; letter-spacing: 0.38em; text-transform: uppercase; font-weight: 500;
+  }
+
+  .footer-cta {
+    position: absolute; right: 56px; bottom: 56px; z-index: 20;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 30px; line-height: 1.05; letter-spacing: -0.03em;
+    text-align: right; display: flex; align-items: flex-end; gap: 16px; font-weight: 400;
+  }
+  .footer-cta .icon {
+    width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--navy-900); color: var(--offwhite);
+    font-size: 28px; font-weight: 300; line-height: 0;
+  }
+  .bg-dark .footer-cta .icon { background: var(--offwhite); color: var(--navy-900); }
+
+  /* CTA com seta pra baixo (usado quando ref pede ↓ em vez de +) */
+  .footer-cta-down {
+    position: absolute; z-index: 20;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 30px; line-height: 1.05; letter-spacing: -0.03em;
+    font-weight: 400;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .footer-cta-down .icon {
+    width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--navy-900); color: var(--offwhite);
+    font-size: 22px; font-weight: 300;
+  }
+  .bg-dark .footer-cta-down .icon { background: var(--offwhite); color: var(--navy-900); }
+
+  .slide-number {
+    position: absolute; left: 56px; bottom: 64px; z-index: 20;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 18px; letter-spacing: 0.18em; opacity: 0.70; font-weight: 500;
+  }
+
+  .micro {
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 22px; letter-spacing: 0.26em; text-transform: uppercase; font-weight: 500;
+  }
+  .thin-line { width: 96px; height: 4px; background: var(--beige-500); }
+
+  /* ============ thin-line 2 cores (referência da Fontes & Khouri) ============ */
+  .thin-line-two {
+    display: inline-flex; width: 220px; height: 3px;
+  }
+  .thin-line-two .a { flex: 1; background: var(--offwhite); }
+  .thin-line-two .b { flex: 1; background: var(--beige-400); }
+
+  /* ================== T1 ================== */
+  .t1 .label-top { position: absolute; top: 240px; left: 0; right: 0; text-align: center; color: var(--blue-gray); }
+  .t1 .num-wrap { position: absolute; top: 340px; left: 0; right: 0; text-align: center; height: 380px; }
+  .t1 .num {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-size: 380px; line-height: 0.85;
+    letter-spacing: -0.07em; color: var(--navy-900);
+    display: inline-block; position: relative;
+  }
+  .t1 .pct {
+    position: absolute; right: -120px; top: 20px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic; font-weight: 500; font-size: 220px; line-height: 1;
+    color: var(--beige-500); transform: rotate(-5deg);
+  }
+  .t1 .texto {
+    position: absolute; top: 800px; left: 90px; right: 90px;
+    text-align: center;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500; font-size: 60px; line-height: 1.10;
+    letter-spacing: -0.035em; color: var(--navy-900);
+  }
+  .t1 .texto em { font-style: italic; color: var(--beige-500); font-weight: 500; }
+  .t1 .center-line { position: absolute; top: 1110px; left: 50%; transform: translateX(-50%); }
+
+  /* ================================================================== */
+  /* T2 — REFEITO conforme referência (escada gigante do bottom)         */
+  /* ================================================================== */
+  .t2 .label {
+    position: absolute; top: 240px; left: 70px; color: var(--beige-400);
+  }
+  .t2 .titulo {
+    position: absolute; top: 310px; left: 70px; width: 720px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    line-height: 0.95; letter-spacing: -0.04em;
+    z-index: 5;
+  }
+  .t2 .titulo .bege {
+    color: var(--beige-400);
+    font-weight: 500; font-size: 96px;
+    display: block;
+  }
+  .t2 .titulo .caps {
+    color: var(--offwhite);
+    font-weight: 500;
+    font-size: 96px;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    display: block;
+    margin-top: 6px;
+  }
+  /* linha bege+branca 2 cores */
+  .t2 .thin-after-title {
+    position: absolute; top: 790px; left: 70px;
+    width: 220px; height: 3px;
+    display: flex;
+    z-index: 5;
+  }
+  .t2 .thin-after-title .a { flex: 1; background: var(--offwhite); }
+  .t2 .thin-after-title .b { flex: 1; background: var(--beige-400); }
+
+  /* CTA inferior esquerdo embaixo da linha (estilo referência) */
+  .t2 .cta-esquerda {
+    position: absolute; bottom: 56px; left: 70px;
+    font-family: "Inter", sans-serif;
+    font-size: 30px; line-height: 1.05; letter-spacing: -0.03em;
+    color: var(--offwhite);
+    z-index: 10;
+  }
+  .t2 .cta-esquerda .label-cta { margin-bottom: 18px; }
+  .t2 .cta-esquerda .icon {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--offwhite); color: var(--navy-900);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 400;
+  }
+
+  /* ESCADA GIGANTE: 5 barras desde o bottom até ~600 top, ocupando metade direita */
+  .t2 .escada {
+    position: absolute;
+    right: 0; bottom: 0;
+    width: 600px; height: 1100px;
+    display: flex; align-items: flex-end;
+    gap: 14px;
+    padding-right: 56px;
+    z-index: 3;
+  }
+  .t2 .escada .bar {
+    flex: 1;
+    background:
+      linear-gradient(180deg,
+        rgba(255,255,255,0.96) 0%,
+        rgba(245,244,239,0.65) 30%,
+        rgba(111,129,144,0.30) 65%,
+        rgba(20,38,56,0.10) 100%);
+    border-radius: 6px 6px 0 0;
+    box-shadow: inset 0 -120px 100px rgba(20,38,56,0.40);
+  }
+  .t2 .escada .b1 { height: 18%; }
+  .t2 .escada .b2 { height: 40%; }
+  .t2 .escada .b3 { height: 62%; }
+  .t2 .escada .b4 { height: 82%; }
+  .t2 .escada .b5 { height: 100%; }
+
+  /* ================== T3 ================== */
+  .t3 .label-top { position: absolute; top: 220px; left: 70px; color: var(--beige-400); }
+  .t3 .prancheta {
+    position: absolute; left: 70px; top: 290px; width: 360px; height: 460px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,0.25), transparent 45%),
+      linear-gradient(165deg, var(--beige-300) 0%, var(--beige-500) 100%);
+    border-radius: 14px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.32), inset 0 0 0 1px rgba(255,255,255,0.20);
+    transform: rotate(-3deg);
+    padding: 60px 36px 36px;
+    z-index: 4;
+  }
+  .t3 .prancheta::before {
+    content: ""; position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    width: 130px; height: 42px;
+    background: linear-gradient(180deg, var(--navy-800) 0%, var(--navy-950) 100%);
+    border-radius: 8px 8px 4px 4px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.40), inset 0 -3px 4px rgba(0,0,0,0.30);
+  }
+  .t3 .prancheta::after {
+    content: ""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    width: 76px; height: 20px;
+    background: linear-gradient(180deg, var(--navy-700) 0%, var(--navy-900) 100%);
+    border-radius: 5px;
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.25);
+  }
+  .t3 .prancheta .doc-header {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic; font-size: 18px; color: var(--navy-900); opacity: 0.55;
+    letter-spacing: 0.08em; margin-bottom: 28px; text-transform: uppercase;
+  }
+  .t3 .prancheta .doc-line { height: 6px; background: rgba(27,48,69,0.18); border-radius: 2px; margin-bottom: 14px; }
+  .t3 .prancheta .doc-line.s { width: 56%; }
+  .t3 .prancheta .doc-line.m { width: 80%; }
+  .t3 .prancheta .doc-line.l { width: 96%; }
+  .t3 .prancheta .doc-line.xs { width: 38%; }
+  .t3 .prancheta .doc-line.faded { opacity: 0.4; }
+  .t3 .prancheta .doc-stamp {
+    position: absolute; bottom: 34px; right: 28px;
+    width: 100px; height: 100px;
+    border: 1.8px solid rgba(27,48,69,0.40); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic; font-size: 15px; color: var(--navy-900); opacity: 0.55;
+    text-align: center; line-height: 1.1;
+    transform: rotate(-12deg); font-weight: 600;
+  }
+  .t3 .titulo {
+    position: absolute; left: 510px; top: 290px; right: 56px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-size: 86px; line-height: 0.94;
+    letter-spacing: -0.04em; color: var(--offwhite); z-index: 3;
+  }
+  .t3 .titulo em {
+    display: inline-block;
+    background: var(--beige-400); color: var(--navy-900);
+    padding: 4px 18px 8px;
+    font-style: italic; font-weight: 500;
+    margin: 8px 0; border-radius: 4px;
+  }
+  .t3 .bloco-branco {
+    position: absolute; right: 0; bottom: 0; width: 100%; height: 380px;
+    background: var(--offwhite); border-top-left-radius: 280px;
+    padding: 110px 320px 70px 220px; z-index: 2;
+  }
+  .t3 .bloco-branco .micro { color: var(--blue-gray); margin-bottom: 18px; }
+  .t3 .bloco-branco .frase {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600; font-size: 44px; line-height: 1.15;
+    color: var(--navy-900); letter-spacing: -0.025em;
+  }
+  .t3 .bloco-branco .frase em { color: var(--beige-500); font-style: italic; }
+  .t3 .footer-cta { color: var(--navy-900); }
+  .t3 .footer-cta .icon { background: var(--navy-900); color: var(--offwhite); }
+
+  /* ================================================================== */
+  /* T4 — AJUSTADO (conteúdo desceu, mais centralizado vertical)         */
+  /* ================================================================== */
+  .t4 .micro-pre {
+    position: absolute; top: 380px; left: 56px;
+    color: var(--beige-500); font-style: italic;
+    font-size: 24px; letter-spacing: 0.20em; text-transform: uppercase;
+    font-weight: 500; font-family: "Inter", sans-serif;
+  }
+  .t4 .conceito {
+    position: absolute; top: 460px; left: 56px; right: 56px;
+    font-family: "Inter", sans-serif;
+    font-weight: 300; font-size: 138px; line-height: 0.88;
+    letter-spacing: -0.06em; color: var(--blue-gray);
+  }
+  .t4 .conceito .destaque {
+    display: inline-block;
+    background: rgba(215,192,160,0.42); padding: 0 16px;
+    color: var(--navy-900); font-weight: 400;
+  }
+  .t4 .arc {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    left: 100px; bottom: -50px; transform: translate(-50%, 50%);
+  }
+  .t4 .arc-1 { width: 880px; height: 880px; background: rgba(215,192,160,0.18); }
+  .t4 .arc-2 { width: 640px; height: 640px; background: rgba(205,178,142,0.30); }
+  .t4 .arc-3 { width: 400px; height: 400px; background: rgba(215,192,160,0.50); }
+  .t4 .vert-lines {
+    position: absolute; right: 56px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .t4 .vert-lines .vl { width: 4px; height: 50px; }
+  .t4 .vert-lines .navy { background: var(--navy-900); }
+  .t4 .vert-lines .beige { background: var(--beige-500); }
+  .t4 .vert-lines .opacity { opacity: 0.4; }
+
+  /* ================== T5 ================== */
+  .t5 .label-pre { position: absolute; top: 230px; left: 0; right: 0; text-align: center; color: var(--blue-gray); }
+  .t5 .small-italic {
+    position: absolute; top: 320px; left: 0; right: 0; text-align: center;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic; font-weight: 500; font-size: 56px;
+    color: var(--blue-gray); letter-spacing: -0.02em;
+  }
+  .t5 .palavra-chave {
+    position: absolute; top: 410px; left: 0; right: 0; text-align: center;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-style: italic; font-size: 360px; line-height: 0.9;
+    letter-spacing: -0.06em; color: var(--beige-500);
+  }
+  .t5 .complemento {
+    position: absolute; top: 780px; left: 0; right: 0; text-align: center;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500; font-size: 64px; line-height: 1.0;
+    color: var(--navy-900); letter-spacing: -0.035em;
+  }
+  .t5 .legenda {
+    position: absolute; top: 900px; left: 120px; right: 120px; text-align: center;
+    font-family: "Inter", sans-serif;
+    font-size: 28px; line-height: 1.5; letter-spacing: -0.02em; color: var(--navy-700);
+  }
+  .t5 .marcas-esq, .t5 .marcas-dir {
+    position: absolute; top: 540px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .t5 .marcas-esq { left: 90px; }
+  .t5 .marcas-dir { right: 90px; }
+  .t5 .marca { width: 5px; height: 80px; background: var(--navy-900); opacity: 0.20; }
+  .t5 .marca.ativo { background: var(--beige-500); opacity: 1; width: 8px; }
+
+  /* ================== T6 — Lupa 720×720 ================== */
+  .t6 .bg-letters {
+    position: absolute; top: 240px; left: 0; right: 0; text-align: center;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-size: 420px; line-height: 0.85;
+    letter-spacing: -0.08em; color: rgba(111,129,144,0.09);
+    user-select: none;
+  }
+  .t6 .loupe-shadow {
+    position: absolute; left: 280px; top: 1000px;
+    width: 520px; height: 60px;
+    background: radial-gradient(ellipse, rgba(20,38,56,0.40), transparent 70%);
+    border-radius: 50%; filter: blur(10px);
+  }
+  .t6 .loupe-handle {
+    position: absolute; width: 78px; height: 290px;
+    left: 748px; top: 894px;
+    background: linear-gradient(120deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    border-radius: 26px;
+    transform: rotate(-30deg); transform-origin: top center;
+    box-shadow: 0 24px 48px rgba(20,38,56,0.34);
+  }
+  .t6 .loupe-joint {
+    position: absolute; width: 84px; height: 84px;
+    left: 745px; top: 854px;
+    background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-950) 100%);
+    border-radius: 50%;
+    box-shadow: 0 8px 16px rgba(20,38,56,0.30);
+  }
+  .t6 .loupe-ring {
+    position: absolute; width: 720px; height: 720px;
+    left: 180px; top: 280px;
+    border: 36px solid var(--navy-950);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 32% 28%, rgba(255,255,255,0.92) 0%, rgba(245,244,239,0.72) 18%, rgba(245,244,239,0.42) 40%, rgba(215,192,160,0.22) 75%, rgba(45,70,95,0.10) 100%);
+    box-shadow:
+      0 32px 75px rgba(20,38,56,0.34),
+      inset 0 0 55px rgba(20,38,56,0.10),
+      inset 12px 12px 40px rgba(255,255,255,0.24);
+  }
+  .t6 .text-inside {
+    position: absolute; width: 620px; left: 230px; top: 470px;
+    text-align: center;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600; font-size: 92px; line-height: 0.96;
+    letter-spacing: -0.04em; color: var(--navy-900);
+    z-index: 5;
+  }
+  .t6 .text-inside em { color: var(--beige-500); font-style: italic; }
+  .t6 .text-inside .sub {
+    display: block; margin-top: 28px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500; font-size: 30px; line-height: 1.35;
+    color: var(--navy-700); letter-spacing: -0.01em; font-style: normal;
+  }
+
+  /* ================== T7 ================== */
+  .t7 .arc-tr {
+    position: absolute; top: 0; right: 0;
+    border-radius: 50%; transform: translate(50%, -50%); pointer-events: none;
+  }
+  .t7 .arc-tr1 { width: 1000px; height: 1000px; background: rgba(215,192,160,0.08); }
+  .t7 .arc-tr2 { width: 700px; height: 700px; background: rgba(215,192,160,0.14); }
+  .t7 .arc-tr3 { width: 420px; height: 420px; background: rgba(111,129,144,0.28); }
+  .t7 .arc-bl {
+    position: absolute; bottom: 0; left: 0;
+    border-radius: 50%; transform: translate(-50%, 50%); pointer-events: none;
+  }
+  .t7 .arc-bl1 { width: 760px; height: 760px; background: rgba(111,129,144,0.14); }
+  .t7 .arc-bl2 { width: 460px; height: 460px; background: rgba(215,192,160,0.18); }
+  .t7 .titulo {
+    position: absolute; top: 360px; left: 56px; right: 220px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-size: 122px; line-height: 0.90; letter-spacing: -0.045em;
+  }
+  .t7 .titulo .branco-forte { color: #fff; }
+  .t7 .titulo .beige { color: var(--beige-400); font-style: italic; font-weight: 500; }
+  .t7 .body {
+    position: absolute; top: 880px; left: 56px; right: 280px;
+    color: var(--blue-gray-light);
+    font-family: "Inter", sans-serif;
+    font-size: 32px; line-height: 1.4; max-width: 680px; font-weight: 400;
+  }
+
+  /* ================== T8 ================== */
+  .t8 .topo-texto {
+    position: absolute; top: 330px; left: 56px; right: 56px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-size: 78px; line-height: 1.04;
+    letter-spacing: -0.04em; color: var(--blue-gray);
+    z-index: 5; text-align: center;
+  }
+  .t8 .topo-texto .destaque {
+    display: inline-block;
+    background: rgba(215,192,160,0.50);
+    padding: 0 16px 6px 16px; color: var(--navy-900);
+  }
+  .t8 .topo-texto .beige { color: var(--beige-500); font-style: italic; }
+  .t8 .card-central {
+    position: absolute; top: 720px; left: 50%; transform: translateX(-50%);
+    width: 820px;
+    background: var(--white-soft);
+    border-radius: 26px;
+    padding: 44px 54px;
+    box-shadow: 0 30px 70px rgba(20,38,56,0.22);
+    border-left: 4px solid var(--beige-500);
+    z-index: 5;
+  }
+  .t8 .card-central .micro { color: var(--blue-gray); margin-bottom: 14px; font-size: 22px; }
+  .t8 .card-central .frase {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600; font-size: 42px; line-height: 1.18;
+    color: var(--navy-900); letter-spacing: -0.025em;
+  }
+  .t8 .card-central .frase em { color: var(--beige-500); font-style: italic; }
+  .t8 .arc-base {
+    position: absolute; border-radius: 50%;
+    left: 50%; transform: translateX(-50%); pointer-events: none;
+  }
+  .t8 .arc-base-1 { width: 1380px; height: 1380px; bottom: -940px; background: var(--navy-950); }
+  .t8 .arc-base-2 { width: 1080px; height: 1080px; bottom: -790px; background: rgba(45,70,95,0.85); }
+  .t8 .arc-base-3 { width: 780px; height: 780px; bottom: -640px; background: rgba(111,129,144,0.55); }
+  .t8 .footer-cta { color: var(--offwhite); z-index: 10; }
+  .t8 .footer-cta .icon { background: var(--offwhite); color: var(--navy-900); }
+  .t8 .slide-number { color: var(--offwhite); z-index: 10; }
+
+  /* ================================================================== */
+  /* T9 — NOVO: Card duplo (estilo segunda referência)                   */
+  /* ================================================================== */
+  .t9 .header .corner,
+  .t9 .header .logo .mark,
+  .t9 .header .logo .tagline { color: var(--navy-900); }
+
+  .t9 .cards-wrap {
+    position: absolute; top: 290px; left: 56px; right: 56px; bottom: 200px;
+    display: flex; gap: 28px;
+  }
+  .t9 .card {
+    flex: 1; position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(20,38,56,0.22);
+  }
+  /* CARD ESQUERDO: navy com fade pra bege embaixo */
+  .t9 .card-left {
+    background: linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 55%, var(--beige-400) 55%, var(--beige-300) 100%);
+    padding: 42px 38px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .t9 .card-left .top-line {
+    display: flex; width: 130px; height: 3px; margin-bottom: 28px;
+  }
+  .t9 .card-left .top-line .a { flex: 1; background: var(--offwhite); }
+  .t9 .card-left .top-line .b { flex: 1; background: var(--beige-400); }
+
+  .t9 .card-left .frase {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    color: var(--beige-400);
+    font-size: 60px; line-height: 0.96;
+    letter-spacing: -0.035em;
+    margin-bottom: 6px;
+  }
+  .t9 .card-left .frase em {
+    color: var(--offwhite);
+    font-style: italic;
+    font-weight: 500;
+    font-family: "Inter", sans-serif;
+    font-size: 56px;
+    letter-spacing: -0.04em;
+  }
+  /* área inferior bege com CTA dentro */
+  .t9 .card-left .cta-inner {
+    color: var(--navy-900);
+    font-family: "Inter", sans-serif;
+    font-size: 28px; line-height: 1.05;
+  }
+  .t9 .card-left .cta-inner .icon {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--navy-900); color: var(--offwhite);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-top: 16px;
+  }
+
+  /* CARD DIREITO: navy puro com 3 barras escalonadas */
+  .t9 .card-right {
+    background: linear-gradient(180deg, var(--navy-800) 0%, var(--navy-950) 100%);
+    padding: 0;
+    position: relative;
+  }
+  .t9 .escada-card {
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-end;
+    padding-bottom: 60px;
+  }
+  .t9 .escada-card .bar {
+    flex: 1; position: relative;
+    background: rgba(255,255,255,0.06);
+    border-right: 1px solid rgba(255,255,255,0.04);
+  }
+  .t9 .escada-card .bar:last-child { border-right: none; }
+  .t9 .escada-card .bar.b1 { height: 26%; }
+  .t9 .escada-card .bar.b2 { height: 52%; background: rgba(255,255,255,0.10); }
+  .t9 .escada-card .bar.b3 { height: 78%; background: rgba(255,255,255,0.14); }
+  .t9 .escada-card .bar .num {
+    position: absolute;
+    bottom: calc(100% + 38px);
+    left: 50%; transform: translateX(-50%);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 500; font-style: italic;
+    font-size: 70px; line-height: 1;
+    color: var(--offwhite);
+    white-space: nowrap;
+  }
+  .t9 .escada-card .bar .lbl {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%; transform: translateX(-50%);
+    font-family: "Inter", sans-serif;
+    font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--blue-gray-light);
+    white-space: nowrap;
+  }
+  /* linha bege+branca embaixo do card direito */
+  .t9 .card-right .bottom-line {
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; width: 130px; height: 3px;
+  }
+  .t9 .card-right .bottom-line .a { flex: 1; background: var(--offwhite); }
+  .t9 .card-right .bottom-line .b { flex: 1; background: var(--beige-400); }
+
+  /* CTA do post inteiro */
+  .t9 .footer-cta { display: none; } /* CTA está dentro do card esquerdo */
+  .t9 .slide-number { color: var(--navy-900); opacity: 0.6; }
+
+  /* ================================================================== */
+  /* T10 — AJUSTADO: "Direito Previdenciário" desceu pra cima da pergunta*/
+  /* ================================================================== */
+  .t10 .foto-bg {
+    position: absolute; top: 0; left: 0; right: 0; height: 820px;
+    background-image: url("../assets/fotos-posts/foto-1-mobile.png");
+    background-size: cover;
+    background-position: center 20%;
+    z-index: 1;
+  }
+  .t10 .foto-overlay {
+    position: absolute; top: 0; left: 0; right: 0; height: 820px;
+    background:
+      linear-gradient(180deg, rgba(20,38,56,0.35) 0%, rgba(20,38,56,0.10) 30%, rgba(20,38,56,0.65) 90%, rgba(20,38,56,0.95) 100%);
+    z-index: 2;
+  }
+  .t10 .header { color: var(--offwhite); }
+  /* DESCEU: era top:250, agora top:530 (logo em cima da pergunta) */
+  .t10 .micro-top {
+    position: absolute; top: 530px; left: 56px;
+    color: var(--beige-400); z-index: 5;
+  }
+  .t10 .pergunta {
+    position: absolute; top: 600px; left: 56px; right: 56px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 500; font-size: 90px; line-height: 0.96;
+    color: var(--offwhite); letter-spacing: -0.04em; z-index: 5;
+  }
+  .t10 .pergunta em { color: var(--beige-400); font-style: italic; }
+  .t10 .bloco-inferior {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 530px;
+    background: var(--offwhite);
+    padding: 70px 56px 56px;
+    z-index: 4;
+  }
+  .t10 .bloco-inferior .micro { color: var(--blue-gray); margin-bottom: 28px; }
+  .t10 .bloco-inferior .resposta {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600; font-size: 50px; line-height: 1.12;
+    color: var(--navy-900); letter-spacing: -0.025em;
+    max-width: 880px;
+  }
+  .t10 .bloco-inferior .resposta em { color: var(--beige-500); font-style: italic; }
+  .t10 .footer-cta { color: var(--navy-900); }
+  .t10 .footer-cta .icon { background: var(--navy-900); color: var(--offwhite); }
+
+  /* ================== T11 (mantido) ================== */
+  .t11 .foto-temp {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(180deg, rgba(20,38,56,0.55) 0%, rgba(20,38,56,0.30) 35%, rgba(20,38,56,0.85) 100%),
+      url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1080&h=1350&fit=crop&q=80");
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+  }
+  .t11 .foto-fallback {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--navy-700) 0%, var(--navy-950) 100%);
+    z-index: 0;
+  }
+  .t11 .header { color: var(--offwhite); z-index: 10; }
+  .t11 .micro-pre {
+    position: absolute; top: 260px; left: 56px;
+    color: var(--beige-400); z-index: 5;
+  }
+  .t11 .num-grande {
+    position: absolute; top: 360px; left: 56px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-style: italic;
+    font-size: 280px; line-height: 0.85;
+    color: var(--beige-400); letter-spacing: -0.05em;
+    z-index: 5;
+  }
+  .t11 .titulo {
+    position: absolute; top: 740px; left: 56px; right: 56px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600; font-size: 82px; line-height: 0.96;
+    color: var(--offwhite); letter-spacing: -0.04em;
+    z-index: 5;
+  }
+  .t11 .titulo em { color: var(--beige-400); font-style: italic; font-weight: 500; }
+  .t11 .legenda {
+    position: absolute; top: 980px; left: 56px; right: 240px;
+    font-family: "Inter", sans-serif;
+    font-size: 26px; line-height: 1.45;
+    color: var(--blue-gray-light);
+    z-index: 5;
+  }
+  .t11 .thin-line {
+    position: absolute; top: 720px; left: 56px;
+    background: var(--beige-400); z-index: 5;
+  }
+  .t11 .footer-cta { color: var(--offwhite); z-index: 10; }
+  .t11 .footer-cta .icon { background: var(--offwhite); color: var(--navy-900); }
+  .t11 .slide-number { color: var(--offwhite); z-index: 10; }
+</style>
+</head>
+
+<body>
+
+<h1 class="gallery-title">Templates A·P·A Previdenciário <span style="font-size:18px; opacity:0.6; font-style:italic;">— v6</span></h1>
+<p class="gallery-sub">
+  T2 refeito conforme referência (escada gigante do bottom, headline em 2 estilos, CTA esquerda com seta).
+  T4 com conteúdo descido pra ficar centralizado vertical. T9 (Marcio capa) removido,
+  substituído por NOVO card duplo (estilo da segunda referência). T10 com "Direito Previdenciário"
+  descido pra ficar logo acima da pergunta (não no meio do rosto).
+</p>
+
+<!-- ============================================ T1 ============================================ -->
+<div class="template-label">Template 1 <span class="tag">Estatística</span></div>
+<p class="template-desc">Mantido.</p>
+<div class="post t1 bg-light">
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+  <div class="micro label-top">Dado · INSS · 2025</div>
+  <div class="num-wrap"><span class="num">70<span class="pct">%</span></span></div>
+  <div class="texto">dos pedidos de auxílio-doença<br>são <em>negados</em> na primeira<br>análise do INSS.</div>
+  <div class="thin-line center-line"></div>
+  <div class="footer-cta"><span>Leia a<br>legenda</span><span class="icon">+</span></div>
+  <span class="slide-number">01 / 06</span>
+</div>
+
+<!-- ============================================ T2 — REFEITO ============================================ -->
+<div class="template-label">Template 2 <span class="tag">Notícia + escada GIGANTE · refeito</span></div>
+<p class="template-desc">
+  Escada agora ocupa metade direita inteira do post, vindo do bottom até quase o meio.
+  Headline em 2 estilos (bege serif + caixa alta off-white). Linha fina bege+off-white.
+  CTA inferior esquerdo embaixo da linha com seta ↓ (estilo da referência).
+</p>
+<div class="post t2 bg-dark">
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+
+  <span class="micro label">— Notícia · Maio 2026</span>
+
+  <h1 class="titulo">
+    <span class="bege">Defesa técnica protege</span>
+    <span class="caps">E AGILIZA O<br>SEU DIREITO.</span>
+  </h1>
+
+  <div class="thin-after-title">
+    <span class="a"></span>
+    <span class="b"></span>
+  </div>
+
+  <div class="cta-esquerda">
+    <div class="label-cta">Leia a<br>legenda</div>
+    <div class="icon">↓</div>
+  </div>
+
+  <div class="escada">
+    <div class="bar b1"></div>
+    <div class="bar b2"></div>
+    <div class="bar b3"></div>
+    <div class="bar b4"></div>
+    <div class="bar b5"></div>
+  </div>
+
+  <span class="slide-number" style="color: var(--offwhite);">01 / 07</span>
+</div>
+
+<!-- ============================================ T3 ============================================ -->
+<div class="template-label">Template 3 <span class="tag">Prancheta</span></div>
+<p class="template-desc">Mantido.</p>
+<div class="post t3 bg-dark">
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+  <span class="micro label-top">— Direito Previdenciário</span>
+  <div class="prancheta">
+    <div class="doc-header">Requerimento · INSS</div>
+    <div class="doc-line l"></div><div class="doc-line l"></div><div class="doc-line m"></div>
+    <div class="doc-line l"></div><div class="doc-line s faded"></div><div class="doc-line m"></div>
+    <div class="doc-line l"></div><div class="doc-line xs"></div>
+    <div class="doc-line m faded"></div><div class="doc-line s faded"></div>
+    <div class="doc-stamp">CID<br>F32.1</div>
+  </div>
+  <div class="titulo">Antes de dar entrada,<br><em>organize</em><br>seus<br>documentos.</div>
+  <div class="bloco-branco">
+    <div class="micro">Checklist técnico</div>
+    <div class="frase">Sem laudo, CID e <em>período de afastamento</em>, o pedido sai do balcão e volta como negativa.</div>
+  </div>
+  <div class="footer-cta"><span>Leia a<br>legenda</span><span class="icon">+</span></div>
+  <span class="slide-number" style="color: var(--offwhite);">03 / 07</span>
+</div>
+
+<!-- ============================================ T4 — AJUSTADO ============================================ -->
+<div class="template-label">Template 4 <span class="tag">Conceito · descido pro centro</span></div>
+<p class="template-desc">
+  Conteúdo desceu: micro-pré de top:240 → top:380, conceito de top:320 → top:460.
+  Agora fica centralizado verticalmente.
+</p>
+<div class="post t4 bg-light">
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+  <span class="micro-pre">Mito comum entre segurados</span>
+  <div class="conceito">Auxílio-doença<br><span class="destaque">não impede</span><br>aposentadoria.</div>
+  <div class="arc arc-1"></div><div class="arc arc-2"></div><div class="arc arc-3"></div>
+  <div class="vert-lines">
+    <div class="vl navy"></div><div class="vl beige"></div>
+    <div class="vl navy opacity"></div><div class="vl beige opacity"></div>
+  </div>
+  <div class="footer-cta"><span>Leia a<br>legenda</span><span class="icon">+</span></div>
+  <span class="slide-number">02 / 05</span>
+</div>
+
+<!-- ============================================ T5 ============================================ -->
+<div class="template-label">Template 5 <span class="tag">Tipográfico "É direito"</span></div>
+<p class="template-desc">Mantido.</p>
+<div class="post t5 bg-light">
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+  <div class="micro label-pre">Direito Previdenciário</div>
+  <div class="small-italic">Aposentadoria não é favor.</div>
+  <div class="palavra-chave">É direito.</div>
+  <div class="complemento">Quem contribuiu, tem.</div>
+  <div class="marcas-esq">
+    <div class="marca"></div><div class="marca"></div><div class="marca ativo"></div><div class="marca"></div>
+  </div>
+  <div class="marcas-dir">
+    <div class="marca"></div><div class="marca ativo"></div><div class="marca"></div><div class="marca"></div>
+  </div>
+  <div class="legenda">O INSS é um sistema obrigatório de seguro social. Quem contribuiu tem direito ao benefício previsto em lei. Não é favor, é contrato.</div>
+  <div class="footer-cta"><span>Leia a<br>legenda</span><span class="icon">+</span></div>
+  <span class="slide-number">04 / 06</span>
+</div>
+
+<!-- ============================================ T6 ============================================ -->
+<div class="template-label">Template 6 <span class="tag">Lupa</span></div>
+<p class="template-desc">Mantido.</p>
+<div class="post t6 bg-light">
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+  <div class="bg-letters">INSS</div>
+  <div class="loupe-shadow"></div>
+  <div class="loupe-handle"></div>
+  <div class="loupe-joint"></div>
+  <div class="loupe-ring"></div>
+  <div class="text-inside">
+    O que o perito<br>
+    <em>realmente</em> olha.
+    <span class="sub">Os 5 critérios que decidem sua perícia.</span>
+  </div>
+  <div class="footer-cta"><span>Leia a<br>legenda</span><span class="icon">+</span></div>
+  <span class="slide-number">01 / 05</span>
+</div>
+
+<!-- ============================================ T7 ============================================ -->
+<div class="template-label">Template 7 <span class="tag">Arcos</span></div>
+<p class="template-desc">Mantido.</p>
+<div class="post t7 bg-dark">
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+  <div class="arc-tr arc-tr1"></div><div class="arc-tr arc-tr2"></div><div class="arc-tr arc-tr3"></div>
+  <div class="arc-bl arc-bl1"></div><div class="arc-bl arc-bl2"></div>
+  <h1 class="titulo">O direito que<br><span class="branco-forte">você</span> tem,<br>e o INSS<br><span class="beige">não conta.</span></h1>
+  <div class="body">Série semanal com os benefícios pouco conhecidos da previdência social. Toda terça, sem juridiquês.</div>
+  <div class="footer-cta"><span>Leia a<br>legenda</span><span class="icon">+</span></div>
+  <span class="slide-number" style="color: var(--offwhite);">01 / 04</span>
+</div>
+
+<!-- ============================================ T8 ============================================ -->
+<div class="template-label">Template 8 <span class="tag">Risco + ondas</span></div>
+<p class="template-desc">Mantido.</p>
+<div class="post t8 bg-light">
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+  <div class="topo-texto">Pedir auxílio sem<br><span class="destaque">documentação</span> completa<br>é <span class="beige">apostar contra</span> o INSS.</div>
+  <div class="card-central">
+    <div class="micro">Erro comum #1</div>
+    <div class="frase">Laudo médico sem CID ou sem período é <em>negativa</em> quase certa, mesmo com incapacidade real.</div>
+  </div>
+  <div class="arc-base arc-base-1"></div><div class="arc-base arc-base-2"></div><div class="arc-base arc-base-3"></div>
+  <div class="footer-cta"><span>Leia a<br>legenda</span><span class="icon">+</span></div>
+  <span class="slide-number">03 / 05</span>
+</div>
+
+<!-- ============================================ T9 — NOVO Card Duplo ============================================ -->
+<div class="template-label">Template 9 <span class="tag new">NOVO · Card duplo</span></div>
+<p class="template-desc">
+  Estilo da segunda referência Fontes & Khouri. Fundo off-white claro com 2 cards verticais.
+  Card esquerdo: navy com fade pra bege embaixo, frase forte previdenciária + CTA dentro do bege.
+  Card direito: navy puro com 3 barras escalonadas (13 anos / +2.000 benefícios / +3.000 processos).
+  Ideal pra apresentação institucional / autoridade.
+</p>
+<div class="post t9 bg-ice-clean">
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+
+  <div class="cards-wrap">
+    <!-- CARD ESQUERDO -->
+    <div class="card card-left">
+      <div>
+        <div class="top-line"><span class="a"></span><span class="b"></span></div>
+        <div class="frase">
+          Advogado<br>previdenciário<br>não é gasto.<br>
+          <em>É garantia.</em>
+        </div>
+      </div>
+      <div class="cta-inner">
+        Leia a<br>legenda
+        <div><span class="icon">↓</span></div>
+      </div>
+    </div>
+
+    <!-- CARD DIREITO -->
+    <div class="card card-right">
+      <div class="escada-card">
+        <div class="bar b1">
+          <div class="lbl">Carreira</div>
+          <div class="num">13</div>
+        </div>
+        <div class="bar b2">
+          <div class="lbl">Benefícios</div>
+          <div class="num">+2.000</div>
+        </div>
+        <div class="bar b3">
+          <div class="lbl">Processos</div>
+          <div class="num">+3.000</div>
+        </div>
+      </div>
+      <div class="bottom-line"><span class="a"></span><span class="b"></span></div>
+    </div>
+  </div>
+
+  <span class="slide-number">02 / 06</span>
+</div>
+
+<!-- ============================================ T10 — AJUSTADO ============================================ -->
+<div class="template-label">Template 10 <span class="tag">Marcio + foto · "Direito Previdenciário" descido</span></div>
+<p class="template-desc">
+  "Direito Previdenciário" desceu de top:250 → top:530 (antes ficava no meio do rosto do Marcio).
+  Agora aparece logo acima da pergunta, formando um bloco textual coeso na parte inferior da foto.
+</p>
+<div class="post t10">
+  <div class="foto-bg"></div>
+  <div class="foto-overlay"></div>
+
+  <header class="header">
+    <span class="corner" style="color: var(--offwhite);">Direito</span>
+    <div class="logo" style="color: var(--offwhite);"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner" style="color: var(--offwhite);">Previdenciário</span>
+  </header>
+
+  <div class="micro micro-top">— Direito Previdenciário</div>
+
+  <div class="pergunta">
+    Quem <em>realmente</em> lê<br>
+    o seu processo?
+  </div>
+
+  <div class="bloco-inferior">
+    <div class="micro">A diferença</div>
+    <div class="resposta">
+      Quando o INSS nega, <em>alguém</em> precisa ir além do laudo. Análise técnica, recurso administrativo, ação judicial. Cada etapa pensada.
+    </div>
+  </div>
+
+  <div class="footer-cta"><span>Leia a<br>legenda</span><span class="icon">+</span></div>
+  <span class="slide-number" style="color: var(--navy-900);">02 / 06</span>
+</div>
+
+<!-- ============================================ T11 ============================================ -->
+<div class="template-label">Template 11 <span class="tag">Imagem temática</span></div>
+<p class="template-desc">Mantido. URL Unsplash dá pra trocar.</p>
+<div class="post t11">
+  <div class="foto-fallback"></div>
+  <div class="foto-temp"></div>
+  <header class="header">
+    <span class="corner">Direito</span>
+    <div class="logo"><div class="mark">A·P·A</div><span class="tagline">Previdenciário</span></div>
+    <span class="corner">Previdenciário</span>
+  </header>
+  <div class="micro micro-pre">— Dado · INSS · 2025</div>
+  <div class="num-grande">+1mi</div>
+  <div class="thin-line"></div>
+  <div class="titulo">pedidos de auxílio-doença foram <em>negados</em> em 2025.</div>
+  <div class="legenda">Por trás de cada negativa, uma pessoa sem renda esperando a próxima perícia. O recurso administrativo existe, e funciona.</div>
+  <div class="footer-cta"><span>Leia a<br>legenda</span><span class="icon">+</span></div>
+  <span class="slide-number">05 / 06</span>
+</div>
+
+</body>
+</html>

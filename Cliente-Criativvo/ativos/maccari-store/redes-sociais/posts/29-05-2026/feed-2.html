@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Slide 2 — Como funciona + regra do porta-copo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #1a1a1a; }
+    body { display: flex; justify-content: center; padding: 30px; }
+
+    .card {
+      width: 1080px;
+      height: 1350px;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      overflow: hidden;
+      background: #1A120B;
+      color: #F2EAD8;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 700px 380px at 50% 0%, rgba(237,125,23,0.28) 0%, rgba(237,125,23,0) 60%),
+        radial-gradient(ellipse 520px 320px at 18% 100%, rgba(232,197,138,0.14) 0%, rgba(232,197,138,0) 65%),
+        radial-gradient(ellipse 520px 320px at 82% 100%, rgba(90,188,183,0.10) 0%, rgba(90,188,183,0) 65%),
+        linear-gradient(180deg, #1A120B 0%, #110B07 100%);
+    }
+
+    .lockup {
+      position: absolute;
+      top: 60px;
+      left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      z-index: 6;
+    }
+    .lockup .cs { height: 56px; filter: drop-shadow(0 4px 18px rgba(0,0,0,0.7)); }
+    .lockup .x {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-size: 26px;
+      color: #E8C58A;
+      opacity: 0.85;
+    }
+    .lockup .bandvip {
+      font-family: 'Fraunces';
+      font-weight: 500;
+      font-size: 28px;
+      color: #F2EAD8;
+      font-variation-settings: 'opsz' 144;
+      letter-spacing: 0.5px;
+    }
+    .lockup .bandvip em { font-style: italic; font-weight: 400; color: #E8C58A; }
+    .lockup .mc { height: 46px; filter: drop-shadow(0 4px 18px rgba(0,0,0,0.7)); }
+
+    .eyebrow {
+      position: absolute;
+      top: 185px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 5;
+    }
+    .eyebrow .txt {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      font-family: 'Inter';
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 8px;
+      color: #ED7D17;
+      text-transform: uppercase;
+    }
+    .eyebrow .txt::before,
+    .eyebrow .txt::after {
+      content: '';
+      width: 60px; height: 1.5px;
+      background: rgba(237,125,23,0.5);
+    }
+
+    .title {
+      position: absolute;
+      top: 235px;
+      left: 60px; right: 60px;
+      text-align: center;
+      z-index: 5;
+      font-family: 'Fraunces';
+      font-weight: 500;
+      font-size: 88px;
+      line-height: 0.96;
+      letter-spacing: -2.5px;
+      color: #F2EAD8;
+      font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    }
+    .title em { font-style: italic; font-weight: 400; color: #E8C58A; }
+
+    /* 4 cards uniformes (3 passos + alerta) */
+    .steps {
+      position: absolute;
+      top: 440px;
+      left: 60px; right: 60px;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 30px 36px;
+      background: rgba(20,12,6,0.6);
+      border: 1px solid rgba(232,197,138,0.18);
+      border-radius: 24px;
+      min-height: 150px;
+    }
+    .step .num {
+      flex-shrink: 0;
+      width: 90px;
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-size: 72px;
+      font-weight: 500;
+      color: #ED7D17;
+      font-variation-settings: 'opsz' 144;
+      line-height: 0.9;
+      text-align: center;
+    }
+    .step .icon-warning {
+      flex-shrink: 0;
+      width: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step .icon-warning .badge {
+      width: 76px; height: 76px;
+      border-radius: 50%;
+      background: #ED7D17;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step .icon-warning svg {
+      width: 40px; height: 40px;
+      stroke: #1A120B;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .step .body { flex: 1; }
+    .step .label {
+      font-family: 'Inter';
+      font-size: 30px;
+      font-weight: 700;
+      color: #F2EAD8;
+      line-height: 1.28;
+      letter-spacing: 0.2px;
+    }
+    .step .label b { color: #E8C58A; font-weight: 800; }
+    .step .label .at { color: #E8C58A; font-weight: 800; }
+    .step .hint {
+      font-family: 'Inter';
+      font-size: 20px;
+      font-weight: 500;
+      color: rgba(242,234,216,0.6);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* Card 4 = alerta laranja */
+    .step.warning {
+      background: linear-gradient(135deg, rgba(237,125,23,0.22) 0%, rgba(237,125,23,0.06) 100%);
+      border: 2px solid rgba(237,125,23,0.7);
+    }
+    .step.warning .label {
+      font-size: 28px;
+      font-weight: 800;
+      color: #ED7D17;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+    .step.warning .hint {
+      font-size: 22px;
+      font-weight: 600;
+      color: #F2EAD8;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="ambient"></div>
+
+    <div class="lockup">
+      <img class="cs" src="../../../assets/logo-castellinhos-clean.png" alt="Castellinhos">
+      <span class="x">×</span>
+      <span class="bandvip"><em>Banda</em> VIP</span>
+      <span class="x">×</span>
+      <img class="mc" src="../../../assets/logo.png" alt="Maccari Store">
+    </div>
+
+    <div class="eyebrow">
+      <span class="txt">Como funciona</span>
+    </div>
+
+    <div class="title">
+      Seu segundo chopp<br>
+      em <em>3 passos.</em>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <div class="body">
+          <div class="label"><b>Peça</b> seu chopp no balcão do Castellinhos</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">02</div>
+        <div class="body">
+          <div class="label"><b>Poste</b> marcando <span class="at">@storemaccari</span>, <span class="at">@oscaradavip</span> e <span class="at">@castellinhos.bar</span></div>
+          <div class="hint">com o <b style="color:#E8C58A;font-weight:800">porta-copo Maccari</b> aparecendo na foto</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">03</div>
+        <div class="body">
+          <div class="label"><b>Mostre</b> no balcão e <b>ganhe</b> o segundo chopp</div>
+          <div class="hint">por nossa conta</div>
+        </div>
+      </div>
+
+      <div class="step warning">
+        <div class="icon-warning">
+          <div class="badge">
+            <svg viewBox="0 0 24 24"><path d="M12 2 L22 20 L2 20 Z"/><path d="M12 9v5M12 17h.01"/></svg>
+          </div>
+        </div>
+        <div class="body">
+          <div class="label">Sem a logo Maccari no porta-copo, a foto não vale</div>
+          <div class="hint">Selfie sozinho não conta. A logo TEM que aparecer.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

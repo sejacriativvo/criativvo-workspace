@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Método Atleta da Pelada — Estudo de Mercado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090A;
+  --surf:#0D1117;
+  --card:#131C22;
+  --border:#1C2B33;
+  --lime:#AAFF3C;
+  --lime-glow:rgba(170,255,60,.15);
+  --lime-dim:rgba(170,255,60,.08);
+  --red:#FF4D4D;
+  --gold:#FFD060;
+  --white:#F0F2F0;
+  --gray:#7A8C8A;
+  --gray2:#3A4A48;
+}
+html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+/* ── DECK ── */
+#deck{width:100vw;height:100vh;position:relative}
+
+/* ── SLIDE ── */
+.slide{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .5s ease;
+  background:var(--bg);
+  overflow:hidden;
+}
+.slide.active{opacity:1;pointer-events:all}
+.slide.prev{opacity:0}
+
+/* ── SLIDE INNER ── */
+.s-wrap{
+  width:min(1280px,100vw);
+  height:min(720px,100vh);
+  position:relative;
+  display:flex;flex-direction:column;
+  padding:60px 72px;
+  overflow:hidden;
+}
+
+/* ── SHARED TYPO ── */
+.eyebrow{
+  font-size:clamp(9px,1vw,11px);font-weight:700;letter-spacing:4px;
+  text-transform:uppercase;color:var(--lime);margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--lime)}
+
+h1.display{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(52px,7vw,96px);line-height:.88;
+  letter-spacing:-.03em;color:var(--white);text-transform:uppercase;
+}
+h2.display{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(36px,5vw,64px);line-height:.9;
+  letter-spacing:-.03em;color:var(--white);text-transform:uppercase;
+}
+.lime{color:var(--lime)}
+.red{color:var(--red)}
+.gold{color:var(--gold)}
+
+.lead{font-size:clamp(13px,1.4vw,17px);color:rgba(240,242,240,.65);line-height:1.7;font-weight:300}
+.lead b{color:rgba(240,242,240,.9);font-weight:600}
+
+/* ── NAV ── */
+#nav{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:16px;z-index:100;
+}
+.nav-btn{
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--border);background:var(--card);
+  color:var(--gray);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;transition:all .2s;user-select:none;
+}
+.nav-btn:hover{border-color:var(--lime);color:var(--lime)}
+#counter{
+  font-size:11px;font-weight:600;letter-spacing:2px;
+  color:var(--gray);min-width:50px;text-align:center;
+}
+.nav-dots{display:flex;gap:6px;align-items:center}
+.dot{
+  width:6px;height:6px;border-radius:50%;background:var(--gray2);
+  cursor:pointer;transition:all .25s;
+}
+.dot.on{background:var(--lime);width:18px;border-radius:3px}
+
+/* ── PROGRESS ── */
+#progress{
+  position:fixed;top:0;left:0;height:2px;
+  background:var(--lime);transition:width .4s ease;z-index:100;
+}
+
+/* ═══════════════════════════════
+   SLIDE 1 — COVER
+═══════════════════════════════ */
+.s-cover{
+  background:
+    linear-gradient(135deg,rgba(7,9,10,0) 40%,rgba(7,9,10,.97) 85%),
+    linear-gradient(to bottom,rgba(7,9,10,.55),rgba(7,9,10,.9)),
+    url('https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+  justify-content:flex-end;align-items:flex-start;
+}
+.s-cover .s-wrap{justify-content:flex-end}
+.cover-tag{
+  position:absolute;top:40px;left:72px;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray);
+}
+.cover-h1{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(60px,9vw,120px);line-height:.82;
+  letter-spacing:-.03em;color:var(--white);text-transform:uppercase;
+  margin-bottom:24px;
+}
+.cover-sub{
+  font-size:clamp(13px,1.4vw,17px);color:rgba(240,242,240,.6);
+  line-height:1.65;max-width:520px;margin-bottom:32px;font-weight:300;
+}
+.cover-pill{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 22px;border:1px solid var(--border);border-radius:100px;
+  font-size:12px;font-weight:500;color:var(--white);letter-spacing:.3px;
+}
+.cover-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--lime)}
+
+/* ═══════════════════════════════
+   SLIDE 2 — O PROBLEMA
+═══════════════════════════════ */
+.s-problema{
+  background:radial-gradient(ellipse 80% 60% at 50% 130%,rgba(255,77,77,.09) 0%,transparent 70%),var(--bg);
+}
+.prob-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center;flex:1;margin-top:16px}
+.prob-left .big-red{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(80px,13vw,180px);line-height:.82;
+  letter-spacing:-.05em;color:var(--red);
+}
+.prob-left .big-label{
+  font-size:clamp(14px,1.5vw,18px);color:rgba(240,242,240,.7);
+  line-height:1.6;margin-top:16px;font-weight:300;max-width:320px;
+}
+.prob-left .big-label b{color:var(--white);font-weight:600}
+.stat-stack{display:flex;flex-direction:column;gap:12px}
+.stat-brick{
+  padding:20px 24px;border-radius:14px;
+  background:rgba(255,77,77,.07);border:1px solid rgba(255,77,77,.2);
+  display:flex;align-items:center;gap:20px;
+}
+.stat-brick .sb-n{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(28px,3vw,40px);color:var(--red);
+  letter-spacing:-.03em;flex-shrink:0;min-width:80px;
+}
+.stat-brick .sb-t{font-size:clamp(11px,1.1vw,13px);color:rgba(240,242,240,.65);line-height:1.55}
+
+/* ═══════════════════════════════
+   SLIDE 3 — O MERCADO
+═══════════════════════════════ */
+.s-mercado{
+  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(170,255,60,.06) 0%,transparent 60%),var(--bg);
+  align-items:center;justify-content:center;
+}
+.mkt-center{text-align:center;display:flex;flex-direction:column;align-items:center}
+.mkt-pre{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--lime);margin-bottom:12px}
+.mkt-big{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(80px,16vw,200px);line-height:.82;
+  letter-spacing:-.05em;color:var(--white);
+}
+.mkt-big span{color:var(--lime)}
+.mkt-sub{font-size:clamp(14px,1.5vw,18px);color:rgba(240,242,240,.55);margin:16px 0 32px;font-weight:300;line-height:1.5}
+.mkt-pills{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.mpill{
+  padding:12px 20px;border:1px solid var(--border);
+  border-radius:100px;background:var(--card);
+  display:flex;align-items:center;gap:10px;
+}
+.mpill .mpv{font-family:'Oswald',sans-serif;font-weight:600;font-size:clamp(18px,2vw,24px);color:var(--lime);letter-spacing:-.02em}
+.mpill .mpt{font-size:clamp(10px,1vw,12px);color:var(--gray);line-height:1.4}
+.mkt-source{margin-top:20px;font-size:10px;color:var(--gray2);letter-spacing:.4px}
+
+/* ═══════════════════════════════
+   SLIDE 4 — PERFIL
+═══════════════════════════════ */
+.s-perfil{background:var(--bg)}
+.perf-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  flex:1;margin-top:16px;
+}
+.perf-card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:22px 20px;display:flex;flex-direction:column;gap:8px;
+}
+.perf-card.hi{background:var(--lime-dim);border-color:rgba(170,255,60,.2)}
+.perf-card .pc-i{font-size:26px;line-height:1}
+.perf-card .pc-t{font-size:clamp(12px,1.2vw,14px);font-weight:700;color:var(--white)}
+.perf-card.hi .pc-t{color:var(--lime)}
+.perf-card .pc-d{font-size:clamp(10px,1vw,12px);color:var(--gray);line-height:1.6}
+
+/* ═══════════════════════════════
+   SLIDE 5 — O GAP
+═══════════════════════════════ */
+.s-gap{background:var(--bg)}
+.gap-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;flex:1;margin-top:16px}
+.gap-table{width:100%;border-collapse:collapse}
+.gap-table th{
+  font-size:9px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;padding:10px 14px;text-align:left;
+  border-bottom:1px solid var(--border);
+}
+.gap-table th:nth-child(2){color:var(--gray);text-align:center}
+.gap-table th:nth-child(3){color:var(--lime);text-align:center}
+.gap-table td{
+  font-size:clamp(10px,1.1vw,12.5px);padding:11px 14px;
+  border-bottom:1px solid rgba(28,43,51,.6);color:var(--gray);
+}
+.gap-table td:first-child{color:rgba(240,242,240,.8);font-weight:500}
+.gap-table td:nth-child(2),.gap-table td:nth-child(3){text-align:center;font-size:15px}
+.no{color:rgba(255,77,77,.7)}.yes{color:var(--lime)}
+.gap-right{display:flex;flex-direction:column;gap:16px}
+.gap-right h3{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(28px,3.5vw,44px);letter-spacing:-.03em;
+  color:var(--white);text-transform:uppercase;line-height:.92;
+}
+.proof-box{
+  padding:22px 20px;background:var(--lime-dim);
+  border:1px solid rgba(170,255,60,.2);border-radius:14px;
+}
+.proof-box .pb-n{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(44px,5vw,62px);color:var(--lime);letter-spacing:-.04em;line-height:.9;
+}
+.proof-box .pb-t{font-size:clamp(11px,1.1vw,13px);color:rgba(240,242,240,.7);line-height:1.6;margin-top:8px}
+.proof-box .pb-t b{color:var(--white);font-weight:600}
+
+/* ═══════════════════════════════
+   SLIDE 6 — O PRODUTO
+═══════════════════════════════ */
+.s-prod{background:linear-gradient(to right,rgba(170,255,60,.04) 0%,transparent 50%),var(--bg)}
+.prod-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;flex:1;margin-top:12px}
+.prod-left h2{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(44px,6vw,76px);letter-spacing:-.03em;line-height:.85;
+  color:var(--white);text-transform:uppercase;margin-bottom:16px;
+}
+.prod-numbers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:20px 0}
+.pn{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center}
+.pn .pnv{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(32px,4vw,48px);color:var(--lime);letter-spacing:-.04em;display:block;line-height:1}
+.pn .pnl{font-size:10px;color:var(--gray);margin-top:5px;line-height:1.4}
+.tag-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.stag{
+  padding:5px 12px;border:1px solid var(--border);
+  border-radius:100px;font-size:10px;font-weight:500;color:var(--gray);
+}
+.stag.on{background:var(--lime-dim);border-color:rgba(170,255,60,.25);color:var(--lime)}
+.prod-right{display:flex;flex-direction:column;gap:10px}
+.phase-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:16px 18px;display:flex;align-items:center;gap:16px;
+}
+.phase-card .ph-n{
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:28px;
+  color:var(--lime);width:28px;flex-shrink:0;letter-spacing:-.02em;
+}
+.phase-card .ph-t{font-size:12.5px;font-weight:700;color:var(--white);margin-bottom:3px}
+.phase-card .ph-d{font-size:11px;color:var(--gray);line-height:1.5}
+
+/* ═══════════════════════════════
+   SLIDE 7 — COMO FUNCIONA
+═══════════════════════════════ */
+.s-flow{background:var(--bg)}
+.flow-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  flex:1;align-items:stretch;margin-top:20px;
+}
+.flow-col{
+  display:flex;flex-direction:column;align-items:center;
+  padding:0 12px;position:relative;
+}
+.flow-col:not(:last-child)::after{
+  content:'→';position:absolute;right:-12px;top:68px;
+  font-size:20px;color:var(--gray2);font-weight:300;
+}
+.flow-bubble{
+  width:56px;height:56px;border-radius:50%;
+  border:2px solid var(--lime);background:var(--lime-dim);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:22px;color:var(--lime);
+  margin-bottom:14px;flex-shrink:0;
+}
+.flow-t{font-size:clamp(11px,1.1vw,13px);font-weight:700;color:var(--white);text-align:center;margin-bottom:8px;line-height:1.3}
+.flow-d{font-size:clamp(9px,.9vw,11px);color:var(--gray);text-align:center;line-height:1.55}
+.flow-badge-s{
+  margin-top:auto;padding:4px 10px;border-radius:100px;
+  font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+}
+.auto{background:var(--lime-dim);color:var(--lime);border:1px solid rgba(170,255,60,.2)}
+.manual{background:var(--card);color:var(--gray);border:1px solid var(--border)}
+.flow-callout{
+  margin-top:20px;padding:16px 22px;
+  background:var(--lime-dim);border:1px solid rgba(170,255,60,.2);border-radius:12px;
+  font-size:clamp(11px,1.2vw,13.5px);color:rgba(240,242,240,.8);
+  line-height:1.6;font-style:italic;font-weight:300;
+}
+.flow-callout b{color:var(--lime);font-style:normal;font-weight:700}
+
+/* ═══════════════════════════════
+   SLIDE 8 — MONETIZAÇÃO
+═══════════════════════════════ */
+.s-mono{background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(255,208,96,.05) 0%,transparent 60%),var(--bg)}
+.mono-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;flex:1;margin-top:12px}
+.mono-left h2{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(40px,5.5vw,68px);letter-spacing:-.03em;line-height:.88;
+  color:var(--white);text-transform:uppercase;margin-bottom:20px;
+}
+.mono-cards{display:flex;flex-direction:column;gap:10px}
+.mc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.mc.gold{background:rgba(255,208,96,.07);border-color:rgba(255,208,96,.25)}
+.mc .mcl{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:6px;display:block}
+.mc.gold .mcl{color:var(--gold)}
+.mc .mcv{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(28px,3.5vw,44px);color:var(--white);letter-spacing:-.04em;line-height:1;display:block}
+.mc.gold .mcv{color:var(--gold)}
+.mc .mcd{font-size:11px;color:var(--gray);line-height:1.55;margin-top:5px}
+.math-box{
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:22px 20px;display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.mi{text-align:center;flex:1}
+.mi .mv{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(22px,2.5vw,32px);color:var(--white);letter-spacing:-.03em;display:block;line-height:1}
+.mi .ml{font-size:9.5px;color:var(--gray);margin-top:4px;font-weight:500}
+.mi.res .mv{color:var(--lime)}
+.mop{font-size:22px;color:var(--gray2);font-weight:300;flex-shrink:0}
+
+/* ═══════════════════════════════
+   SLIDE 9 — PROJEÇÃO
+═══════════════════════════════ */
+.s-proj{background:radial-gradient(ellipse 80% 50% at 50% 100%,rgba(170,255,60,.07) 0%,transparent 70%),var(--bg)}
+.proj-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1;margin-top:16px}
+.psc{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:28px 24px;display:flex;flex-direction:column;gap:8px;
+}
+.psc.best{background:var(--lime-dim);border-color:rgba(170,255,60,.3)}
+.psc .psl{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:4px}
+.psc.best .psl{color:rgba(170,255,60,.7)}
+.psc .psa{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(48px,7vw,80px);color:var(--white);letter-spacing:-.05em;line-height:.9}
+.psc.best .psa{color:var(--lime)}
+.psc .pss{font-size:11px;color:var(--gray);margin-bottom:8px}
+.psc .psm{font-size:11px;color:var(--gray)}
+.psc .psm b{font-size:clamp(18px,2vw,24px);font-weight:700;color:var(--white);letter-spacing:-.02em;display:block;margin-top:2px}
+.psc.best .psm b{color:var(--lime)}
+.psc .psy{padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--gray)}
+.psc.best .psy{border-color:rgba(170,255,60,.2)}
+.psc .psy b{color:var(--white);font-weight:700}
+.psc.best .psy b{color:var(--lime)}
+.bar-section{margin-top:16px}
+.br{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.bl{font-size:10.5px;color:var(--gray);font-weight:500;width:100px;flex-shrink:0}
+.bt{flex:1;height:8px;background:var(--card);border-radius:100px;overflow:hidden}
+.bf{height:100%;border-radius:100px;background:var(--lime)}
+.bv{font-size:11px;font-weight:700;color:var(--white);width:100px;text-align:right;flex-shrink:0}
+
+/* ═══════════════════════════════
+   SLIDE 10 — POR QUE AGORA
+═══════════════════════════════ */
+.s-now{background:var(--bg)}
+.now-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;margin-top:16px}
+.now-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 26px}
+.now-card.lime-card{background:var(--lime-dim);border-color:rgba(170,255,60,.25)}
+.now-card .nc-n{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(48px,6vw,72px);color:var(--white);
+  letter-spacing:-.05em;line-height:.9;margin-bottom:12px;display:block;
+}
+.now-card.lime-card .nc-n{color:var(--lime)}
+.now-card .nc-t{font-size:clamp(13px,1.3vw,16px);font-weight:700;color:var(--white);margin-bottom:8px}
+.now-card .nc-d{font-size:clamp(11px,1.1vw,13px);color:var(--gray);line-height:1.6}
+
+/* ═══════════════════════════════
+   SLIDE 11 — PRÓXIMOS PASSOS
+═══════════════════════════════ */
+.s-next{background:linear-gradient(to bottom,rgba(170,255,60,.05) 0%,transparent 40%),var(--bg)}
+.steps{display:flex;flex-direction:column;gap:0;flex:1;margin-top:12px}
+.step{
+  display:flex;align-items:flex-start;gap:24px;
+  padding:18px 0;border-bottom:1px solid var(--border);
+}
+.step:last-child{border-bottom:none}
+.step-c{
+  width:44px;height:44px;border-radius:50%;
+  border:2px solid var(--lime);background:var(--lime-dim);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:20px;color:var(--lime);
+  flex-shrink:0;
+}
+.step-b .st{font-size:clamp(13px,1.4vw,16px);font-weight:700;color:var(--white);margin-bottom:5px;letter-spacing:-.01em}
+.step-b .sd{font-size:clamp(11px,1.1vw,13px);color:var(--gray);line-height:1.6}
+.step-b .sd b{color:rgba(240,242,240,.8);font-weight:600}
+.step-t{margin-left:auto;flex-shrink:0;text-align:right}
+.step-t .sv{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(22px,2.5vw,30px);color:var(--lime);display:block;letter-spacing:-.02em;line-height:1}
+.step-t .su{font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1.5px}
+.cta-banner{
+  margin-top:16px;padding:20px 26px;
+  background:var(--lime-dim);border:1px solid rgba(170,255,60,.25);border-radius:14px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.cta-banner .cb{font-size:clamp(11px,1.2vw,13px);color:rgba(240,242,240,.75);line-height:1.6;max-width:500px}
+.cta-banner .cb b{color:var(--lime);font-size:clamp(13px,1.4vw,15px);font-weight:700;display:block;margin-bottom:4px}
+.cta-btn{
+  flex-shrink:0;padding:14px 26px;background:var(--lime);
+  color:#07090A;border-radius:100px;font-size:11px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;text-decoration:none;white-space:nowrap;
+}
+
+/* ── MADE BY ── */
+.made{
+  position:absolute;bottom:16px;right:24px;
+  font-size:9px;color:var(--gray2);letter-spacing:.4px;
+}
+.made b{color:var(--gray);font-weight:600}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div id="deck">
+
+  <!-- ══ SLIDE 1 — COVER ══ -->
+  <div class="slide s-cover active">
+    <div class="cover-tag">CRIATIVVO · ESTUDO ESTRATÉGICO 2026</div>
+    <div class="s-wrap">
+      <div class="eyebrow" style="color:rgba(170,255,60,.7)">Estudo de Mercado</div>
+      <h1 class="cover-h1">Método<br/><span class="lime">Atleta</span><br/>da Pelada</h1>
+      <p class="cover-sub">A maior oportunidade não explorada do mercado fitness amador no Brasil. Dados, projeções e o caminho para monetizar.</p>
+      <div class="cover-pill">Preparado para Hugo Araujo · Junho 2026</div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 2 — O PROBLEMA ══ -->
+  <div class="slide s-problema">
+    <div class="s-wrap">
+      <span class="page-label" style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">02 / 11</span>
+      <div class="eyebrow">O Problema</div>
+      <div class="prob-grid">
+        <div class="prob-left">
+          <div class="big-red">1 em 4</div>
+          <div class="big-label">lesões no futebol amador é <b>grave o suficiente para afastar por mais de 21 dias.</b><br/>E quase ninguém faz prevenção.</div>
+        </div>
+        <div class="stat-stack">
+          <div class="stat-brick">
+            <div class="sb-n">85%</div>
+            <div class="sb-t">das lesões atingem membros inferiores: joelho, tornozelo, coxa e quadril</div>
+          </div>
+          <div class="stat-brick">
+            <div class="sb-n">24%</div>
+            <div class="sb-t">das lesões são graves, com afastamento superior a 21 dias de jogo</div>
+          </div>
+          <div class="stat-brick">
+            <div class="sb-n" style="font-size:clamp(18px,2vw,26px)">R$50k</div>
+            <div class="sb-t">custo máximo de cirurgia de LCA + reabilitação completa sem convênio</div>
+          </div>
+          <div style="font-size:9px;color:var(--gray2);margin-top:4px">Fonte: Revista Brasileira de Medicina do Esporte · SciELO · HU Revista UFJF 2022</div>
+        </div>
+      </div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 3 — O MERCADO ══ -->
+  <div class="slide s-mercado">
+    <div class="s-wrap" style="justify-content:center;align-items:center">
+      <span style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">03 / 11</span>
+      <div class="mkt-center">
+        <span class="eyebrow" style="justify-content:center">O Mercado</span>
+        <span class="mkt-pre">Praticantes ativos de futebol no Brasil</span>
+        <div class="mkt-big">15,3<span>M</span></div>
+        <div class="mkt-sub">de brasileiros jogam futebol regularmente<br/>segundo dados oficiais do IBGE</div>
+        <div class="mkt-pills">
+          <div class="mpill"><span class="mpv">94,5%</span><span class="mpt">homens<br/>praticantes</span></div>
+          <div class="mpill"><span class="mpv">2ª</span><span class="mpt">maior busca esportiva<br/>no Google Brasil</span></div>
+          <div class="mpill"><span class="mpv">25–40</span><span class="mpt">anos, faixa principal<br/>do peladeiro adulto</span></div>
+        </div>
+        <div class="mkt-source">Fonte: IBGE / PNAD 2015 · estimativas de mercado chegam a 30 milhões incluindo praticantes ocasionais</div>
+      </div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 4 — PERFIL ══ -->
+  <div class="slide s-perfil">
+    <div class="s-wrap">
+      <span style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">04 / 11</span>
+      <div class="eyebrow">O Cliente Ideal</div>
+      <h2 class="display" style="font-size:clamp(36px,5vw,56px);margin-bottom:16px">Ele tem <span class="lime">nome.</span></h2>
+      <div class="perf-grid">
+        <div class="perf-card hi"><div class="pc-i">⚽</div><div class="pc-t">Joga pelada 1 a 2x por semana</div><div class="pc-d">Fiel ao futebol do fim de semana há anos. O time, o campo, os amigos: rotina sagrada.</div></div>
+        <div class="perf-card"><div class="pc-i">🦵</div><div class="pc-t">Sente dor depois de jogar</div><div class="pc-d">Joelho travado na segunda, tornozelo inflamado. Aceita como "normal", mas incomoda cada vez mais.</div></div>
+        <div class="perf-card"><div class="pc-i">📱</div><div class="pc-t">Busca solução no YouTube</div><div class="pc-d">Já pesquisou exercício para dor no joelho. Não encontrou nada específico para quem joga pelada.</div></div>
+        <div class="perf-card"><div class="pc-i">💸</div><div class="pc-t">Não tem orçamento para personal</div><div class="pc-d">Pagaria R$50 a R$150 por uma solução prática, mas não R$300/mês por personal presencial.</div></div>
+        <div class="perf-card"><div class="pc-i">🎯</div><div class="pc-t">Quer continuar jogando</div><div class="pc-d">A motivação não é virar atleta. É continuar jogando por mais 10, 20 anos sem precisar de cirurgia.</div></div>
+        <div class="perf-card hi"><div class="pc-i">🏆</div><div class="pc-t">Se identifica com "Potência"</div><div class="pc-d">O bordão "fala potência" já cria pertencimento antes mesmo de pagar. Comunidade vende.</div></div>
+      </div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 5 — O GAP ══ -->
+  <div class="slide s-gap">
+    <div class="s-wrap">
+      <span style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">05 / 11</span>
+      <div class="eyebrow">O Gap de Mercado</div>
+      <div class="gap-grid">
+        <div>
+          <table class="gap-table">
+            <thead><tr><th>O que existe hoje</th><th>Peladeiro</th><th>Método</th></tr></thead>
+            <tbody>
+              <tr><td>Cursos para preparadores físicos</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+              <tr><td>Apps de treino genéricos</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+              <tr><td>Personal trainers online</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+              <tr><td>Protocolo por tipo de lesão</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+              <tr><td>Validado por preparador profissional</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="gap-right">
+          <h3>Esse mercado <span class="lime">está esperando.</span></h3>
+          <p class="lead">Existe preparação física para futebol profissional. Existe fitness genérico. O que não existe é um protocolo para quem joga pelada e tem dor.</p>
+          <div class="proof-box">
+            <div class="pb-n">158K</div>
+            <div class="pb-t"><b>@preparadorpedroferreira</b> acumulou 158 mil seguidores falando sobre dor no futebol amador, sem produto validado. Prova de que a demanda existe e está esperando.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 6 — O PRODUTO ══ -->
+  <div class="slide s-prod">
+    <div class="s-wrap">
+      <span style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">06 / 11</span>
+      <div class="eyebrow">O Produto</div>
+      <div class="prod-layout">
+        <div class="prod-left">
+          <h2>Método <span class="lime">Atleta</span><br/>da Pelada</h2>
+          <p class="lead">Protocolo de preparação física com validação médica, pensado exclusivamente para jogadores de futebol amador. Não é ficha de academia. É um sistema de 90 dias.</p>
+          <div class="prod-numbers">
+            <div class="pn"><span class="pnv">15</span><div class="pnl">Protocolos<br/>por lesão</div></div>
+            <div class="pn"><span class="pnv">3</span><div class="pnl">Fases por<br/>protocolo</div></div>
+            <div class="pn"><span class="pnv">90</span><div class="pnl">Dias de<br/>transformação</div></div>
+          </div>
+          <div class="tag-wrap">
+            <span class="stag on">Joelho</span>
+            <span class="stag on">Tornozelo</span>
+            <span class="stag on">LCA</span>
+            <span class="stag on">Lombar</span>
+            <span class="stag">Coxa</span>
+            <span class="stag">Virilha</span>
+            <span class="stag">Condicionamento</span>
+          </div>
+        </div>
+        <div class="prod-right">
+          <div class="phase-card"><div class="ph-n">01</div><div><div class="ph-t">Ativação</div><div class="ph-d">Mês 1. Reativar os padrões de movimento corretos e preparar o corpo para o esforço.</div></div></div>
+          <div class="phase-card"><div class="ph-n">02</div><div><div class="ph-t">Fortalecimento</div><div class="ph-d">Mês 2. Fortalecer os grupos musculares específicos para a lesão e posição do atleta.</div></div></div>
+          <div class="phase-card"><div class="ph-n">03</div><div><div class="ph-t">Explosividade</div><div class="ph-d">Mês 3. Desenvolver potência e performance para jogar melhor e com mais segurança.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 7 — COMO FUNCIONA ══ -->
+  <div class="slide s-flow">
+    <div class="s-wrap">
+      <span style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">07 / 11</span>
+      <div class="eyebrow">Como Funciona</div>
+      <h2 class="display" style="font-size:clamp(32px,4.5vw,52px);margin-bottom:0">O sistema <span class="lime">trabalha por você.</span></h2>
+      <div class="flow-grid">
+        <div class="flow-col">
+          <div class="flow-bubble">1</div>
+          <div class="flow-t">Atleta acessa e compra</div>
+          <div class="flow-d">Landing page com copy focada na dor. R$297 por trimestre.</div>
+          <div class="flow-badge-s manual" style="margin-top:12px">Você faz</div>
+        </div>
+        <div class="flow-col">
+          <div class="flow-bubble">2</div>
+          <div class="flow-t">Cria login e acessa</div>
+          <div class="flow-d">Sistema libera acesso automaticamente após pagamento confirmado.</div>
+          <div class="flow-badge-s auto" style="margin-top:12px">Automático</div>
+        </div>
+        <div class="flow-col">
+          <div class="flow-bubble">3</div>
+          <div class="flow-t">Responde o quiz</div>
+          <div class="flow-d">15 perguntas sobre lesão, posição, frequência e equipamento.</div>
+          <div class="flow-badge-s auto" style="margin-top:12px">Automático</div>
+        </div>
+        <div class="flow-col">
+          <div class="flow-bubble">4</div>
+          <div class="flow-t">Protocolo selecionado</div>
+          <div class="flow-d">Sistema escolhe 1 dos 15 protocolos. Sem curadoria manual.</div>
+          <div class="flow-badge-s auto" style="margin-top:12px">Automático</div>
+        </div>
+        <div class="flow-col">
+          <div class="flow-bubble">5</div>
+          <div class="flow-t">Fases entregues mês a mês</div>
+          <div class="flow-d">Meses 1, 2 e 3 liberados automaticamente na data certa.</div>
+          <div class="flow-badge-s auto" style="margin-top:12px">Automático</div>
+        </div>
+      </div>
+      <div class="flow-callout"><b>100% escalável.</b> Você cria os protocolos uma vez. O sistema atende 10 ou 10.000 alunos sem aumentar seu tempo operacional um minuto.</div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 8 — MONETIZAÇÃO ══ -->
+  <div class="slide s-mono">
+    <div class="s-wrap">
+      <span style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">08 / 11</span>
+      <div class="eyebrow">Monetização</div>
+      <div class="mono-layout">
+        <div class="mono-left">
+          <h2>Como você <span class="gold">ganha dinheiro.</span></h2>
+          <p class="lead" style="margin-bottom:16px">Receita recorrente, previsível e que escala sem aumentar sua operação.</p>
+          <div class="math-box">
+            <div class="mi"><span class="mv">100</span><div class="ml">alunos ativos</div></div>
+            <div class="mop">×</div>
+            <div class="mi"><span class="mv">R$99</span><div class="ml">ticket/mês</div></div>
+            <div class="mop">=</div>
+            <div class="mi res"><span class="mv">R$9.900</span><div class="ml">por mês</div></div>
+          </div>
+        </div>
+        <div class="mono-cards">
+          <div class="mc"><span class="mcl">Preço por aluno</span><span class="mcv">R$297</span><div class="mcd">por trimestre. R$99/mês por um protocolo feito por quem treinou profissional.</div></div>
+          <div class="mc gold"><span class="mcl">LTV médio por aluno</span><span class="mcv">R$891</span><div class="mcd">aluno que renova 3 trimestres. Cada renovação é automática, sem novo esforço de venda.</div></div>
+          <div class="mc"><span class="mcl">Upsell possível</span><span class="mcv">+R$197</span><div class="mcd">sessão individual com Hugo para quem quer acompanhamento personalizado.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 9 — PROJEÇÃO ══ -->
+  <div class="slide s-proj">
+    <div class="s-wrap">
+      <span style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">09 / 11</span>
+      <div class="eyebrow">Projeção de Receita</div>
+      <h2 class="display" style="font-size:clamp(32px,4.5vw,52px);margin-bottom:0">3 cenários. <span class="lime">Todos viáveis.</span></h2>
+      <div class="proj-cards">
+        <div class="psc"><div class="psl">Conservador</div><div class="psa">50</div><div class="pss">alunos ativos</div><div class="psm">Receita mensal<b>R$4.950</b></div><div class="psy">Anual: <b>R$59.400</b></div></div>
+        <div class="psc"><div class="psl">Realista</div><div class="psa">200</div><div class="pss">alunos ativos</div><div class="psm">Receita mensal<b>R$19.800</b></div><div class="psy">Anual: <b>R$237.600</b></div></div>
+        <div class="psc best"><div class="psl">Otimista</div><div class="psa">500</div><div class="pss">alunos ativos</div><div class="psm">Receita mensal<b>R$49.500</b></div><div class="psy">Anual: <b>R$594.000</b></div></div>
+      </div>
+      <div class="bar-section">
+        <div class="br"><div class="bl">Conservador</div><div class="bt"><div class="bf" style="width:10%;opacity:.3"></div></div><div class="bv">R$4.950/mês</div></div>
+        <div class="br"><div class="bl">Realista</div><div class="bt"><div class="bf" style="width:40%;opacity:.65"></div></div><div class="bv">R$19.800/mês</div></div>
+        <div class="br"><div class="bl">Otimista</div><div class="bt"><div class="bf" style="width:100%"></div></div><div class="bv">R$49.500/mês</div></div>
+      </div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 10 — POR QUE AGORA ══ -->
+  <div class="slide s-now">
+    <div class="s-wrap">
+      <span style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">10 / 11</span>
+      <div class="eyebrow">Por que Agora</div>
+      <h2 class="display" style="font-size:clamp(32px,4.5vw,52px);margin-bottom:16px">A janela está <span class="lime">aberta.</span></h2>
+      <div class="now-grid">
+        <div class="now-card lime-card">
+          <span class="nc-n">0</span>
+          <div class="nc-t">Concorrentes diretos validados</div>
+          <div class="nc-d">Nenhum produto consolidado no nicho de protocolos por lesão para o peladeiro. Quem chegar primeiro vai ser a referência.</div>
+        </div>
+        <div class="now-card">
+          <span class="nc-n">79%</span>
+          <div class="nc-t">dos brasileiros já consumiram algum infoproduto</div>
+          <div class="nc-d">O comportamento de compra digital está normalizado. O público não precisa ser educado para comprar online.</div>
+        </div>
+        <div class="now-card">
+          <span class="nc-n">4ª</span>
+          <div class="nc-t">maior categoria na Hotmart é saúde e esportes</div>
+          <div class="nc-d">Mercado fitness digital estimado em R$7 bilhões no Brasil em 2025. O setor cresce e o nicho específico ainda está vazio.</div>
+        </div>
+        <div class="now-card lime-card">
+          <span class="nc-n">158K</span>
+          <div class="nc-t">seguidores do maior concorrente, sem produto</div>
+          <div class="nc-d">Pedro Ferreira prova a demanda existindo sem vender nada estruturado. Você tem credencial maior e entra com produto pronto.</div>
+        </div>
+      </div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b></div>
+  </div>
+
+  <!-- ══ SLIDE 11 — PRÓXIMOS PASSOS ══ -->
+  <div class="slide s-next">
+    <div class="s-wrap">
+      <span style="position:absolute;top:28px;right:28px;font-size:9px;color:var(--gray2);letter-spacing:2px;text-transform:uppercase">11 / 11</span>
+      <div class="eyebrow">Próximos Passos</div>
+      <h2 class="display" style="font-size:clamp(32px,4.5vw,52px);margin-bottom:0">Do zero ao <span class="lime">lançamento</span> em 14 dias.</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-c">1</div>
+          <div class="step-b">
+            <div class="st">Hugo prepara os protocolos com o doutor</div>
+            <div class="sd">15 fichas por tipo de lesão, com 3 fases cada. <b>Esse é o único trabalho que depende de você.</b> Pode ser feito em paralelo ao desenvolvimento do sistema.</div>
+          </div>
+          <div class="step-t"><span class="sv">1–2</span><span class="su">semanas</span></div>
+        </div>
+        <div class="step">
+          <div class="step-c">2</div>
+          <div class="step-b">
+            <div class="st">Criativvo constrói o sistema completo</div>
+            <div class="sd">Landing page, app com login, quiz, lógica de seleção, entrega automática e painel de gestão. <b>Stack testado em produção.</b></div>
+          </div>
+          <div class="step-t"><span class="sv">14</span><span class="su">dias</span></div>
+        </div>
+        <div class="step">
+          <div class="step-c">3</div>
+          <div class="step-b">
+            <div class="st">Lançamento para a base + tráfego pago</div>
+            <div class="sd">Ativação da audiência do Instagram e campanhas no Meta Ads. <b>Primeiros alunos na primeira semana.</b></div>
+          </div>
+          <div class="step-t"><span class="sv">1ª</span><span class="su">semana</span></div>
+        </div>
+      </div>
+      <div class="cta-banner">
+        <div class="cb"><b>A janela está aberta agora.</b>O nicho não está saturado, a demanda existe e a tecnologia está pronta. Cada semana de espera é uma semana que alguém com menos credencial que a sua chega antes.</div>
+        <a href="https://wa.me/5516993396988" class="cta-btn">Fala Potência</a>
+      </div>
+    </div>
+    <div class="made">Elaborado por <b>criativvo</b> · criativvo.com.br</div>
+  </div>
+
+</div><!-- #deck -->
+
+<!-- ── NAV ── -->
+<div id="nav">
+  <button class="nav-btn" id="prev">&#8592;</button>
+  <div class="nav-dots" id="dots"></div>
+  <span id="counter">1 / 11</span>
+  <button class="nav-btn" id="next">&#8594;</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dots = document.getElementById('dots');
+const counter = document.getElementById('counter');
+const progress = document.getElementById('progress');
+const total = slides.length;
+let cur = 0;
+
+// build dots
+slides.forEach((_,i)=>{
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' on':'');
+  d.onclick = ()=>go(i);
+  dots.appendChild(d);
+});
+
+function go(n){
+  slides[cur].classList.remove('active');
+  cur = (n+total)%total;
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  counter.textContent = (cur+1)+' / '+total;
+  progress.style.width = ((cur+1)/total*100)+'%';
+}
+
+document.getElementById('next').onclick = ()=>go(cur+1);
+document.getElementById('prev').onclick = ()=>go(cur-1);
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ')go(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(cur-1);
+});
+
+// touch/swipe
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50)go(dx<0?cur+1:cur-1);
+},{passive:true});
+
+// init progress
+progress.style.width = (1/total*100)+'%';
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter);
+}
+
+/* Tokens semânticos (estilo shadcn) usados pelos gráficos recharts.
+   Mapeados pra paleta neutra do app — habilitam bg-background, text-foreground,
+   text-muted-foreground, border-border, bg-muted, fill-*, stroke-*. */
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-card: #ffffff;
+  --color-card-foreground: #171717;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #737373;
+  --color-border: #e5e5e5;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  /* Mata o "puxar pra atualizar"/bounce que fazia o dock flutuante se mexer. */
+  overscroll-behavior-y: none;
+}
+
+body {
+  font-family: var(--font-inter), -apple-system, system-ui, Arial, sans-serif;
+  background: #fafafa;
+  color: #171717;
+}
+
+/* Modo privacidade: borra dados pessoais marcados com data-private */
+html.privacy [data-private] {
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
+  user-select: none;
+}
+
+/* Esconde scrollbar nas tiras de filtros horizontais */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Inputs nunca estouram a largura do container no celular (datas/horas no iOS). */
+input,
+select,
+textarea {
+  max-width: 100%;
+  min-width: 0;
+}
+input[type='date'],
+input[type='time'] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+

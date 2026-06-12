@@ -1,0 +1,55 @@
+import type { Unit } from '../types'
+
+// Cada unidade tem identidade visual própria para criar a sensação de jornada.
+export const units: Unit[] = [
+  {
+    id: 'unit-1',
+    number: 1,
+    title: 'Primeiros passos',
+    subtitle: 'Conheça seu instrumento',
+    theme: 'forest',
+    accentFrom: '#10B981',
+    accentTo: '#059669',
+    iconKey: 'sprout',
+  },
+  {
+    id: 'unit-2',
+    number: 2,
+    title: 'Acordes básicos',
+    subtitle: 'Construa seu vocabulário',
+    theme: 'sunset',
+    accentFrom: '#FB923C',
+    accentTo: '#F43F5E',
+    iconKey: 'flame',
+  },
+  {
+    id: 'unit-3',
+    number: 3,
+    title: 'Ritmos',
+    subtitle: 'Encontre o seu groove',
+    theme: 'ocean',
+    accentFrom: '#0EA5E9',
+    accentTo: '#1D4ED8',
+    iconKey: 'waves',
+  },
+  {
+    id: 'unit-4',
+    number: 4,
+    title: 'Primeiras músicas',
+    subtitle: 'Toque do começo ao fim',
+    theme: 'twilight',
+    accentFrom: '#8B5CF6',
+    accentTo: '#312E81',
+    iconKey: 'music',
+  },
+  {
+    id: 'unit-5',
+    number: 5,
+    title: 'Evolução',
+    subtitle: 'Sua identidade no violão',
+    theme: 'stage',
+    accentFrom: '#F59E0B',
+    accentTo: '#B45309',
+    iconKey: 'crown',
+  },
+]

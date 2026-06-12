@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Story 1 — Capa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #1a1a1a; }
+    body { display: flex; justify-content: center; padding: 30px; }
+
+    .card {
+      width: 1080px;
+      height: 1920px;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      overflow: hidden;
+      background: #1A120B;
+      color: #F2EAD8;
+    }
+
+    .hero {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1080px;
+      height: 1180px;
+      overflow: hidden;
+    }
+    .hero img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      height: 380px;
+      background: linear-gradient(180deg, rgba(26,18,11,0.85) 0%, rgba(26,18,11,0.35) 60%, transparent 100%);
+      pointer-events: none;
+      z-index: 3;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 380px;
+      background: linear-gradient(180deg, transparent 0%, rgba(26,18,11,0.7) 55%, #1A120B 100%);
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .lockup {
+      position: absolute;
+      top: 140px;
+      left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      z-index: 6;
+    }
+    .lockup .cs { height: 100px; filter: drop-shadow(0 6px 22px rgba(0,0,0,0.8)); }
+    .lockup .x {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-size: 46px;
+      color: #E8C58A;
+      opacity: 0.95;
+    }
+    .lockup .bandvip {
+      font-family: 'Fraunces';
+      font-weight: 500;
+      font-size: 50px;
+      color: #F2EAD8;
+      font-variation-settings: 'opsz' 144;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.8);
+    }
+    .lockup .bandvip em { font-style: italic; font-weight: 400; color: #E8C58A; }
+    .lockup .mc { height: 82px; filter: drop-shadow(0 6px 22px rgba(0,0,0,0.8)); }
+
+    .pill-row {
+      position: absolute;
+      top: 1130px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 5;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      font-family: 'Inter';
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 8px;
+      color: #F2EAD8;
+      background: rgba(20,12,6,0.78);
+      border: 2px solid rgba(232,197,138,0.5);
+      padding: 24px 44px;
+      border-radius: 100px;
+      text-transform: uppercase;
+    }
+    .pill .live {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: #ED7D17;
+      box-shadow: 0 0 0 6px rgba(237,125,23,0.28);
+    }
+    .pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(242,234,216,0.55);
+    }
+
+    .headline-block {
+      position: absolute;
+      top: 1230px;
+      left: 50px; right: 50px;
+      text-align: center;
+      z-index: 5;
+    }
+    .headline {
+      font-family: 'Fraunces';
+      font-weight: 500;
+      font-size: 112px;
+      line-height: 0.95;
+      letter-spacing: -2.8px;
+      color: #F2EAD8;
+      font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    }
+    .headline em { font-style: italic; font-weight: 400; color: #E8C58A; }
+    .subheadline {
+      font-family: 'Inter';
+      font-size: 34px;
+      font-weight: 500;
+      color: rgba(242,234,216,0.85);
+      margin-top: 40px;
+      line-height: 1.35;
+    }
+    .subheadline b { color: #F2EAD8; font-weight: 700; }
+
+    .swipe {
+      position: absolute;
+      bottom: 90px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 5;
+    }
+    .swipe .txt {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Inter';
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 7px;
+      color: #ED7D17;
+      text-transform: uppercase;
+    }
+    .swipe .txt svg {
+      width: 28px; height: 28px;
+      stroke: #ED7D17;
+      fill: none;
+      stroke-width: 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <div class="hero">
+      <img src="hero-story.jpg" alt="Chopp no Castellinhos">
+    </div>
+
+    <div class="lockup">
+      <img class="cs" src="../../../assets/logo-castellinhos-clean.png" alt="Castellinhos">
+      <span class="x">×</span>
+      <span class="bandvip"><em>Banda</em> VIP</span>
+      <span class="x">×</span>
+      <img class="mc" src="../../../assets/logo.png" alt="Maccari Store">
+    </div>
+
+    <div class="pill-row">
+      <div class="pill">
+        <span class="live"></span>
+        <span>HOJE</span>
+        <span class="dot"></span>
+        <span>29/05</span>
+        <span class="dot"></span>
+        <span>CASTELLINHOS</span>
+      </div>
+    </div>
+
+    <div class="headline-block">
+      <div class="headline">
+        O segundo chopp<br>
+        é por <em>nossa conta.</em>
+      </div>
+      <div class="subheadline">
+        Show da <b>Banda VIP</b> rolando.<br>
+        Você pediu o primeiro, a <b>Maccari</b> paga o segundo.
+      </div>
+    </div>
+
+    <div class="swipe">
+      <div class="txt">
+        <span>ARRASTA PRA VER COMO FUNCIONA</span>
+        <svg viewBox="0 0 24 24"><path d="M5 12 h14 M13 6 l6 6 -6 6"/></svg>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

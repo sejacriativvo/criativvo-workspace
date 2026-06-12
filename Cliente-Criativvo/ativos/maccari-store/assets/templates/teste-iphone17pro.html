@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>iPhone 17 Pro — Maccari Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #555;
+      min-height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px;
+    }
+
+    /* ══════════════════════════
+       CANVAS STORIES 1080 × 1920
+    ══════════════════════════ */
+    .canvas {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      background: #F2F2F2;
+      font-family: 'Montserrat', sans-serif;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    /* ── TÍTULO ── */
+    .title {
+      position: absolute;
+      left: 60px;
+      top: 90px;
+      width: 960px;
+      font-size: 120px;
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -4px;
+      color: #000;
+    }
+
+    /* ── ESPECIFICAÇÕES ── */
+    .specs {
+      position: absolute;
+      left: 60px;
+      top: 360px;
+      width: 800px;
+      font-size: 38px;
+      font-weight: 600;
+      color: #111;
+      letter-spacing: -0.5px;
+    }
+
+    /* ── MOLDURA DO PRODUTO ── */
+    .product-frame {
+      position: absolute;
+      left: 60px;
+      top: 470px;
+      width: 960px;
+      height: 1030px;
+      border: 10px solid #FF0000;
+      border-radius: 35px;
+      overflow: hidden;
+      background: #D9D9D9;
+    }
+
+    .placeholder {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 44px;
+      font-weight: 700;
+      color: #9B9B9B;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── LOGO DENTRO DA FOTO ── */
+    .frame-logo {
+      position: absolute;
+      left: 50%;
+      bottom: 45px;
+      transform: translateX(-50%);
+      width: 220px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    }
+
+    /* ── CORAÇÃO 3D ── */
+    .heart {
+      position: absolute;
+      top: 435px;
+      right: 35px;
+      width: 150px;
+      height: 150px;
+      z-index: 10;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 25px 30px rgba(0,0,0,0.25));
+    }
+
+    /* ═══════════════════════════
+       CARD DE PREÇO
+    ═══════════════════════════ */
+    .price-card {
+      position: absolute;
+      left: 40px;
+      bottom: 50px;
+      width: 1000px;
+      height: 360px;
+      background: linear-gradient(90deg, #A7D7DB, #7FAFAF);
+      border-radius: 55px;
+    }
+
+    /* ─── LADO ESQUERDO ─── */
+    .installments {
+      position: absolute;
+      left: 55px;
+      top: 40px;
+    }
+
+    .installments-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .installments .big {
+      font-size: 96px;
+      font-weight: 800;
+      line-height: 0.8;
+      color: #000;
+    }
+
+    .small-stack {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 3px;
+    }
+
+    .installments .small {
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 0.9;
+      color: #000;
+    }
+
+    .installments .note {
+      margin-top: 10px;
+      font-size: 25px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    /* ─── GARANTIA APPLE ─── */
+    .apple-warranty {
+      position: absolute;
+      left: 55px;
+      bottom: 40px;
+      width: 280px;
+    }
+
+    .apple-warranty img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ─── LADO DIREITO (container isolado) ─── */
+    .price-right {
+      position: absolute;
+      right: 45px;
+      top: 40px;
+      bottom: 40px;
+      width: 510px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .old-price {
+      font-size: 30px;
+      font-weight: 500;
+      color: #333;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .old-price .value {
+      text-decoration: line-through;
+      font-weight: 700;
+      font-size: 32px;
+    }
+
+    .cash-label {
+      font-size: 60px;
+      font-weight: 600;
+      color: #FFF;
+    }
+
+    /* Linha de preço principal */
+    .main-price-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+    }
+
+    .price-currency {
+      font-size: 50px;
+      font-weight: 800;
+      color: #FFF;
+      margin-bottom: 14px;
+      letter-spacing: -1px;
+    }
+
+    .price-value {
+      font-size: 140px;
+      font-weight: 800;
+      line-height: 0.85;
+      letter-spacing: -6px;
+      color: #FFF;
+      white-space: nowrap;
+    }
+
+    .price-cents {
+      font-size: 60px;
+      font-weight: 800;
+      vertical-align: super;
+      letter-spacing: -2px;
+    }
+  </style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- TÍTULO -->
+  <div class="title">iPhone 17 Pro</div>
+
+  <!-- SPECS -->
+  <div class="specs">256GB &nbsp;·&nbsp; Silver &nbsp;·&nbsp; Laranja Cósmico &nbsp;·&nbsp; Deep Blue</div>
+
+  <!-- MOLDURA DO PRODUTO -->
+  <div class="product-frame">
+    <!-- Substituir por: <img class="product-image" src="foto.jpg" alt="iPhone 17 Pro"> -->
+    <div class="placeholder">FOTO DO PRODUTO</div>
+    <img class="frame-logo" src="../logo.png" alt="Maccari Store">
+  </div>
+
+  <!-- CORAÇÃO 3D -->
+  <img class="heart" src="../CORAÇÃO.png" alt="">
+
+  <!-- CARD DE PREÇO -->
+  <div class="price-card">
+
+    <!-- ESQUERDA: parcelamento -->
+    <div class="installments">
+      <div class="installments-row">
+        <span class="big">12x</span>
+        <div class="small-stack">
+          <span class="small">.sem</span>
+          <span class="small">juros</span>
+        </div>
+      </div>
+      <div class="note">Exceto Linha Apple</div>
+    </div>
+
+    <!-- ESQUERDA: garantia apple -->
+    <div class="apple-warranty">
+      <img src="../GARANTIA APPLE.png" alt="Garantia Apple 12 Meses">
+    </div>
+
+    <!-- DIREITA: todos os preços isolados -->
+    <div class="price-right">
+      <div class="old-price">A Prazo: <span class="value">R$8.761,90</span></div>
+      <div class="cash-label">A Vista</div>
+      <div class="main-price-row">
+        <span class="price-currency">R$&nbsp;</span>
+        <span class="price-value">7.893,<span class="price-cents">60</span></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

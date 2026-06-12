@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório Mensal — GilsonCar Veículos</title>
+  <link rel="icon" type="image/png" href="assets/FAVICON RELATÓRIO.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @font-face {
+      font-family: 'AVEstiana';
+      src: url('../../fonts/AVEstiana-Black.otf') format('opentype');
+      font-weight: 900;
+      font-style: normal;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:  #CC0000;
+      --grn:  #16a34a;
+      --yel:  #d97706;
+      --tx:   #111827;
+      --mu:   #6b7280;
+      --lt:   #9ca3af;
+      --bg:   #f0f2f5;
+      --card: #ffffff;
+      --bd:   rgba(0,0,0,0.07);
+      --sh:   0 1px 3px rgba(0,0,0,0.06), 0 6px 24px rgba(0,0,0,0.04);
+      --sh-lg:0 4px 16px rgba(0,0,0,0.09), 0 1px 3px rgba(0,0,0,0.06);
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--tx);
+      font-family: 'Montserrat', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── PROGRESS BAR ── */
+    #progress {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--red), #ff5555);
+      z-index: 9999; transition: width .08s linear;
+      pointer-events: none;
+      box-shadow: 0 0 8px rgba(204,0,0,0.5);
+    }
+
+    /* ── NAV — light liquid glass ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(22px) saturate(200%) url('#lg-filter');
+      -webkit-backdrop-filter: blur(22px) saturate(200%);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      padding: 0 28px; height: 76px;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      box-shadow:
+        0 1px 0 rgba(0,0,0,0.05),
+        0 2px 8px rgba(0,0,0,0.06),
+        inset 3px 3px 0.5px -3px rgba(0,0,0,0.9),
+        inset -3px -3px 0.5px -3px rgba(0,0,0,0.85),
+        inset 1px 1px 1px -0.5px rgba(0,0,0,0.6),
+        inset -1px -1px 1px -0.5px rgba(0,0,0,0.6),
+        inset 0 0 6px 6px rgba(0,0,0,0.08),
+        inset 0 0 2px 2px rgba(0,0,0,0.04);
+    }
+    .nav-gilson-logo { height: 34px; width: auto; justify-self: start; }
+    .nav-mid  { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .nav-city { font-size: .80rem; font-weight: 800; color: var(--tx); letter-spacing: 1.5px; text-transform: uppercase; }
+    .nav-period { font-size: .62rem; font-weight: 600; color: var(--mu); }
+    .nav-brand { font-family: 'AVEstiana', 'Montserrat', sans-serif; font-size: 1.3rem; font-weight: 900; color: var(--tx); letter-spacing: -1px; line-height: 1; justify-self: end; }
+
+    /* ── CONTROLS ── */
+    .controls {
+      max-width: 960px; margin: 20px auto 0;
+      padding: 0 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+
+    /* ── UNIT TABS ── */
+    .utab {
+      flex: 1; min-width: 140px; padding: 11px 18px; border-radius: 12px;
+      border: 1.5px solid rgba(0,0,0,0.08);
+      background: var(--card); box-shadow: var(--sh);
+      cursor: pointer; font-family: 'Montserrat', sans-serif;
+      font-size: .74rem; font-weight: 700;
+      color: var(--mu);
+      transition: transform 160ms var(--ease-out), border-color 160ms ease, color 160ms ease, box-shadow 200ms ease;
+      text-align: center;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .utab:hover:not(.on) { border-color: rgba(0,0,0,0.16); color: var(--tx); transform: translateY(-1px); }
+    }
+    .utab:active:not(.on) { transform: scale(0.97); }
+    .utab.on {
+      background: linear-gradient(135deg, #e00, #900);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 20px rgba(204,0,0,0.30), 0 0 0 1px rgba(204,0,0,0.15);
+    }
+
+    /* ── CALENDAR PICKER ── */
+    .cal-wrap { position: relative; display: inline-block; }
+    .cal-trigger {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 12px;
+      border: 1.5px solid rgba(0,0,0,0.08);
+      background: var(--card); box-shadow: var(--sh);
+      cursor: pointer; font-family: 'Montserrat', sans-serif;
+      font-size: .74rem; font-weight: 700;
+      color: var(--tx);
+      transition: border-color 160ms ease, transform 160ms var(--ease-out);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .cal-trigger:hover { border-color: rgba(204,0,0,0.25); }
+    }
+    .cal-trigger:active { transform: scale(0.98); }
+    .cal-arrow { transition: transform .18s; }
+    .cal-trigger.open .cal-arrow { transform: rotate(180deg); }
+    .cal-drop {
+      position: absolute; top: calc(100% + 8px); left: 0;
+      background: var(--card);
+      border: 1.5px solid rgba(0,0,0,0.08);
+      border-radius: 16px; padding: 16px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+      z-index: 300; opacity: 0; pointer-events: none;
+      transform: translateY(-6px) scale(0.97);
+      transform-origin: top left;
+      transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+      min-width: 240px;
+    }
+    .cal-drop.open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+    .cal-year { font-size: .60rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); margin-bottom: 10px; }
+    .cal-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+    .cal-m {
+      padding: 10px 8px; border-radius: 8px; border: 1.5px solid transparent;
+      font-family: 'Montserrat', sans-serif; font-size: .74rem; font-weight: 700;
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease, border-color 150ms ease, transform 150ms var(--ease-out);
+      color: var(--mu); background: transparent; text-align: center;
+    }
+    .cal-m.dis { opacity: .28; cursor: not-allowed; pointer-events: none; }
+    @media (hover: hover) and (pointer: fine) {
+      .cal-m.avail:hover { background: rgba(204,0,0,0.07); color: var(--red); border-color: rgba(204,0,0,0.2); }
+    }
+    .cal-m.avail:active { transform: scale(0.94); }
+    .cal-m.avail.on { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 4px 14px rgba(204,0,0,0.30); }
+
+    /* ── HERO ── */
+    .hero { max-width: 960px; margin: 20px auto 0; padding: 0 20px; }
+    .hero-top {
+      background: var(--red);
+      border-radius: 16px 16px 0 0;
+      padding: 28px 28px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .hero-tag  { font-size: .58rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
+    .hero-title{ font-size: 1.3rem; font-weight: 900; color: #fff; line-height: 1.1; }
+    .hero-sub  { font-size: .72rem; color: rgba(255,255,255,0.70); margin-top: 5px; }
+    .hero-logo { height: 44px; width: auto; flex-shrink: 0; }
+    .hero-metrics {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      background: var(--card); border-radius: 0 0 16px 16px;
+      border: 1px solid var(--bd); border-top: none;
+      box-shadow: var(--sh-lg); overflow: hidden;
+    }
+    @media(max-width:600px){ .hero-metrics { grid-template-columns: repeat(2,1fr); } }
+    .hm {
+      padding: 18px 16px; border-right: 1px solid var(--bd);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .hm:last-child { border-right: none; }
+    .hm-lbl  { font-size: .56rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); }
+    .hm-val  { font-size: 1.8rem; font-weight: 900; color: var(--tx); line-height: 1; }
+    .hm { padding: 20px 18px; border-right: 1px solid var(--bd); display: flex; flex-direction: column; gap: 4px; }
+    .hm:last-child { border-right: none; }
+    .hm-val.good { color: var(--grn); }
+    .hm-val.warn { color: var(--yel); }
+    .hm-delta{ font-size: .64rem; font-weight: 700; color: var(--mu); }
+    .hm-delta.up  { color: var(--grn); }
+    .hm-delta.dn  { color: #dc2626; }
+
+    /* ── MAIN ── */
+    main { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+    /* ── SECTION ── */
+    .sec { margin-bottom: 48px; }
+    .sec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .sec-label  { font-size: .58rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); white-space: nowrap; }
+    .sec-title  { font-size: 1.05rem; font-weight: 800; color: var(--tx); white-space: nowrap; }
+    .sec-line   { height: 1px; background: var(--bd); flex: 1; }
+
+    /* ── BANNER CUSTO TOTAL ── */
+    .mktg-wrap  { max-width: 960px; margin: 20px auto 0; padding: 0 20px; }
+    .mktg-inner {
+      background: #0e0e0e; border: 1px solid rgba(255,255,255,0.07); border-radius: 16px;
+      padding: 26px 32px;
+      display: flex; align-items: center; gap: 36px;
+    }
+    .mktg-main  { flex-shrink: 0; }
+    .mktg-val   { font-size: 2.8rem; font-weight: 900; color: var(--grn); line-height: 1; }
+    .mktg-sub   { font-size: .64rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-top: 5px; }
+    .mktg-div   { width: 1px; height: 56px; background: rgba(255,255,255,.12); flex-shrink: 0; }
+    .mktg-info  { flex: 1; }
+    .mktg-title { font-size: .64rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 10px; }
+    .mktg-formula { font-size: .95rem; font-weight: 700; color: #fff; line-height: 1.7; }
+    .mktg-formula em { color: rgba(255,255,255,.45); font-style: normal; }
+    @media(max-width:560px){
+      .mktg-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .mktg-div   { display: none; }
+    }
+
+    /* ── KPI CARDS ── */
+    .kpis { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 10px; margin-bottom: 16px; }
+    @media(max-width:480px){ .kpis { grid-template-columns: 1fr 1fr; } }
+    .kpi {
+      background: var(--card);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 16px; padding: 20px 18px;
+      box-shadow: var(--sh);
+      transition: transform .22s, border-color .22s, box-shadow .22s;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .kpi:hover {
+        transform: translateY(-5px);
+        border-color: rgba(204,0,0,0.22);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(204,0,0,0.12);
+      }
+    }
+    .kpi-lbl  { font-size: .54rem; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--mu); margin-bottom: 10px; }
+    .kpi-val  { font-size: 1.7rem; font-weight: 900; line-height: 1; color: var(--tx); }
+    .badge    { display: inline-flex; align-items: center; margin-top: 10px; font-size: .60rem; font-weight: 700; padding: 4px 9px; border-radius: 20px; }
+    .up  { background: rgba(22,163,74,0.10);  color: var(--grn); }
+    .dn  { background: rgba(220,38,38,0.10);  color: #dc2626; }
+    .neu { background: rgba(0,0,0,0.05);       color: var(--mu); }
+    .kpi-note { font-size: .60rem; color: var(--lt); margin-top: 6px; letter-spacing: .3px; }
+
+    /* ── SUMMARY BOX ── */
+    .sum {
+      background: var(--card);
+      border-left: 3px solid var(--red);
+      border-top: 1px solid var(--bd);
+      border-right: 1px solid var(--bd);
+      border-bottom: 1px solid var(--bd);
+      border-radius: 0 14px 14px 0;
+      padding: 18px 20px; font-size: .82rem; color: var(--mu);
+      line-height: 1.9; box-shadow: var(--sh);
+    }
+    .sum strong { color: var(--tx); }
+
+    /* ── COMPARE GRID ── */
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    @media(max-width:480px){ .compare-grid { grid-template-columns: 1fr; } }
+    .cmp-card {
+      background: var(--card);
+      border: 1.5px solid var(--bd);
+      border-radius: 14px; padding: 18px 20px;
+      box-shadow: var(--sh);
+    }
+    .cmp-card.active {
+      border-color: var(--red);
+      box-shadow: 0 4px 20px rgba(204,0,0,0.10);
+    }
+    .cmp-label { font-size: .56rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); margin-bottom: 12px; }
+    .cmp-card.active .cmp-label { color: var(--red); }
+    .cmp-row   { display: flex; justify-content: space-between; font-size: .76rem; padding: 5px 0; border-bottom: 1px solid var(--bd); }
+    .cmp-row:last-child { border: none; }
+    .cmp-row span:first-child { color: var(--mu); }
+    .cmp-row span:last-child  { font-weight: 700; color: var(--tx); }
+
+    /* ── CHARTS GRID ── */
+    .charts-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    @media(max-width:560px){ .charts-2 { grid-template-columns: 1fr; } }
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: 16px; padding: 22px;
+      box-shadow: var(--sh);
+    }
+    .chart-card.full { grid-column: 1/-1; }
+    .chart-lbl { font-size: .56rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); margin-bottom: 18px; }
+
+    /* ── WEEK CARDS ── */
+    .weeks-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(175px,1fr)); gap: 10px; margin-top: 12px; }
+    @media(max-width:480px){ .weeks-grid { grid-template-columns: 1fr 1fr; } }
+    .wk {
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: 14px; padding: 16px;
+      box-shadow: var(--sh);
+      transition: transform .18s, border-color .18s;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .wk:hover { transform: translateY(-2px); border-color: rgba(0,0,0,0.14); }
+    }
+    .wk.best {
+      border-color: var(--red);
+      box-shadow: 0 4px 20px rgba(204,0,0,0.10), 0 0 0 1px rgba(204,0,0,0.06);
+    }
+    .wk-h   { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .wk-lbl { font-size: .58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); }
+    .wk-b   { font-size: .56rem; font-weight: 700; color: var(--grn); }
+    .wr     { display: flex; justify-content: space-between; font-size: .74rem; padding: 6px 0; border-bottom: 1px solid var(--bd); }
+    .wr:last-child { border: none; }
+    .wl { color: var(--mu); }
+    .wv { font-weight: 700; color: var(--tx); }
+    .wv.g { color: var(--grn); }
+
+    /* ── TABLE ── */
+    .tw { overflow-x: auto; border-radius: 12px; border: 1px solid var(--bd); margin-top: 10px; box-shadow: var(--sh); background: var(--card); }
+    table { width: 100%; border-collapse: collapse; min-width: 440px; }
+    thead th { background: #f8f9fb; color: var(--mu); font-size: .58rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--bd); }
+    tbody tr { border-bottom: 1px solid var(--bd); transition: background .12s; }
+    tbody tr:last-child { border: none; }
+    tbody tr:hover { background: #f8f9fb; }
+    tbody tr.me   { background: rgba(204,0,0,0.04); }
+    tbody td { padding: 10px 14px; font-size: .76rem; color: var(--mu); }
+    tbody tr.me td { color: var(--tx); font-weight: 700; }
+    .you { background: var(--red); color: #fff; font-size: .5rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; margin-left: 4px; vertical-align: middle; }
+
+    /* ── RANKING ── */
+    .rank-list { display: flex; flex-direction: column; gap: 7px; margin-top: 10px; }
+    .ri {
+      background: var(--card);
+      display: flex; align-items: center; gap: 10px;
+      border: 1px solid var(--bd);
+      border-radius: 12px; padding: 10px 14px;
+      box-shadow: var(--sh);
+      transition: border-color .15s, transform .15s;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .ri:hover { border-color: rgba(0,0,0,0.14); transform: translateX(3px); }
+    }
+    .ri.me {
+      border-color: var(--red);
+      box-shadow: 0 0 16px rgba(204,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .ri-n  { width: 24px; height: 24px; border-radius: 50%; background: #f0f2f5; display: flex; align-items: center; justify-content: center; font-size: .65rem; font-weight: 800; color: var(--mu); flex-shrink: 0; }
+    .ri-n.top { background: var(--red); color: #fff; box-shadow: 0 0 14px rgba(204,0,0,0.40); }
+    .ri-name { flex: 1; font-size: .78rem; color: var(--mu); }
+    .ri.me .ri-name { color: var(--tx); font-weight: 700; }
+    .ri-bar  { width: 52px; height: 3px; background: var(--bd); border-radius: 2px; overflow: hidden; }
+    .ri-bar div { height: 100%; border-radius: 2px; }
+    .ri-pct  { font-size: .8rem; font-weight: 800; min-width: 50px; text-align: right; }
+
+    /* ── TROPHY ── */
+    .trophy {
+      background: rgba(204,0,0,0.04);
+      border: 1.5px solid rgba(204,0,0,0.14);
+      border-radius: 16px; padding: 24px; text-align: center; margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(204,0,0,0.06);
+    }
+    .trophy .ti { font-size: 2rem; margin-bottom: 8px; }
+    .trophy h3  { font-size: .92rem; font-weight: 800; color: var(--red); margin-bottom: 5px; }
+    .trophy p   { font-size: .78rem; color: var(--mu); }
+    .trophy p strong { color: var(--tx); }
+
+    /* ── ANALYSIS ITEMS ── */
+    .analysis-grid { display: grid; gap: 10px; }
+    .analysis-item {
+      border-radius: 14px;
+      border: 1px solid var(--bd);
+      padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start;
+      box-shadow: var(--sh);
+      transition: transform .18s;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .analysis-item:hover { transform: translateX(3px); }
+    }
+    .analysis-item.ok   { border-left: 3px solid var(--grn); background: linear-gradient(135deg, #f0fdf4, #ffffff); }
+    .analysis-item.warn { border-left: 3px solid var(--yel); background: linear-gradient(135deg, #fffbeb, #ffffff); }
+    .analysis-item.tgt  { border-left: 3px solid var(--red); background: linear-gradient(135deg, #fff5f5, #ffffff); }
+    .ai-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .ai-body h4 { font-size: .78rem; font-weight: 800; margin-bottom: 5px; }
+    .analysis-item.ok   .ai-body h4 { color: var(--grn); }
+    .analysis-item.warn .ai-body h4 { color: var(--yel); }
+    .analysis-item.tgt  .ai-body h4 { color: var(--red); }
+    .ai-body p  { font-size: .75rem; color: var(--mu); line-height: 1.65; }
+    .ai-body p strong { color: var(--tx); }
+
+    /* ── INFO NOTE ── */
+    .info-note {
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: 12px; padding: 14px 18px;
+      font-size: .74rem; color: var(--mu); margin-top: 10px; line-height: 1.7;
+      box-shadow: var(--sh);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--bd);
+      padding: 36px 20px; text-align: center;
+      background: var(--card);
+    }
+    .footer-brand { font-family: 'AVEstiana', 'Montserrat', sans-serif; font-weight: 900; font-size: 1.6rem; color: var(--tx); display: block; letter-spacing: -1px; margin-bottom: 6px; }
+    footer p { font-size: .66rem; color: var(--mu); }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .anim { opacity: 0; transform: translateY(14px); transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out); }
+    .anim.in { opacity: 1; transform: none; }
+    .anim-d1 { transition-delay: 60ms; }
+    .anim-d2 { transition-delay: 110ms; }
+    .anim-d3 { transition-delay: 160ms; }
+    .anim-d4 { transition-delay: 210ms; }
+    .anim-d5 { transition-delay: 260ms; }
+
+    /* ── STAGGER: hero metrics ── */
+    .hero-metrics .hm { animation: fadeUpHm 350ms var(--ease-out) both paused; }
+    .hero-metrics .hm:nth-child(2) { animation-delay: 55ms; }
+    .hero-metrics .hm:nth-child(3) { animation-delay: 110ms; }
+    .hero-metrics .hm:nth-child(4) { animation-delay: 165ms; }
+    .hero.in .hero-metrics .hm { animation-play-state: running; }
+    @keyframes fadeUpHm {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── STAGGER: rank items ── */
+    .rank-list .ri { animation: slideInRi 350ms var(--ease-out) both paused; }
+    .rank-list .ri:nth-child(2) { animation-delay: 55ms; }
+    .rank-list .ri:nth-child(3) { animation-delay: 110ms; }
+    .rank-list .ri:nth-child(4) { animation-delay: 165ms; }
+    .rank-list .ri:nth-child(5) { animation-delay: 220ms; }
+    .rank-list .ri:nth-child(6) { animation-delay: 275ms; }
+    .sec.in .rank-list .ri { animation-play-state: running; }
+    @keyframes slideInRi {
+      from { opacity: 0; transform: translateX(-10px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── STAGGER: analysis items ── */
+    .analysis-grid .analysis-item { animation: slideInAi 380ms var(--ease-out) both paused; }
+    .analysis-grid .analysis-item:nth-child(2) { animation-delay: 75ms; }
+    .analysis-grid .analysis-item:nth-child(3) { animation-delay: 150ms; }
+    .analysis-grid .analysis-item:nth-child(4) { animation-delay: 225ms; }
+    .analysis-grid .analysis-item:nth-child(5) { animation-delay: 300ms; }
+    .sec.in .analysis-grid .analysis-item { animation-play-state: running; }
+    @keyframes slideInAi {
+      from { opacity: 0; transform: translateX(-12px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── STAGGER: week cards ── */
+    .weeks-grid .wk { animation: fadeUpWk 320ms var(--ease-out) both paused; }
+    .weeks-grid .wk:nth-child(2) { animation-delay: 55ms; }
+    .weeks-grid .wk:nth-child(3) { animation-delay: 110ms; }
+    .weeks-grid .wk:nth-child(4) { animation-delay: 165ms; }
+    .sec.in .weeks-grid .wk { animation-play-state: running; }
+    @keyframes fadeUpWk {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── rank bar fill transition ── */
+    .ri-bar div { height: 100%; border-radius: 2px; transition: width 600ms var(--ease-out); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { transform: none; transition: opacity 200ms ease; }
+      .utab, .cal-trigger, .kpi, .wk, .ri, .analysis-item {
+        transition: opacity 150ms ease !important;
+      }
+      .cal-drop { transition: opacity 150ms ease !important; }
+      .rank-list .ri, .analysis-grid .analysis-item,
+      .weeks-grid .wk, .hero-metrics .hm { animation: none; opacity: 1; transform: none; }
+    }
+
+    .ghost-bg { display: none; }
+
+    @media(max-width:480px){
+      .hero-title { font-size: 1.05rem; }
+      .hm-val     { font-size: 1.5rem; }
+      .kpi-val    { font-size: 1.45rem; }
+      .nav-logo   { height: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ghost-bg">GILSONCAR</div>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="lg-filter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="1" result="turbulence"/>
+      <feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="70" xChannelSelector="R" yChannelSelector="B" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="4" result="finalBlur"/>
+      <feComposite in="finalBlur" in2="finalBlur" operator="over"/>
+    </filter>
+  </defs>
+</svg>
+
+<div id="progress"></div>
+
+<nav>
+  <img class="nav-gilson-logo" src="assets/LOGO GILSONCAR.png" alt="GilsonCar">
+  <div class="nav-mid">
+    <span class="nav-city" id="navCity">Ibitinga</span>
+    <span class="nav-period" id="navPeriod">Abril 2026</span>
+  </div>
+  <span class="nav-brand">criativvo</span>
+</nav>
+
+<!-- CONTROLS -->
+<div class="controls anim">
+  <button class="utab on" onclick="setUnit('ibitinga')">Ibitinga</button>
+  <button class="utab"    onclick="setUnit('borborema')">Borborema</button>
+
+  <div class="cal-wrap" id="calWrap">
+    <button class="cal-trigger" id="calTrigger" onclick="toggleCal(event)">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
+      <span id="calLabel">Abril 2026</span>
+      <svg class="cal-arrow" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="cal-drop" id="calDrop">
+      <div class="cal-year">2026</div>
+      <div class="cal-grid">
+        <button class="cal-m dis">Jan</button>
+        <button class="cal-m dis">Fev</button>
+        <button class="cal-m avail" onclick="pickMonth('marco','Março 2026',this)">Mar</button>
+        <button class="cal-m avail on" onclick="pickMonth('abril','Abril 2026',this)">Abr</button>
+        <button class="cal-m dis">Mai</button>
+        <button class="cal-m dis">Jun</button>
+        <button class="cal-m dis">Jul</button>
+        <button class="cal-m dis">Ago</button>
+        <button class="cal-m dis">Set</button>
+        <button class="cal-m dis">Out</button>
+        <button class="cal-m dis">Nov</button>
+        <button class="cal-m dis">Dez</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero anim">
+  <div class="hero-top">
+    <div>
+      <div class="hero-tag">Relatório Mensal</div>
+      <div class="hero-title" id="hUnit">GilsonCar Ibitinga</div>
+      <div class="hero-sub" id="heroSub">@gilsoncarveiculos &nbsp;·&nbsp; Gestão Criativvo</div>
+    </div>
+    <img class="hero-logo" src="assets/LOGO GILSONCAR BRANCA.png" alt="GilsonCar">
+  </div>
+  <div class="hero-metrics">
+    <div class="hm">
+      <span class="hm-lbl">Conversas</span>
+      <span class="hm-val good" id="hmLeads">—</span>
+      <span class="hm-delta" id="hmLeadsDelta">—</span>
+    </div>
+    <div class="hm">
+      <span class="hm-lbl">Investido</span>
+      <span class="hm-val" id="hmInv">—</span>
+      <span class="hm-delta" id="hmInvDelta">—</span>
+    </div>
+    <div class="hm">
+      <span class="hm-lbl" id="hmCplLbl">CPL</span>
+      <span class="hm-val good" id="hmCpl">—</span>
+      <span class="hm-delta" id="hmCplDelta">—</span>
+    </div>
+    <div class="hm">
+      <span class="hm-lbl">Vendas</span>
+      <span class="hm-val" id="hmSales">—</span>
+      <span class="hm-delta" id="hmSalesDelta">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- BANNER CUSTO TOTAL DE MARKETING -->
+<div class="mktg-wrap">
+  <div class="mktg-inner">
+    <div class="mktg-main">
+      <div class="mktg-val" id="mktgVal">—</div>
+      <div class="mktg-sub">por carro vendido</div>
+    </div>
+    <div class="mktg-div"></div>
+    <div class="mktg-info">
+      <div class="mktg-title">Custo total de marketing</div>
+      <div class="mktg-formula" id="mktgFormula">—</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- RESUMO EXECUTIVO -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Visão geral</span>
+      <span class="sec-title">Resumo do mês</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi anim anim-d1"><div class="kpi-lbl">Conversas</div><div class="kpi-val" id="vL">—</div><div class="badge up" id="dL">—</div><div class="kpi-note">Leads no WhatsApp</div></div>
+      <div class="kpi anim anim-d2"><div class="kpi-lbl">Investido em tráfego</div><div class="kpi-val" id="vI">—</div><div class="badge" id="dI">—</div><div class="kpi-note">Verba em anúncios</div></div>
+      <div class="kpi anim anim-d3"><div class="kpi-lbl">Custo por lead</div><div class="kpi-val" id="vC">—</div><div class="badge" id="dC">—</div><div class="kpi-note">Por conversa iniciada</div></div>
+      <div class="kpi anim anim-d4"><div class="kpi-lbl">Carros vendidos</div><div class="kpi-val" id="vS">—</div><div class="badge neu" id="dS">—</div><div class="kpi-note">Vendas confirmadas</div></div>
+      <div class="kpi anim anim-d5"><div class="kpi-lbl">Custo/venda (tráfego)</div><div class="kpi-val" id="vP">—</div><div class="badge neu" id="dP">—</div><div class="kpi-note">Só verba de anúncio</div></div>
+    </div>
+    <div class="sum" id="sumBox"></div>
+  </div>
+
+  <!-- TRÁFEGO PAGO -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Meta Ads</span>
+      <span class="sec-title">Tráfego pago</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="compare-grid">
+      <div class="cmp-card" id="cm1">
+        <div class="cmp-label" id="cm1mo">Mês anterior</div>
+        <div class="cmp-row" id="cmL1"></div>
+        <div class="cmp-row" id="cmI1"></div>
+        <div class="cmp-row" id="cmC1"></div>
+        <div class="cmp-row" id="cmS1"></div>
+      </div>
+      <div class="cmp-card active" id="cm2">
+        <div class="cmp-label" id="cm2mo">Mês atual</div>
+        <div class="cmp-row" id="cmL2"></div>
+        <div class="cmp-row" id="cmI2"></div>
+        <div class="cmp-row" id="cmC2"></div>
+        <div class="cmp-row" id="cmS2"></div>
+      </div>
+    </div>
+    <div class="charts-2">
+      <div class="chart-card"><div class="chart-lbl">Conversas</div><canvas id="chL" height="220"></canvas></div>
+      <div class="chart-card"><div class="chart-lbl" id="cplLbl">Custo por lead</div><canvas id="chC" height="220"></canvas></div>
+      <div class="chart-card full" id="semWrap"><div class="chart-lbl">Investimento × Conversas — semana a semana</div><canvas id="chS" height="160"></canvas></div>
+    </div>
+    <div class="weeks-grid" id="wkGrid"></div>
+    <div class="info-note" id="wkInfo" style="display:none"></div>
+  </div>
+
+  <!-- REDES SOCIAIS -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Instagram</span>
+      <span class="sec-title">Análise de concorrentes</span>
+      <div class="sec-line"></div>
+    </div>
+    <p style="font-size:.7rem;color:var(--mu);margin-bottom:16px;">Período: 03/05/2026 – 10/05/2026</p>
+    <div id="trophyWrap"></div>
+    <div class="kpis" style="margin-bottom:12px;">
+      <div class="kpi"><div class="kpi-lbl">Engajamento</div><div class="kpi-val" id="sEng">—</div><div class="badge up" id="sEngBadge">—</div><div class="kpi-note">Média concorrentes: 0,07%</div></div>
+      <div class="kpi"><div class="kpi-lbl">Crescimento</div><div class="kpi-val" id="sGrow">—</div><div class="badge" id="sGrowBadge">—</div><div class="kpi-note">Seguidores no período</div></div>
+      <div class="kpi"><div class="kpi-lbl">Interação/post</div><div class="kpi-val" id="sIpp">—</div><div class="badge neu" id="sIppBadge">—</div><div class="kpi-note">Curtidas + comentários</div></div>
+      <div class="kpi"><div class="kpi-lbl">Posts publicados</div><div class="kpi-val" id="sPosts">—</div><div class="badge neu" id="sPostsBadge">—</div><div class="kpi-note">No período</div></div>
+    </div>
+    <div class="charts-2">
+      <div class="chart-card"><div class="chart-lbl">Engajamento vs concorrentes</div><canvas id="chEng" height="240"></canvas></div>
+      <div class="chart-card"><div class="chart-lbl" id="reelsLbl">Visualizações de Reels</div><canvas id="chR" height="240"></canvas></div>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Perfil</th><th>Engajamento</th><th>Posts</th><th>Curtidas</th><th>Interação/post</th></tr></thead>
+        <tbody id="tBody"></tbody>
+      </table>
+    </div>
+    <div style="margin-top:28px;">
+      <div class="sec-header" style="margin-bottom:12px;">
+        <span class="sec-label">Ranking</span>
+        <span class="sec-title" style="font-size:.88rem;">Crescimento de seguidores</span>
+        <div class="sec-line"></div>
+      </div>
+      <div class="rank-list" id="rankList"></div>
+    </div>
+  </div>
+
+  <!-- ANÁLISE DO MÊS -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Avaliação</span>
+      <span class="sec-title">O que aconteceu em <span id="anMo">Abril</span></span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="analysis-grid" id="anGrid"></div>
+  </div>
+
+</main>
+
+<footer>
+  <span class="footer-brand">criativvo</span>
+  <p>Relatório produzido pela Criativvo &nbsp;·&nbsp; criativvo.com.br &nbsp;·&nbsp; Maio de 2026</p>
+</footer>
+
+<script>
+// ── countUp utility ──
+function countUp(el, target, fmt, ms = 700) {
+  if (!el) return;
+  const n = parseFloat(target);
+  if (isNaN(n)) { el.textContent = String(target); return; }
+  const t0 = performance.now();
+  const run = now => {
+    const p = Math.min((now - t0) / ms, 1);
+    const e = 1 - Math.pow(1 - p, 4); // ease-out-quart
+    el.textContent = fmt(e * n);
+    if (p < 1) requestAnimationFrame(run);
+    else el.textContent = fmt(n);
+  };
+  requestAnimationFrame(run);
+}
+
+// ── Progress bar ──
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  progress.style.width = (Math.min(pct,1)*100)+'%';
+}, { passive:true });
+
+// ── Scroll animations ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold:0.05, rootMargin:'0px 0px -20px 0px' });
+document.querySelectorAll('.anim').forEach(el => obs.observe(el));
+
+// ── Preload GilsonCar logo para usar nos gráficos ──
+const gilsonImg = new Image();
+gilsonImg.src = 'assets/LOGO GILSONCAR.png';
+
+// ── Plugin: logo GilsonCar acima da barra "você" ──
+Chart.register({
+  id: 'voceLogo',
+  afterDraw(chart) {
+    if(!chart.config.options?.plugins?.voceLogo) return;
+    if(!gilsonImg.complete || !gilsonImg.naturalWidth) return;
+    const voceI = chart.data.labels.findIndex(l => l.toLowerCase() === 'você');
+    if(voceI < 0) return;
+    const { ctx } = chart;
+    const meta = chart.getDatasetMeta(0);
+    const bar  = meta.data[voceI];
+    const w = 64, h = w * (gilsonImg.naturalHeight / gilsonImg.naturalWidth);
+    const topOfBar = Math.min(bar.y, bar.base ?? bar.y);
+    const y = topOfBar - h - 6;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 0, chart.width, chart.height); ctx.clip();
+    ctx.drawImage(gilsonImg, bar.x - w/2, y, w, h);
+    ctx.restore();
+  }
+});
+
+// ── Plugin: pulso animado nos pontos de linha ──
+Chart.register({
+  id: 'pulsePoints',
+  afterDraw(chart) {
+    if(!chart.config.options?.plugins?.pulsePoints) return;
+    if(chart._dead) return;
+    const { ctx } = chart;
+    const t = (Date.now() % 1400) / 1400;
+    chart.data.datasets.forEach((_, di) => {
+      const meta = chart.getDatasetMeta(di);
+      meta.data.forEach(pt => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 7 + 11 * t, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(204,0,0,${(1-t)*0.45})`;
+        ctx.lineWidth = 2; ctx.stroke();
+        ctx.restore();
+      });
+    });
+    cancelAnimationFrame(chart._pulseRAF);
+    chart._pulseRAF = requestAnimationFrame(() => { if(!chart._dead) chart.draw(); });
+  },
+  destroy(chart) { chart._dead = true; cancelAnimationFrame(chart._pulseRAF); }
+});
+
+// ── Plugin: valores acima das barras ──
+Chart.register({
+  id: 'barLabels',
+  afterDatasetsDraw(chart){
+    if(!chart.config.options?.plugins?.barLabels) return;
+    const {ctx} = chart;
+    chart.data.datasets.forEach((ds,di)=>{
+      const meta = chart.getDatasetMeta(di);
+      if(meta.type !== 'bar') return;
+      meta.data.forEach((bar,i)=>{
+        const v = ds.data[i];
+        if(v == null) return;
+        const txt = typeof v === 'number' && !Number.isInteger(v)
+          ? v.toFixed(2).replace('.',',') : String(v);
+        const isRed = Array.isArray(ds.backgroundColor)
+          ? ds.backgroundColor[i] === BRD
+          : ds.backgroundColor === BRD;
+        ctx.save();
+        ctx.fillStyle = isRed ? BRD : 'rgba(240,240,240,0.55)';
+        ctx.font = '700 10px Montserrat, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(txt, bar.x, bar.y - 7);
+        ctx.restore();
+      });
+    });
+  }
+});
+
+// ── Chart defaults ──
+Chart.defaults.color = 'rgba(107,114,128,0.80)';
+Chart.defaults.font  = { family:'Montserrat', size:11 };
+
+const BRD   = '#CC0000';
+const BRD_D = 'rgba(204,0,0,0.18)';
+const NEU   = 'rgba(156,163,175,0.35)';
+const GRN   = '#16a34a';
+const AX    = {
+  grid:  { color:'rgba(0,0,0,0.05)', drawBorder:false },
+  ticks: { color:'rgba(107,114,128,0.70)', padding:6 }
+};
+
+function mkGrad(id, c0, c1){
+  const cv = document.getElementById(id);
+  const h  = cv.parentElement.clientHeight || 220;
+  const g  = cv.getContext('2d').createLinearGradient(0, 0, 0, h);
+  g.addColorStop(0, c0); g.addColorStop(1, c1); return g;
+}
+
+function mkBarGrad(id){
+  const cv = document.getElementById(id);
+  const g  = cv.getContext('2d').createLinearGradient(0, 0, 0, cv.parentElement.clientHeight || 220);
+  g.addColorStop(0, '#ff4444'); g.addColorStop(1, '#990000'); return g;
+}
+
+const ANIM_BAR = {
+  duration: 700, easing: 'easeOutQuart',
+  delay(ctx) { return ctx.type === 'data' ? ctx.dataIndex * 90 : 0; }
+};
+const TIP = {
+  backgroundColor:'rgba(14,14,14,0.97)',
+  titleColor:'rgba(255,255,255,0.95)', bodyColor:'rgba(180,180,180,0.85)',
+  borderColor:'rgba(255,255,255,0.10)', borderWidth:1,
+  padding:14, cornerRadius:12,
+  titleFont:{family:'Montserrat',weight:'800',size:12},
+  bodyFont:{family:'Montserrat',size:11}
+};
+
+Chart.register({
+  id:'lineGlow',
+  beforeDatasetsDraw(chart){
+    if(chart.config.type!=='line') return;
+    chart.ctx.save();
+    chart.ctx.shadowColor='rgba(204,0,0,0.30)';
+    chart.ctx.shadowBlur=8;
+  },
+  afterDatasetsDraw(chart){ if(chart.config.type==='line') chart.ctx.restore(); }
+});
+
+const R2  = n => 'R$'+n.toFixed(2).replace('.',',');
+const N   = n => n.toLocaleString('pt-BR');
+const set = (id,txt,cls) => { const e=document.getElementById(id); e.textContent=txt; if(cls) e.className='badge '+cls; };
+const html = (id,h) => document.getElementById(id).innerHTML = h;
+const row  = (l,v) => `<span>${l}</span><span>${v}</span>`;
+
+// ── DADOS ──
+const UNITS = {
+  ibitinga: {
+    name:'GilsonCar Ibitinga', handle:'@gilsoncarveiculos', fee:4000,
+    social:{ eng:0.17, grow:-0.20, ipp:20.07, posts:15, reels:1200,
+      trophy:false, growRank:'3º lugar',
+      engBadge:'↑ 1º lugar da região', engBadgeClass:'up',
+      ippBadge:'2x mais que Furlan',    ippBadgeClass:'up',
+      postsBadge:'Média conc.: 15,2',   postsBadgeClass:'neu',
+    },
+    marco:{ leads:429, inv:3192, cpl:7.79, sales:23, cps:160,
+      label:'Março 2026',
+      sum:'Março foi o mês de maior volume de vendas: <strong>23 carros vendidos</strong> com R$3.192 em tráfego. A semana de 16–22/03 foi excepcional — sozinha gerou <strong>9 vendas</strong> com custo por venda de R$86.',
+      weeks:[
+        {l:'01–08/03',inv:813.32,leads:82, sales:5,cpl:9.92,cps:162.66},
+        {l:'09–15/03',inv:766.46,leads:110,sales:3,cpl:6.97,cps:255.49},
+        {l:'16–22/03',inv:775.56,leads:89, sales:9,cpl:8.71,cps:86.17, best:true},
+        {l:'23–31/03',inv:837.50,leads:148,sales:6,cpl:5.56,cps:139.58},
+      ],
+      an:[
+        {t:'ok',  i:'✅',h:'23 carros — melhor mês em volume',p:'A semana de 16–22/03 foi a destaque: 9 vendas com custo de R$86/venda. <strong>Cada R$1 gerou ~R$63 em faturamento.</strong>'},
+        {t:'warn',i:'⚠️',h:'CPL em R$7,79',p:'Custo por lead caiu ao longo do mês (de R$9,92 → R$5,56), tendência que acelerou em abril.'},
+      ]
+    },
+    abril:{ leads:602, inv:2921, cpl:4.62, sales:22, cps:167,
+      label:'Abril 2026',
+      sum:'Abril foi o mês da <strong>eficiência</strong>: com R$271 a menos que março, foram <strong>173 conversas a mais</strong> com quase o mesmo volume de vendas. CPL caiu 41% — de R$7,79 para <strong>R$4,62</strong>.',
+      weeks:[
+        {l:'01–07/04',inv:633.95,leads:106,sales:4,cpl:5.35,cps:158.49},
+        {l:'08–14/04',inv:583.50,leads:143,sales:2,cpl:3.94,cps:291.75},
+        {l:'15–21/04',inv:720.88,leads:111,sales:9,cpl:5.50,cps:80.10, best:true},
+        {l:'22–30/04',inv:983.05,leads:242,sales:7,cpl:3.69,cps:140.44},
+      ],
+      an:[
+        {t:'ok', i:'✅',h:'CPL caiu 41% — R$4,62 por conversa',p:'Última semana: R$3,69 — o menor da história. <strong>Os anúncios estão cada vez mais afiados.</strong>'},
+        {t:'ok', i:'✅',h:'Engajamento #1 da região',p:'0,17% e 20 interações por post — lidera todos os 5 concorrentes monitorados.'},
+        {t:'warn',i:'⚠️',h:'Seguidores caíram levemente (−0,20%)',p:'Premier e Furlan cresceram. Reels frequentes — especialmente <strong>aos sábados</strong> — devem reverter isso.'},
+        {t:'tgt', i:'🎯',h:'Foco de maio: sustentar CPL baixo e crescer seguidores',p:'Manter CPL em R$3,50–R$4,50 e aumentar Reels para crescer o perfil organicamente.'},
+      ]
+    }
+  },
+  borborema: {
+    name:'GilsonCar Borborema', handle:'@gilsoncarborborema', fee:750,
+    social:{ eng:0.57, grow:1.35, ipp:7.0, posts:3, reels:0,
+      trophy:true, growRank:'🏆 1º lugar',
+      engBadge:'↑ 8x acima da média', engBadgeClass:'up',
+      ippBadge:'acima da média (5,4)', ippBadgeClass:'up',
+      postsBadge:'⚠️ Média é 15,2',   postsBadgeClass:'dn',
+    },
+    marco:{ leads:29, inv:1202, cpl:null, sales:17, cps:null, roi:'78,89%',
+      label:'Março 2026',
+      sum:'Março foi a estreia em Borborema: <strong>17 carros vendidos</strong> com R$1.202 investidos. ROI de 78,89% — anúncios certeiros desde o primeiro mês.',
+      weeks:null,
+      an:[
+        {t:'ok', i:'✅',h:'17 vendas com R$1.202 investidos',p:'ROI de 78,89% desde o primeiro mês de operação em Borborema.'},
+        {t:'warn',i:'⚠️',h:'Volume de conversas ainda baixo (29)',p:'Abril mostrou que havia espaço: 57 conversas com menos verba.'},
+      ]
+    },
+    abril:{ leads:57, inv:831, cpl:null, sales:8, cps:null, roi:'76,66%',
+      label:'Abril 2026',
+      sum:'Abril foi o mês do <strong>crescimento nas redes</strong>: @gilsoncarborborema foi o perfil que <strong>mais cresceu em seguidores da região</strong> (+1,35%). Nos anúncios, conversas quase dobraram com menos verba.',
+      weeks:null,
+      an:[
+        {t:'ok', i:'✅',h:'🏆 Crescimento #1 da região: +1,35%',p:'O maior crescimento de seguidores entre todos os perfis monitorados.'},
+        {t:'ok', i:'✅',h:'Engajamento 8x acima da média (0,57%)',p:'A maior taxa de toda a análise — seguidores altamente engajados.'},
+        {t:'ok', i:'✅',h:'Conversas quase dobraram com menos verba',p:'29 → 57 conversas, com R$371 a menos investidos.'},
+        {t:'warn',i:'⚠️',h:'Apenas 3 posts — concorrentes publicam 15+',p:'Engajamento excelente por post. Aumentar frequência acelerará o crescimento.'},
+        {t:'tgt', i:'🎯',h:'Foco de maio: mais conteúdo, crescimento contínuo',p:'Aumentar Reels para transformar o engajamento atual em mais seguidores e compradores.'},
+      ]
+    }
+  }
+};
+
+const SOCIAL_COMP = [
+  {h:'@gilsoncarveiculos',  eng:0.17, posts:15, curtidas:276, ipp:20.07, unit:'ibitinga'},
+  {h:'@gilsoncarborborema', eng:0.57, posts:3,  curtidas:21,  ipp:7.0,   unit:'borborema'},
+  {h:'@_premier_autos',     eng:0.12, posts:30, curtidas:104, ipp:3.5},
+  {h:'@furlanveiculos',     eng:0.10, posts:21, curtidas:181, ipp:8.71},
+  {h:'@belavista_veiculos', eng:0.09, posts:12, curtidas:24,  ipp:2.0},
+  {h:'@pinguimmotors',      eng:0.06, posts:13, curtidas:141, ipp:11.08},
+];
+
+const RANK = {
+  ibitinga: [
+    {n:'@_premier_autos',     s:'(~21k)',   pct:0.25,  bar:18, pos:true},
+    {n:'@furlanveiculos',     s:'(~10k)',   pct:0.06,  bar:4,  pos:true},
+    {n:'@gilsoncarveiculos',  s:'(~12,5k)', pct:-0.20, bar:0,  pos:false, me:true},
+    {n:'@ibivelveiculos',     s:'',         pct:-0.33, bar:0,  pos:false},
+    {n:'@belavista_veiculos', s:'',         pct:-0.39, bar:0,  pos:false},
+    {n:'@pinguimmotors',      s:'',         pct:-0.81, bar:0,  pos:false},
+  ],
+  borborema: [
+    {n:'@gilsoncarborborema', s:'(~3k)',  pct:1.35,  bar:100, pos:true, me:true, top:true},
+    {n:'@_premier_autos',     s:'(~21k)', pct:0.25,  bar:18,  pos:true},
+    {n:'@furlanveiculos',     s:'(~10k)', pct:0.06,  bar:4,   pos:true},
+    {n:'@pinguimmotors',      s:'',       pct:-0.08, bar:0,   pos:false},
+    {n:'@belavista_veiculos', s:'',       pct:-0.39, bar:0,   pos:false},
+  ]
+};
+
+let curUnit='ibitinga', charts={}, curKey='abril';
+const fmt = n => (n>=0?'+':'')+n.toFixed(2).replace('.',',')+'%';
+
+function toggleCal(e){
+  e.stopPropagation();
+  const trigger = document.getElementById('calTrigger');
+  const drop    = document.getElementById('calDrop');
+  const isOpen  = drop.classList.contains('open');
+  drop.classList.toggle('open', !isOpen);
+  trigger.classList.toggle('open', !isOpen);
+}
+document.addEventListener('click', () => {
+  document.getElementById('calDrop').classList.remove('open');
+  document.getElementById('calTrigger').classList.remove('open');
+});
+function pickMonth(key, label, btn){
+  document.querySelectorAll('.cal-m.avail').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('calLabel').textContent = label;
+  document.getElementById('navPeriod').textContent = label;
+  document.getElementById('calDrop').classList.remove('open');
+  document.getElementById('calTrigger').classList.remove('open');
+  curKey = key; render();
+}
+
+function setUnit(u){
+  curUnit = u;
+  document.querySelectorAll('.utab').forEach((b,i) => b.classList.toggle('on', u==='ibitinga'?i===0:i===1));
+  render();
+}
+
+function render(){
+  const primary    = UNITS[curUnit][curKey];
+  const other      = curKey==='abril' ? 'marco' : 'abril';
+  const comparison = UNITS[curUnit][other];
+  const unitData   = UNITS[curUnit];
+
+  document.getElementById('hUnit').textContent   = unitData.name;
+  document.getElementById('navCity').textContent = curUnit === 'ibitinga' ? 'Ibitinga' : 'Borborema';
+  document.getElementById('heroSub').textContent = unitData.handle + ' · Gestão Criativvo';
+  document.getElementById('anMo').textContent     = primary.label.split(' ')[0];
+
+  buildHeroMetrics(primary, comparison);
+  buildKPIs(primary, comparison);
+  buildCompare(primary, comparison);
+  buildWeeks(primary);
+  buildCharts(primary, comparison);
+  buildSocial(curUnit);
+  buildAnalysis(primary);
+}
+
+function buildHeroMetrics(d, prev){
+  // Conversas
+  countUp(document.getElementById('hmLeads'), d.leads, v => N(Math.round(v)));
+  const lp = Math.round(((d.leads-prev.leads)/prev.leads)*100);
+  const lEl = document.getElementById('hmLeadsDelta');
+  lEl.textContent = (lp>0?'↑ ':'↓ ')+Math.abs(lp)+'% vs '+prev.label.split(' ')[0].toLowerCase();
+  lEl.className = 'hm-delta '+(lp>0?'up':'dn');
+
+  // Investimento
+  countUp(document.getElementById('hmInv'), d.inv, v => 'R$'+N(Math.round(v)));
+  const ip = Math.round(((d.inv-prev.inv)/prev.inv)*100);
+  const iEl = document.getElementById('hmInvDelta');
+  iEl.textContent = (ip<0?'↓ ':ip>0?'↑ ':'')+Math.abs(ip)+'% vs '+prev.label.split(' ')[0].toLowerCase();
+  iEl.className = 'hm-delta '+(ip<0?'up':'dn');
+
+  // CPL / ROI
+  const cplEl   = document.getElementById('hmCpl');
+  const cplLbl  = document.getElementById('hmCplLbl');
+  const cplDelta = document.getElementById('hmCplDelta');
+  if(d.cpl){
+    cplLbl.textContent  = 'CPL';
+    countUp(cplEl, d.cpl, v => 'R$'+v.toFixed(2).replace('.',','));
+    cplEl.className     = 'hm-val good';
+    if(prev.cpl){
+      const cp = Math.round(((d.cpl-prev.cpl)/prev.cpl)*100);
+      cplDelta.textContent = (cp<0?'↓ ':'↑ ')+Math.abs(cp)+'% vs '+prev.label.split(' ')[0].toLowerCase();
+      cplDelta.className = 'hm-delta '+(cp<0?'up':'dn');
+    } else { cplDelta.textContent=''; }
+  } else {
+    cplLbl.textContent  = 'ROI';
+    cplEl.textContent   = d.roi || '—';
+    cplEl.className     = 'hm-val good';
+    cplDelta.textContent = '';
+  }
+
+  // Vendas
+  countUp(document.getElementById('hmSales'), d.sales, v => String(Math.round(v)));
+  const salesDiff = d.sales - prev.sales;
+  const sDeltaEl  = document.getElementById('hmSalesDelta');
+  if(salesDiff === 0){
+    sDeltaEl.textContent = 'igual ao ' + prev.label.split(' ')[0].toLowerCase();
+    sDeltaEl.className   = 'hm-delta';
+  } else {
+    const sign = salesDiff > 0 ? '+' : '';
+    sDeltaEl.textContent = sign + salesDiff + ' carro' + (Math.abs(salesDiff)>1?'s':'') + ' vs ' + prev.label.split(' ')[0].toLowerCase();
+    sDeltaEl.className   = 'hm-delta ' + (salesDiff > 0 ? 'up' : 'dn');
+  }
+}
+
+function buildKPIs(d, prev){
+  countUp(document.getElementById('vL'), d.leads, v => N(Math.round(v)));
+  countUp(document.getElementById('vI'), d.inv, v => 'R$'+N(Math.round(v)));
+  if (d.cpl) countUp(document.getElementById('vC'), d.cpl, v => 'R$'+v.toFixed(2).replace('.',','));
+  else html('vC', d.roi||'—');
+  countUp(document.getElementById('vS'), d.sales, v => String(Math.round(v)));
+  if (d.cps) countUp(document.getElementById('vP'), d.cps, v => 'R$'+N(Math.round(v)));
+  else html('vP','—');
+
+  const fee = UNITS[curUnit].fee || 0;
+  const totalCost = d.inv + fee;
+  const totalCpv  = d.sales ? Math.round(totalCost / d.sales) : null;
+  if (totalCpv) countUp(document.getElementById('mktgVal'), totalCpv, v => 'R$'+N(Math.round(v)));
+  else html('mktgVal','—');
+  html('mktgFormula',
+    `R$${N(Math.round(d.inv))} tráfego <em>+</em> R$${N(fee)} serviço<br>`+
+    `<em>= R$${N(Math.round(totalCost))} ÷ ${d.sales} vendas</em>`
+  );
+
+  const lp=Math.round(((d.leads-prev.leads)/prev.leads)*100);
+  set('dL',(lp>0?'↑ ':'↓ ')+Math.abs(lp)+'% vs '+prev.label.split(' ')[0].toLowerCase(), lp>0?'up':'dn');
+  const ip=Math.round(((d.inv-prev.inv)/prev.inv)*100);
+  set('dI',(ip<0?'↓ ':ip>0?'↑ ':'')+Math.abs(ip)+'% vs '+prev.label.split(' ')[0].toLowerCase(), ip<0?'up':'dn');
+  if(d.cpl&&prev.cpl){
+    const cp=Math.round(((d.cpl-prev.cpl)/prev.cpl)*100);
+    set('dC',(cp<0?'↓ ':'↑ ')+Math.abs(cp)+'% vs '+prev.label.split(' ')[0].toLowerCase(), cp<0?'up':'dn');
+  } else { set('dC', d.roi ? 'ROI: '+d.roi : '—','neu'); }
+  set('dS', d.sales+' vendas no mês','neu');
+  set('dP', d.cps&&prev.cps ? 'vs R$'+N(prev.cps)+' ant.' : '—','neu');
+  html('sumBox',d.sum);
+}
+
+function buildCompare(d, prev){
+  html('cm1mo',prev.label); html('cm2mo',d.label);
+  html('cmL1',row('Conversas',prev.leads));   html('cmI1',row('Investimento','R$'+N(prev.inv)));
+  html('cmC1',row(prev.cpl?'CPL':'ROI',prev.cpl?R2(prev.cpl):(prev.roi||'—'))); html('cmS1',row('Vendas',prev.sales));
+  html('cmL2',row('Conversas',d.leads));      html('cmI2',row('Investimento','R$'+N(d.inv)));
+  html('cmC2',row(d.cpl?'CPL':'ROI',d.cpl?R2(d.cpl):(d.roi||'—'))); html('cmS2',row('Vendas',d.sales));
+}
+
+function buildWeeks(d){
+  const grid=document.getElementById('wkGrid'), info=document.getElementById('wkInfo'), sem=document.getElementById('semWrap');
+  if(!d.weeks){
+    grid.innerHTML=''; info.style.display='block';
+    info.innerHTML='Detalhamento semanal não disponível para esta unidade.';
+    sem.style.display='none'; return;
+  }
+  sem.style.display=''; info.style.display='none';
+  grid.innerHTML=d.weeks.map(w=>`
+    <div class="wk${w.best?' best':''}">
+      <div class="wk-h"><span class="wk-lbl">${w.l}</span>${w.best?'<span class="wk-b">🏆 melhor</span>':''}</div>
+      <div class="wr"><span class="wl">Investido</span><span class="wv">${R2(w.inv)}</span></div>
+      <div class="wr"><span class="wl">Conversas</span><span class="wv g">${w.leads}</span></div>
+      <div class="wr"><span class="wl">Vendas</span><span class="wv">${w.sales}</span></div>
+      <div class="wr"><span class="wl">CPL</span><span class="wv">${R2(w.cpl)}</span></div>
+      <div class="wr"><span class="wl">Custo/venda</span><span class="wv">${R2(w.cps)}</span></div>
+    </div>`).join('');
+}
+
+function buildCharts(d, prev){
+  if(charts.l) charts.l.destroy();
+  charts.l = new Chart('chL',{type:'bar',data:{
+    labels:[prev.label.split(' ')[0], d.label.split(' ')[0]],
+    datasets:[{label:'Conversas',data:[prev.leads,d.leads],backgroundColor:[NEU, mkBarGrad('chL')],borderRadius:10,borderSkipped:false,borderWidth:0}]
+  },options:{animation:ANIM_BAR,plugins:{legend:{display:false},tooltip:TIP,barLabels:true},scales:{x:AX,y:{...AX,beginAtZero:true,ticks:{...AX.ticks,display:false},grid:{display:false}}}}});
+
+  if(charts.c) charts.c.destroy();
+  if(d.cpl){
+    charts.c = new Chart('chC',{type:'line',data:{
+      labels:d.weeks ? d.weeks.map(w=>w.l) : [prev.label.split(' ')[0],d.label.split(' ')[0]],
+      datasets:[{
+        label:'CPL (R$)', data:d.weeks?d.weeks.map(w=>w.cpl):[prev.cpl,d.cpl],
+        borderColor:BRD, backgroundColor:mkGrad('chC','rgba(204,0,0,0.12)','rgba(204,0,0,0.00)'),
+        fill:true, tension:0.42, borderWidth:3,
+        pointBackgroundColor:'#111', pointBorderColor:BRD, pointBorderWidth:2.5,
+        pointRadius:5, pointHoverRadius:9, pointHoverBackgroundColor:'#fff'
+      }]
+    },options:{
+      animation:{duration:900,easing:'easeInOutQuart'},
+      plugins:{
+        legend:{display:false}, pulsePoints:true,
+        tooltip:{...TIP,callbacks:{label(ctx){return ` R$${ctx.raw.toFixed(2).replace('.',',')} por lead`;}}}
+      },
+      scales:{x:AX,y:{...AX,beginAtZero:false}}
+    }});
+    document.getElementById('cplLbl').textContent = 'Evolução do custo por lead';
+  } else {
+    charts.c = new Chart('chC',{type:'bar',data:{
+      labels:[prev.label.split(' ')[0],d.label.split(' ')[0]],
+      datasets:[{label:'Investimento (R$)',data:[prev.inv,d.inv],backgroundColor:[NEU, mkBarGrad('chC')],borderRadius:10,borderSkipped:false,borderWidth:0}]
+    },options:{animation:ANIM_BAR,plugins:{legend:{display:false},tooltip:TIP,barLabels:true},scales:{x:AX,y:{...AX,beginAtZero:true,ticks:{...AX.ticks,display:false},grid:{display:false}}}}});
+    document.getElementById('cplLbl').textContent='Investimento por mês (R$)';
+  }
+
+  if(charts.s) charts.s.destroy();
+  if(d.weeks){
+    charts.s = new Chart('chS',{type:'bar',data:{
+      labels:d.weeks.map(w=>w.l),
+      datasets:[
+        {label:'Investimento (R$)',data:d.weeks.map(w=>w.inv),backgroundColor:BRD_D,borderColor:BRD,borderWidth:1.5,borderRadius:6,borderSkipped:false,yAxisID:'y'},
+        {label:'Conversas',data:d.weeks.map(w=>w.leads),backgroundColor:NEU,borderRadius:6,borderSkipped:false,yAxisID:'y1'}
+      ]
+    },options:{
+      animation:ANIM_BAR,
+      plugins:{legend:{labels:{font:{family:'Montserrat',size:11},color:'rgba(107,114,128,0.80)',boxWidth:10,borderRadius:4}},tooltip:TIP},
+      scales:{x:AX,y:{...AX,beginAtZero:true},y1:{grid:{display:false},ticks:{color:'rgba(107,114,128,0.60)',padding:4},beginAtZero:true,position:'right'}}
+    }});
+  }
+}
+
+function buildSocial(u){
+  const s = UNITS[u].social;
+  html('trophyWrap', s.trophy
+    ? `<div class="trophy"><div class="ti">🏆</div><h3>Maior crescimento de seguidores da região</h3><p>${UNITS[u].handle} cresceu <strong>+1,35%</strong> — acima de todos os concorrentes monitorados.</p></div>`
+    : '');
+  countUp(document.getElementById('sEng'), s.eng, v => v.toFixed(2).replace('.',',')+'%');
+  const gc = s.grow>=0 ? 'var(--grn)' : '#dc2626';
+  const gEl = document.getElementById('sGrow');
+  gEl.style.color = gc;
+  countUp(gEl, Math.abs(s.grow), v => (s.grow>=0?'+':'-')+v.toFixed(2).replace('.',',')+'%');
+  set('sEngBadge',  s.engBadge,  s.engBadgeClass);
+  set('sGrowBadge', s.growRank,  s.grow>=0?'up':'dn');
+  countUp(document.getElementById('sIpp'), s.ipp, v => v.toFixed(2).replace('.',','));
+  set('sIppBadge',   s.ippBadge,   s.ippBadgeClass);
+  countUp(document.getElementById('sPosts'), s.posts, v => String(Math.round(v)));
+  set('sPostsBadge', s.postsBadge, s.postsBadgeClass);
+
+  const me     = SOCIAL_COMP.find(c=>c.unit===u);
+  const others = SOCIAL_COMP.filter(c=>!c.unit);
+  const all    = [me,...others].slice(0,5);
+
+  const scaleClean = {
+    x:{...AX,ticks:{...AX.ticks,maxRotation:30}},
+    y:{...AX,beginAtZero:true,ticks:{...AX.ticks,display:false},grid:{display:false}}
+  };
+  const logoOpts = {
+    plugins:{ legend:{display:false}, voceLogo:true, tooltip:TIP, barLabels:true },
+    layout:{ padding:{ top:28 } },
+    animation:ANIM_BAR
+  };
+
+  if(charts.eng) charts.eng.destroy();
+  charts.eng = new Chart('chEng',{type:'bar',data:{
+    labels:all.map((c,i)=>i===0?'você':c.h.replace('@','')),
+    datasets:[{label:'Engajamento (%)',data:all.map(c=>c.eng),backgroundColor:all.map((_,i)=>i===0?BRD:NEU),borderRadius:10,borderSkipped:false,borderWidth:0}]
+  },options:{...logoOpts,scales:scaleClean}});
+
+  if(charts.r) charts.r.destroy();
+  if(s.reels>0){
+    const rd=[{n:'Furlan',v:2300},{n:'você',v:s.reels},{n:'Premier',v:886}];
+    charts.r = new Chart('chR',{type:'bar',data:{
+      labels:rd.map(d=>d.n),
+      datasets:[{label:'Viz. Reels',data:rd.map(d=>d.v),backgroundColor:rd.map(d=>d.n==='você'?BRD:NEU),borderRadius:10,borderSkipped:false,borderWidth:0}]
+    },options:{...logoOpts,scales:scaleClean}});
+    html('reelsLbl','Visualizações de Reels');
+  } else {
+    const rk = u==='borborema'
+      ? [{n:'você',v:1.35},{n:'premier',v:0.25},{n:'furlan',v:0.06},{n:'pinguim',v:-0.08},{n:'bela vista',v:-0.39}]
+      : [{n:'premier',v:0.25},{n:'furlan',v:0.06},{n:'você',v:-0.20},{n:'ibivel',v:-0.33},{n:'bela vista',v:-0.39}];
+    charts.r = new Chart('chR',{type:'bar',data:{
+      labels:rk.map(d=>d.n),
+      datasets:[{label:'Crescimento (%)',data:rk.map(d=>d.v),backgroundColor:rk.map(d=>d.n==='você'?BRD:NEU),borderRadius:10,borderSkipped:false,borderWidth:0}]
+    },options:{...logoOpts,scales:{x:AX,y:AX}}});
+    html('reelsLbl','Crescimento de seguidores (%)');
+  }
+
+  const rows = SOCIAL_COMP.filter(c=>c.unit===u||!c.unit).map(c=>{
+    const isMe = c.unit===u;
+    return `<tr${isMe?' class="me"':''}><td>${c.h}${isMe?'<span class="you">você</span>':''}</td><td>${c.eng.toFixed(2).replace('.',',')}%</td><td>${c.posts}</td><td>${c.curtidas}</td><td>${c.ipp}</td></tr>`;
+  });
+  html('tBody',rows.join(''));
+
+  html('rankList',RANK[u].map((r,i)=>`
+    <div class="ri${r.me?' me':''}">
+      <div class="ri-n${r.top?' top':''}">${i+1}</div>
+      <div class="ri-name">${r.n} <span style="color:var(--lt);font-size:.65rem">${r.s}</span></div>
+      <div class="ri-bar"><div data-w="${r.bar}" style="width:0%;background:${r.pos?(r.me?BRD:GRN):'#dc2626'}"></div></div>
+      <div class="ri-pct" style="color:${r.pos?(r.me?BRD:'var(--grn)'):'#dc2626'}">${fmt(r.pct)}</div>
+    </div>`).join(''));
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.ri-bar [data-w]').forEach((el, i) => {
+      setTimeout(() => { el.style.width = el.dataset.w + '%'; }, 120 + i * 80);
+    });
+  });
+}
+
+function buildAnalysis(d){
+  html('anGrid',d.an.map(a=>`
+    <div class="analysis-item ${a.t}">
+      <div class="ai-icon">${a.i}</div>
+      <div class="ai-body"><h4>${a.h}</h4><p>${a.p}</p></div>
+    </div>`).join(''));
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600&family=Jost:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:640px;overflow:hidden;font-family:'Jost',sans-serif}
+.hero{position:relative;width:1920px;height:640px;background:#DAD2C8}
+/* placeholder da foto */
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;
+  background:repeating-linear-gradient(45deg,#D8CFC3,#D8CFC3 26px,#D2C8BB 26px,#D2C8BB 52px)}
+.ph-label{margin-right:140px;text-align:center;color:#8C7E6C}
+.ph-label .t{font-size:22px;letter-spacing:3px;text-transform:uppercase}
+.ph-label .s{font-size:16px;margin-top:8px;letter-spacing:1px}
+/* scrim marrom à esquerda */
+.scrim{position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(60,35,21,.94) 0%,rgba(60,35,21,.86) 30%,rgba(60,35,21,.45) 52%,rgba(60,35,21,0) 70%)}
+.content{position:absolute;left:96px;top:50%;transform:translateY(-50%);width:760px;color:#fff}
+.logo{height:54px;margin-bottom:30px;opacity:.96}
+.kicker{font-size:14px;letter-spacing:4px;text-transform:uppercase;color:#E0B291;margin-bottom:18px}
+h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:62px;line-height:1.04;color:#fff}
+h1 em{font-style:italic;color:#EAD9C7}
+.sub{margin-top:26px;display:flex;align-items:center;gap:16px;font-size:15px;letter-spacing:1.5px;text-transform:uppercase;color:#F0E4D6}
+.sub .sep{width:5px;height:5px;transform:rotate(45deg);background:#E0B291}
+</style></head>
+<body>
+<div class="hero">
+  <div class="ph"><div class="ph-label"><div class="t">Área da foto</div><div class="s">cortina blackout · janela à direita</div></div></div>
+  <div class="scrim"></div>
+  <div class="content">
+    <img class="logo" src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja/_logo/feffo-branca.png">
+    <div class="kicker">Fabricação própria desde 2017</div>
+    <h1>Cortinas que <em>vestem</em><br>o seu ambiente</h1>
+    <div class="sub">Sob medida<span class="sep"></span>Acabamento premium<span class="sep"></span>Envio em 1 dia útil</div>
+  </div>
+</div>
+</body></html>

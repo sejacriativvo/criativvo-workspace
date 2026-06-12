@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --yellow:#E6E540; --ink:#141312; --red:#D20000; --white:#fff;
+    --sans:'Montserrat',-apple-system,system-ui,sans-serif;
+  }
+  html,body{width:1450px;height:2200px;overflow:hidden;}
+  body{background:var(--yellow);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;}
+  .frame{position:absolute;inset:0;padding:90px 112px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+
+  /* logo preta destacada, sem tarja */
+  .logo{height:132px;filter:brightness(0);flex-shrink:0;}
+
+  .eyebrow{margin-top:40px;font-size:35px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--red);flex-shrink:0;}
+
+  h1{margin-top:22px;font-size:172px;font-weight:900;line-height:.86;letter-spacing:-.03em;color:var(--ink);flex-shrink:0;}
+  h1 .red{color:var(--red);}
+  .punch{margin-top:26px;font-size:45px;font-weight:700;color:var(--ink);line-height:1.2;flex-shrink:0;}
+
+  /* ROLETA */
+  .wheelwrap{position:relative;margin-top:48px;width:336px;height:336px;flex-shrink:0;}
+  .pointer{position:absolute;top:-11px;left:50%;transform:translateX(-50%);z-index:4;
+    width:0;height:0;border-left:25px solid transparent;border-right:25px solid transparent;border-top:42px solid var(--ink);
+    filter:drop-shadow(0 0 3px #fff) drop-shadow(0 5px 6px rgba(0,0,0,.3));}
+  .wheel{width:100%;height:100%;border-radius:50%;border:12px solid #fff;box-shadow:0 20px 46px rgba(0,0,0,.26),inset 0 0 0 3px rgba(0,0,0,.12);
+    background:conic-gradient(from -30deg,
+      var(--red) 0 60deg, #18120F 60deg 120deg, var(--red) 120deg 180deg,
+      #18120F 180deg 240deg, var(--red) 240deg 300deg, #18120F 300deg 360deg);}
+  .hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:112px;height:112px;border-radius:50%;
+    background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 7px 16px rgba(0,0,0,.3);border:5px solid #fff;}
+  .hub span{font-size:34px;font-weight:900;color:var(--ink);letter-spacing:.5px;}
+
+  /* CTA + seta + QR */
+  .cta{margin-top:56px;font-size:55px;font-weight:900;letter-spacing:-.01em;line-height:1.04;color:var(--ink);flex-shrink:0;}
+  .bigarrow{margin-top:18px;width:60px;display:block;flex-shrink:0;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18));}
+  .qrcard{margin-top:18px;background:#fff;border-radius:30px;padding:20px;box-shadow:0 26px 60px rgba(0,0,0,.25);flex-shrink:0;}
+  .qrcard img{width:560px;height:560px;display:block;}
+
+  /* prêmios */
+  .prizes{margin-top:46px;display:flex;align-items:center;gap:22px;font-size:33px;font-weight:700;color:var(--ink);flex-wrap:wrap;justify-content:center;max-width:1150px;flex-shrink:0;}
+  .prizes .hot{color:var(--red);font-weight:800;}
+  .prizes .dot{width:8px;height:8px;border-radius:50%;background:var(--ink);opacity:.4;}
+
+  /* rodapé */
+  .foot{margin-top:40px;font-size:28px;font-weight:700;color:var(--ink);opacity:.7;letter-spacing:.01em;flex-shrink:0;}
+  .foot b{opacity:1;font-weight:800;}
+</style>
+</head>
+<body>
+  <div class="frame">
+
+    <img class="logo" src="logo.png" alt="Maccari Store">
+    <div class="eyebrow">Feira de Ibitinga</div>
+
+    <h1>GIRE E<br><span class="red">GANHE</span></h1>
+    <div class="punch">iPhone, descontos e brindes. Prêmio na hora.</div>
+
+    <div class="wheelwrap">
+      <div class="pointer"></div>
+      <div class="wheel"></div>
+      <div class="hub"><span>GIRE</span></div>
+    </div>
+
+    <div class="cta">APONTE A CÂMERA E GIRE</div>
+    <svg class="bigarrow" viewBox="0 0 120 150" aria-hidden="true"><path d="M42 0 H78 V78 H112 L60 150 L8 78 H42 Z" fill="#D20000"/></svg>
+    <div class="qrcard"><img src="qr.png" alt="QR Code da roleta"></div>
+
+    <div class="prizes">
+      <span class="hot">iPhone com 10% OFF</span>
+      <span class="dot"></span>
+      <span>capinha + película grátis</span>
+      <span class="dot"></span>
+      <span>descontos na hora</span>
+    </div>
+
+    <div class="foot"><b>@storemaccari</b> · R. Miguel Landim, 849 · Centro, Ibitinga</div>
+
+  </div>
+</body>
+</html>

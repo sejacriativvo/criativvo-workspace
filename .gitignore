@@ -1,0 +1,36 @@
+# Lixo do macOS
+.DS_Store
+**/.DS_Store
+
+# Dependências (reinstaláveis com npm install)
+node_modules/
+**/node_modules/
+
+# Segredos / credenciais (NUNCA versionar)
+.env
+**/.env
+*.env.local
+
+# Logs e temporários
+*.log
+.cache/
+tmp/
+
+# Build artifacts (Next.js)
+.next/
+**/.next/
+out/
+**/out/
+build/
+**/build/
+
+# Vercel
+.vercel
+**/.vercel
+
+# Sub-repositórios com remote próprio (gerenciados separadamente)
+CriativvoUI/
+edson-veiculos/
+Cliente-Criativvo/ativos/gi-vareschi/midia-kit-site/
+Cliente-Criativvo/ativos/mariana-medeiros/site/
+Cliente-Criativvo/propostas-enviadas/carvalho-costa-adv/site/

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#2B332F;
+  --green-d:#1E231F;
+  --green-l:#343D37;
+  --ivory:#F1EDE3;
+  --ivory-2:#E7E1D3;
+  --ink:#232A25;
+  --gold:#C2A57B;
+  --mute-d:rgba(241,237,227,0.64);
+  --mute-l:rgba(35,42,37,0.66);
+  --line-d:rgba(241,237,227,0.18);
+  --line-l:rgba(35,42,37,0.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#0c0e0b}
+.slide{
+  display:none;
+  width:1080px;height:1350px;
+  position:relative;overflow:hidden;
+  font-family:'Inter',sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- shared chrome ---------- */
+.top{position:absolute;top:64px;left:88px;right:88px;
+  display:flex;align-items:center;justify-content:space-between;z-index:5}
+.wm{font-family:'Playfair Display',serif;font-weight:500;
+  font-size:23px;letter-spacing:.34em;text-indent:.34em}
+.pg{font-family:'Inter',sans-serif;font-weight:500;font-size:14px;
+  letter-spacing:.22em}
+.kicker{font-family:'Inter',sans-serif;font-weight:700;font-size:13.5px;
+  letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+.rule{width:54px;height:1px;background:var(--gold);border:0}
+.display{font-family:'Playfair Display',serif;font-weight:600;
+  line-height:1.02;letter-spacing:-.005em}
+.body{font-family:'Inter',sans-serif;font-weight:400;font-size:21px;
+  line-height:1.62}
+.handle{font-family:'Inter',sans-serif;font-weight:500;font-size:16px;
+  letter-spacing:.04em}
+
+/* tone helpers */
+.on-dark .wm,.on-dark .pg{color:var(--ivory)}
+.on-dark .display{color:var(--ivory)}
+.on-dark .body{color:var(--mute-d)}
+.on-dark .handle{color:var(--mute-d)}
+.on-light .wm,.on-light .pg{color:var(--ink)}
+.on-light .display{color:var(--ink)}
+.on-light .body{color:var(--mute-l)}
+.on-light .handle{color:var(--mute-l)}
+
+/* ---------- S1 cover ---------- */
+.cover{background:#1e231f;}
+.cover .photo{position:absolute;inset:0;
+  background-size:cover;background-position:center 42%}
+.cover .veil{position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(30,36,31,.22) 0%,rgba(30,36,31,.55) 48%,rgba(27,32,28,.94) 100%)}
+.cover .wrap{position:absolute;left:88px;right:88px;bottom:104px;z-index:4}
+.cover .kicker{margin-bottom:26px}
+.cover .display{font-size:88px;margin-bottom:30px}
+.cover .sub{font-family:'Playfair Display',serif;font-style:italic;
+  font-weight:400;font-size:27px;color:var(--ivory);opacity:.9;
+  margin-top:30px;max-width:760px}
+.cover .handle{position:absolute;left:88px;bottom:60px}
+
+/* ---------- split (S2 / S3 / S5) ---------- */
+.split{display:grid}
+.split .pane{position:absolute;top:0;bottom:0;width:432px;
+  background-size:cover;background-position:center}
+.split .txt{position:absolute;top:0;bottom:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 86px}
+.split.photo-right .pane{right:0}
+.split.photo-right .txt{left:0;width:648px}
+.split.photo-left .pane{left:0}
+.split.photo-left .txt{right:0;width:648px}
+.split .kicker{margin-bottom:24px}
+.split .display{font-size:60px;margin-bottom:28px}
+.split .rule{margin-bottom:28px}
+.split .body{max-width:470px}
+.bg-green{background:var(--green)}
+.bg-ivory{background:var(--ivory)}
+
+/* ---------- S4 full photo ---------- */
+.full .photo{position:absolute;inset:0;background-size:cover;background-position:center 38%}
+.full .veil{position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(27,32,28,.08) 0%,rgba(27,32,28,.06) 40%,rgba(27,32,28,.93) 100%)}
+.full .wrap{position:absolute;left:88px;right:88px;bottom:104px;z-index:4}
+.full .kicker{margin-bottom:24px}
+.full .display{font-size:64px;margin-bottom:26px;max-width:840px}
+.full .rule{margin-bottom:26px}
+.full .body{max-width:680px}
+
+/* ---------- S5 editorial split reuse handled by .split ---------- */
+
+/* ---------- S6 triptych ---------- */
+.tri{background:var(--green);padding:88px;
+  display:flex;flex-direction:column;justify-content:center}
+.tri .head{margin-bottom:54px}
+.tri .kicker{margin-bottom:20px}
+.tri .display{font-size:54px;color:var(--ivory)}
+.tri .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px}
+.tri .card .frame{width:100%;aspect-ratio:1/1;background:var(--ivory);
+  border:1px solid var(--line-d);overflow:hidden}
+.tri .card .frame .ph{width:100%;height:100%;background-size:cover;background-position:center}
+.tri .name{font-family:'Inter',sans-serif;font-weight:700;font-size:17px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ivory);
+  margin:24px 0 10px}
+.tri .desc{font-family:'Playfair Display',serif;font-style:italic;
+  font-weight:400;font-size:19px;line-height:1.4;color:var(--mute-d)}
+.tri .num{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;
+  letter-spacing:.2em;color:var(--gold);margin-bottom:8px}
+
+/* ---------- S7 specs ---------- */
+.specs{background:var(--ivory);padding:88px;
+  display:flex;flex-direction:column;justify-content:center}
+.specs .head{margin-bottom:54px}
+.specs .kicker{margin-bottom:20px}
+.specs .display{font-size:64px;color:var(--ink)}
+.specs .list{margin-top:8px}
+.specs .item{display:flex;align-items:baseline;justify-content:space-between;
+  padding:30px 0;border-bottom:1px solid var(--line-l)}
+.specs .item:first-child{border-top:1px solid var(--line-l)}
+.specs .lbl{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--mute-l)}
+.specs .val{font-family:'Playfair Display',serif;font-weight:500;font-size:29px;
+  color:var(--ink);text-align:right}
+
+/* ---------- S8 cta ---------- */
+.cta{background:var(--green);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:0 90px}
+.cta .logo{width:360px;margin-bottom:54px;opacity:.96}
+.cta .kicker{margin-bottom:22px}
+.cta .display{font-size:70px;color:var(--ivory);margin-bottom:40px}
+.cta .price{font-family:'Playfair Display',serif;font-weight:600;font-size:80px;
+  color:var(--ivory);line-height:1}
+.cta .from{font-family:'Inter',sans-serif;font-weight:500;font-size:18px;
+  letter-spacing:.08em;color:var(--mute-d);margin-top:16px}
+.cta .from s{opacity:.75}
+.cta .from b{color:var(--gold);font-weight:700;letter-spacing:.14em}
+.cta .pill{margin-top:54px;display:inline-block;
+  border:1px solid var(--gold);color:var(--ivory);
+  font-family:'Inter',sans-serif;font-weight:600;font-size:18px;
+  letter-spacing:.18em;text-transform:uppercase;
+  padding:20px 54px;border-radius:60px}
+.cta .handle{position:absolute;bottom:60px;left:0;right:0;color:var(--mute-d)}
+.cta .rule{margin:0 auto 40px}
+</style>
+</head>
+<body>
+
+<!-- ===================== S1 — CAPA ===================== -->
+<section class="slide on-dark cover" id="s1">
+  <div class="photo" style="background-image:url('assets/img05_imagem_produto_4f4d0059-60b3-42b4-b44e-815939d75c5c.webp')"></div>
+  <div class="veil"></div>
+  <div class="top"><div class="wm">FABBRICANTTI</div><div class="pg">01 / 08</div></div>
+  <div class="wrap">
+    <div class="kicker">Paris, 1904</div>
+    <h1 class="display">O relógio que<br>nasceu para voar</h1>
+    <hr class="rule">
+    <p class="sub">Santos Dumont, Cartier e a origem do Santtos.</p>
+  </div>
+  <div class="handle">@fabbricantti</div>
+</section>
+
+<!-- ===================== S2 — O PROBLEMA ===================== -->
+<section class="slide on-dark split bg-green photo-right" id="s2">
+  <div class="top"><div class="wm">FABBRICANTTI</div><div class="pg">02 / 08</div></div>
+  <div class="pane" style="background-image:url('assets/img11_imagem_produto_dfec789b-b880-44c9-8dd5-81323553a59d.webp')"></div>
+  <div class="txt">
+    <div class="kicker">O problema</div>
+    <h2 class="display">Um piloto que<br>não podia soltar<br>o leme</h2>
+    <hr class="rule">
+    <p class="body">1904, céu de Paris. Santos Dumont voava e não conseguia ver as horas sem largar os comandos. O relógio de bolso, ali em cima, era inútil.</p>
+  </div>
+</section>
+
+<!-- ===================== S3 — O PEDIDO ===================== -->
+<section class="slide on-light split bg-ivory photo-left" id="s3">
+  <div class="top"><div class="wm" style="color:var(--ivory)">FABBRICANTTI</div><div class="pg">03 / 08</div></div>
+  <div class="pane" style="background-image:url('assets/img07_1_473d89d6-c85e-4bd5-ba8c-8c5602041243.webp')"></div>
+  <div class="txt">
+    <div class="kicker">O pedido</div>
+    <h2 class="display">Cartier<br>resolveu numa<br>peça só</h2>
+    <hr class="rule">
+    <p class="body">O joalheiro criou para o amigo um relógio que vivia no pulso. Caixa quadrada, parafusos à mostra, leitura imediata. Nascia ali o primeiro relógio masculino de pulso.</p>
+  </div>
+</section>
+
+<!-- ===================== S4 — O ÍCONE ===================== -->
+<section class="slide on-dark full" id="s4">
+  <div class="photo" style="background-image:url('assets/img01_imagem_produto_394e2c6f-b7c7-46a2-8a7e-bbf2bc160d82.webp')"></div>
+  <div class="veil"></div>
+  <div class="top"><div class="wm">FABBRICANTTI</div><div class="pg">04 / 08</div></div>
+  <div class="wrap">
+    <div class="kicker">O ícone</div>
+    <h2 class="display">120 anos depois,<br>ainda no pulso certo</h2>
+    <hr class="rule">
+    <p class="body">O desenho atravessou o século como símbolo de elegância funcional. Reconhecível em qualquer pulso, em qualquer época.</p>
+  </div>
+</section>
+
+<!-- ===================== S5 — A NOSSA VERSÃO ===================== -->
+<section class="slide on-light split bg-ivory photo-left" id="s5">
+  <div class="top"><div class="wm" style="color:var(--ivory)">FABBRICANTTI</div><div class="pg">05 / 08</div></div>
+  <div class="pane" style="background-image:url('assets/img08_2_768a8ad8-625a-4151-9f85-3a07700d9cfc.webp')"></div>
+  <div class="txt">
+    <div class="kicker">A nossa versão</div>
+    <h2 class="display">Reescrevemos<br>o clássico</h2>
+    <hr class="rule">
+    <p class="body">A Fabbricantti pegou o desenho que mudou a relojoaria masculina e devolveu com a nossa assinatura. Mesma atitude, outra geração. Chamamos de Santtos.</p>
+  </div>
+</section>
+
+<!-- ===================== S6 — TRÊS FACES ===================== -->
+<section class="slide tri" id="s6">
+  <div class="top"><div class="wm" style="color:var(--ivory)">FABBRICANTTI</div><div class="pg" style="color:var(--ivory)">06 / 08</div></div>
+  <div class="head">
+    <div class="kicker">Três faces</div>
+    <h2 class="display">Qual delas é você?</h2>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="frame"><div class="ph" style="background-image:url('assets/img06_13.webp')"></div></div>
+      <div class="num">01</div>
+      <div class="name">Santtos Branco</div>
+      <p class="desc">O clássico que combina com tudo.</p>
+    </div>
+    <div class="card">
+      <div class="frame"><div class="ph" style="background-image:url('assets/img09_14_60da98d6-94ce-4650-baaa-84b4b029d93e.webp')"></div></div>
+      <div class="num">02</div>
+      <div class="name">Time Is Money</div>
+      <p class="desc">Pra quem sabe o que o tempo vale.</p>
+    </div>
+    <div class="card">
+      <div class="frame"><div class="ph" style="background-image:url('assets/img10_15_75922381-57fc-4c04-800a-2a787361d3a0.webp')"></div></div>
+      <div class="num">03</div>
+      <div class="name">Fuck 9-5</div>
+      <p class="desc">Pra quem não pertence ao horário comercial.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== S7 — ESPECIFICAÇÕES ===================== -->
+<section class="slide specs" id="s7">
+  <div class="top"><div class="wm" style="color:var(--ink)">FABBRICANTTI</div><div class="pg" style="color:var(--ink)">07 / 08</div></div>
+  <div class="head">
+    <div class="kicker">O que tem dentro</div>
+    <h2 class="display">Especificações</h2>
+  </div>
+  <div class="list">
+    <div class="item"><span class="lbl">Movimento</span><span class="val">Automático Seiko NH35</span></div>
+    <div class="item"><span class="lbl">Reserva de marcha</span><span class="val">41 horas</span></div>
+    <div class="item"><span class="lbl">Caixa</span><span class="val">Aço inox · 38 × 48 mm</span></div>
+    <div class="item"><span class="lbl">Pulseira</span><span class="val">Metálica integrada</span></div>
+    <div class="item"><span class="lbl">Resistência</span><span class="val">3 ATM · 30 metros</span></div>
+    <div class="item"><span class="lbl">Garantia</span><span class="val">1 ano</span></div>
+  </div>
+</section>
+
+<!-- ===================== S8 — CTA ===================== -->
+<section class="slide cta on-dark" id="s8">
+  <div class="top"><div class="wm">FABBRICANTTI</div><div class="pg">08 / 08</div></div>
+  <img class="logo" src="assets/img12_imagem_clean_Fabbricantti_380x.png" alt="Fabbricantti">
+  <div class="kicker">Lançamento</div>
+  <h2 class="display">Garanta o seu Santtos</h2>
+  <hr class="rule">
+  <div class="price">R$ 1.987,90</div>
+  <div class="from">de <s>R$ 2.850</s> &nbsp;·&nbsp; <b>30% OFF</b></div>
+  <span class="pill">fabbricantti.com</span>
+  <div class="handle">@fabbricantti</div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var p = new URLSearchParams(location.search);
+    var n = p.get('s') || '1';
+    document.querySelectorAll('.slide').forEach(function (el) { el.style.display = 'none'; });
+    var t = document.getElementById('s' + n);
+    if (t) {
+      var flex = t.classList.contains('cta') || t.classList.contains('tri') || t.classList.contains('specs');
+      t.style.display = flex ? 'flex' : 'block';
+    }
+  });
+</script>
+</body>
+</html>

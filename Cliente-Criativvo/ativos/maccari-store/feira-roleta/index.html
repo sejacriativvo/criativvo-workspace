@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Roleta da Sorte · Maccari Store na Feira de Ibitinga</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  @font-face{font-family:'AVEstiana';src:url('AVEstiana-Black.otf') format('opentype');font-weight:900;font-display:swap;}
+  :root{
+    --yellow:#E6E540; --ink:#141312; --red:#D20000; --cream:#F4F2EC; --white:#fff;
+    --wpp:#25D366; --orange:#ff5a1f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:'Montserrat',sans-serif;background:var(--yellow);color:var(--ink);
+    min-height:100dvh;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;
+  }
+  .wrap{width:100%;max-width:440px;padding:22px 22px 64px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .logo{height:42px;filter:brightness(0);margin:2px auto 0;display:block;}
+
+  .screen{display:none;width:100%;flex-direction:column;align-items:center;}
+  .screen.active{display:flex;animation:fade .45s ease both;}
+  @keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+  /* banner fachada */
+  .fachada{position:relative;width:100%;height:132px;margin-top:15px;border-radius:20px;overflow:hidden;box-shadow:0 14px 32px rgba(0,0,0,.18);}
+  .fachada img{width:100%;height:100%;object-fit:cover;display:block;}
+  .fachada .cap{position:absolute;left:0;right:0;bottom:0;padding:22px 16px 10px;text-align:left;
+    background:linear-gradient(transparent, rgba(0,0,0,.62));color:#fff;font-size:12.5px;font-weight:700;}
+
+  .kicker{margin-top:20px;font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--red);}
+  h1{margin-top:9px;font-size:36px;font-weight:900;line-height:1.0;letter-spacing:-1px;color:var(--ink);}
+  h1 .hl{color:var(--red);}
+  .sub{margin-top:11px;font-size:15px;font-weight:600;line-height:1.45;color:#56521f;max-width:330px;}
+
+  .form{width:100%;margin-top:20px;display:flex;flex-direction:column;gap:11px;}
+  .field{text-align:left;}
+  .field label{display:block;font-size:12px;font-weight:800;letter-spacing:.4px;color:#46431a;margin:0 0 6px 4px;}
+  .field input{width:100%;padding:15px 18px;border-radius:14px;border:2px solid rgba(20,19,18,.18);
+    background:#fff;color:var(--ink);font-family:inherit;font-size:16px;font-weight:600;transition:border-color .2s;}
+  .field input::placeholder{color:#9b9886;font-weight:500;}
+  .field input:focus{outline:none;border-color:var(--red);}
+  .err{display:none;color:#a30000;font-size:12.5px;font-weight:700;margin:2px 0 -2px 4px;text-align:left;}
+  .err.show{display:block;}
+
+  /* botões */
+  .btn{width:100%;padding:16px;border:none;border-radius:15px;cursor:pointer;font-family:inherit;
+    font-size:17px;font-weight:800;letter-spacing:.2px;transition:transform .12s, filter .2s;text-decoration:none;
+    display:flex;align-items:center;justify-content:center;gap:10px;}
+  .btn:active{transform:scale(.98);}
+  .btn svg{width:22px;height:22px;flex:none;}
+  .btn .bag{height:23px;width:auto;flex:none;}
+  .btn-primary{background:var(--red);color:#fff;box-shadow:0 12px 28px rgba(210,0,0,.26);font-size:18px;}
+
+  /* botões secundários lado a lado */
+  .srow{display:flex;gap:10px;width:100%;margin-top:11px;}
+  .sbtn{flex:1;padding:13px 10px;border-radius:13px;font-size:14.5px;font-weight:800;text-decoration:none;
+    display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s;}
+  .sbtn:active{transform:scale(.98);}
+  .sbtn svg{width:19px;height:19px;flex:none;}
+  .sbtn .bag{height:20px;width:auto;flex:none;}
+  .sbtn.loja{background:#fff;color:var(--ink);border:2px solid rgba(20,19,18,.16);}
+  .sbtn.wpp{background:var(--wpp);color:#fff;}
+
+  .mini{margin-top:14px;font-size:11.5px;font-weight:600;color:#6f6c2c;line-height:1.5;}
+
+  /* roleta */
+  .wheel-stage{position:relative;margin-top:20px;width:min(80vw,330px);aspect-ratio:1;}
+  .pointer{position:absolute;top:-6px;left:50%;transform:translateX(-50%);z-index:5;width:0;height:0;
+    border-left:17px solid transparent;border-right:17px solid transparent;border-top:30px solid var(--ink);
+    filter:drop-shadow(0 0 2px #fff) drop-shadow(0 4px 5px rgba(0,0,0,.35));}
+  .wheel-ring{position:absolute;inset:-9px;border-radius:50%;background:#1b1a16;
+    box-shadow:0 20px 44px rgba(0,0,0,.4), inset 0 0 0 5px #ffffff;z-index:0;}
+  #wheel{position:relative;z-index:2;width:100%;height:100%;border-radius:50%;display:block;transition:transform 5.2s cubic-bezier(.13,.86,.18,1);}
+  .hub{position:absolute;z-index:4;top:50%;left:50%;transform:translate(-50%,-50%);width:29%;aspect-ratio:1;border-radius:50%;
+    background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;border:5px solid #fff;}
+  .hub span{font-size:16px;font-weight:900;color:var(--ink);letter-spacing:.5px;}
+  .hub.spinning{cursor:default;}
+  .spin-hint{margin-top:22px;font-size:15px;font-weight:800;color:var(--ink);}
+  .spin-name{color:var(--red);}
+
+  /* resultado */
+  .prize-emoji{font-size:58px;margin-top:14px;line-height:1;}
+  .won-label{margin-top:8px;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--red);}
+  .prize-name{margin-top:6px;font-size:32px;font-weight:900;line-height:1.08;letter-spacing:-.5px;color:var(--ink);}
+  .prize-name.big{color:var(--red);font-size:34px;}
+  .prize-detail{margin-top:14px;font-size:15.5px;font-weight:600;line-height:1.55;color:#46431a;max-width:340px;}
+  .prize-detail b{color:var(--ink);}
+  .code-box{margin-top:22px;width:100%;padding:18px;border-radius:16px;background:#fff;border:2px dashed var(--red);}
+  .code-box .cl{font-size:11px;font-weight:800;letter-spacing:2px;color:#9b9886;text-transform:uppercase;}
+  .code-box .cv{margin-top:5px;font-size:32px;font-weight:900;letter-spacing:3px;color:var(--red);}
+  .redeem{margin-top:14px;font-size:13.5px;font-weight:600;color:#46431a;line-height:1.5;max-width:330px;}
+  .redeem b{color:var(--ink);}
+  .result-btns{width:100%;margin-top:20px;display:flex;flex-direction:column;gap:11px;}
+
+  /* barra Criativvo — minimalista */
+  .cbar{position:fixed;left:0;right:0;bottom:0;height:40px;background:var(--ink);z-index:30;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;text-decoration:none;cursor:pointer;}
+  .cbar .cr{position:absolute;width:100%;padding:0 16px;text-align:center;transition:opacity .5s ease, transform .5s ease;}
+  .cbar .cr-a{font-family:'AVEstiana','Montserrat';font-size:21px;color:#fff;letter-spacing:-.8px;line-height:1;opacity:.92;}
+  .cbar .cr-b{font-size:12px;font-weight:700;color:#fff;line-height:1;opacity:0;transform:translateY(6px);}
+  .cbar .cr-b b{color:var(--orange);}
+  .cbar.alt .cr-a{opacity:0;transform:translateY(-6px);}
+  .cbar.alt .cr-b{opacity:1;transform:none;}
+
+  /* confete */
+  .confetti{position:fixed;inset:0;pointer-events:none;z-index:9;overflow:hidden;display:none;}
+  .confetti.on{display:block;}
+  .confetti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards;}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9;}}
+</style>
+</head>
+<body>
+<div class="confetti" id="confetti"></div>
+
+<!-- ícones reutilizáveis -->
+<svg width="0" height="0" style="position:absolute"><symbol id="i-wpp" viewBox="0 0 448 512"><path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l119.7-31.4c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-156.9zM223.9 438.6h-.1c-33.2 0-65.7-8.9-94-25.7l-6.7-4-71 18.6 19-69.2-4.4-7.1c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-82.8 184.6-184.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></symbol><symbol id="i-gift" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></g></symbol></svg>
+
+<div class="wrap">
+  <img class="logo" src="logo.png" alt="Maccari Store">
+
+  <!-- TELA 1: FORM -->
+  <section class="screen active" id="screen-form">
+    <div class="fachada">
+      <img src="fachada.jpg" alt="Loja Maccari Store">
+      <div class="cap">Maccari Store · loja física no Centro de Ibitinga</div>
+    </div>
+    <div class="kicker">Feira de Ibitinga</div>
+    <h1>Gire e <span class="hl">ganhe</span><br>na hora</h1>
+    <p class="sub">Todo giro é prêmio. Preenche aí e gira pra ver o que você levou hoje.</p>
+
+    <form class="form" id="lead-form" autocomplete="on" novalidate>
+      <div class="field">
+        <label for="nome">Seu nome</label>
+        <input id="nome" name="name" type="text" placeholder="Como te chamam?" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="zap">WhatsApp</label>
+        <input id="zap" name="tel" type="tel" inputmode="numeric" placeholder="(16) 99999-9999" autocomplete="tel">
+        <div class="err" id="err">Põe um nome e um WhatsApp válido pra liberar 🙂</div>
+      </div>
+      <button class="btn btn-primary" type="submit"><svg><use href="#i-gift"/></svg> QUERO GIRAR</button>
+    </form>
+
+    <div class="srow">
+      <a class="sbtn loja" id="q-loja" href="#" target="_blank" rel="noopener"><img class="bag" src="maccari-bag.png" alt=""> Ver a loja</a>
+      <a class="sbtn wpp" id="q-wpp" href="#" target="_blank" rel="noopener"><svg><use href="#i-wpp"/></svg> WhatsApp</a>
+    </div>
+    <p class="mini">1 giro por pessoa · prêmio resgatado na hora no estande da Maccari</p>
+  </section>
+
+  <!-- TELA 2: ROLETA -->
+  <section class="screen" id="screen-wheel">
+    <div class="kicker" style="margin-top:18px;">É a sua vez</div>
+    <h1 style="font-size:28px;margin-top:8px;">Boa sorte 🍀</h1>
+    <div class="wheel-stage">
+      <div class="pointer"></div>
+      <div class="wheel-ring"></div>
+      <canvas id="wheel" width="600" height="600"></canvas>
+      <div class="hub" id="hub"><span>GIRAR</span></div>
+    </div>
+    <p class="spin-hint">Aperta em <b>GIRAR</b>, <span class="spin-name" id="hi-name">você</span> 👆</p>
+  </section>
+
+  <!-- TELA 3: RESULTADO -->
+  <section class="screen" id="screen-result">
+    <div class="prize-emoji" id="r-emoji">🎉</div>
+    <div class="won-label">Você ganhou</div>
+    <div class="prize-name" id="r-name">Prêmio</div>
+    <p class="prize-detail" id="r-detail"></p>
+
+    <div class="code-box">
+      <div class="cl">Seu código de resgate</div>
+      <div class="cv" id="r-code">MAC-0000</div>
+    </div>
+    <p class="redeem">Mostra essa tela (ou o código) no <b>estande da Maccari</b> pra resgatar. Vale só hoje.</p>
+
+    <div class="result-btns">
+      <a class="btn btn-wpp" id="r-wpp" href="#" target="_blank" rel="noopener" style="background:var(--wpp);color:#fff;"><svg><use href="#i-wpp"/></svg> Resgatar no WhatsApp</a>
+      <a class="btn btn-loja" id="r-loja" href="#" target="_blank" rel="noopener" style="background:#fff;color:var(--ink);border:2px solid rgba(20,19,18,.16);"><img class="bag" src="maccari-bag.png" alt=""> Ver produtos da loja</a>
+    </div>
+  </section>
+</div>
+
+<!-- barra Criativvo (minimalista) -->
+<a class="cbar" id="cbar" href="https://www.instagram.com/sejacriativvo" target="_blank" rel="noopener">
+  <span class="cr cr-a">criativvo</span>
+  <span class="cr cr-b">Quer uma propaganda interativa como essa? <b>Fale com a Criativvo</b></span>
+</a>
+
+<script>
+/* ====== CONFIG ====== */
+const LEAD_ENDPOINT = "";
+const WPP_LOJA  = "5516997123537";
+const SITE_LOJA = "https://www.maccaristore.com.br";
+
+/* ====== PRÊMIOS E CHANCES (mexer só aqui) ====== */
+const PRIZES = [
+  { id:'d10',     label:'10% OFF',            wheel:'10%\nOFF',         color:'#18120F', text:'#fff',     weight:30,
+    emoji:'🛍️', detail:'<b>10% de desconto</b> na sua compra na feira. Aproveita!' },
+  { id:'combo',   label:'Capinha + Película', wheel:'Capinha +\nPelícula', color:'#F4F2EC', text:'#141312', weight:12,
+    emoji:'📱', detail:'<b>capinha + película de brinde</b>, as duas juntas na sua compra! 😎' },
+  { id:'d5',      label:'5% OFF',             wheel:'5%\nOFF',          color:'#D20000', text:'#fff',     weight:26,
+    emoji:'🛍️', detail:'<b>5% de desconto</b> na sua compra na feira. Bora aproveitar!' },
+  { id:'proxima', label:'Brinde na próxima',  wheel:'Brinde\npróxima',  color:'#18120F', text:'#fff',     weight:16,
+    emoji:'🎁', detail:'um <b>brinde na sua próxima compra</b>. Volta lá pra resgatar!' },
+  { id:'surpresa',label:'Brinde surpresa',    wheel:'Brinde\nsurpresa', color:'#F4F2EC', text:'#141312',  weight:12,
+    emoji:'✨', detail:'um <b>brinde surpresa</b> no estande da Maccari. Vai lá descobrir!' },
+  { id:'iphone',  label:'iPhone 17 Pro Max',  wheel:'iPhone 17\nPro Max', color:'#D20000', text:'#fff',   weight:4,
+    big:true, emoji:'🤯', detail:'o <b>iPhone 17 Pro Max com 10% OFF</b>: sai por <b>R$ 7.890 à vista</b>, com <b>capinha e película de brinde</b>. Essa é rara, corre no estande!' },
+];
+
+/* ====== motor ====== */
+const $ = s => document.querySelector(s);
+const N = PRIZES.length, SLICE = 360 / N;
+const canvas = $('#wheel'), ctx = canvas.getContext('2d');
+const SIZE = canvas.width, R = SIZE/2;
+
+$('#q-loja').href = SITE_LOJA;
+$('#q-wpp').href  = `https://wa.me/${WPP_LOJA}`;
+$('#r-loja').href = SITE_LOJA;
+
+function drawWheel(){
+  ctx.clearRect(0,0,SIZE,SIZE);
+  for(let i=0;i<N;i++){
+    const start = (-90 - SLICE/2 + i*SLICE) * Math.PI/180;
+    const end   = start + SLICE*Math.PI/180;
+    ctx.beginPath(); ctx.moveTo(R,R); ctx.arc(R,R,R-4,start,end); ctx.closePath();
+    ctx.fillStyle = PRIZES[i].color; ctx.fill();
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.18)'; ctx.stroke();
+    ctx.save(); ctx.translate(R,R);
+    const ang = (-90 + i*SLICE) * Math.PI/180;
+    ctx.rotate(ang); ctx.translate(R*0.60, 0);
+    if(Math.cos(ang) < -1e-6) ctx.rotate(Math.PI);
+    ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillStyle = PRIZES[i].text;
+    const lines = PRIZES[i].wheel.split('\n'); const big = PRIZES[i].big;
+    ctx.font = `900 ${big?31:27}px Montserrat, sans-serif`; const lh = big?34:31;
+    lines.forEach((ln,k)=>ctx.fillText(ln, 0, (k-(lines.length-1)/2)*lh));
+    ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(R,R,R-4,0,2*Math.PI);
+  ctx.lineWidth=6; ctx.strokeStyle='rgba(255,255,255,.9)'; ctx.stroke();
+}
+drawWheel();
+
+function pickIndex(){
+  const total = PRIZES.reduce((s,p)=>s+p.weight,0);
+  let r = Math.random()*total;
+  for(let i=0;i<N;i++){ r-=PRIZES[i].weight; if(r<0) return i; }
+  return N-1;
+}
+
+let LEAD = {};
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); $(id).classList.add('active'); window.scrollTo(0,0); }
+function digits(s){ return (s||'').replace(/\D/g,''); }
+
+$('#zap').addEventListener('input', e=>{
+  let d = digits(e.target.value).slice(0,11); let out = d;
+  if(d.length>2)  out = '('+d.slice(0,2)+') '+d.slice(2);
+  if(d.length>7)  out = '('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7);
+  e.target.value = out;
+});
+
+$('#lead-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const nome = $('#nome').value.trim(), zap = digits($('#zap').value);
+  if(nome.length<2 || zap.length<10){ $('#err').classList.add('show'); return; }
+  $('#err').classList.remove('show'); LEAD = { nome, zap };
+  const saved = localStorage.getItem('maccari_feira_'+zap);
+  if(saved){ renderResult(JSON.parse(saved), true); return; }
+  $('#hi-name').textContent = nome.split(' ')[0];
+  show('#screen-wheel');
+});
+
+let spinning=false;
+$('#hub').addEventListener('click', ()=>{
+  if(spinning) return; spinning=true;
+  $('#hub').classList.add('spinning'); $('#hub').querySelector('span').textContent='...';
+  const win = pickIndex();
+  const jitter = (Math.random()-0.5) * (SLICE-14);
+  const finalDeg = 360*6 - win*SLICE + jitter;
+  canvas.style.transform = `rotate(${finalDeg}deg)`;
+  setTimeout(()=>{
+    const code = 'MAC-' + (LEAD.zap.slice(-2)) + Math.random().toString(36).slice(2,5).toUpperCase();
+    const result = { premioId:PRIZES[win].id, premio:PRIZES[win].label, codigo:code,
+      nome:LEAD.nome, zap:LEAD.zap, data:new Date().toLocaleString('pt-BR') };
+    localStorage.setItem('maccari_feira_'+LEAD.zap, JSON.stringify(result));
+    sendLead(result); renderResult(result, false);
+  }, 5400);
+});
+
+function renderResult(result, already){
+  const p = PRIZES.find(x=>x.id===result.premioId) || PRIZES[0];
+  $('#r-emoji').textContent = p.emoji;
+  $('#r-name').textContent = p.label;
+  $('#r-name').className = 'prize-name' + (p.big?' big':'');
+  $('#r-detail').innerHTML = (already?'<b>Você já girou hoje.</b> Ganhou ':'Você ganhou ') + p.detail;
+  $('#r-code').textContent = result.codigo;
+  const msg = encodeURIComponent(`Oi! Ganhei "${result.premio}" na roleta da feira. Meu código é ${result.codigo}. Nome: ${result.nome}`);
+  $('#r-wpp').href = `https://wa.me/${WPP_LOJA}?text=${msg}`;
+  show('#screen-result');
+  if(!already) burst(p.big);
+}
+
+function sendLead(result){
+  if(!LEAD_ENDPOINT) return;
+  try{ fetch(LEAD_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(result)}); }
+  catch(err){}
+}
+
+function burst(big){
+  const box = $('#confetti'); box.innerHTML=''; box.classList.add('on');
+  const cores = ['#D20000','#141312','#fff','#E6E540'];
+  const qtd = big? 90 : 55;
+  for(let i=0;i<qtd;i++){
+    const c=document.createElement('i');
+    c.style.left = Math.random()*100+'vw'; c.style.background = cores[i%cores.length];
+    c.style.animationDuration = (2.4+Math.random()*1.8)+'s'; c.style.animationDelay = (Math.random()*.5)+'s';
+    c.style.transform = `rotate(${Math.random()*360}deg)`; box.appendChild(c);
+  }
+  setTimeout(()=>box.classList.remove('on'), 4200);
+}
+
+setInterval(()=>$('#cbar').classList.toggle('alt'), 4200);
+</script>
+</body>
+</html>

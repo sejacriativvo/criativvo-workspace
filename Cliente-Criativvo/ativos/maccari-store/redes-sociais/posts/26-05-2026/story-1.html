@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Story 1 — Hook / Sorteio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #1a1a1a; }
+    body { display: flex; justify-content: center; padding: 30px; }
+
+    .card {
+      width: 1080px;
+      height: 1920px;
+      font-family: 'Montserrat', sans-serif;
+      position: relative;
+      overflow: hidden;
+      background: #1A120B;
+      color: #F2EAD8;
+    }
+
+    .photo {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1080px;
+      height: 880px;
+      overflow: hidden;
+    }
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 28%;
+      display: block;
+    }
+    .scrim-top {
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      height: 280px;
+      background: linear-gradient(180deg, rgba(26,18,11,0.72) 0%, rgba(26,18,11,0.30) 60%, transparent 100%);
+      z-index: 2;
+    }
+    .scrim-bot {
+      position: absolute;
+      left: 0; right: 0; top: 540px;
+      height: 360px;
+      background: linear-gradient(180deg, transparent 0%, rgba(26,18,11,0.18) 25%, rgba(26,18,11,0.55) 60%, rgba(26,18,11,0.88) 85%, #1A120B 100%);
+      z-index: 2;
+    }
+
+    .lockup {
+      position: absolute;
+      top: 110px;
+      left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 34px;
+      z-index: 5;
+    }
+    .lockup .cs {
+      height: 100px;
+      filter: drop-shadow(0 4px 24px rgba(0,0,0,0.75));
+    }
+    .lockup .x {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 400;
+      font-size: 46px;
+      color: #E8C58A;
+      opacity: 0.9;
+    }
+    .lockup .mc {
+      height: 84px;
+      filter: drop-shadow(0 4px 24px rgba(0,0,0,0.75));
+    }
+
+    .sorteio-block {
+      position: absolute;
+      top: 960px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 5;
+    }
+    .sorteio {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 400;
+      font-size: 260px;
+      line-height: 0.88;
+      letter-spacing: -8px;
+      color: #E8C58A;
+      font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    }
+    .sorteio-tag {
+      font-family: 'Montserrat';
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 9px;
+      color: #ED7D17;
+      text-transform: uppercase;
+      margin-top: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+    }
+    .sorteio-tag::before,
+    .sorteio-tag::after {
+      content: '';
+      width: 70px; height: 1px;
+      background: rgba(237,125,23,0.6);
+    }
+
+    .headline {
+      position: absolute;
+      top: 1380px;
+      left: 60px; right: 60px;
+      text-align: center;
+      z-index: 5;
+      font-family: 'Fraunces';
+      font-weight: 500;
+      font-size: 100px;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      color: #F2EAD8;
+      font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    }
+    .headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: #E8C58A;
+    }
+
+    .swipe {
+      position: absolute;
+      bottom: 80px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 5;
+      font-family: 'Montserrat';
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: 5px;
+      color: #b9ad94;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .swipe svg {
+      width: 22px; height: 22px;
+      stroke: #b9ad94;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="photo"><img src="hero-couple-night.jpg" alt="Casal no Castellinhos"></div>
+    <div class="scrim-top"></div>
+    <div class="scrim-bot"></div>
+
+    <div class="lockup">
+      <img class="cs" src="../../../assets/logo-castellinhos-clean.png" alt="Castellinhos">
+      <span class="x">×</span>
+      <img class="mc" src="../../../assets/logo.png" alt="Maccari Store">
+    </div>
+
+    <div class="sorteio-block">
+      <div class="sorteio">Sorteio</div>
+      <div class="sorteio-tag"><span>DIA DOS NAMORADOS · 11/06</span></div>
+    </div>
+
+    <div class="headline">
+      Uma noite <em>inesquecível</em><br>
+      pra dois.
+    </div>
+
+    <div class="swipe">
+      VEJA O QUE O CASAL VAI GANHAR
+      <svg viewBox="0 0 24 24"><path d="M5 12 h14 M13 6 l6 6 -6 6"/></svg>
+    </div>
+  </div>
+</body>
+</html>

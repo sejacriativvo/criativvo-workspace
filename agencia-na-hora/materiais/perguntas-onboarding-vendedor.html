@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de perguntas - Onboarding Agência na Hora</title>
+<style>
+  :root{ --tinta:#141414; --suave:#6b6b6b; --linha:#e4e0d8; --laranja:#ff5a1f; --fundo:#ffffff; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--tinta);background:#f0ede7;line-height:1.55;}
+  .page{max-width:760px;margin:24px auto;background:var(--fundo);padding:56px 56px 64px;box-shadow:0 4px 24px rgba(0,0,0,.08);}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--laranja);}
+  h1{font-size:26px;font-weight:800;letter-spacing:-.5px;margin:6px 0 4px;}
+  .lead{color:var(--suave);font-size:14px;max-width:90%;margin-bottom:14px;}
+  .aviso{background:#fff6f2;border-left:3px solid var(--laranja);padding:12px 16px;border-radius:0 8px 8px 0;font-size:13px;color:#7a3d28;margin:18px 0 8px;}
+  h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--laranja);margin:30px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--linha);}
+  ol{list-style:none;counter-reset:q;}
+  ol li{counter-increment:q;position:relative;padding:7px 0 7px 34px;font-size:14.5px;border-bottom:1px dashed var(--linha);}
+  ol li:before{content:counter(q);position:absolute;left:0;top:7px;width:22px;height:22px;background:var(--tinta);color:#fff;border-radius:6px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .check{margin-top:14px;background:#faf8f4;border:1px solid var(--linha);border-radius:12px;padding:18px 22px;}
+  .check h3{font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+  .check ul{list-style:none;}
+  .check li{font-size:13.5px;padding:4px 0 4px 26px;position:relative;}
+  .check li:before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;border:2px solid var(--laranja);border-radius:4px;}
+  .foot{margin-top:26px;font-size:13px;color:var(--suave);}
+  .foot b{color:var(--tinta);}
+  .logo{font-weight:800;letter-spacing:-.5px;}
+  @media print{
+    body{background:#fff;}
+    .page{box-shadow:none;margin:0;max-width:100%;padding:28px 32px;}
+    h2{page-break-after:avoid;}
+    ol li,.check{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <span class="tag">Agência na Hora</span>
+  <h1>Guia da call de onboarding</h1>
+  <p class="lead">Roteiro pro vendedor conduzir a call de descoberta depois da venda fechada. Siga a ordem e deixe o cliente falar. Tudo aqui vira insumo pro sistema montar site, tráfego e posts.</p>
+  <div class="aviso"><b>Antes de começar:</b> confirme que a gravação e a transcrição estão ligadas. A transcrição é o que alimenta toda a montagem.</div>
+
+  <h2>1. O negócio</h2>
+  <ol>
+    <li>Como você descreveria seu negócio pra um amigo, em uma frase?</li>
+    <li>O que você vende exatamente? (produtos, serviços, ou os dois)</li>
+    <li>Há quanto tempo está no mercado?</li>
+    <li>Tem mais de uma unidade ou loja? Onde?</li>
+  </ol>
+
+  <h2>2. Cliente e diferencial</h2>
+  <ol start="5">
+    <li>Quem é seu cliente típico? (quem compra de verdade, não "todo mundo")</li>
+    <li>Por que o cliente escolhe você e não o concorrente?</li>
+    <li>Quem são seus principais concorrentes na região?</li>
+  </ol>
+
+  <h2>3. Presença atual</h2>
+  <ol start="8">
+    <li>Tem site hoje? Qual? O que não gosta nele?</li>
+    <li>Quais redes sociais usa? Passe os @.</li>
+    <li>Já anuncia ou já anunciou (Google, Instagram, Facebook)? Como foi?</li>
+    <li>Tem Google Meu Negócio? Endereço e telefone estão certos lá?</li>
+  </ol>
+
+  <h2>4. Identidade e material</h2>
+  <ol start="12">
+    <li>Tem logo e cores da marca? Pode enviar.</li>
+    <li>Tem fotos boas do espaço, produtos, equipe? (se não, resolvemos com IA)</li>
+    <li>Manda um exemplo do que você já escreveu (legenda, anúncio, WhatsApp).</li>
+  </ol>
+
+  <h2>5. Operação e contato</h2>
+  <ol start="15">
+    <li>Como o cliente entra em contato hoje?</li>
+    <li>Qual número de WhatsApp recebe os leads?</li>
+    <li>Endereço completo e horário de funcionamento.</li>
+    <li>Quem vai mexer no site pra adicionar e remover item quando vender?</li>
+  </ol>
+
+  <h2>6. Expectativa</h2>
+  <ol start="19">
+    <li>O que você espera ver nos primeiros 30 dias?</li>
+    <li>Tem campanha, promoção ou data importante chegando?</li>
+  </ol>
+
+  <div class="check">
+    <h3>Checklist do que tem que sair da call</h3>
+    <ul>
+      <li>Nome do negócio, nicho e o que vende</li>
+      <li>Perfil de cliente e diferencial</li>
+      <li>@ das redes e site atual</li>
+      <li>Status do Google Meu Negócio (endereço/telefone certos?)</li>
+      <li>Logo, cores e fotos</li>
+      <li>Exemplo de escrita (tom de voz)</li>
+      <li>WhatsApp de leads, endereço e horário</li>
+      <li>Quem opera o site</li>
+      <li>Expectativa de 30 dias e datas importantes</li>
+    </ul>
+  </div>
+
+  <p class="foot">Com a transcrição completa, rodar <b>/onboarding-agencia</b> pra montar a entrega. <span class="logo">criativvo</span> · Agência na Hora</p>
+</div>
+</body>
+</html>

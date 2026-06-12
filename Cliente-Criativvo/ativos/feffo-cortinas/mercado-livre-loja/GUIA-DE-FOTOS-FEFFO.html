@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Jost:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+@page{size:A4;margin:0}
+body{font-family:'Jost',sans-serif;color:#2b2017;font-size:13px;line-height:1.5}
+.page{width:210mm;min-height:297mm;padding:18mm 16mm 22mm;position:relative}
+.page+.page{page-break-before:always}
+/* capa / header */
+.cover-head{background:#653E27;color:#fff;margin:-18mm -16mm 10mm;padding:16mm 16mm 13mm;position:relative;overflow:hidden}
+.flag{position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(90deg,#653E27 0 33%,#86634A 33% 66%,#E0B291 66% 100%)}
+.logo{height:54px;margin-bottom:18px}
+.cover-head h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:38px;line-height:1.05}
+.cover-head p{color:#E7D8CB;margin-top:8px;font-size:14px;max-width:155mm}
+h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:23px;color:#653E27;margin:16px 0 9px;border-bottom:2px solid #86634A;padding-bottom:6px}
+h2 .tag{font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#86634A;margin-left:10px;vertical-align:middle}
+.intro b{color:#653E27}
+.rules{background:#F5F0EA;border-left:4px solid #86634A;padding:14px 18px;border-radius:4px;margin:8px 0 4px}
+.rules li{margin:5px 0 5px 16px}
+.lead{margin:6px 0 2px;color:#4a3a2c}
+/* tabela resumo */
+.sizes{margin-top:8px}
+.sizes table{width:100%;border-collapse:collapse;font-size:12px}
+.sizes th,.sizes td{text-align:left;padding:6px 8px;border-bottom:1px solid #ece4db;vertical-align:middle}
+.sizes th{color:#86634A;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px;border-bottom:2px solid #ddd0c4}
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.b-ok{background:#e3f1e7;color:#2f7d4f}
+.b-half{background:#fbf0d8;color:#9a6a00}
+.b-new{background:#f6e0d6;color:#9c3a18}
+/* card de foto */
+.shot{border:1px solid #e6ddd3;border-radius:8px;padding:11px 16px;margin:9px 0;break-inside:avoid;page-break-inside:avoid}
+.shot-h{display:flex;align-items:center;gap:12px;margin-bottom:7px}
+.num{flex:none;width:32px;height:32px;border-radius:50%;background:#653E27;color:#E0B291;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
+.shot-h .ttl{font-weight:700;font-size:16px;color:#653E27}
+.shot-h .use{margin-left:auto;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#86634A;background:#F5F0EA;padding:4px 10px;border-radius:20px}
+.grid{display:flex;gap:18px;align-items:flex-start}
+.col{flex:1}
+.row{margin:4px 0}
+.k{font-weight:700;color:#653E27}
+.mini{margin-top:6px;border-top:1px dashed #ddd0c4;padding-top:6px}
+.mini table{width:100%;border-collapse:collapse;font-size:12px}
+.mini th,.mini td{text-align:left;padding:4px 6px;border-bottom:1px solid #f0eae2}
+.mini th{color:#86634A;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px}
+/* diagrama de enquadramento */
+.diag{flex:none}
+.frame{position:relative;background:#f2ece5;border:2px solid #653E27;border-radius:4px;overflow:hidden}
+.zone{position:absolute;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;text-align:center;text-transform:uppercase;letter-spacing:.4px;line-height:1.2}
+.z-prod{background:rgba(101,62,39,.16);color:#653E27}
+.z-text{background:rgba(167,168,173,.26);color:#5b5048}
+.cap{font-size:10px;color:#9a8b7c;text-align:center;margin-top:5px}
+/* grade de aproveitamento */
+.reuse-grid{display:flex;flex-wrap:wrap;gap:13px;margin-top:10px}
+.rcard{width:calc(50% - 7px);border:1px solid #e6ddd3;border-radius:8px;overflow:hidden;break-inside:avoid;page-break-inside:avoid;display:flex}
+.rcard img{width:92px;height:92px;object-fit:cover;flex:none;background:#f2ece5}
+.rcard .body{padding:9px 11px}
+.rcard .body .rt{font-weight:700;color:#653E27;font-size:13px}
+.rcard .body .src{font-size:10.5px;color:#9a8b7c;margin:2px 0 6px}
+.rcard .body .note{font-size:11px;color:#4a3a2c;line-height:1.35}
+.foot{position:absolute;left:16mm;right:16mm;bottom:11mm;font-size:10px;color:#a99a8b;border-top:1px solid #ece4db;padding-top:8px;display:flex;justify-content:space-between}
+.note-box{background:#F5F0EA;border-left:4px solid #E0B291;padding:11px 16px;border-radius:4px;margin:10px 0;font-size:12px}
+</style></head>
+<body>
+
+<!-- PAGINA 1 -->
+<div class="page">
+  <div class="cover-head">
+    <img class="logo" src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja/_logo/feffo-branca.png">
+    <h1>Guia de Fotos · Loja Oficial Mercado Livre</h1>
+    <p>O que ainda falta de foto pra fechar os banners da loja Fêffo Cortinas, o que já dá pra reaproveitar das imagens que produzimos, e o enquadramento certo de cada peça.</p>
+    <div class="flag"></div>
+  </div>
+
+  <div class="intro">
+    <p class="lead">Os banners da loja já estão montados e fechados no layout. Falta só a foto entrar na área marcada de cada peça. Parte disso a gente já cobre com as imagens prontas (página 2). O resto precisa ser fotografado ou gerado seguindo os enquadramentos das páginas 3 e 4.</p>
+
+    <h2>Regras gerais <span class="tag">valem pra todas as fotos</span></h2>
+    <div class="rules"><ul>
+      <li><b>Luz:</b> natural e suave, lateral. Clima de editorial de decoração, clean e elegante. Nada de flash duro.</li>
+      <li><b>Cortina é a estrela:</b> nas fotos de cortina, o caimento do tecido tem que aparecer inteiro, do varão ao chão, bem esticado e sem amassado.</li>
+      <li><b>Fundo:</b> ambiente arrumado, paredes claras, sem objeto fora de lugar. Posicionamento premium.</li>
+      <li><b>Zona segura:</b> respeite a área indicada em cada peça. A parte marcada como "texto" fica mais lisa/vazia, porque é onde entra a escrita.</li>
+      <li><b>Qualidade:</b> maior resolução possível, arquivo original, sem filtro e sem corte.</li>
+      <li><b>Coesão:</b> as 6 fotos de categoria devem ter a mesma luz e o mesmo estilo de fundo pra combinarem entre si.</li>
+    </ul></div>
+  </div>
+
+  <div class="foot"><span>Fêffo Cortinas · Guia de Fotos</span><span>Criativvo</span></div>
+</div>
+
+<!-- PAGINA 2 -->
+<div class="page">
+  <h2>Resumo · status de cada peça</h2>
+  <div class="sizes">
+    <table>
+      <tr><th>#</th><th>Peça da loja</th><th>Formato</th><th>Status</th></tr>
+      <tr><td>1</td><td>Banner principal (hero) · cortina blackout</td><td>1920×640 + 600×800</td><td><span class="badge b-new">Falta tirar</span></td></tr>
+      <tr><td>2</td><td>Categoria · Blackout</td><td>800×800</td><td><span class="badge b-new">Falta tirar</span></td></tr>
+      <tr><td>3</td><td>Categoria · Voil</td><td>800×800</td><td><span class="badge b-new">Falta tirar</span></td></tr>
+      <tr><td>4</td><td>Categoria · Cobreleito</td><td>800×800</td><td><span class="badge b-ok">Dá pra reaproveitar</span></td></tr>
+      <tr><td>5</td><td>Categoria · Jogo de cama</td><td>800×800</td><td><span class="badge b-half">Quebra-galho pronto</span></td></tr>
+      <tr><td>6</td><td>Categoria · Edredom estampado</td><td>800×800</td><td><span class="badge b-new">Falta tirar</span></td></tr>
+      <tr><td>7</td><td>Categoria · Almofadas</td><td>800×800</td><td><span class="badge b-half">Quebra-galho pronto</span></td></tr>
+      <tr><td>8</td><td>Secundário · Fabricação própria (costura)</td><td>1500×375 + 600×340</td><td><span class="badge b-new">Falta tirar</span></td></tr>
+      <tr><td>9</td><td>Secundário · Sob medida (medição)</td><td>1500×375 + 600×340</td><td><span class="badge b-new">Falta tirar</span></td></tr>
+      <tr><td>10</td><td>Secundário · Envio + garantia (embalagem)</td><td>1500×375 + 600×340</td><td><span class="badge b-new">Falta tirar</span></td></tr>
+      <tr><td>11</td><td>Etiquetas · ambiente comprável</td><td>1200×800</td><td><span class="badge b-ok">Dá pra reaproveitar</span></td></tr>
+    </table>
+  </div>
+
+  <div class="note-box">Resumo rápido: das 11 peças, <b>4 já dão pra fechar agora</b> com o que temos (cobreleito, jogo de cama, almofadas e etiquetas), e <b>7 precisam de foto nova</b>, todas ligadas a cortina e a processo (blackout, voil, edredom estampado, costura, medição e embalagem). O cabeçalho não usa foto, já está pronto.</div>
+
+  <div class="foot"><span>Fêffo Cortinas · Guia de Fotos</span><span>Criativvo</span></div>
+</div>
+
+<!-- PAGINA 2 -->
+<div class="page">
+  <h2>O que dá pra aproveitar <span class="tag">das fotos que já produzimos</span></h2>
+  <p class="lead">Essas imagens já existem (foram feitas pra loja MH) e servem direto, ou de quebra-galho, em peças da Fêffo. Onde está "quebra-galho", dá pra subir agora e trocar depois por uma foto própria do produto.</p>
+
+  <div class="reuse-grid">
+
+    <div class="rcard">
+      <img src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja-mh/_fotos-recebidas/categoria-casa.png">
+      <div class="body">
+        <div class="rt">Categoria · Cobreleito</div>
+        <div class="src">usa: categoria-casa.png</div>
+        <div class="note">Cama posta com cobreleito bege, vista limpa. Encaixa direto no tile de Cobreleito. <b>Serve sem ressalva.</b></div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <img src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja-mh/_fotos-recebidas/travesseiro.png">
+      <div class="body">
+        <div class="rt">Categoria · Jogo de cama</div>
+        <div class="src">usa: travesseiro.png</div>
+        <div class="note">Cama com travesseiros e roupa de cama clara. Serve de quebra-galho pro tile de Jogo de cama. Ideal: foto focada em lençol + fronha.</div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <img src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja-mh/_fotos-recebidas/categoria-moveis-decoracoes.png">
+      <div class="body">
+        <div class="rt">Categoria · Almofadas</div>
+        <div class="src">usa: categoria-moveis-decoracoes.png</div>
+        <div class="note">Sala com sofá, almofadas e cortina ao fundo. Quebra-galho pra Almofadas. Ideal: close de almofadas decorativas.</div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <img src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja-mh/_fotos-recebidas/etiqueta-ambiente.png">
+      <div class="body">
+        <div class="rt">Etiquetas · ambiente 1</div>
+        <div class="src">usa: etiqueta-ambiente.png</div>
+        <div class="note">Quarto com cortina dos dois lados + cama posta. Vários produtos na mesma cena. <b>Serve direto</b> como etiqueta comprável.</div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <img src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja-mh/_fotos-recebidas/categoria-moveis-decoracoes.png">
+      <div class="body">
+        <div class="rt">Etiquetas · ambiente 2</div>
+        <div class="src">usa: categoria-moveis-decoracoes.png</div>
+        <div class="note">A mesma cena de sala funciona como segunda etiqueta (cortina + almofadas + tapete). <b>Serve direto.</b></div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <img src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja-mh/_fotos-recebidas/hero-desktop.png">
+      <div class="body">
+        <div class="rt">Hero · uso temporário</div>
+        <div class="src">usa: hero-desktop.png / hero-mobile.png</div>
+        <div class="note">Tem voil na lateral e cama no centro. Dá pra subir o hero provisoriamente, mas o ideal é a foto nova de cortina blackout (peça 1).</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note-box"><b>Não serve pra Fêffo:</b> as fotos de galpão (categoria-industria-comercio.png) e as de cama escura do secundário da MH não entram aqui, porque a Fêffo não tem categoria de atacado e os secundários da Fêffo são de processo (costura, medição, embalagem), não de cama posta.</div>
+
+  <div class="foot"><span>Fêffo Cortinas · Guia de Fotos</span><span>Criativvo</span></div>
+</div>
+
+<!-- PAGINA 3 -->
+<div class="page">
+  <h2>O que falta tirar <span class="tag">cortinas e hero</span></h2>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">1</div><div class="ttl">Banner principal · cortina blackout</div><div class="use">1920×640 / 600×800</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Cena:</span> sala ou quarto com <b>cortina blackout instalada</b> e luz entrando pela lateral. Editorial, sofisticado, parede clara.</div>
+        <div class="row"><span class="k">Atenção:</span> são <b>2 fotos do mesmo ambiente</b>, porque desktop e mobile têm formatos bem diferentes.</div>
+        <div class="row"><span class="k">Desktop (horizontal):</span> a janela com a cortina na <b>metade direita</b>, esquerda calma pro texto + logo.</div>
+        <div class="row"><span class="k">Mobile (vertical):</span> cortina no <b>centro/baixo</b>, <b>topo mais vazio</b> pro texto.</div>
+        <div class="mini">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Desktop (horizontal)</td><td>1920×640 px</td><td>3000×1000 px</td></tr>
+          <tr><td>Mobile (vertical)</td><td>600×800 px</td><td>1200×1600 px</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:150px;height:54px;margin-bottom:8px">
+          <div class="zone z-text" style="left:5px;top:5px;bottom:5px;width:64px">texto</div>
+          <div class="zone z-prod" style="right:5px;top:5px;bottom:5px;width:70px">Cortina</div>
+        </div>
+        <div class="cap" style="margin-bottom:8px">desktop horizontal</div>
+        <div class="frame" style="width:70px;height:94px;margin:0 auto">
+          <div class="zone z-text" style="left:5px;right:5px;top:5px;height:30px">texto</div>
+          <div class="zone z-prod" style="left:5px;right:5px;bottom:5px;height:50px">Cortina</div>
+        </div>
+        <div class="cap">mobile vertical</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">2</div><div class="ttl">Categoria · Blackout</div><div class="use">Tile 800×800</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Produto:</span> cortina <b>blackout</b> instalada, mostrando o tecido encorpado e o bloqueio de luz (ambiente mais fechado de um lado, claro do outro).</div>
+        <div class="row"><span class="k">Alinhamento:</span> cortina <b>centralizada</b>, com margem. <b>Terço de baixo calmo</b> (entra o nome "Blackout").</div>
+        <div class="mini">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Único</td><td>800×800 px</td><td>1600×1600 px (quadrada)</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:140px;height:140px">
+          <div class="zone z-prod" style="inset:8px 8px 40px 8px">Cortina<br>centralizada</div>
+          <div class="zone z-text" style="left:8px;right:8px;bottom:8px;height:28px">nome (calmo)</div>
+        </div>
+        <div class="cap">quadrado 1:1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">3</div><div class="ttl">Categoria · Voil</div><div class="use">Tile 800×800</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Produto:</span> cortina <b>voil</b> (leve, translúcida), com a luz natural passando pelo tecido. Pegada clara e suave.</div>
+        <div class="row"><span class="k">Alinhamento:</span> cortina <b>centralizada</b>, mesma luz e fundo da foto de Blackout. <b>Terço de baixo calmo</b>.</div>
+        <div class="mini">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Único</td><td>800×800 px</td><td>1600×1600 px (quadrada)</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:140px;height:140px">
+          <div class="zone z-prod" style="inset:8px 8px 40px 8px">Cortina<br>centralizada</div>
+          <div class="zone z-text" style="left:8px;right:8px;bottom:8px;height:28px">nome (calmo)</div>
+        </div>
+        <div class="cap">quadrado 1:1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Fêffo Cortinas · Guia de Fotos</span><span>Criativvo</span></div>
+</div>
+
+<!-- PAGINA 4 -->
+<div class="page">
+  <h2>O que falta tirar <span class="tag">enxoval e diferenciais</span></h2>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">4</div><div class="ttl">Categoria · Edredom estampado</div><div class="use">Tile 800×800</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Produto:</span> edredom <b>estampado</b> bem arrumado na cama, estampa em destaque. Carro-chefe feminino do mix.</div>
+        <div class="row"><span class="k">Alinhamento:</span> produto <b>centralizado</b>, <b>terço de baixo calmo</b> (entra o nome). Mesma luz das outras categorias.</div>
+        <div class="mini">
+          <table><tr><th>Dispositivo</th><th>Tamanho final</th><th>Tirar no mínimo</th></tr>
+          <tr><td>Único</td><td>800×800 px</td><td>1600×1600 px (quadrada)</td></tr></table>
+        </div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:140px;height:140px">
+          <div class="zone z-prod" style="inset:8px 8px 40px 8px">Produto<br>centralizado</div>
+          <div class="zone z-text" style="left:8px;right:8px;bottom:8px;height:28px">nome (calmo)</div>
+        </div>
+        <div class="cap">quadrado 1:1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">5</div><div class="ttl">Secundário · Fabricação 100% própria</div><div class="use">1500×375 / 600×340</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Cena:</span> bastidor da fábrica: <b>máquina de costura em ação</b> ou <b>mãos costurando</b> a cortina. Prova de que vocês fabricam.</div>
+        <div class="row"><span class="k">Alinhamento:</span> elemento à <b>direita</b>, metade esquerda limpa pro texto. Foto horizontal e ampla atende desktop e mobile.</div>
+        <div class="mini"><span class="k">Tamanhos:</span> 1500×375 (desktop) + 600×340 (mobile) · tirar no mínimo 3000×800 px (horizontal).</div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:170px;height:70px">
+          <div class="zone z-text" style="left:6px;top:6px;bottom:6px;width:74px">texto<br>(limpo)</div>
+          <div class="zone z-prod" style="right:6px;top:6px;bottom:6px;width:78px">Costura<br>à direita</div>
+        </div>
+        <div class="cap">horizontal</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">6</div><div class="ttl">Secundário · Sob medida</div><div class="use">1500×375 / 600×340</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Cena:</span> <b>medição</b> da cortina (trena/régua no tecido) ou cortina instalada com caimento perfeito sob medida.</div>
+        <div class="row"><span class="k">Alinhamento:</span> elemento à <b>direita</b>, esquerda limpa pro texto.</div>
+        <div class="row"><span class="k">Lembrete:</span> é nesse banner que entra, com elegância, o aviso de que <b>a cortina não acompanha varão</b>.</div>
+        <div class="mini"><span class="k">Tamanhos:</span> 1500×375 (desktop) + 600×340 (mobile) · tirar no mínimo 3000×800 px (horizontal).</div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:170px;height:70px">
+          <div class="zone z-text" style="left:6px;top:6px;bottom:6px;width:74px">texto<br>(limpo)</div>
+          <div class="zone z-prod" style="right:6px;top:6px;bottom:6px;width:78px">Medição<br>à direita</div>
+        </div>
+        <div class="cap">horizontal</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shot-h"><div class="num">7</div><div class="ttl">Secundário · Envio em 1 dia útil + garantia</div><div class="use">1500×375 / 600×340</div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="row"><span class="k">Cena:</span> <b>embalagem/caixa pronta pra envio</b> ou close do acabamento bem feito. Sensação de cuidado e agilidade.</div>
+        <div class="row"><span class="k">Alinhamento:</span> elemento à <b>direita</b>, esquerda limpa pro texto (envio em 1 dia útil + 30 dias de garantia).</div>
+        <div class="mini"><span class="k">Tamanhos:</span> 1500×375 (desktop) + 600×340 (mobile) · tirar no mínimo 3000×800 px (horizontal).</div>
+      </div>
+      <div class="diag">
+        <div class="frame" style="width:170px;height:70px">
+          <div class="zone z-text" style="left:6px;top:6px;bottom:6px;width:74px">texto<br>(limpo)</div>
+          <div class="zone z-prod" style="right:6px;top:6px;bottom:6px;width:78px">Embalagem<br>à direita</div>
+        </div>
+        <div class="cap">horizontal</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Fêffo Cortinas · Guia de Fotos</span><span>Criativvo</span></div>
+</div>
+
+</body></html>

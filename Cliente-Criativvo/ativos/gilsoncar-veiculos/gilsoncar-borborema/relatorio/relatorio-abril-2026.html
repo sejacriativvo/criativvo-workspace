@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório Abril 2026 — GilsonCar Veículos Borborema</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #000; color: #fff; font-family: 'Montserrat', sans-serif; line-height: 1.6; }
+    a { color: #CC0000; }
+
+    /* PROGRESS BAR */
+    #progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: linear-gradient(90deg, #CC0000, #ff2020);
+      z-index: 9999; transition: width 0.08s linear;
+    }
+
+    /* LAYOUT */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(0,0,0,0.97); border-bottom: 2px solid #CC0000;
+      padding: 24px 20px; text-align: center;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    }
+    header .client-logo { height: 52px; width: auto; margin-bottom: 12px; }
+    header .agency-line { font-size: 0.68rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #444; }
+    header h1 { font-size: 1.2rem; font-weight: 800; color: #fff; margin-top: 10px; }
+    header .periodo { font-size: 0.75rem; color: #555; margin-top: 5px; letter-spacing: 1px; }
+
+    /* SECTIONS */
+    section { padding: 56px 20px; }
+    section + section { border-top: 1px solid #111; }
+
+    /* SECTION LABELS */
+    .section-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: #CC0000; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      background: #CC0000; border-radius: 50%; flex-shrink: 0;
+    }
+    .section-title { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 28px; }
+
+    /* CARDS */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .card {
+      background: #0c0c0c; border-radius: 14px; padding: 24px 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(204,0,0,0.1);
+    }
+    .card.highlight { border: 1px solid rgba(204,0,0,0.55); }
+    .card.highlight:hover { box-shadow: 0 12px 32px rgba(204,0,0,0.18), 0 0 0 1px rgba(204,0,0,0.5); }
+    .card-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #555; margin-bottom: 8px; }
+    .card-value { font-size: 2rem; font-weight: 900; color: #CC0000; line-height: 1; }
+    .card-value.white { color: #fff; }
+    .card-sub { font-size: 0.73rem; color: #444; margin-top: 6px; }
+    .card-delta { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .delta-up { background: rgba(34,197,94,0.12); color: #22c55e; }
+    .delta-down { background: rgba(239,68,68,0.12); color: #ef4444; }
+
+    /* RESUMO TEXTO */
+    .resumo-texto {
+      background: #0c0c0c; border-left: 3px solid #CC0000;
+      border-radius: 0 12px 12px 0; padding: 20px 24px; margin-top: 8px;
+      font-size: 0.93rem; color: #aaa; line-height: 1.75;
+    }
+    .resumo-texto strong { color: #fff; }
+
+    /* CHARTS */
+    .chart-wrap { background: #0c0c0c; border-radius: 14px; padding: 24px; margin-bottom: 16px; }
+    .chart-title { font-size: 0.82rem; font-weight: 700; color: #bbb; margin-bottom: 16px; letter-spacing: 0.5px; }
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .charts-grid { grid-template-columns: 1fr; } }
+
+    /* INSIGHTS */
+    .insights { display: grid; gap: 12px; margin-top: 4px; margin-bottom: 28px; }
+    .insight { background: #0c0c0c; border-radius: 12px; padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start; }
+    .insight-icon { font-size: 1.2rem; flex-shrink: 0; line-height: 1.6; }
+    .insight-text { font-size: 0.87rem; color: #aaa; line-height: 1.6; }
+    .insight-text strong { color: #fff; }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; border-radius: 12px; overflow: hidden; margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    thead th {
+      background: #111; color: #555; font-weight: 600;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 12px 14px; text-align: left; font-size: 0.68rem;
+    }
+    tbody tr { border-bottom: 1px solid #111; transition: background 0.15s; }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+    tbody tr:first-child td { color: #CC0000; font-weight: 700; }
+    tbody td { padding: 13px 14px; color: #aaa; }
+    tbody tr:first-child { background: rgba(204,0,0,0.04); }
+
+    /* RANKING */
+    .ranking { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .rank-item {
+      display: flex; align-items: center; gap: 12px;
+      background: #0c0c0c; border-radius: 10px; padding: 12px 16px;
+      transition: background 0.15s;
+    }
+    .rank-item:hover { background: #141414; }
+    .rank-num {
+      width: 28px; height: 28px; border-radius: 50%; background: #1a1a1a;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 800; color: #444; flex-shrink: 0;
+    }
+    .rank-num.first { background: #CC0000; color: #fff; }
+    .rank-name { flex: 1; font-size: 0.85rem; color: #aaa; font-weight: 500; }
+    .rank-val { font-size: 0.85rem; font-weight: 700; }
+    .rank-val.pos { color: #22c55e; }
+    .rank-val.neg { color: #ef4444; }
+
+    /* FOCO */
+    .foco-grid { display: grid; gap: 12px; margin-top: 8px; }
+    .foco { border-radius: 12px; padding: 20px 22px; }
+    .foco.ok { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.18); }
+    .foco.atencao { background: rgba(234,179,8,0.06); border: 1px solid rgba(234,179,8,0.18); }
+    .foco.alvo { background: rgba(204,0,0,0.06); border: 1px solid rgba(204,0,0,0.22); }
+    .foco-header { font-size: 0.77rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .foco.ok .foco-header { color: #22c55e; }
+    .foco.atencao .foco-header { color: #eab308; }
+    .foco.alvo .foco-header { color: #CC0000; }
+    .foco p { font-size: 0.87rem; color: #aaa; line-height: 1.65; }
+    .foco p strong { color: #fff; }
+
+    /* DESTAQUE */
+    .destaque-box {
+      background: rgba(204,0,0,0.06); border: 1px solid rgba(204,0,0,0.3);
+      border-radius: 14px; padding: 28px 24px; margin-bottom: 24px; text-align: center;
+    }
+    .destaque-box .trophy { font-size: 2.4rem; margin-bottom: 10px; }
+    .destaque-box h3 { font-size: 1.05rem; font-weight: 800; color: #CC0000; margin-bottom: 8px; }
+    .destaque-box p { font-size: 0.87rem; color: #aaa; line-height: 1.6; }
+
+    /* FOOTER */
+    footer { background: #050505; border-top: 1px solid #111; padding: 32px 20px; text-align: center; }
+    footer p { font-size: 0.72rem; color: #444; letter-spacing: 1px; }
+    footer .brand { font-family: 'Great Vibes', cursive; color: #CC0000; font-size: 1.2rem; display: block; margin-bottom: 6px; }
+
+    /* ANIMATE ON SCROLL */
+    .anim {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .anim.in { opacity: 1; transform: none; }
+    .anim-delay-1 { transition-delay: 0.08s; }
+    .anim-delay-2 { transition-delay: 0.16s; }
+    .anim-delay-3 { transition-delay: 0.24s; }
+    .anim-delay-4 { transition-delay: 0.32s; }
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- HEADER -->
+<header>
+  <img class="client-logo" src="../gilsoncar/assets/LOGO GILSONCAR.png" alt="GilsonCar Veículos">
+  <div class="agency-line">Relatório produzido pela Criativvo</div>
+  <h1>Relatório Mensal — Unidade Borborema</h1>
+  <div class="periodo">ABRIL 2026 &nbsp;•&nbsp; @gilsoncarborborema</div>
+</header>
+
+<!-- RESUMO EXECUTIVO -->
+<section>
+  <div class="container">
+    <div class="section-label">Visão geral</div>
+    <div class="section-title">Resumo do mês</div>
+
+    <div class="cards">
+      <div class="card highlight anim anim-delay-1">
+        <div class="card-label">Conversas iniciadas</div>
+        <div class="card-value">57</div>
+        <div class="card-sub">Clientes que falaram com a loja</div>
+        <span class="card-delta delta-up">↑ 97% vs março</span>
+      </div>
+      <div class="card anim anim-delay-2">
+        <div class="card-label">Investido em anúncios</div>
+        <div class="card-value white">R$831</div>
+        <div class="card-sub">Total de verba no mês</div>
+        <span class="card-delta delta-up">↓ 31% vs março</span>
+      </div>
+      <div class="card highlight anim anim-delay-3">
+        <div class="card-label">ROI dos anúncios</div>
+        <div class="card-value">76,66%</div>
+        <div class="card-sub">Retorno sobre investimento</div>
+      </div>
+      <div class="card anim anim-delay-4">
+        <div class="card-label">Carros vendidos</div>
+        <div class="card-value white">8</div>
+        <div class="card-sub">Vendas confirmadas no mês</div>
+      </div>
+    </div>
+
+    <div class="resumo-texto anim">
+      Abril foi um mês de <strong>crescimento acelerado</strong> para a unidade Borborema: com menos verba que março (R$831 vs R$1.202), o número de conversas praticamente dobrou — <strong>57 leads contra 29</strong> no mês anterior. Nas redes sociais, a GilsonCar Borborema foi <strong>a conta que mais cresceu em seguidores</strong> entre todos os concorrentes monitorados, com +1,35% no período.
+    </div>
+  </div>
+</section>
+
+<!-- TRÁFEGO PAGO -->
+<section>
+  <div class="container">
+    <div class="section-label">Meta Ads</div>
+    <div class="section-title">Tráfego pago</div>
+
+    <div class="charts-grid anim">
+      <div class="chart-wrap">
+        <div class="chart-title">Conversas geradas</div>
+        <canvas id="chartConversas" height="200"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">Investimento vs Vendas</div>
+        <canvas id="chartROI" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="cards anim">
+      <div class="card">
+        <div class="card-label">Março 2026</div>
+        <div class="card-value white" style="font-size:1.4rem;">29 leads</div>
+        <div class="card-sub">R$1.202 investidos &nbsp;•&nbsp; 17 vendas &nbsp;•&nbsp; ROI 78,89%</div>
+      </div>
+      <div class="card highlight">
+        <div class="card-label">Abril 2026</div>
+        <div class="card-value" style="font-size:1.4rem;">57 leads</div>
+        <div class="card-sub">R$831 investidos &nbsp;•&nbsp; 8 vendas &nbsp;•&nbsp; ROI 76,66%</div>
+      </div>
+    </div>
+
+    <div class="insights anim">
+      <div class="insight">
+        <div class="insight-icon">⚡</div>
+        <div class="insight-text"><strong>Eficiência quase dobrou.</strong> Com 31% menos verba, a unidade gerou 97% mais leads — o aprendizado dos anúncios está evoluindo e chegando em pessoas com maior intenção de compra.</div>
+      </div>
+      <div class="insight">
+        <div class="insight-icon">🎯</div>
+        <div class="insight-text"><strong>ROI estável acima de 76%.</strong> Mesmo com volume de vendas diferente em relação a março, o retorno sobre o investimento se manteve consistente — sinal de que a qualidade dos leads está boa.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REDES SOCIAIS -->
+<section>
+  <div class="container">
+    <div class="section-label">Instagram — Análise de concorrentes</div>
+    <div class="section-title">Redes sociais</div>
+
+    <div class="destaque-box anim">
+      <div class="trophy">🏆</div>
+      <h3>Maior crescimento de seguidores da região</h3>
+      <p>@gilsoncarborborema cresceu +1,35% no período — mais que todos os concorrentes monitorados.<br>O segundo lugar foi o Premier Veículos com apenas +0,25%.</p>
+    </div>
+
+    <div class="cards anim" style="margin-bottom:24px;">
+      <div class="card highlight">
+        <div class="card-label">Engajamento público</div>
+        <div class="card-value">0,57%</div>
+        <div class="card-sub">Sua taxa no período</div>
+        <span class="card-delta delta-up">↑ 8x acima da média (0,07%)</span>
+      </div>
+      <div class="card">
+        <div class="card-label">Posts publicados</div>
+        <div class="card-value white">3</div>
+        <div class="card-sub">No período analisado</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Curtidas totais</div>
+        <div class="card-value white">21</div>
+        <div class="card-sub">No período analisado</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Interação por post</div>
+        <div class="card-value white">7,0</div>
+        <div class="card-sub">Média por publicação</div>
+      </div>
+    </div>
+
+    <div class="chart-wrap anim" style="margin-bottom:16px;">
+      <div class="chart-title">Engajamento público — comparativo com concorrentes</div>
+      <canvas id="chartEngajamento" height="200"></canvas>
+    </div>
+
+    <div class="section-label" style="margin-bottom:12px;">Resumo da concorrência</div>
+    <div class="table-wrap anim">
+      <table>
+        <thead>
+          <tr>
+            <th>Perfil</th>
+            <th>Engaj.</th>
+            <th>Posts</th>
+            <th>Curtidas</th>
+            <th>Interação/post</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>@gilsoncarborborema ★</td>
+            <td>0,57%</td>
+            <td>3</td>
+            <td>21</td>
+            <td>7,0</td>
+          </tr>
+          <tr>
+            <td>@_premier_autos</td>
+            <td>0,12%</td>
+            <td>30</td>
+            <td>104</td>
+            <td>3,5</td>
+          </tr>
+          <tr>
+            <td>@furlanveiculos</td>
+            <td>0,10%</td>
+            <td>21</td>
+            <td>181</td>
+            <td>8,6</td>
+          </tr>
+          <tr>
+            <td>@belavista_veiculos</td>
+            <td>0,09%</td>
+            <td>12</td>
+            <td>24</td>
+            <td>2,0</td>
+          </tr>
+          <tr>
+            <td>@pinguimmotors</td>
+            <td>0,06%</td>
+            <td>13</td>
+            <td>141</td>
+            <td>10,8</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:32px;" class="anim">
+      <div class="section-label" style="margin-bottom:12px;">Crescimento de seguidores no período</div>
+      <div class="ranking">
+        <div class="rank-item" style="border: 1px solid rgba(204,0,0,0.4);">
+          <div class="rank-num first">1</div>
+          <div class="rank-name" style="color:#CC0000;font-weight:700;">@gilsoncarborborema ★</div>
+          <div class="rank-val pos">+1,35%</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num">2</div>
+          <div class="rank-name">@_premier_autos</div>
+          <div class="rank-val pos">+0,25%</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num">3</div>
+          <div class="rank-name">@furlanveiculos</div>
+          <div class="rank-val pos">+0,06%</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num">4</div>
+          <div class="rank-name">@pinguimmotors</div>
+          <div class="rank-val neg">−0,08%</div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num">5</div>
+          <div class="rank-name">@belavista_veiculos</div>
+          <div class="rank-val neg">−0,39%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANÁLISE DO MÊS -->
+<section>
+  <div class="container">
+    <div class="section-label">Avaliação</div>
+    <div class="section-title">Análise do mês</div>
+
+    <div class="foco-grid">
+      <div class="foco ok anim">
+        <div class="foco-header">✅ O que funcionou bem</div>
+        <p><strong>Crescimento #1 da região.</strong> Com +1,35%, a GilsonCar Borborema foi o perfil que mais cresceu em seguidores entre todos os concorrentes monitorados — mesmo sendo uma das contas mais novas da região. O conteúdo está atraindo público qualificado.</p>
+      </div>
+      <div class="foco ok anim">
+        <div class="foco-header">✅ O que funcionou bem</div>
+        <p><strong>Engajamento 8x acima da média.</strong> A taxa de 0,57% é a mais alta entre todos os perfis analisados, muito acima da média regional de 0,07%. Seguidores engajados tendem a converter melhor e indicar mais.</p>
+      </div>
+      <div class="foco ok anim">
+        <div class="foco-header">✅ O que funcionou bem</div>
+        <p><strong>Dobrou os leads com menos verba.</strong> 57 conversas com R$831 em abril contra 29 com R$1.202 em março. A otimização dos anúncios está funcionando — menos gasto, mais resultado.</p>
+      </div>
+      <div class="foco atencao anim">
+        <div class="foco-header">⚠️ Ponto de atenção</div>
+        <p><strong>Volume de conteúdo ainda baixo.</strong> Apenas 3 posts no período enquanto a média dos concorrentes fica acima de 15. Com engajamento e crescimento de seguidores liderando a região, aumentar a frequência de publicação é a principal alavanca para ampliar os resultados orgânicos.</p>
+      </div>
+      <div class="foco alvo anim">
+        <div class="foco-header">🎯 Foco de maio</div>
+        <p><strong>Escalar o conteúdo para capitalizar o momentum.</strong> Com engajamento no topo da região e crescimento de seguidores liderando, o próximo passo é aumentar o volume de posts — especialmente Reels — para acelerar esse crescimento e gerar mais conversas orgânicas sem depender só de verba.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <span class="brand">Criativvo</span>
+    <p>Relatório produzido pela Criativvo &nbsp;•&nbsp; criativvo.com.br &nbsp;•&nbsp; Maio de 2026</p>
+  </div>
+</footer>
+
+<script>
+  // ── Progress bar ──
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    progress.style.width = (Math.min(pct, 1) * 100) + '%';
+  }, { passive: true });
+
+  // ── Scroll animations ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+
+  // ── Charts ──
+  const red = '#CC0000';
+  const redFade = 'rgba(204,0,0,0.2)';
+  const grayFade = 'rgba(120,120,120,0.25)';
+  const defaultFont = { family: 'Montserrat', size: 11 };
+  Chart.defaults.color = '#555';
+  Chart.defaults.font = defaultFont;
+  const axisOpts = { grid: { color: '#111' }, ticks: { color: '#555' } };
+
+  new Chart(document.getElementById('chartConversas'), {
+    type: 'bar',
+    data: {
+      labels: ['Março 2026', 'Abril 2026'],
+      datasets: [{
+        label: 'Conversas', data: [29, 57],
+        backgroundColor: [grayFade, red], borderRadius: 8, borderSkipped: false
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+    }
+  });
+
+  new Chart(document.getElementById('chartROI'), {
+    type: 'bar',
+    data: {
+      labels: ['Março 2026', 'Abril 2026'],
+      datasets: [
+        { label: 'Investimento (R$)', data: [1202.11, 831.80], backgroundColor: [grayFade, redFade], borderRadius: 6, borderSkipped: false },
+        { label: 'Vendas', data: [17, 8], backgroundColor: ['rgba(120,120,120,0.45)', red], borderRadius: 6, borderSkipped: false }
+      ]
+    },
+    options: {
+      plugins: { legend: { labels: { font: defaultFont, color: '#555' } } },
+      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+    }
+  });
+
+  new Chart(document.getElementById('chartEngajamento'), {
+    type: 'bar',
+    data: {
+      labels: ['GilsonCar Borborema ★', 'Premier', 'Furlan', 'Bela Vista', 'Pinguim'],
+      datasets: [{
+        label: 'Engajamento (%)', data: [0.57, 0.12, 0.10, 0.09, 0.06],
+        backgroundColor: [red, grayFade, grayFade, grayFade, grayFade],
+        borderRadius: 8, borderSkipped: false
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { x: axisOpts, y: { ...axisOpts, beginAtZero: true } }
+    }
+  });
+</script>
+</body>
+</html>

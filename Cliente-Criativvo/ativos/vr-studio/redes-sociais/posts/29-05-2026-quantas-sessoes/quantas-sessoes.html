@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1b19;
+    --ink-soft:#6b665e;
+    --label:#9a9388;
+    --serif:'Newsreader', Georgia, serif;
+    --sans:'Bricolage Grotesque', system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1080px;height:1350px;}
+  body{
+    font-family:var(--serif);
+    background:
+      radial-gradient(120% 80% at 50% 8%, #f1ede6 0%, #e9e4db 38%, #ddd8cd 72%, #d3cdc1 100%);
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:118px 96px 96px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .kicker{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:21px;
+    letter-spacing:7px;
+    text-transform:uppercase;
+    color:var(--label);
+    margin-bottom:46px;
+  }
+  .headline{
+    text-align:center;
+    font-size:104px;
+    line-height:1.0;
+    letter-spacing:-1.5px;
+    color:var(--ink);
+    margin-bottom:96px;
+  }
+  .headline .em{
+    font-style:italic;
+    font-weight:600;
+  }
+  .cards{
+    display:flex;
+    gap:34px;
+    width:100%;
+    margin-bottom:86px;
+  }
+  .card{
+    flex:1;
+    background:linear-gradient(180deg,#fbfaf7 0%,#f6f3ec 100%);
+    border:1px solid rgba(28,27,25,.06);
+    border-radius:30px;
+    padding:52px 30px 46px;
+    text-align:center;
+    box-shadow:0 24px 50px -28px rgba(60,52,40,.45), inset 0 1px 0 rgba(255,255,255,.7);
+  }
+  .card .big{
+    font-style:italic;
+    font-weight:600;
+    font-size:118px;
+    line-height:.9;
+    letter-spacing:-2px;
+    color:var(--ink);
+  }
+  .card .tag{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:23px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:var(--label);
+    margin:22px 0 24px;
+  }
+  .card .desc{
+    font-size:29px;
+    line-height:1.32;
+    color:var(--ink-soft);
+    max-width:300px;
+    margin:0 auto;
+  }
+  .footnote{
+    text-align:center;
+    font-size:31px;
+    line-height:1.4;
+    color:var(--ink-soft);
+    max-width:760px;
+  }
+  .footnote b{
+    font-weight:600;
+    color:#4f4a42;
+  }
+</style>
+</head>
+<body>
+  <div class="kicker">Quantas sessões</div>
+
+  <h1 class="headline">
+    Remoção <span class="em">progressiva</span><br>
+    do pigmento.
+  </h1>
+
+  <div class="cards">
+    <div class="card">
+      <div class="big">3-4</div>
+      <div class="tag">Sessões</div>
+      <div class="desc">Pra eliminar o pigmento por completo</div>
+    </div>
+    <div class="card">
+      <div class="big">100%</div>
+      <div class="tag">Definitivo</div>
+      <div class="desc">A remoção é pra sempre, sem manutenção</div>
+    </div>
+  </div>
+
+  <p class="footnote">
+    Cada sessão tem <b>~30 - 45 dias de intervalo</b><br>
+    para cicatrização da pele.
+  </p>
+</body>
+</html>

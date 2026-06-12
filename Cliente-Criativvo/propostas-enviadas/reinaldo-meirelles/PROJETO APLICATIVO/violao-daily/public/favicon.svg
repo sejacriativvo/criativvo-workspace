@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background rounded square -->
+  <rect width="32" height="32" rx="8" fill="#58CC02"/>
+  <!-- Inner shadow bottom (3D effect) -->
+  <rect x="0" y="26" width="32" height="6" rx="0" fill="#46A302"/>
+  <rect x="0" y="24" width="32" height="8" rx="8" fill="#46A302"/>
+  <rect width="32" height="28" rx="8" fill="#58CC02"/>
+
+  <!-- Guitar neck -->
+  <rect x="14.2" y="2.5" width="3.6" height="12" rx="1.8" fill="white"/>
+  <!-- Guitar head (tuning pegs area) -->
+  <rect x="11.5" y="1.5" width="9" height="5" rx="2.5" fill="white"/>
+  <!-- Tuning peg dots -->
+  <circle cx="12.8" cy="4" r="1" fill="#58CC02"/>
+  <circle cx="19.2" cy="4" r="1" fill="#58CC02"/>
+
+  <!-- Guitar body (figure-8 waist shape) -->
+  <path d="M16 13 C11.5 13 8 16 8 19.5 C8 21.5 9 23 9 24.5 C9 27 12 30 16 30 C20 30 23 27 23 24.5 C23 23 24 21.5 24 19.5 C24 16 20.5 13 16 13 Z"
+        fill="white"/>
+
+  <!-- Sound hole -->
+  <circle cx="16" cy="22" r="2.8" fill="#58CC02"/>
+
+  <!-- Bridge -->
+  <rect x="12.5" y="26.5" width="7" height="1.5" rx="0.75" fill="#46A302"/>
+</svg>

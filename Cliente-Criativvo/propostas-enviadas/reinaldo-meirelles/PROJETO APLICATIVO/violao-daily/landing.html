@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tocaê — Aprenda violão em minutos por dia. Lições curtas, trilha gamificada e músicas que você conhece. De graça." />
+  <title>Tocaê — Aprenda violão em minutos por dia</title>
+
+  <link rel="icon" type="image/png" href="public/logo.png" />
+  <link rel="icon" type="image/svg+xml" href="public/favicon.svg" />
+  <link rel="apple-touch-icon" href="public/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#F0FAE6', 100: '#D9F5B3', 500: '#58CC02', 600: '#46A302', 700: '#357A01' },
+            sky:   { 50: '#E8F7FE', 500: '#1CB0F6', 600: '#0E84BC' },
+            grape: { 50: '#F5EDFF', 500: '#CE82FF', 600: '#8444C2' },
+            sun:   { 50: '#FFF9E0', 400: '#FFD233', 500: '#FFC800', 600: '#DC9F00' },
+            rose:  { 50: '#FFE8E8', 500: '#FF4B4B', 600: '#C53030' },
+            ink: {
+              50: '#F7F7F7', 100: '#EFEFEF', 200: '#E5E5E5', 300: '#D4D4D4',
+              400: '#AFAFAF', 500: '#777777', 600: '#5A5A5A',
+              700: '#4B4B4B', 800: '#2E2E2E', 900: '#1A1A1A',
+            },
+          },
+          fontFamily: {
+            display: ['Fredoka', 'system-ui', 'sans-serif'],
+            sans: ['Nunito', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+    /* ── 3D Buttons ─────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 0.5rem; border-radius: 1rem; padding: 0 1.75rem; height: 56px;
+      font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s; text-decoration: none;
+      white-space: nowrap; border: 0;
+    }
+    .btn:active { transform: translateY(3px); box-shadow: none !important; }
+    .btn-lg { height: 64px; font-size: 1.1rem; padding: 0 2.25rem; border-radius: 1.25rem; }
+    .btn-green  { background: #58CC02; color: #fff; box-shadow: 0 5px 0 0 #46A302; }
+    .btn-yellow { background: #FFC800; color: #2B2B2B; box-shadow: 0 5px 0 0 #DC9F00; }
+    .btn-gray   { background: #fff; color: #777; border: 2.5px solid #E5E5E5; box-shadow: 0 4px 0 0 #C4C4C4; }
+    .btn-ghost  { background: transparent; color: #1CB0F6; border: 2.5px solid #1CB0F6; box-shadow: none; height: 48px; padding: 0 1.25rem; }
+    .btn-ghost:hover { background: #E8F7FE; }
+
+    /* ── Card 3D ────────────────────────────────────────── */
+    .card-3d {
+      border-radius: 1.5rem; border: 2.5px solid #E5E5E5;
+      background: #fff; box-shadow: 0 4px 0 0 #E5E5E5;
+    }
+    .card-3d-green {
+      border-color: #58CC02; box-shadow: 0 4px 0 0 #46A302;
+    }
+
+    /* ── Fade-up animation ──────────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+
+    /* ── Phone mockup ───────────────────────────────────── */
+    .phone-frame {
+      width: 270px; height: 540px;
+      background: #fff;
+      border-radius: 40px;
+      border: 8px solid #1A1A1A;
+      box-shadow: 0 0 0 2px #333, 0 40px 80px rgba(0,0,0,0.25);
+      overflow: hidden; position: relative; flex-shrink: 0;
+    }
+    .phone-notch {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 24px; background: #1A1A1A;
+      border-bottom-left-radius: 14px; border-bottom-right-radius: 14px;
+      z-index: 10;
+    }
+
+    /* ── Floating chip ──────────────────────────────────── */
+    .chip {
+      position: absolute; border-radius: 999px;
+      padding: 8px 16px; font-family: 'Nunito', sans-serif;
+      font-size: 0.8rem; font-weight: 800;
+      display: flex; align-items: center; gap: 6px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      animation: float 3s ease-in-out infinite;
+      white-space: nowrap;
+      z-index: 20;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ── Section badge ──────────────────────────────────── */
+    .section-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #F0FAE6; color: #46A302;
+      border: 2px solid #D9F5B3; border-radius: 999px;
+      padding: 6px 16px; font-size: 0.78rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Lesson node ────────────────────────────────────── */
+    .lesson-node {
+      width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; flex-shrink: 0;
+      border: 3px solid rgba(255,255,255,0.6);
+    }
+
+    /* ── Stripe separator ───────────────────────────────── */
+    .stripe {
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(255,255,255,0.04) 0,
+        rgba(255,255,255,0.04) 4px,
+        transparent 4px,
+        transparent 12px
+      );
+    }
+
+    /* ── Scrollbar hide ─────────────────────────────────── */
+    ::-webkit-scrollbar { width: 0; }
+
+    /* ── Nav blur ───────────────────────────────────────── */
+    .nav-blur {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.92);
+    }
+  </style>
+</head>
+
+<body class="bg-white text-ink-900 font-sans overflow-x-hidden">
+
+  <!-- ════════════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════════════ -->
+  <nav class="sticky top-0 z-50 nav-blur border-b-2 border-ink-100">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between gap-6">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2 flex-shrink-0">
+        <img src="public/logo.png" alt="Tocaê" class="h-10 w-10 rounded-2xl object-cover"
+             style="box-shadow: 0 4px 0 0 #46A302" />
+        <span class="font-display text-xl font-bold text-ink-900 tracking-tight">tocaê</span>
+      </a>
+
+      <!-- Links (desktop) -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#como-funciona" class="text-sm font-bold text-ink-500 hover:text-ink-900 transition-colors">Como funciona</a>
+        <a href="#para-quem"     class="text-sm font-bold text-ink-500 hover:text-ink-900 transition-colors">Para quem é</a>
+        <a href="#depoimentos"   class="text-sm font-bold text-ink-500 hover:text-ink-900 transition-colors">Depoimentos</a>
+        <a href="#premium"       class="text-sm font-bold text-sun-600 hover:text-sun-700 transition-colors">Premium ✨</a>
+      </div>
+
+      <!-- CTAs -->
+      <div class="flex items-center gap-3">
+        <a href="#" class="btn btn-ghost hidden sm:inline-flex">Entrar</a>
+        <a href="#" class="btn btn-green" style="height:48px;padding:0 1.25rem;font-size:0.9rem">Começar grátis</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════════ -->
+  <section class="pt-16 pb-24 px-6 overflow-hidden">
+    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+
+      <!-- Left: copy -->
+      <div class="flex-1 text-center lg:text-left max-w-xl mx-auto lg:mx-0">
+        <div class="section-badge fade-up">🎸 100% gratuito para começar</div>
+
+        <h1 class="font-display text-5xl lg:text-6xl font-bold leading-tight text-ink-900 fade-up fade-up-delay-1">
+          Aprenda violão<br/>em minutos por dia
+        </h1>
+
+        <p class="mt-5 text-lg font-semibold text-ink-500 leading-relaxed fade-up fade-up-delay-2">
+          Do zero ao seu primeiro acorde. Lições curtas, trilha gamificada<br class="hidden lg:block"/>
+          e músicas que você realmente conhece.
+        </p>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-up fade-up-delay-2">
+          <a href="#" class="btn btn-green btn-lg">Começar grátis</a>
+          <a href="#como-funciona" class="btn btn-gray btn-lg">Como funciona</a>
+        </div>
+
+        <!-- Social proof -->
+        <div class="mt-8 flex items-center gap-3 justify-center lg:justify-start fade-up fade-up-delay-3">
+          <div class="flex -space-x-2">
+            <div class="h-9 w-9 rounded-full border-2 border-white flex items-center justify-center text-sm bg-brand-500">😊</div>
+            <div class="h-9 w-9 rounded-full border-2 border-white flex items-center justify-center text-sm bg-sky-500">🎵</div>
+            <div class="h-9 w-9 rounded-full border-2 border-white flex items-center justify-center text-sm bg-grape-500">🎸</div>
+            <div class="h-9 w-9 rounded-full border-2 border-white flex items-center justify-center text-sm bg-sun-500">🤠</div>
+            <div class="h-9 w-9 rounded-full border-2 border-white flex items-center justify-center text-xs bg-rose-500 text-white font-bold">+</div>
+          </div>
+          <p class="text-sm font-bold text-ink-500">
+            <span class="text-ink-900">+10.000 alunos</span> aprendendo agora
+          </p>
+        </div>
+      </div>
+
+      <!-- Right: phone + chips -->
+      <div class="relative flex-shrink-0 flex justify-center" style="width:320px;height:580px">
+
+        <!-- Floating chips -->
+        <div class="chip bg-brand-500 text-white" style="top:12px;right:-20px;animation-delay:0s;box-shadow:0 4px 0 0 #46A302">
+          <span>⭐</span> +15 XP
+        </div>
+        <div class="chip bg-white text-ink-800 border-2 border-ink-200" style="top:130px;left:-30px;animation-delay:1s">
+          🔥 7 dias seguidos
+        </div>
+        <div class="chip bg-sun-500 text-ink-900" style="bottom:90px;right:-24px;animation-delay:1.8s;box-shadow:0 4px 0 0 #DC9F00">
+          🏆 Conquista!
+        </div>
+        <div class="chip bg-sky-500 text-white" style="bottom:180px;left:-28px;animation-delay:0.6s;box-shadow:0 4px 0 0 #0E84BC">
+          🎵 Lição concluída
+        </div>
+
+        <!-- Phone frame -->
+        <div class="phone-frame" style="margin-top:20px">
+          <div class="phone-notch"></div>
+
+          <!-- Status bar -->
+          <div class="flex items-center justify-between px-5 pt-7 pb-1 text-[10px] font-bold text-ink-500">
+            <span>9:41</span>
+            <div class="flex items-center gap-1">
+              <span>▲▲▲</span>
+              <span>📶</span>
+              <span>🔋</span>
+            </div>
+          </div>
+
+          <!-- Top stats bar -->
+          <div class="flex items-center justify-between px-4 py-2">
+            <div class="flex items-center gap-1">
+              <span class="text-rose-500">🔥</span>
+              <span class="font-display text-sm font-bold text-ink-800">7</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-sun-500">⭐</span>
+              <span class="font-display text-sm font-bold text-ink-800">320</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="text-rose-500">❤️</span>
+              <span class="font-display text-sm font-bold text-ink-800">5</span>
+            </div>
+          </div>
+
+          <!-- Next lesson card -->
+          <div class="mx-3 rounded-2xl p-3 text-white" style="background:#58CC02;box-shadow:0 4px 0 0 #46A302">
+            <p class="text-[9px] font-bold uppercase tracking-widest opacity-80">Próxima lição</p>
+            <p class="font-display text-sm font-bold leading-tight mt-0.5">Acordes Am e E</p>
+            <div class="mt-2 flex items-center justify-between">
+              <span class="text-[9px] font-bold opacity-80">Unidade 1 • Lição 4</span>
+              <div class="bg-white text-brand-600 rounded-xl px-3 py-1 text-[10px] font-black uppercase">
+                Continuar →
+              </div>
+            </div>
+          </div>
+
+          <!-- Lesson map -->
+          <div class="flex flex-col items-center pt-4 gap-0">
+            <!-- Node 1 (done) -->
+            <div class="lesson-node" style="background:#58CC02;box-shadow:0 4px 0 0 #46A302;color:white">✓</div>
+            <div style="width:3px;height:16px;background:#58CC02;border-radius:2px"></div>
+            <!-- Node 2 (done) -->
+            <div class="lesson-node" style="background:#58CC02;box-shadow:0 4px 0 0 #46A302;color:white">✓</div>
+            <div style="width:3px;height:16px;background:#58CC02;border-radius:2px"></div>
+            <!-- Node 3 (done) -->
+            <div class="lesson-node" style="background:#1CB0F6;box-shadow:0 4px 0 0 #0E84BC;color:white">⭐</div>
+            <div style="width:3px;height:16px;background:#E5E5E5;border-radius:2px"></div>
+            <!-- Node 4 (current) -->
+            <div class="lesson-node relative" style="background:#58CC02;box-shadow:0 4px 0 0 #46A302;color:white;animation:pulse-glow 2s ease-in-out infinite">
+              🎸
+            </div>
+            <div style="width:3px;height:16px;background:#E5E5E5;border-radius:2px"></div>
+            <!-- Node 5 (locked) -->
+            <div class="lesson-node" style="background:#E5E5E5;box-shadow:0 4px 0 0 #C4C4C4;color:#AFAFAF">🔒</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 4px 0 0 #46A302, 0 0 0 0 rgba(88,204,2,0.4); }
+      50% { box-shadow: 0 4px 0 0 #46A302, 0 0 0 12px rgba(88,204,2,0); }
+    }
+  </style>
+
+
+  <!-- ════════════════════════════════════════════════════
+       STATS BAR
+  ════════════════════════════════════════════════════ -->
+  <section class="bg-ink-900 stripe py-12 px-6">
+    <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div class="fade-up">
+        <p class="font-display text-4xl font-bold text-brand-500">+10.000</p>
+        <p class="mt-1 text-sm font-bold text-ink-400 uppercase tracking-widest">Alunos ativos</p>
+      </div>
+      <div class="fade-up fade-up-delay-1">
+        <p class="font-display text-4xl font-bold text-sky-500">+50</p>
+        <p class="mt-1 text-sm font-bold text-ink-400 uppercase tracking-widest">Músicas no catálogo</p>
+      </div>
+      <div class="fade-up fade-up-delay-2">
+        <p class="font-display text-4xl font-bold text-sun-500">4.9 ★</p>
+        <p class="mt-1 text-sm font-bold text-ink-400 uppercase tracking-widest">Avaliação média</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       FEATURE 1 — Gamificado
+  ════════════════════════════════════════════════════ -->
+  <section class="py-24 px-6" id="para-quem">
+    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+
+      <!-- Illustration -->
+      <div class="flex-1 flex justify-center fade-up">
+        <div class="relative">
+          <!-- Main card -->
+          <div class="card-3d-green border-2 border-brand-500 rounded-3xl p-6 w-72 bg-white" style="box-shadow:0 6px 0 0 #46A302">
+            <p class="text-xs font-bold uppercase tracking-widest text-brand-600 mb-3">Sua semana</p>
+            <!-- XP bar -->
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-bold text-ink-700">XP semanal</span>
+              <span class="font-display text-sm font-bold text-brand-600">320 / 500</span>
+            </div>
+            <div class="h-3 rounded-full bg-ink-100 overflow-hidden mb-5">
+              <div class="h-full rounded-full bg-brand-500" style="width:64%;box-shadow:inset 0 -2px 0 rgba(0,0,0,0.1)"></div>
+            </div>
+            <!-- Streak days -->
+            <div class="grid grid-cols-7 gap-1">
+              <div class="flex flex-col items-center gap-1">
+                <div class="h-8 w-8 rounded-xl bg-brand-500 flex items-center justify-center text-sm">🔥</div>
+                <span class="text-[9px] font-bold text-ink-400">SEG</span>
+              </div>
+              <div class="flex flex-col items-center gap-1">
+                <div class="h-8 w-8 rounded-xl bg-brand-500 flex items-center justify-center text-sm">🔥</div>
+                <span class="text-[9px] font-bold text-ink-400">TER</span>
+              </div>
+              <div class="flex flex-col items-center gap-1">
+                <div class="h-8 w-8 rounded-xl bg-brand-500 flex items-center justify-center text-sm">🔥</div>
+                <span class="text-[9px] font-bold text-ink-400">QUA</span>
+              </div>
+              <div class="flex flex-col items-center gap-1">
+                <div class="h-8 w-8 rounded-xl bg-brand-500 flex items-center justify-center text-sm">🔥</div>
+                <span class="text-[9px] font-bold text-ink-400">QUI</span>
+              </div>
+              <div class="flex flex-col items-center gap-1">
+                <div class="h-8 w-8 rounded-xl bg-sun-500 flex items-center justify-center text-sm border-2 border-sun-600" style="box-shadow:0 2px 0 0 #DC9F00">⭐</div>
+                <span class="text-[9px] font-bold text-ink-900">HOJ</span>
+              </div>
+              <div class="flex flex-col items-center gap-1">
+                <div class="h-8 w-8 rounded-xl bg-ink-100 flex items-center justify-center text-sm">○</div>
+                <span class="text-[9px] font-bold text-ink-400">SAB</span>
+              </div>
+              <div class="flex flex-col items-center gap-1">
+                <div class="h-8 w-8 rounded-xl bg-ink-100 flex items-center justify-center text-sm">○</div>
+                <span class="text-[9px] font-bold text-ink-400">DOM</span>
+              </div>
+            </div>
+          </div>
+          <!-- Floating achievement -->
+          <div class="absolute -top-4 -right-8 chip bg-sun-500 text-ink-900" style="box-shadow:0 4px 0 0 #DC9F00;animation-delay:0.5s">
+            🏆 Sequência de 4 dias!
+          </div>
+          <!-- Floating XP -->
+          <div class="absolute -bottom-4 -left-6 chip bg-brand-500 text-white" style="box-shadow:0 3px 0 0 #46A302;animation-delay:1.2s">
+            ⭐ +20 XP
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="flex-1 text-center lg:text-left fade-up fade-up-delay-1">
+        <div class="section-badge">🎮 Gamificação</div>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold text-ink-900 leading-tight">
+          Aprenda como<br/>num jogo
+        </h2>
+        <p class="mt-4 text-lg font-semibold text-ink-500 leading-relaxed">
+          XP, sequências de dias, conquistas e ranking. Cada lição te dá recompensas que te mantêm motivado a voltar amanhã.
+        </p>
+        <ul class="mt-6 space-y-3 text-left max-w-sm mx-auto lg:mx-0">
+          <li class="flex items-center gap-3">
+            <span class="h-8 w-8 rounded-xl bg-brand-50 flex items-center justify-center text-sm flex-shrink-0">⭐</span>
+            <span class="font-bold text-ink-700">Ganhe XP a cada lição concluída</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="h-8 w-8 rounded-xl bg-rose-50 flex items-center justify-center text-sm flex-shrink-0">🔥</span>
+            <span class="font-bold text-ink-700">Mantenha sua sequência diária</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="h-8 w-8 rounded-xl bg-sun-50 flex items-center justify-center text-sm flex-shrink-0">🏆</span>
+            <span class="font-bold text-ink-700">Desbloqueie conquistas exclusivas</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="h-8 w-8 rounded-xl bg-sky-50 flex items-center justify-center text-sm flex-shrink-0">📊</span>
+            <span class="font-bold text-ink-700">Dispute no ranking semanal</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       FEATURE 2 — Músicas reais
+  ════════════════════════════════════════════════════ -->
+  <section class="py-24 px-6 bg-ink-50">
+    <div class="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-16">
+
+      <!-- Text -->
+      <div class="flex-1 text-center lg:text-left fade-up">
+        <div class="section-badge" style="background:#E8F7FE;color:#0E84BC;border-color:#BDE9FD">🎵 Catálogo</div>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold text-ink-900 leading-tight">
+          Músicas que você<br/>realmente conhece
+        </h2>
+        <p class="mt-4 text-lg font-semibold text-ink-500 leading-relaxed">
+          Sertanejo, MPB, pop, gospel e rock. Aprenda tocando o que você já ama — não escalas aleatórias de um método chato.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2 justify-center lg:justify-start">
+          <span class="px-4 py-2 rounded-2xl bg-white border-2 border-ink-200 text-sm font-bold text-ink-700" style="box-shadow:0 3px 0 0 #E5E5E5">🤠 Sertanejo</span>
+          <span class="px-4 py-2 rounded-2xl bg-white border-2 border-ink-200 text-sm font-bold text-ink-700" style="box-shadow:0 3px 0 0 #E5E5E5">🇧🇷 MPB</span>
+          <span class="px-4 py-2 rounded-2xl bg-white border-2 border-ink-200 text-sm font-bold text-ink-700" style="box-shadow:0 3px 0 0 #E5E5E5">⛪ Gospel</span>
+          <span class="px-4 py-2 rounded-2xl bg-white border-2 border-ink-200 text-sm font-bold text-ink-700" style="box-shadow:0 3px 0 0 #E5E5E5">🎸 Rock</span>
+          <span class="px-4 py-2 rounded-2xl bg-white border-2 border-ink-200 text-sm font-bold text-ink-700" style="box-shadow:0 3px 0 0 #E5E5E5">🎶 Pop</span>
+        </div>
+      </div>
+
+      <!-- Illustration -->
+      <div class="flex-1 flex justify-center fade-up fade-up-delay-1">
+        <div class="space-y-3 w-72">
+          <!-- Song cards -->
+          <div class="card-3d p-4 flex items-center gap-4 hover:scale-[1.02] transition-transform cursor-pointer">
+            <div class="h-14 w-14 rounded-2xl bg-sun-500 flex items-center justify-center text-2xl flex-shrink-0" style="box-shadow:0 3px 0 0 #DC9F00">🤠</div>
+            <div class="flex-1 min-w-0">
+              <p class="font-display text-sm font-bold text-ink-900 truncate">Evidências</p>
+              <p class="text-xs font-semibold text-ink-400">Roberto Carlos • Básico</p>
+              <div class="mt-1.5 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                <div class="h-full rounded-full bg-brand-500" style="width:60%"></div>
+              </div>
+            </div>
+            <span class="text-brand-500 font-black text-lg flex-shrink-0">›</span>
+          </div>
+
+          <div class="card-3d p-4 flex items-center gap-4 hover:scale-[1.02] transition-transform cursor-pointer">
+            <div class="h-14 w-14 rounded-2xl bg-grape-500 flex items-center justify-center text-2xl flex-shrink-0" style="box-shadow:0 3px 0 0 #8444C2">🇧🇷</div>
+            <div class="flex-1 min-w-0">
+              <p class="font-display text-sm font-bold text-ink-900 truncate">Garota de Ipanema</p>
+              <p class="text-xs font-semibold text-ink-400">Tom Jobim • Intermediário</p>
+              <div class="mt-1.5 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                <div class="h-full rounded-full bg-grape-500" style="width:30%"></div>
+              </div>
+            </div>
+            <span class="text-ink-300 font-black text-lg flex-shrink-0">🔒</span>
+          </div>
+
+          <div class="card-3d p-4 flex items-center gap-4 hover:scale-[1.02] transition-transform cursor-pointer" style="border-color:#1CB0F6;box-shadow:0 4px 0 0 #0E84BC">
+            <div class="h-14 w-14 rounded-2xl bg-sky-500 flex items-center justify-center text-2xl flex-shrink-0" style="box-shadow:0 3px 0 0 #0E84BC">⛪</div>
+            <div class="flex-1 min-w-0">
+              <p class="font-display text-sm font-bold text-ink-900 truncate">Reckless Love</p>
+              <p class="text-xs font-semibold text-ink-400">Gospel • Iniciante</p>
+              <div class="mt-1.5 h-1.5 rounded-full bg-ink-100 overflow-hidden">
+                <div class="h-full rounded-full bg-sky-500" style="width:85%"></div>
+              </div>
+            </div>
+            <span class="text-sky-500 font-black text-lg flex-shrink-0">›</span>
+          </div>
+
+          <p class="text-center text-sm font-bold text-brand-600 pt-1">+50 músicas disponíveis ›</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       FEATURE 3 — Lições rápidas
+  ════════════════════════════════════════════════════ -->
+  <section class="py-24 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+
+      <!-- Illustration -->
+      <div class="flex-1 flex justify-center fade-up">
+        <div class="relative">
+          <!-- Lesson result card -->
+          <div class="rounded-3xl overflow-hidden w-72" style="border:2.5px solid #58CC02;box-shadow:0 6px 0 0 #46A302">
+            <div class="bg-brand-500 p-6 text-center text-white">
+              <p class="text-4xl mb-2">🎉</p>
+              <p class="font-display text-2xl font-bold">Lição concluída!</p>
+              <p class="text-sm font-semibold opacity-80 mt-1">5 minutos bem aproveitados</p>
+            </div>
+            <div class="bg-white p-5 grid grid-cols-3 gap-3 text-center">
+              <div>
+                <p class="font-display text-2xl font-bold text-sun-600">+20</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-ink-400 mt-0.5">XP</p>
+              </div>
+              <div>
+                <p class="font-display text-2xl font-bold text-rose-500">🔥 8</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-ink-400 mt-0.5">Dias</p>
+              </div>
+              <div>
+                <p class="font-display text-2xl font-bold text-brand-600">100%</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-ink-400 mt-0.5">Acertos</p>
+              </div>
+            </div>
+          </div>
+          <!-- Time badge -->
+          <div class="chip bg-sky-500 text-white absolute -top-3 -left-8" style="box-shadow:0 3px 0 0 #0E84BC;animation-delay:0.8s">
+            ⚡ Só 5 min!
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="flex-1 text-center lg:text-left fade-up fade-up-delay-1">
+        <div class="section-badge" style="background:#E8F7FE;color:#0E84BC;border-color:#BDE9FD">⚡ Micro-lições</div>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold text-ink-900 leading-tight">
+          5 minutinhos já<br/>fazem diferença
+        </h2>
+        <p class="mt-4 text-lg font-semibold text-ink-500 leading-relaxed">
+          Cada lição cabe no seu intervalo, no transporte, antes de dormir. Consistência bate intensidade — e nós sabemos disso.
+        </p>
+        <div class="mt-6 space-y-3 max-w-sm mx-auto lg:mx-0">
+          <div class="flex items-center gap-3 p-3 rounded-2xl bg-ink-50">
+            <span class="text-2xl">⚡</span>
+            <div>
+              <p class="font-bold text-ink-900 text-sm">Lições de 5 a 15 minutos</p>
+              <p class="text-xs text-ink-500 font-semibold">Você escolhe quanto tempo tem hoje</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-2xl bg-ink-50">
+            <span class="text-2xl">📱</span>
+            <div>
+              <p class="font-bold text-ink-900 text-sm">Funciona sem instrumento por perto</p>
+              <p class="text-xs text-ink-500 font-semibold">Teoria, ritmo e treino mental também valem</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-2xl bg-ink-50">
+            <span class="text-2xl">🔔</span>
+            <div>
+              <p class="font-bold text-ink-900 text-sm">Lembrete diário personalizado</p>
+              <p class="text-xs text-ink-500 font-semibold">Na hora que for melhor pra você</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       COMO FUNCIONA
+  ════════════════════════════════════════════════════ -->
+  <section class="py-24 px-6 bg-brand-50" id="como-funciona">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="section-badge mx-auto fade-up">🗺️ Passo a passo</div>
+      <h2 class="font-display text-4xl lg:text-5xl font-bold text-ink-900 leading-tight fade-up fade-up-delay-1">
+        Três passos pro<br/>seu primeiro acorde
+      </h2>
+
+      <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Step 1 -->
+        <div class="card-3d p-6 text-center fade-up">
+          <div class="h-20 w-20 mx-auto rounded-3xl bg-brand-500 flex items-center justify-center text-4xl mb-4" style="box-shadow:0 5px 0 0 #46A302">
+            🎯
+          </div>
+          <div class="inline-flex items-center gap-1 mb-2">
+            <span class="h-6 w-6 rounded-full bg-brand-500 text-white text-xs font-black flex items-center justify-center">1</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-brand-600">Passo 1</span>
+          </div>
+          <h3 class="font-display text-xl font-bold text-ink-900">Conta seu objetivo</h3>
+          <p class="mt-2 text-sm font-semibold text-ink-500 leading-relaxed">
+            No onboarding você diz o que quer tocar, seu nível e quanto tempo tem por dia.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="card-3d p-6 text-center fade-up fade-up-delay-1" style="border-color:#1CB0F6;box-shadow:0 4px 0 0 #0E84BC">
+          <div class="h-20 w-20 mx-auto rounded-3xl bg-sky-500 flex items-center justify-center text-4xl mb-4" style="box-shadow:0 5px 0 0 #0E84BC">
+            🗺️
+          </div>
+          <div class="inline-flex items-center gap-1 mb-2">
+            <span class="h-6 w-6 rounded-full bg-sky-500 text-white text-xs font-black flex items-center justify-center">2</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-sky-600">Passo 2</span>
+          </div>
+          <h3 class="font-display text-xl font-bold text-ink-900">Segue sua trilha</h3>
+          <p class="mt-2 text-sm font-semibold text-ink-500 leading-relaxed">
+            O app monta um mapa de lições do seu jeito. Você avança na ordem certa, sem pular etapas.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="card-3d p-6 text-center fade-up fade-up-delay-2" style="border-color:#CE82FF;box-shadow:0 4px 0 0 #8444C2">
+          <div class="h-20 w-20 mx-auto rounded-3xl bg-grape-500 flex items-center justify-center text-4xl mb-4" style="box-shadow:0 5px 0 0 #8444C2">
+            🎸
+          </div>
+          <div class="inline-flex items-center gap-1 mb-2">
+            <span class="h-6 w-6 rounded-full bg-grape-500 text-white text-xs font-black flex items-center justify-center">3</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-grape-600">Passo 3</span>
+          </div>
+          <h3 class="font-display text-xl font-bold text-ink-900">Toca sua música</h3>
+          <p class="mt-2 text-sm font-semibold text-ink-500 leading-relaxed">
+            Em semanas você já toca a música que sempre quis. Com acordes reais, ritmo certo e tudo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       REINALDO MEIRELLES
+  ════════════════════════════════════════════════════ -->
+  <section class="py-24 px-6 bg-ink-50">
+    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+
+      <!-- Left: card do Reinaldo -->
+      <div class="flex-1 flex justify-center flex-shrink-0 fade-up">
+        <div class="relative">
+          <!-- Card principal -->
+          <div class="w-80 rounded-3xl overflow-hidden border-2 border-ink-200 bg-white" style="box-shadow:0 6px 0 0 #D4D4D4">
+            <!-- Header roxo escuro (palco) -->
+            <div class="h-36 relative flex items-end justify-center pb-0" style="background:linear-gradient(135deg,#1A1A1A 0%,#2E2E2E 100%)">
+              <!-- Luzes de palco decorativas -->
+              <div class="absolute top-3 left-6 h-16 w-3 rounded-full opacity-30" style="background:linear-gradient(to bottom,#FFC800,transparent)"></div>
+              <div class="absolute top-3 right-8 h-16 w-3 rounded-full opacity-30" style="background:linear-gradient(to bottom,#1CB0F6,transparent)"></div>
+              <div class="absolute top-3 left-1/2 -translate-x-1/2 h-20 w-3 rounded-full opacity-40" style="background:linear-gradient(to bottom,#CE82FF,transparent)"></div>
+              <!-- Avatar -->
+              <div class="relative -mb-8 z-10">
+                <div class="h-20 w-20 rounded-3xl border-4 border-white bg-brand-500 flex items-center justify-center text-4xl" style="box-shadow:0 4px 0 0 #46A302">
+                  🎸
+                </div>
+                <div class="absolute -right-1 -top-1 h-7 w-7 rounded-full bg-sun-500 flex items-center justify-center text-sm border-2 border-white" style="box-shadow:0 2px 0 0 #DC9F00">✓</div>
+              </div>
+            </div>
+            <!-- Info -->
+            <div class="pt-12 pb-5 px-5 text-center">
+              <p class="font-display text-xl font-bold text-ink-900">Reinaldo Meirelles</p>
+              <p class="text-xs font-bold uppercase tracking-widest text-brand-600 mt-0.5">Músico · Produtor · Educador</p>
+              <p class="text-xs font-semibold text-ink-400 mt-0.5">Ribeirão Preto · SP</p>
+              <!-- Redes sociais -->
+              <div class="flex items-center justify-center gap-2 mt-3">
+                <a href="https://www.instagram.com/reinaldomeirelles/" target="_blank"
+                   class="px-3 py-1 rounded-xl bg-ink-100 text-xs font-bold text-ink-600 hover:bg-ink-200 transition-colors">
+                  @reinaldomeirelles
+                </a>
+              </div>
+            </div>
+            <!-- Stats grid -->
+            <div class="grid grid-cols-3 gap-0 border-t-2 border-ink-100">
+              <div class="py-3 text-center border-r border-ink-100">
+                <p class="font-display text-lg font-bold text-brand-600">20+</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-ink-400">Anos</p>
+              </div>
+              <div class="py-3 text-center border-r border-ink-100">
+                <p class="font-display text-lg font-bold text-grape-600">1k+</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-ink-400">Alunos</p>
+              </div>
+              <div class="py-3 text-center">
+                <p class="font-display text-lg font-bold text-sky-600">RM</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-ink-400">Studio</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chip Gusttavo Lima -->
+          <div class="chip bg-sun-500 text-ink-900" style="bottom:-16px;left:-24px;box-shadow:0 4px 0 0 #DC9F00;animation-delay:0.4s">
+            🤠 Ex-produtor do Gusttavo Lima
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: story -->
+      <div class="flex-1 text-center lg:text-left fade-up fade-up-delay-1">
+        <div class="section-badge" style="background:#F5EDFF;color:#8444C2;border-color:#E0C8FF">🎸 Sobre o criador</div>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold text-ink-900 leading-tight">
+          Feito por quem<br/>vive o violão
+        </h2>
+        <p class="mt-5 text-base font-semibold text-ink-600 leading-relaxed">
+          Reinaldo Meirelles passou mais de <strong class="text-ink-900">20 anos nos bastidores da música brasileira</strong>. Como guitarrista e produtor de Gusttavo Lima, Zé Neto &amp; Cristiano, Edson &amp; Hudson e João Bosco &amp; Vinícius, ele viu de perto o que separa quem toca bem de quem desiste no meio do caminho.
+        </p>
+        <p class="mt-4 text-base font-semibold text-ink-600 leading-relaxed">
+          Depois de ensinar centenas de alunos pela <strong class="text-ink-900">Academia do Violão</strong> e fundar o <strong class="text-ink-900">RM Studio em Ribeirão Preto</strong>, Reinaldo percebeu que a maioria abandona o violão não por falta de talento — mas por falta de motivação e método.
+        </p>
+        <p class="mt-4 text-base font-semibold text-ink-600 leading-relaxed">
+          Foi daí que nasceu o <strong class="text-brand-600">Tocaê</strong>: um método gamificado construído sobre a experiência real de um dos músicos mais requisitados do Brasil. Cada lição foi pensada por quem já ensinou do iniciante absoluto ao músico profissional.
+        </p>
+
+        <!-- Credenciais -->
+        <div class="mt-7 grid grid-cols-2 gap-3 max-w-sm mx-auto lg:mx-0">
+          <div class="flex items-center gap-2 p-3 rounded-2xl bg-white border-2 border-ink-200" style="box-shadow:0 3px 0 0 #E5E5E5">
+            <span class="text-xl">🎵</span>
+            <div>
+              <p class="text-xs font-black text-ink-900 leading-none">Gusttavo Lima</p>
+              <p class="text-[10px] font-semibold text-ink-400">Guitarrista e produtor</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-2xl bg-white border-2 border-ink-200" style="box-shadow:0 3px 0 0 #E5E5E5">
+            <span class="text-xl">🎸</span>
+            <div>
+              <p class="text-xs font-black text-ink-900 leading-none">Zé Neto & Cristiano</p>
+              <p class="text-[10px] font-semibold text-ink-400">Produtor musical</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-2xl bg-white border-2 border-ink-200" style="box-shadow:0 3px 0 0 #E5E5E5">
+            <span class="text-xl">🏫</span>
+            <div>
+              <p class="text-xs font-black text-ink-900 leading-none">Academia do Violão</p>
+              <p class="text-[10px] font-semibold text-ink-400">Fundador e professor</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-2xl bg-white border-2 border-ink-200" style="box-shadow:0 3px 0 0 #E5E5E5">
+            <span class="text-xl">🎚️</span>
+            <div>
+              <p class="text-xs font-black text-ink-900 leading-none">RM Studio</p>
+              <p class="text-[10px] font-semibold text-ink-400">Diretor, Ribeirão Preto</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       DEPOIMENTOS
+  ════════════════════════════════════════════════════ -->
+  <section class="py-24 px-6" id="depoimentos">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-14">
+        <div class="section-badge mx-auto fade-up">💬 Depoimentos</div>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold text-ink-900 leading-tight fade-up fade-up-delay-1">
+          Quem já começou a tocar
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Review 1 -->
+        <div class="card-3d p-6 fade-up">
+          <div class="flex items-center gap-1 mb-3">
+            <span class="text-sun-500 text-lg">★★★★★</span>
+          </div>
+          <p class="text-sm font-semibold text-ink-700 leading-relaxed italic">
+            "Em 2 semanas já toquei minha primeira música completa. Nunca imaginei aprender tão rápido sem precisar de professor."
+          </p>
+          <div class="mt-4 flex items-center gap-3">
+            <div class="h-10 w-10 rounded-2xl bg-brand-500 flex items-center justify-center text-lg" style="box-shadow:0 3px 0 0 #46A302">😊</div>
+            <div>
+              <p class="font-display text-sm font-bold text-ink-900">Ana Lima</p>
+              <p class="text-xs font-semibold text-ink-400">Professora • São Paulo</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="card-3d p-6 fade-up fade-up-delay-1" style="border-color:#1CB0F6;box-shadow:0 4px 0 0 #0E84BC">
+          <div class="flex items-center gap-1 mb-3">
+            <span class="text-sun-500 text-lg">★★★★★</span>
+          </div>
+          <p class="text-sm font-semibold text-ink-700 leading-relaxed italic">
+            "Tentei outros apps e abandonei. O Tocaê é diferente — as lições são curtas e a gamificação faz você querer continuar."
+          </p>
+          <div class="mt-4 flex items-center gap-3">
+            <div class="h-10 w-10 rounded-2xl bg-sky-500 flex items-center justify-center text-lg" style="box-shadow:0 3px 0 0 #0E84BC">🎵</div>
+            <div>
+              <p class="font-display text-sm font-bold text-ink-900">Carlos Mendes</p>
+              <p class="text-xs font-semibold text-ink-400">Estudante • Belo Horizonte</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="card-3d p-6 fade-up fade-up-delay-2" style="border-color:#CE82FF;box-shadow:0 4px 0 0 #8444C2">
+          <div class="flex items-center gap-1 mb-3">
+            <span class="text-sun-500 text-lg">★★★★★</span>
+          </div>
+          <p class="text-sm font-semibold text-ink-700 leading-relaxed italic">
+            "Aprendi a tocar no violão os acordes de louvor que uso todo domingo na church. Que aplicativo incrível."
+          </p>
+          <div class="mt-4 flex items-center gap-3">
+            <div class="h-10 w-10 rounded-2xl bg-grape-500 flex items-center justify-center text-lg" style="box-shadow:0 3px 0 0 #8444C2">⛪</div>
+            <div>
+              <p class="font-display text-sm font-bold text-ink-900">Júlia Santos</p>
+              <p class="text-xs font-semibold text-ink-400">Música de louvor • Goiânia</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       PREMIUM
+  ════════════════════════════════════════════════════ -->
+  <section class="py-24 px-6 bg-sun-500 stripe" id="premium">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12 fade-up">
+        <div class="inline-flex items-center gap-2 bg-white/20 text-white border-2 border-white/30 rounded-full px-4 py-1.5 text-xs font-black uppercase tracking-widest mb-4">
+          👑 Premium
+        </div>
+        <h2 class="font-display text-4xl lg:text-5xl font-bold text-white leading-tight">
+          Sem limites. Sem pausa.<br/>Sem desculpa.
+        </h2>
+        <p class="mt-3 text-base font-semibold text-white/80">
+          Energia ilimitada, todas as músicas e treinos personalizados.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div class="bg-white/15 backdrop-blur rounded-3xl p-5 border-2 border-white/20 fade-up">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-white/10 rounded-2xl p-3">
+              <p class="text-2xl mb-1">⚡</p>
+              <p class="font-display text-sm font-bold text-white">Energia ilimitada</p>
+              <p class="text-xs text-white/70 font-semibold">Pratique sem parar</p>
+            </div>
+            <div class="bg-white/10 rounded-2xl p-3">
+              <p class="text-2xl mb-1">🎵</p>
+              <p class="font-display text-sm font-bold text-white">Todas as músicas</p>
+              <p class="text-xs text-white/70 font-semibold">Catálogo completo</p>
+            </div>
+            <div class="bg-white/10 rounded-2xl p-3">
+              <p class="text-2xl mb-1">🎯</p>
+              <p class="font-display text-sm font-bold text-white">Treinos personalizados</p>
+              <p class="text-xs text-white/70 font-semibold">Feitos pra você</p>
+            </div>
+            <div class="bg-white/10 rounded-2xl p-3">
+              <p class="text-2xl mb-1">📊</p>
+              <p class="font-display text-sm font-bold text-white">Relatório detalhado</p>
+              <p class="text-xs text-white/70 font-semibold">Veja sua evolução</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan cards -->
+        <div class="space-y-3 fade-up fade-up-delay-1">
+          <div class="bg-white rounded-3xl p-5 border-2 border-white" style="box-shadow:0 5px 0 0 rgba(0,0,0,0.15)">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-display text-base font-bold text-ink-900">Plano Anual</p>
+                <p class="text-xs font-bold text-brand-600 uppercase tracking-wider">Economize 44%</p>
+              </div>
+              <span class="bg-rose-500 text-white text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full" style="box-shadow:0 2px 0 0 #C53030">Popular</span>
+            </div>
+            <p class="font-display text-3xl font-bold text-ink-900 mt-2">R$ 199<span class="text-base font-semibold text-ink-400">/ano</span></p>
+            <p class="text-xs text-ink-500 font-bold">≈ R$ 16,60 por mês</p>
+          </div>
+
+          <div class="bg-white/20 rounded-3xl p-5 border-2 border-white/40">
+            <p class="font-display text-base font-bold text-white">Plano Mensal</p>
+            <p class="font-display text-3xl font-bold text-white mt-1">R$ 29,90<span class="text-base font-semibold text-white/70">/mês</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center fade-up">
+        <a href="#" class="btn btn-lg" style="background:#fff;color:#DC9F00;box-shadow:0 5px 0 0 rgba(0,0,0,0.15);font-size:1rem">
+          👑 Conhecer o Premium
+        </a>
+        <p class="mt-3 text-sm font-bold text-white/70">Cancele quando quiser · Sem burocracia</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       CTA FINAL
+  ════════════════════════════════════════════════════ -->
+  <section class="py-24 px-6 bg-brand-500" style="background:linear-gradient(135deg,#58CC02 0%,#46A302 100%)">
+    <div class="max-w-3xl mx-auto text-center fade-up">
+      <div class="text-6xl mb-6">🎸</div>
+      <h2 class="font-display text-4xl lg:text-5xl font-bold text-white leading-tight">
+        Seu violão está<br/>esperando por você
+      </h2>
+      <p class="mt-4 text-lg font-semibold text-white/80">
+        Comece hoje, de graça. Sem precisar de experiência, de professor ou de muito tempo.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#" class="btn btn-lg" style="background:#fff;color:#46A302;box-shadow:0 5px 0 0 rgba(0,0,0,0.2)">
+          Começar grátis agora
+        </a>
+        <a href="#" class="btn btn-lg btn-ghost" style="border-color:rgba(255,255,255,0.5);color:#fff">
+          Já tenho conta
+        </a>
+      </div>
+      <p class="mt-5 text-sm font-bold text-white/60 uppercase tracking-widest">
+        100% gratuito · Sem cartão de crédito
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════════ -->
+  <footer class="bg-ink-900 py-14 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+
+        <!-- Brand -->
+        <div class="col-span-2 md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <img src="public/logo.png" alt="Tocaê" class="h-10 w-10 rounded-2xl object-cover" style="box-shadow:0 4px 0 0 #46A302" />
+            <span class="font-display text-xl font-bold text-white">tocaê</span>
+          </div>
+          <p class="text-sm font-semibold text-ink-400 leading-relaxed">
+            Aprenda violão em minutos por dia com lições gamificadas e músicas reais.
+          </p>
+          <div class="flex gap-3 mt-4">
+            <a href="#" class="h-9 w-9 rounded-xl bg-ink-800 flex items-center justify-center text-sm hover:bg-ink-700 transition-colors">📱</a>
+            <a href="#" class="h-9 w-9 rounded-xl bg-ink-800 flex items-center justify-center text-sm hover:bg-ink-700 transition-colors">📘</a>
+            <a href="#" class="h-9 w-9 rounded-xl bg-ink-800 flex items-center justify-center text-sm hover:bg-ink-700 transition-colors">📸</a>
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <p class="text-xs font-black uppercase tracking-widest text-ink-500 mb-4">Produto</p>
+          <ul class="space-y-2.5">
+            <li><a href="#como-funciona" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Como funciona</a></li>
+            <li><a href="#premium" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Premium</a></li>
+            <li><a href="#depoimentos" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Depoimentos</a></li>
+            <li><a href="#" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Blog</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs font-black uppercase tracking-widest text-ink-500 mb-4">Aprender</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Sertanejo</a></li>
+            <li><a href="#" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">MPB</a></li>
+            <li><a href="#" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Gospel</a></li>
+            <li><a href="#" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Rock e Pop</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs font-black uppercase tracking-widest text-ink-500 mb-4">Empresa</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Sobre nós</a></li>
+            <li><a href="#" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Contato</a></li>
+            <li><a href="#" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Privacidade</a></li>
+            <li><a href="#" class="text-sm font-semibold text-ink-400 hover:text-white transition-colors">Termos de uso</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-ink-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-xs font-bold uppercase tracking-widest text-ink-600">
+          © 2025 Tocaê · Todos os direitos reservados
+        </p>
+        <div class="flex items-center gap-3">
+          <a href="#" class="flex items-center gap-2 bg-ink-800 hover:bg-ink-700 transition-colors rounded-2xl px-4 py-2 text-white text-xs font-bold border border-ink-700">
+            <span>🍎</span> App Store
+          </a>
+          <a href="#" class="flex items-center gap-2 bg-ink-800 hover:bg-ink-700 transition-colors rounded-2xl px-4 py-2 text-white text-xs font-bold border border-ink-700">
+            <span>🤖</span> Google Play
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ════════════════════════════════════════════════════
+       SCROLL ANIMATIONS
+  ════════════════════════════════════════════════════ -->
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    )
+    document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el))
+  </script>
+
+</body>
+</html>

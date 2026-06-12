@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>trafego-queima-dinheiro</title><style>
+@font-face{font-family:'Display';font-weight:800;src:url("../../../marca/fonts/bricolage-800.woff2") format("woff2");}
+@font-face{font-family:'UI';font-weight:400;src:url("../../../marca/fonts/geist-400.woff2") format("woff2");}
+@font-face{font-family:'UI';font-weight:600;src:url("../../../marca/fonts/geist-600.woff2") format("woff2");}
+@font-face{font-family:'UI';font-weight:700;src:url("../../../marca/fonts/geist-700.woff2") format("woff2");}
+:root{--escuro:#071016;--branco:#F4F2EC;--lima:#EFFF7A;--display:'Display','Arial Black',sans-serif;--ui:'UI','Helvetica Neue',Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#22272b;font-family:var(--ui);}
+.slide{position:relative;width:1080px;height:1440px;overflow:hidden;color:var(--escuro);}
+.slide.dark{color:var(--branco);}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+.pg-bottom{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(7,16,22,.55) 0%,rgba(7,16,22,0) 26%);}
+.layer{position:relative;z-index:2;width:100%;height:100%;padding:88px;display:flex;flex-direction:column;}
+.head{display:flex;align-items:center;gap:14px;}
+.head .logo{width:58px;height:58px;flex:none;}
+.wm{display:flex;flex-direction:column;line-height:.9;letter-spacing:-.4px;}
+.wm .l1{font-weight:400;font-size:25px;}
+.wm .l2{font-weight:800;font-size:26px;}
+.wm .tm{font-size:11px;vertical-align:super;opacity:.55;font-weight:500;}
+.body{flex:1;display:flex;flex-direction:column;min-height:0;}
+.body.top{justify-content:flex-start;padding-top:34px;}
+.body.bottom{justify-content:flex-end;padding-bottom:8px;}
+.eyebrow{font-family:var(--ui);font-weight:700;font-size:22px;letter-spacing:3.5px;text-transform:uppercase;display:inline-block;margin-bottom:22px;}
+.dark .eyebrow{color:var(--lima);}
+.title{font-family:var(--display);font-weight:800;font-size:74px;line-height:.96;letter-spacing:-2.5px;}
+.title.boxed{line-height:1.2;}
+.dark .hl{background:var(--lima);color:var(--escuro);padding:.04em 14px;-webkit-box-decoration-break:clone;box-decoration-break:clone;}
+.onlight .hl{background:var(--escuro);color:var(--branco);padding:.04em 14px;-webkit-box-decoration-break:clone;box-decoration-break:clone;}
+.sub{font-family:var(--ui);font-weight:400;font-size:30px;line-height:1.34;margin-top:24px;}
+.dark .sub{color:var(--branco);opacity:.92;}
+.cta-block{margin-top:30px;display:flex;align-items:center;gap:22px;}
+.cta-circle{flex:none;width:90px;height:90px;border-radius:50%;background:var(--lima);display:flex;align-items:center;justify-content:center;}
+.cta-circle svg{width:40px;height:40px;}
+.cta-text{font-family:var(--ui);font-size:29px;line-height:1.25;font-weight:500;} .cta-text b{font-weight:800;}
+.foot{display:flex;justify-content:space-between;align-items:center;padding-top:22px;}
+.foot .handle{font-family:var(--ui);font-weight:700;font-size:22px;}
+.icons{display:flex;gap:19px;} .icons svg{width:28px;height:28px;display:block;}
+</style></head>
+<body><section class="slide dark"><img class="bg" src="assets/img.png" alt=""><div class="layer">
+<div class="head"><img class="logo" src="../../../marca/logo-branca.png" alt=""><span class="wm" style="color:#F4F2EC;"><span class="l1">agência</span><span class="l2">na hora<span class="tm">™</span></span></span></div>
+<div class="body top"><div style="max-width:66%;"><span class="eyebrow">Onde mais erram</span><h1 class="title boxed">Tráfego sem<br>destino <span class="hl">queima dinheiro</span>.</h1><p class="sub" style="max-width:96%;">Anúncio que joga o lead num Instagram parado não vende. Precisa cair num site pronto pra fechar.</p></div></div>
+<div class="foot"><span class="handle" style="color:#fff;">@agencianahora</span><div class="icons"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.3C.6 8.9 2.2 5.5 5.5 5.5c2 0 3.4 1.2 4.5 2.7 1.1-1.5 2.5-2.7 4.5-2.7 3.3 0 4.9 3.4 3.5 6.2C19.5 16.4 12 21 12 21z" stroke="#fff" stroke-width="1.6"/></svg><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" stroke="#fff" stroke-width="1.6"/></svg></div></div>
+</div></section></body></html>

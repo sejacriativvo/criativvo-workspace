@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF7F1; --champagne:#F1E7D8; --champagne-deep:#E4D4BC;
+    --gold:#BC9A5E; --gold-deep:#9A7C4F; --gold-lt:#E2CB92;
+    --espresso:#221C16; --ink:#2B2521; --muted:#7A6F62;
+    --gold-grad:linear-gradient(120deg,#8C6B3D 0%,#BC9A5E 35%,#E2CB92 55%,#A8854E 100%);
+    --num:'DM Sans',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Jost',sans-serif;background:#555;-webkit-font-smoothing:antialiased}
+  .slide{
+    width:1080px;height:1350px;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:120px 100px;background:var(--cream);
+  }
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.05}
+  .eyebrow{font-size:20px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-deep)}
+  .logo{position:absolute;bottom:64px;left:100px;font-family:'Cormorant Garamond',serif;font-size:34px;letter-spacing:.06em;color:var(--ink)}
+  .logo span{color:var(--gold-deep)}
+  .pageno{position:absolute;bottom:66px;right:100px;font-family:var(--num);font-size:22px;color:var(--muted);letter-spacing:.1em}
+  em{font-style:italic;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;z-index:0}
+
+  /* CAPA */
+  .cover{background:linear-gradient(125deg,#F6EEE2 0%,#EFE2CE 60%,#E7D6BD 100%);padding:0}
+  .cover .ctop{position:relative;height:620px;overflow:hidden}
+  .cover .ctop img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
+  .cover .cbody{flex:1;padding:70px 100px;display:flex;flex-direction:column;justify-content:center}
+  .cover .eyebrow{margin-bottom:30px}
+  .cover h1{font-size:104px;letter-spacing:-.01em}
+  .cover .sub{margin-top:34px;font-size:30px;color:var(--muted);max-width:760px;line-height:1.45}
+  .cover .save{margin-top:40px;display:inline-flex;align-items:center;gap:14px;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
+
+  /* CONTEÚDO (erros) */
+  .tip{background:var(--cream)}
+  .tip .num{font-family:var(--num);font-weight:600;font-size:30px;letter-spacing:.2em;color:var(--gold-deep);text-transform:uppercase}
+  .tip .bar{width:64px;height:3px;background:var(--gold);margin:28px 0 40px}
+  .tip h2{font-size:84px;letter-spacing:-.01em;color:var(--ink)}
+  .tip .err{margin-top:18px;font-size:27px;letter-spacing:.04em;text-transform:uppercase;color:var(--gold-deep);font-weight:500;font-family:'Jost'}
+  .tip p{margin-top:46px;font-size:34px;line-height:1.5;color:var(--muted);max-width:840px}
+  .tip p b{color:var(--ink);font-weight:500}
+  .tip.dark{background:var(--espresso)}
+  .tip.dark h2{color:#F6EEE2}
+  .tip.dark p{color:rgba(243,234,221,.72)}
+  .tip.dark p b{color:#F6EEE2}
+  .tip.dark .logo{color:#F6EEE2}
+  .tip.dark .pageno{color:rgba(243,234,221,.5)}
+  .tip.dark .err,.tip.dark .num{color:var(--gold-lt)}
+  .tip.dark .bar{background:var(--gold-lt)}
+
+  /* CTA final */
+  .end{background:linear-gradient(125deg,#F6EEE2,#E8D9C0);text-align:center;align-items:center}
+  .end h2{font-size:92px;color:var(--ink)}
+  .end p{margin-top:34px;font-size:32px;color:var(--muted);max-width:760px;line-height:1.45}
+  .end .handle{margin-top:60px;font-family:'Cormorant Garamond',serif;font-size:52px;color:var(--gold-deep)}
+  .end .follow{margin-top:10px;font-size:22px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 — CAPA -->
+<div class="slide cover" id="s1">
+  <div class="ctop"><img src="../midia-kit-site/assets/fotos/img_1229.jpg" alt="Gi"></div>
+  <div class="cbody">
+    <span class="eyebrow">Maquiagem que valoriza</span>
+    <h1>4 erros de make<br>que <em>envelhecem</em><br>o olhar</h1>
+    <p class="sub">Pequenos detalhes que abrem ou fecham o olhar. Os 3 últimos quase ninguém percebe.</p>
+    <span class="save">↗ Salve pra não esquecer</span>
+  </div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide tip" id="s2">
+  <span class="num">Erro 01</span>
+  <div class="bar"></div>
+  <h2>Lápis preto<br>esfumado por baixo</h2>
+  <div class="err">Fecha e marca o olhar</div>
+  <p>O preto embaixo do olho <b>encolhe o olhar</b> e marca a olheira. Troque por <b>marrom ou nude amadeirado</b>: ilumina e abre o olho na mesma hora.</p>
+  <div class="logo">gisele<span>vareschi</span></div><div class="pageno">02</div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide tip dark" id="s3">
+  <span class="num">Erro 02</span>
+  <div class="bar"></div>
+  <h2>Pó demais<br>na área dos olhos</h2>
+  <div class="err">Realça as linhas finas</div>
+  <p>Pó em excesso <b>resseca e marca cada ruguinha</b>. Na região dos olhos, <b>menos é mais</b>: sele só o necessário e finalize com um toque de hidratação.</p>
+  <div class="logo">gisele<span>vareschi</span></div><div class="pageno">03</div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide tip" id="s4">
+  <span class="num">Erro 03</span>
+  <div class="bar"></div>
+  <h2>Pele dos olhos<br>sem preparo</h2>
+  <div class="err">A make racha e acumula</div>
+  <p>Pular a hidratação e o primer faz a sombra <b>craquelar e juntar nas dobras</b>. Pele preparada = <b>make lisa que dura o dia todo</b>.</p>
+  <div class="logo">gisele<span>vareschi</span></div><div class="pageno">04</div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide tip dark" id="s5">
+  <span class="num">Erro 04</span>
+  <div class="bar"></div>
+  <h2>Cílios pesados<br>embaixo</h2>
+  <div class="err">Puxa o olhar pra baixo</div>
+  <p>Máscara pesada nos cílios inferiores <b>derruba o olhar</b>. Concentre o volume <b>em cima e no canto externo</b>: efeito lifting natural, sem cirurgia.</p>
+  <div class="logo">gisele<span>vareschi</span></div><div class="pageno">05</div>
+</div>
+
+<!-- SLIDE 6 — CTA -->
+<div class="slide end" id="s6">
+  <span class="eyebrow">Gostou?</span>
+  <h2 style="margin-top:30px">Tem muito mais<br>de onde veio.</h2>
+  <p>Me segue pra dicas reais de maquiagem, autocuidado e um lifestyle leve e elegante.</p>
+  <div class="handle">@giselevmakeup</div>
+  <div class="follow">Maquiadora &amp; Influenciadora</div>
+</div>
+
+</body>
+</html>

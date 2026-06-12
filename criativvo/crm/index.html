@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CRM Criativvo</title>
+<style>
+  @font-face {
+    font-family: 'AVEstiana';
+    src: url('../marca/AVEstiana-Black.otf') format('opentype');
+    font-weight: 900;
+    font-display: swap;
+  }
+  :root {
+    --bg: #f4f7fb;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --line: #e8eef6;
+    --card: #ffffff;
+    --brand: #FF5501;
+    --brand-soft: #fff1ea;
+    --green: #16a34a;
+    --red: #e11d48;
+    --amber: #d97706;
+    --blue: #2563eb;
+    --shadow: 0 18px 45px rgba(15,23,42,.06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Inter, -apple-system, system-ui, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: #fff;
+    border-right: 1px solid var(--line);
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+  .brand {
+    font-family: 'AVEstiana', Inter, sans-serif;
+    font-size: 30px;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    padding: 4px 10px 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    line-height: 1;
+    text-transform: lowercase;
+  }
+  .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); align-self: flex-end; margin-bottom: 6px; }
+  .nav { display: flex; flex-direction: column; gap: 4px; }
+  .nav button {
+    display: flex; align-items: center; gap: 12px;
+    border: 0; background: transparent; cursor: pointer;
+    padding: 11px 12px; border-radius: 12px;
+    color: var(--muted); font-size: 14px; font-weight: 600;
+    text-align: left; font-family: inherit; width: 100%;
+  }
+  .nav button .ico { width: 20px; text-align: center; font-size: 16px; }
+  .nav button:hover { background: var(--bg); color: var(--ink); }
+  .nav button.active { background: var(--brand-soft); color: var(--brand); }
+  .sidebar .foot { margin-top: auto; font-size: 12px; color: var(--muted); padding: 12px 10px; line-height: 1.5; }
+
+  /* MAIN */
+  .main { padding: 26px 30px; max-width: 1500px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+  .topbar h1 { font-size: 24px; letter-spacing: -.6px; }
+  .topbar .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .search {
+    flex: 1; max-width: 380px; height: 42px; border-radius: 12px;
+    border: 1px solid var(--line); background: #fff; padding: 0 16px;
+    outline: none; font-family: inherit; font-size: 14px;
+  }
+  .search:focus { border-color: var(--brand); }
+  .btn {
+    height: 42px; border: 0; border-radius: 12px; padding: 0 18px;
+    background: var(--brand); color: #fff; font-weight: 700; font-size: 14px;
+    cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn:hover { filter: brightness(.95); }
+  .btn.ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+
+  .hide { display: none !important; }
+
+  /* CARDS / METRICS */
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 26px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; box-shadow: var(--shadow); }
+  .card .label { font-size: 13px; color: var(--muted); font-weight: 600; }
+  .card .metric { font-size: 32px; letter-spacing: -1px; margin-top: 10px; }
+  .card .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; margin-top: 8px; padding: 3px 9px; border-radius: 999px; background: #f0fdf4; color: var(--green); }
+  .card .pill.gray { background: var(--bg); color: var(--muted); }
+
+  /* PIPELINE */
+  .pipeline { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 14px; align-items: start; }
+  .stage { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px; min-height: 140px; }
+  .stage-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .stage-head .title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); }
+  .stage-head .count { font-size: 11px; font-weight: 700; background: var(--bg); color: var(--muted); border-radius: 999px; padding: 2px 8px; }
+  .stage-sum { font-size: 12px; color: var(--brand); font-weight: 700; margin-bottom: 10px; }
+  .deal {
+    background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px;
+    margin-bottom: 10px; cursor: grab; box-shadow: 0 4px 12px rgba(15,23,42,.04);
+  }
+  .deal:active { cursor: grabbing; }
+  .deal .name { font-weight: 700; font-size: 13px; }
+  .deal .meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .deal .val { font-size: 13px; font-weight: 800; color: var(--ink); margin-top: 8px; }
+  .deal .tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; padding: 2px 7px; border-radius: 6px; display: inline-block; margin-top: 8px; }
+  .tag.ativo { background: #f0fdf4; color: var(--green); }
+  .tag.proposta { background: #fef3c7; color: var(--amber); }
+  .tag.lead { background: #eff6ff; color: var(--blue); }
+  .stage.drop-target { background: var(--brand-soft); border-color: var(--brand); border-style: dashed; }
+
+  /* responsável (avatar) + linha de meta do card */
+  .deal-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; gap: 8px; }
+  .owner { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--muted); }
+  .avatar { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 10px; font-weight: 800; color: #fff; background: var(--blue); }
+  .avatar.a-Matheus{background:#FF5501} .avatar.a-Victor{background:#2563eb} .avatar.a-Alisson{background:#16a34a}
+  .avatar.a-Anderson{background:#9333ea} .avatar.a-Luis{background:#0891b2} .avatar.a-Dudu{background:#db2777}
+  .stale { font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; background: #fef2f2; color: var(--red); white-space: nowrap; }
+  .stale.warn { background: #fffbeb; color: var(--amber); }
+
+  /* seção de alertas no dashboard */
+  .alerts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px; }
+  .alert-row {
+    display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid var(--line);
+    border-left: 3px solid var(--red); border-radius: 12px; padding: 12px 16px; box-shadow: var(--shadow);
+  }
+  .alert-row .grow { flex: 1; }
+  .alert-row .a-name { font-weight: 700; font-size: 14px; }
+  .alert-row .a-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .alert-row button { height: 34px; border: 1px solid var(--line); background: #fff; border-radius: 9px; padding: 0 12px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .alert-row button:hover { border-color: var(--brand); color: var(--brand); }
+  .alerts-empty { background:#f0fdf4; color:var(--green); border:1px solid #bbf7d0; border-radius:12px; padding:14px 16px; font-size:13px; font-weight:600; }
+
+  /* notas / log no modal */
+  .notes-box { border: 1px solid var(--line); border-radius: 10px; padding: 10px; max-height: 150px; overflow-y: auto; background: var(--bg); }
+  .note-item { font-size: 13px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+  .note-item:last-child { border-bottom: 0; }
+  .note-item .nd { font-size: 11px; color: var(--muted); font-weight: 700; }
+  .note-empty { font-size: 12px; color: var(--muted); padding: 4px; }
+  .note-add { display: flex; gap: 8px; margin-top: 8px; }
+  .note-add input { flex: 1; height: 38px; }
+  .note-add button { height: 38px; padding: 0 14px; border-radius: 9px; border: 0; background: var(--ink); color: #fff; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .modal { max-height: 90vh; overflow-y: auto; }
+
+  /* TABLE (clientes) */
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  td { padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
+  tr:last-child td { border-bottom: 0; }
+  tr:hover td { background: #fafcff; }
+  .cell-name { font-weight: 700; }
+  .cell-sub { font-size: 12px; color: var(--muted); }
+
+  /* MODAL */
+  .overlay { position: fixed; inset: 0; background: rgba(15,23,42,.45); display: grid; place-items: center; z-index: 50; padding: 20px; }
+  .modal { background: #fff; border-radius: 20px; padding: 26px; width: 100%; max-width: 460px; box-shadow: 0 30px 80px rgba(0,0,0,.3); }
+  .modal h3 { font-size: 18px; margin-bottom: 18px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+  .field input, .field select {
+    width: 100%; height: 42px; border: 1px solid var(--line); border-radius: 10px;
+    padding: 0 12px; font-family: inherit; font-size: 14px; outline: none;
+  }
+  .field input:focus, .field select:focus { border-color: var(--brand); }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+
+  .section-title { font-size: 16px; font-weight: 800; letter-spacing: -.3px; margin: 4px 0 14px; }
+  .empty { color: var(--muted); font-size: 13px; padding: 20px; text-align: center; }
+
+  /* ---------- MOTIONS ---------- */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pop { 0% { opacity: 0; transform: scale(.92); } 60% { transform: scale(1.02); } 100% { opacity: 1; transform: scale(1); } }
+  @keyframes brandIn { from { opacity: 0; letter-spacing: .1em; } to { opacity: 1; letter-spacing: -.025em; } }
+  @keyframes dotPulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.45); opacity: .65; } }
+
+  /* logo entra e o ponto pulsa de leve */
+  .brand { animation: brandIn .6s cubic-bezier(.2,.7,.3,1) both; }
+  .brand .dot { animation: dotPulse 2.6s ease-in-out infinite 1s; }
+
+  /* view troca com fade-up */
+  main section:not(.hide) { animation: fadeUp .4s ease both; }
+
+  /* cards e stages entram em cascata */
+  .card { animation: fadeUp .5s ease both; }
+  .cards .card:nth-child(1){ animation-delay:.02s } .cards .card:nth-child(2){ animation-delay:.08s }
+  .cards .card:nth-child(3){ animation-delay:.14s } .cards .card:nth-child(4){ animation-delay:.20s }
+  .stage { animation: fadeUp .45s ease both; }
+  .pipeline .stage:nth-child(1){animation-delay:.02s} .pipeline .stage:nth-child(2){animation-delay:.06s}
+  .pipeline .stage:nth-child(3){animation-delay:.10s} .pipeline .stage:nth-child(4){animation-delay:.14s}
+  .pipeline .stage:nth-child(5){animation-delay:.18s} .pipeline .stage:nth-child(6){animation-delay:.22s}
+
+  /* deal aparece com pop ao ser criado/renderizado */
+  .deal { animation: pop .35s ease both; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+
+  /* hovers vivos */
+  .card { transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 26px 60px rgba(15,23,42,.12); }
+  .deal:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 14px 30px rgba(15,23,42,.10); border-color: var(--brand); }
+  .deal.dragging { opacity: .4; transform: scale(.96) rotate(-1.5deg); }
+  .nav button { transition: background .15s ease, color .15s ease, transform .12s ease; }
+  .nav button:active { transform: scale(.97); }
+  .btn { transition: transform .12s ease, filter .15s ease; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0) scale(.98); }
+  tr[data-id] { transition: background .15s ease; }
+
+  /* modal entra suave */
+  .overlay { animation: fadeUp .2s ease both; }
+  .modal { animation: pop .3s cubic-bezier(.2,.8,.3,1) both; }
+
+  /* respeita quem prefere menos movimento */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand" id="brand">criativvo<span class="dot"></span></div>
+    <nav class="nav" id="nav">
+      <button data-view="dashboard" class="active"><span class="ico">🏠</span> Dashboard</button>
+      <button data-view="pipeline"><span class="ico">📊</span> Pipeline</button>
+      <button data-view="clientes"><span class="ico">👥</span> Clientes</button>
+    </nav>
+    <div class="foot">CRM interno · v0.1<br>Dados salvos no navegador</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h1 id="view-title">Dashboard</h1>
+        <div class="sub" id="view-sub">Visão geral da carteira</div>
+      </div>
+      <input class="search" id="search" placeholder="Buscar cliente ou oportunidade…" />
+      <button class="btn" id="add-btn">+ Nova oportunidade</button>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <section id="view-dashboard">
+      <div class="cards" id="metric-cards"></div>
+      <div class="section-title">⏱ Precisa de atenção <span id="alert-count" style="color:var(--muted);font-weight:600"></span></div>
+      <div class="alerts" id="alerts"></div>
+      <div class="section-title">Pipeline resumido</div>
+      <div class="pipeline" id="mini-pipeline"></div>
+    </section>
+
+    <!-- PIPELINE VIEW -->
+    <section id="view-pipeline" class="hide">
+      <div class="pipeline" id="full-pipeline"></div>
+    </section>
+
+    <!-- CLIENTES VIEW -->
+    <section id="view-clientes" class="hide">
+      <div class="panel">
+        <table>
+          <thead>
+            <tr><th>Cliente</th><th>Responsável</th><th>Estágio</th><th>Último contato</th><th>Valor/mês</th><th>Status</th></tr>
+          </thead>
+          <tbody id="clientes-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- MODAL: nova oportunidade -->
+<div class="overlay hide" id="overlay">
+  <div class="modal">
+    <h3 id="modal-title">Nova oportunidade</h3>
+    <input type="hidden" id="f-id" />
+    <div class="field"><label>Nome / Cliente</label><input id="f-name" placeholder="Ex: Prime Motors" /></div>
+    <div class="field"><label>Segmento</label><input id="f-seg" placeholder="Ex: Concessionária" /></div>
+    <div class="field"><label>Valor mensal (R$)</label><input id="f-val" type="number" placeholder="2000" /></div>
+    <div class="field"><label>Estágio</label>
+      <select id="f-stage"></select>
+    </div>
+    <div class="field"><label>Status</label>
+      <select id="f-status">
+        <option value="lead">Lead</option>
+        <option value="proposta">Proposta</option>
+        <option value="ativo">Ativo</option>
+      </select>
+    </div>
+    <div class="field"><label>Responsável</label>
+      <select id="f-owner"></select>
+    </div>
+    <div class="field"><label>Último contato</label><input id="f-lc" type="date" /></div>
+    <div class="field" id="notes-field">
+      <label>Notas / histórico</label>
+      <div class="notes-box" id="notes-box"></div>
+      <div class="note-add">
+        <input id="note-input" placeholder="Adicionar nota…" />
+        <button id="note-add-btn" type="button">Add</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="del-btn" style="margin-right:auto;color:var(--red)">Excluir</button>
+      <button class="btn ghost" id="cancel-btn">Cancelar</button>
+      <button class="btn" id="save-btn">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STAGES = ["Lead","Contato","Reunião","Proposta","Negociação","Fechado"];
+const OWNERS = ["Matheus","Victor","Alisson","Anderson","Luis","Dudu"];
+const STALE_DAYS = 7; // a partir de quantos dias sem contato vira alerta
+const STORE_KEY = "crm_criativvo_v2";
+
+// Seed com a carteira real da Criativvo
+const SEED = [
+  { id:1,  name:"GilsonCar Veículos", seg:"Concessionária multimarca", val:6000, stage:"Fechado", status:"ativo", owner:"Matheus", lastContact:"2026-05-29", notes:[{date:"2026-05-29",text:"Maior faturamento da história, 2 novas unidades."}] },
+  { id:2,  name:"PD Motors", seg:"Intermediação veicular", val:2500, stage:"Fechado", status:"ativo", owner:"Victor", lastContact:"2026-05-22", notes:[] },
+  { id:3,  name:"VR Studio", seg:"Estética / laser", val:2000, stage:"Fechado", status:"ativo", owner:"Alisson", lastContact:"2026-05-28", notes:[] },
+  { id:4,  name:"Fêffo Cortinas", seg:"Home decor", val:2000, stage:"Fechado", status:"ativo", owner:"Matheus", lastContact:"2026-05-15", notes:[] },
+  { id:5,  name:"Maccari Store", seg:"Eletrônicos / tech", val:2500, stage:"Fechado", status:"ativo", owner:"Victor", lastContact:"2026-05-30", notes:[] },
+  { id:6,  name:"Movisol", seg:"Energia solar", val:2000, stage:"Fechado", status:"ativo", owner:"Matheus", lastContact:"2026-05-27", notes:[] },
+  { id:7,  name:"Prime Motors", seg:"Revenda premium", val:3000, stage:"Fechado", status:"ativo", owner:"Victor", lastContact:"2026-05-19", notes:[{date:"2026-05-19",text:"Inauguração 30/05/2026, sócios Neto Camargo + Leandro Soares."}] },
+  { id:8,  name:"Vermeister", seg:"A definir", val:2000, stage:"Fechado", status:"ativo", owner:"Alisson", lastContact:"2026-05-10", notes:[] },
+  { id:9,  name:"Marcio Albrechete", seg:"Advogado previdenciário", val:2500, stage:"Fechado", status:"ativo", owner:"Matheus", lastContact:"2026-05-26", notes:[] },
+  { id:10, name:"Mariana Medeiros", seg:"Nutri esportiva + NutriChef", val:2000, stage:"Fechado", status:"ativo", owner:"Alisson", lastContact:"2026-05-12", notes:[{date:"2026-05-12",text:"Briefing ainda pendente."}] },
+  { id:11, name:"Carvalho Costa Adv", seg:"Advocacia", val:2500, stage:"Proposta", status:"proposta", owner:"Victor", lastContact:"2026-05-24", notes:[{date:"2026-05-24",text:"Proposta enviada, quente."}] },
+  { id:12, name:"Reinaldo Meirelles", seg:"A definir", val:2000, stage:"Proposta", status:"proposta", owner:"Victor", lastContact:"2026-05-18", notes:[{date:"2026-05-18",text:"Proposta enviada, aguardando retorno."}] },
+];
+
+let data = load();
+let activeView = "dashboard";
+
+function load(){
+  let arr;
+  try { const s = localStorage.getItem(STORE_KEY); arr = s ? JSON.parse(s) : null; } catch(e){}
+  if(!arr) arr = JSON.parse(JSON.stringify(SEED));
+  // garante campos novos em registros antigos
+  return arr.map(d=>({ owner:"", lastContact:null, notes:[], ...d }));
+}
+function save(){ localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
+function brl(n){ return "R$ " + (n||0).toLocaleString("pt-BR"); }
+function nextId(){ return data.length ? Math.max(...data.map(d=>d.id))+1 : 1; }
+
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function daysSince(iso){
+  if(!iso) return null;
+  const ms = new Date(todayISO()) - new Date(iso);
+  return Math.max(0, Math.round(ms / 86400000));
+}
+function isStale(d){
+  const n = daysSince(d.lastContact);
+  return n !== null && n >= STALE_DAYS;
+}
+function staleLabel(d){
+  const n = daysSince(d.lastContact);
+  if(n === null) return "sem contato registrado";
+  if(n === 0) return "contato hoje";
+  if(n === 1) return "há 1 dia";
+  return "há " + n + " dias";
+}
+function fmtDate(iso){ return iso ? iso.split("-").reverse().join("/") : "—"; }
+
+function filtered(){
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  if(!q) return data;
+  return data.filter(d => (d.name+" "+d.seg).toLowerCase().includes(q));
+}
+
+/* ---------- RENDER ---------- */
+function renderMetrics(){
+  const d = filtered();
+  const ativos = d.filter(x=>x.status==="ativo");
+  const propostas = d.filter(x=>x.status==="proposta");
+  const mrr = ativos.reduce((s,x)=>s+(x.val||0),0);
+  const pot = propostas.reduce((s,x)=>s+(x.val||0),0);
+  const total = d.length;
+  const conv = total ? Math.round(ativos.length/total*100) : 0;
+  const cards = [
+    { label:"MRR (clientes ativos)", to:mrr, fmt:v=>brl(Math.round(v)), pill:ativos.length+" ativos" },
+    { label:"Em proposta", to:propostas.length, fmt:v=>Math.round(v), pill:brl(pot)+" em jogo", gray:true },
+    { label:"Total na carteira", to:total, fmt:v=>Math.round(v), pill:"oportunidades", gray:true },
+    { label:"Taxa de conversão", to:conv, fmt:v=>Math.round(v)+"%", pill:"ativos / total" },
+  ];
+  document.getElementById("metric-cards").innerHTML = cards.map((c,i)=>`
+    <div class="card">
+      <div class="label">${c.label}</div>
+      <div class="metric" data-i="${i}">${c.fmt(0)}</div>
+      <div class="pill ${c.gray?'gray':''}">● ${c.pill}</div>
+    </div>`).join("");
+  document.querySelectorAll("#metric-cards .metric").forEach(el=>{
+    const c = cards[+el.dataset.i];
+    if(metricsAnimated) el.textContent = c.fmt(c.to);
+    else countUp(el, c.to, c.fmt);
+  });
+  metricsAnimated = true;
+}
+let metricsAnimated = false;
+
+function countUp(el, to, fmt){
+  const dur = 700, t0 = performance.now();
+  function step(now){
+    const p = Math.min(1, (now - t0) / dur);
+    const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+    el.textContent = fmt(to * eased);
+    if(p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function ownerAvatar(owner){
+  if(!owner) return `<span class="avatar" style="background:#cbd5e1">?</span>`;
+  return `<span class="avatar a-${owner}">${owner[0]}</span>`;
+}
+function dealCard(d){
+  const n = daysSince(d.lastContact);
+  const staleCls = n === null ? "" : (n >= STALE_DAYS*2 ? "" : "warn");
+  const badge = isStale(d) ? `<span class="stale ${staleCls}">⏱ ${staleLabel(d)}</span>` : "";
+  return `<div class="deal" draggable="true" data-id="${d.id}">
+    <div class="name">${d.name}</div>
+    <div class="meta">${d.seg||''}</div>
+    <div class="val">${brl(d.val)}/mês</div>
+    <span class="tag ${d.status}">${d.status}</span>
+    <div class="deal-foot">
+      <span class="owner">${ownerAvatar(d.owner)} ${d.owner||'sem dono'}</span>
+      ${badge}
+    </div>
+  </div>`;
+}
+
+function renderPipeline(targetId){
+  const d = filtered();
+  const el = document.getElementById(targetId);
+  el.innerHTML = STAGES.map(stage=>{
+    const items = d.filter(x=>x.stage===stage);
+    const sum = items.reduce((s,x)=>s+(x.val||0),0);
+    return `<div class="stage" data-stage="${stage}">
+      <div class="stage-head">
+        <span class="title">${stage}</span>
+        <span class="count">${items.length}</span>
+      </div>
+      ${sum?`<div class="stage-sum">${brl(sum)}</div>`:''}
+      ${items.map(dealCard).join("")}
+    </div>`;
+  }).join("");
+  bindDnD(el);
+}
+
+function renderClientes(){
+  const d = filtered();
+  const body = document.getElementById("clientes-body");
+  if(!d.length){ body.innerHTML = `<tr><td colspan="6" class="empty">Nenhum resultado</td></tr>`; return; }
+  body.innerHTML = d.map(x=>{
+    const lc = x.lastContact
+      ? `${fmtDate(x.lastContact)} ${isStale(x)?`<span class="stale ${daysSince(x.lastContact)>=STALE_DAYS*2?'':'warn'}">${staleLabel(x)}</span>`:''}`
+      : '<span class="cell-sub">sem registro</span>';
+    return `
+    <tr data-id="${x.id}" style="cursor:pointer">
+      <td class="cell-name">${x.name}<div class="cell-sub">${x.seg||'—'}</div></td>
+      <td><span class="owner">${ownerAvatar(x.owner)} ${x.owner||'sem dono'}</span></td>
+      <td>${x.stage}</td>
+      <td>${lc}</td>
+      <td>${brl(x.val)}</td>
+      <td><span class="tag ${x.status}">${x.status}</span></td>
+    </tr>`;}).join("");
+  body.querySelectorAll("tr[data-id]").forEach(tr=>{
+    tr.onclick = ()=> openModal(+tr.dataset.id);
+  });
+}
+
+function renderAlerts(){
+  const stale = filtered().filter(isStale)
+    .sort((a,b)=> daysSince(b.lastContact) - daysSince(a.lastContact));
+  const el = document.getElementById("alerts");
+  document.getElementById("alert-count").textContent = stale.length ? `(${stale.length})` : "";
+  if(!stale.length){
+    el.innerHTML = `<div class="alerts-empty">✓ Tudo em dia. Nenhum cliente parado há mais de ${STALE_DAYS} dias.</div>`;
+    return;
+  }
+  el.innerHTML = stale.map(d=>`
+    <div class="alert-row" style="border-left-color:${daysSince(d.lastContact)>=STALE_DAYS*2?'var(--red)':'var(--amber)'}">
+      <span class="owner">${ownerAvatar(d.owner)}</span>
+      <div class="grow">
+        <div class="a-name">${d.name}</div>
+        <div class="a-meta">${d.owner||'sem dono'} · ${d.stage} · último contato ${staleLabel(d)}</div>
+      </div>
+      <button data-open="${d.id}">Abrir</button>
+      <button data-contact="${d.id}">Registrar contato hoje</button>
+    </div>`).join("");
+  el.querySelectorAll("[data-open]").forEach(b=> b.onclick = ()=> openModal(+b.dataset.open));
+  el.querySelectorAll("[data-contact]").forEach(b=> b.onclick = ()=>{
+    const item = data.find(x=>x.id===+b.dataset.contact);
+    if(item){ item.lastContact = todayISO(); save(); renderAll(); }
+  });
+}
+
+function renderAll(){
+  renderMetrics();
+  renderAlerts();
+  renderPipeline("mini-pipeline");
+  renderPipeline("full-pipeline");
+  renderClientes();
+}
+
+/* ---------- DRAG & DROP ---------- */
+let dragId = null;
+function bindDnD(container){
+  container.querySelectorAll(".deal").forEach(card=>{
+    let moved = false;
+    card.addEventListener("dragstart", e=>{ dragId = +card.dataset.id; moved = true; card.classList.add("dragging"); });
+    card.addEventListener("dragend", ()=> { card.classList.remove("dragging"); setTimeout(()=> moved=false, 0); });
+    card.addEventListener("click", ()=>{ if(!moved) openModal(+card.dataset.id); });
+  });
+  container.querySelectorAll(".stage").forEach(stage=>{
+    stage.addEventListener("dragover", e=>{ e.preventDefault(); stage.classList.add("drop-target"); });
+    stage.addEventListener("dragleave", ()=> stage.classList.remove("drop-target"));
+    stage.addEventListener("drop", e=>{
+      e.preventDefault(); stage.classList.remove("drop-target");
+      const item = data.find(d=>d.id===dragId);
+      if(item){ item.stage = stage.dataset.stage; if(item.stage==="Fechado") item.status="ativo"; save(); renderAll(); }
+    });
+  });
+}
+
+/* ---------- MODAL ---------- */
+const overlay = document.getElementById("overlay");
+function fillStageSelect(){
+  document.getElementById("f-stage").innerHTML = STAGES.map(s=>`<option value="${s}">${s}</option>`).join("");
+  document.getElementById("f-owner").innerHTML = `<option value="">Sem dono</option>` + OWNERS.map(o=>`<option value="${o}">${o}</option>`).join("");
+}
+function renderNotes(d){
+  const box = document.getElementById("notes-box");
+  const notes = (d.notes||[]).slice().reverse();
+  box.innerHTML = notes.length
+    ? notes.map(n=>`<div class="note-item"><div class="nd">${fmtDate(n.date)}</div>${n.text}</div>`).join("")
+    : `<div class="note-empty">Nenhuma nota ainda.</div>`;
+}
+function openModal(id){
+  fillStageSelect();
+  const isEdit = id!=null;
+  document.getElementById("modal-title").textContent = isEdit ? "Editar oportunidade" : "Nova oportunidade";
+  document.getElementById("del-btn").style.display = isEdit ? "inline-flex" : "none";
+  document.getElementById("notes-field").style.display = isEdit ? "block" : "none";
+  const d = isEdit ? data.find(x=>x.id===id) : { id:"", name:"", seg:"", val:"", stage:"Lead", status:"lead", owner:"", lastContact:todayISO(), notes:[] };
+  document.getElementById("f-id").value = d.id;
+  document.getElementById("f-name").value = d.name;
+  document.getElementById("f-seg").value = d.seg;
+  document.getElementById("f-val").value = d.val;
+  document.getElementById("f-stage").value = d.stage;
+  document.getElementById("f-status").value = d.status;
+  document.getElementById("f-owner").value = d.owner || "";
+  document.getElementById("f-lc").value = d.lastContact || "";
+  document.getElementById("note-input").value = "";
+  if(isEdit) renderNotes(d);
+  overlay.classList.remove("hide");
+}
+function closeModal(){ overlay.classList.add("hide"); }
+
+document.getElementById("note-add-btn").onclick = ()=>{
+  const id = +document.getElementById("f-id").value;
+  const txt = document.getElementById("note-input").value.trim();
+  if(!id || !txt) return;
+  const d = data.find(x=>x.id===id);
+  d.notes = d.notes || [];
+  d.notes.push({ date: todayISO(), text: txt });
+  d.lastContact = todayISO(); // registrar nota conta como contato
+  document.getElementById("f-lc").value = d.lastContact;
+  document.getElementById("note-input").value = "";
+  save(); renderNotes(d); renderAlerts(); renderClientes();
+};
+document.getElementById("note-input").addEventListener("keydown", e=>{ if(e.key==="Enter") document.getElementById("note-add-btn").click(); });
+
+document.getElementById("save-btn").onclick = ()=>{
+  const id = document.getElementById("f-id").value;
+  const obj = {
+    name: document.getElementById("f-name").value.trim() || "Sem nome",
+    seg: document.getElementById("f-seg").value.trim(),
+    val: +document.getElementById("f-val").value || 0,
+    stage: document.getElementById("f-stage").value,
+    status: document.getElementById("f-status").value,
+    owner: document.getElementById("f-owner").value,
+    lastContact: document.getElementById("f-lc").value || null,
+  };
+  if(id){ Object.assign(data.find(x=>x.id===+id), obj); }
+  else { obj.id = nextId(); obj.notes = []; data.push(obj); }
+  save(); closeModal(); renderAll();
+};
+document.getElementById("del-btn").onclick = ()=>{
+  const id = +document.getElementById("f-id").value;
+  if(confirm("Excluir essa oportunidade?")){ data = data.filter(x=>x.id!==id); save(); closeModal(); renderAll(); }
+};
+document.getElementById("cancel-btn").onclick = closeModal;
+overlay.onclick = e=>{ if(e.target===overlay) closeModal(); };
+document.getElementById("add-btn").onclick = ()=> openModal(null);
+
+/* ---------- NAV ---------- */
+const TITLES = {
+  dashboard: ["Dashboard","Visão geral da carteira"],
+  pipeline: ["Pipeline","Arraste os cards entre os estágios"],
+  clientes: ["Clientes","Clique numa linha para editar"],
+};
+document.getElementById("nav").addEventListener("click", e=>{
+  const btn = e.target.closest("button"); if(!btn) return;
+  activeView = btn.dataset.view;
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active", b===btn));
+  ["dashboard","pipeline","clientes"].forEach(v=>{
+    document.getElementById("view-"+v).classList.toggle("hide", v!==activeView);
+  });
+  document.getElementById("view-title").textContent = TITLES[activeView][0];
+  document.getElementById("view-sub").textContent = TITLES[activeView][1];
+});
+
+document.getElementById("search").addEventListener("input", renderAll);
+
+renderAll();
+</script>
+</body>
+</html>

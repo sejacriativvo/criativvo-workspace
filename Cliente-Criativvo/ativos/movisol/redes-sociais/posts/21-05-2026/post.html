@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Movisol — Funciona em dia nublado?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --azul:    #004CF1;
+    --azul-dk: #0036C8;
+    --branco:  #FFFFFF;
+    --preto:   #0A0A0A;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+    padding: 80px 40px 120px;
+  }
+
+  .slide-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #444;
+    align-self: flex-start;
+    margin-bottom: -60px;
+  }
+
+  .post { width:1080px; height:1350px; position:relative; overflow:hidden; flex-shrink:0; }
+
+  /* PILL */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 30px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .pill::before { content:''; width:7px; height:7px; border-radius:50%; background:currentColor; opacity:.7; flex-shrink:0; }
+  .pill-glass  { background:rgba(255,255,255,.13); color:#fff; border:1px solid rgba(255,255,255,.22); }
+  .pill-solid  { background:#fff; color:var(--azul); }
+  .pill-blue   { background:var(--azul); color:#fff; }
+  .pill-outline{ background:transparent; color:var(--azul); border:1.5px solid var(--azul); }
+
+  /* ── SLIDE 1 — TEMPLATE A — FOTO CAPA ── */
+  .ta { background:#000; }
+  .ta-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .ta-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,.10) 0%,
+      rgba(0,0,0,.15) 35%,
+      rgba(0,0,0,.82) 68%,
+      rgba(0,0,0,.97) 100%
+    );
+  }
+  .ta-content {
+    position:absolute; inset:0;
+    padding:68px 64px;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .ta-top { display:flex; align-items:center; justify-content:space-between; }
+  .ta-handle { font-size:16px; font-weight:500; color:rgba(255,255,255,.4); letter-spacing:.5px; }
+  .ta-body { display:flex; flex-direction:column; gap:28px; }
+  .ta-headline { font-size:84px; font-weight:900; line-height:.93; color:#fff; letter-spacing:-2.5px; }
+  .ta-sub { font-size:38px; font-weight:400; line-height:1.45; color:rgba(255,255,255,.62); max-width:720px; }
+  .ta-footer {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(255,255,255,.1); padding-top:30px; margin-top:8px;
+  }
+  .ta-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,.28); }
+
+  /* ── SLIDES 2 e 3 — TEMPLATE B — AZUL ── */
+  .tb { background:var(--azul); }
+  .tb-grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .tb-content { position:absolute; inset:0; padding:72px 64px; display:flex; flex-direction:column; }
+  .tb-top { display:flex; align-items:center; justify-content:space-between; }
+  .tb-handle { font-size:16px; font-weight:500; color:rgba(255,255,255,.38); letter-spacing:.5px; }
+  .tb-mid { flex:1; display:flex; flex-direction:column; justify-content:center; gap:28px; padding:60px 0; }
+  .tb-headline { font-size:92px; font-weight:900; line-height:.9; color:#fff; letter-spacing:-3px; }
+  .tb-divider { width:60px; height:3px; border-radius:2px; background:rgba(255,255,255,.28); }
+  .tb-sub { font-size:38px; font-weight:400; line-height:1.45; color:rgba(255,255,255,.62); max-width:700px; }
+  .tb-bottom {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(255,255,255,.12); padding-top:30px;
+  }
+  .tb-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,.25); }
+
+  /* ── SLIDE 4 — TEMPLATE C — BRANCO ── */
+  .tc { background:#F0F5FF; }
+  .tc-grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(0,76,241,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,76,241,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .tc-content { position:absolute; inset:0; padding:72px; display:flex; flex-direction:column; }
+  .tc-top { display:flex; align-items:center; justify-content:space-between; }
+  .tc-handle { font-size:16px; font-weight:500; color:rgba(0,76,241,.45); letter-spacing:.5px; }
+  .tc-mid { flex:1; display:flex; flex-direction:column; justify-content:center; gap:32px; padding:80px 0; }
+  .tc-headline { font-size:76px; font-weight:900; line-height:.93; color:var(--preto); letter-spacing:-2.5px; }
+  .tc-headline em { font-style:normal; color:var(--azul); }
+  .tc-sub { font-size:36px; font-weight:400; line-height:1.5; color:rgba(10,10,10,.52); max-width:700px; }
+  .tc-bottom {
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(0,76,241,.12); padding-top:28px;
+  }
+  .tc-city { font-size:14px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:rgba(0,0,0,.2); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     SLIDE 1 — CAPA (Template A)
+════════════════════════════════ -->
+<p class="slide-label">Slide 1 — Capa</p>
+<div class="post ta">
+  <img class="ta-img" src="foto-capa.jpg" alt="Painéis solares com céu nublado">
+  <div class="ta-overlay"></div>
+  <div class="ta-content">
+    <div class="ta-top">
+      <img style="height:38px; max-width:180px; object-fit:contain; object-position:left center;"
+           src="../../../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol">
+      <span class="ta-handle">@movisol.se</span>
+    </div>
+    <div class="ta-body">
+      <span class="pill pill-glass">Dúvida frequente</span>
+      <h1 class="ta-headline">Painel solar<br>funciona em<br>dia nublado?</h1>
+      <p class="ta-sub">Muita gente hesita em instalar com medo disso. A resposta muda tudo.</p>
+      <div class="ta-footer">
+        <span class="ta-city">Ibitinga · SP</span>
+        <span class="pill pill-glass" style="font-size:10px; padding:6px 16px;">Ver mais ↓</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     SLIDE 2 — RESPOSTA (Template B)
+════════════════════════════════ -->
+<p class="slide-label">Slide 2 — Resposta</p>
+<div class="post tb">
+  <div class="tb-grid"></div>
+  <div class="tb-content">
+    <div class="tb-top">
+      <img style="height:38px; max-width:180px; object-fit:contain; object-position:left center;"
+           src="../../../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol">
+      <span class="tb-handle">@movisol.se</span>
+    </div>
+    <div class="tb-mid">
+      <span class="pill pill-glass">A resposta</span>
+      <h1 class="tb-headline">Sim.<br>O sistema<br>não desliga.</h1>
+      <div class="tb-divider"></div>
+      <p class="tb-sub">A luz solar não precisa ser direta pra gerar energia. Em dias nublados, a luz difusa atravessa as nuvens e continua alimentando o painel. O céu fechado não para a geração.</p>
+    </div>
+    <div class="tb-bottom">
+      <span class="tb-city">Ibitinga · SP</span>
+      <img style="height:32px; max-width:32px; object-fit:contain; opacity:.85;"
+           src="../../../assets/logo/ICONE DA LOGO BRANCA.png" alt="">
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     SLIDE 3 — O NÚMERO (Template B)
+════════════════════════════════ -->
+<p class="slide-label">Slide 3 — O Número</p>
+<div class="post tb">
+  <div class="tb-grid"></div>
+  <div class="tb-content">
+    <div class="tb-top">
+      <img style="height:38px; max-width:180px; object-fit:contain; object-position:left center;"
+           src="../../../assets/logo/LOGO + ESCRITA LOGO BRANCA.png" alt="Movisol">
+      <span class="tb-handle">@movisol.se</span>
+    </div>
+    <div class="tb-mid">
+      <span class="pill pill-glass">O número</span>
+      <h1 class="tb-headline">10% a 25%<br>de geração<br>no pior dia.</h1>
+      <div class="tb-divider"></div>
+      <p class="tb-sub">Isso é o mínimo em um dia completamente fechado. Nos demais dias do ano, o sistema opera com muito mais. Cada dia de sol vai direto pra sua conta de luz.</p>
+    </div>
+    <div class="tb-bottom">
+      <span class="tb-city">Ibitinga · SP</span>
+      <img style="height:32px; max-width:32px; object-fit:contain; opacity:.85;"
+           src="../../../assets/logo/ICONE DA LOGO BRANCA.png" alt="">
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     SLIDE 4 — CONCLUSÃO (Template C)
+════════════════════════════════ -->
+<p class="slide-label">Slide 4 — Conclusão</p>
+<div class="post tc">
+  <div class="tc-grid"></div>
+  <div class="tc-content">
+    <div class="tc-top">
+      <img style="height:38px; max-width:180px; object-fit:contain; object-position:left center;"
+           src="../../../assets/logo/ICONE + ESCRITA LOGO AZUL.png" alt="Movisol">
+      <span class="tc-handle">@movisol.se</span>
+    </div>
+    <div class="tc-mid">
+      <span class="pill pill-outline">Conclusão</span>
+      <h1 class="tc-headline">O céu fechado não fecha<br>a sua <em>economia.</em></h1>
+      <p class="tc-sub">Quem instalou na região já sente isso na conta todo mês. Dias nublados acontecem, mas a economia é o ano inteiro. Se quiser saber quanto você economizaria, chama a gente no direct.</p>
+    </div>
+    <div class="tc-bottom">
+      <span class="tc-city">Ibitinga · SP</span>
+      <span class="pill pill-blue" style="font-size:10px; padding:8px 20px;">Quer simular? Fala com a gente.</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

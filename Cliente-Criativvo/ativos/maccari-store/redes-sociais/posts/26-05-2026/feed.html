@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Castellinhos × Maccari Store — Sorteio Dia dos Namorados</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #1a1a1a; }
+    body { display: flex; justify-content: center; padding: 30px; }
+
+    .card {
+      width: 1080px;
+      height: 1350px;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      overflow: hidden;
+      background: #1A120B;
+      color: #F2EAD8;
+    }
+
+    /* ══════════════ PHOTO ══════════════ */
+    .photo {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1080px;
+      height: 540px;
+      overflow: hidden;
+    }
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+    .photo::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 130px;
+      background: linear-gradient(180deg, transparent 0%, rgba(26,18,11,0.55) 50%, #1A120B 100%);
+      pointer-events: none;
+    }
+    .photo::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      height: 200px;
+      background: linear-gradient(180deg, rgba(26,18,11,0.65) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ══════════════ BRAND LOCKUP ══════════════ */
+    .lockup {
+      position: absolute;
+      top: 50px;
+      left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 26px;
+      z-index: 5;
+    }
+    .lockup .cs {
+      height: 76px;
+      filter: drop-shadow(0 4px 18px rgba(0,0,0,0.7));
+    }
+    .lockup .x {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-weight: 400;
+      font-size: 34px;
+      color: #E8C58A;
+      opacity: 0.9;
+    }
+    .lockup .mc {
+      height: 62px;
+      filter: drop-shadow(0 4px 18px rgba(0,0,0,0.7));
+    }
+
+    /* ══════════════ PILL ══════════════ */
+    .pill-row {
+      position: absolute;
+      top: 562px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 4;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-family: 'Inter';
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 6px;
+      color: #F2EAD8;
+      background: rgba(20,12,6,0.65);
+      border: 1px solid rgba(242,234,216,0.32);
+      padding: 12px 22px;
+      border-radius: 100px;
+      text-transform: uppercase;
+    }
+    .pill .heart {
+      width: 14px; height: 14px;
+      fill: #ED7D17;
+    }
+    .pill .sep {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(242,234,216,0.55);
+    }
+
+    /* ══════════════ HEADLINE ══════════════ */
+    .headline-block {
+      position: absolute;
+      top: 632px;
+      left: 70px; right: 70px;
+      z-index: 4;
+      text-align: center;
+    }
+    .headline {
+      font-family: 'Fraunces';
+      font-weight: 500;
+      font-size: 86px;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      color: #F2EAD8;
+      font-variation-settings: 'opsz' 144, 'SOFT' 30;
+    }
+    .headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: #E8C58A;
+    }
+
+    /* ══════════════ PRIZES (EDITORIAL, no cards) ══════════════ */
+    .prizes-eyebrow {
+      position: absolute;
+      top: 830px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 4;
+    }
+    .prizes-eyebrow .txt {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Inter';
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 7px;
+      color: #ED7D17;
+      text-transform: uppercase;
+    }
+    .prizes-eyebrow .txt::before,
+    .prizes-eyebrow .txt::after {
+      content: '';
+      width: 44px; height: 1px;
+      background: rgba(237,125,23,0.5);
+    }
+
+    .prizes {
+      position: absolute;
+      top: 870px;
+      left: 70px; right: 70px;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr 1px 1fr;
+      align-items: start;
+      gap: 0;
+      z-index: 4;
+    }
+    .prize {
+      padding: 0 14px;
+      text-align: center;
+    }
+    .prize .img-wrap {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+    .prize .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .prize .label {
+      font-family: 'Inter';
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 5px;
+      color: #ED7D17;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .prize .name {
+      font-family: 'Fraunces';
+      font-size: 28px;
+      font-weight: 500;
+      color: #F2EAD8;
+      line-height: 1.08;
+      letter-spacing: -0.5px;
+      font-variation-settings: 'opsz' 144;
+    }
+    .prize .name em {
+      font-style: italic;
+      color: #E8C58A;
+    }
+    .vsep {
+      width: 1px;
+      align-self: stretch;
+      background: rgba(242,234,216,0.14);
+      margin: 10px 0;
+    }
+
+    /* ══════════════ COMO PARTICIPAR ══════════════ */
+    .howto-eyebrow {
+      position: absolute;
+      top: 1145px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 4;
+    }
+    .howto-eyebrow .txt {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Inter';
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 7px;
+      color: #5ABCB7;
+      text-transform: uppercase;
+    }
+    .howto-eyebrow .txt::before,
+    .howto-eyebrow .txt::after {
+      content: '';
+      width: 44px; height: 1px;
+      background: rgba(90,188,183,0.5);
+    }
+
+    .steps {
+      position: absolute;
+      top: 1185px;
+      left: 50px; right: 50px;
+      display: grid;
+      grid-template-columns: 1fr 36px 1fr 36px 1fr;
+      align-items: stretch;
+      z-index: 4;
+    }
+    .step {
+      text-align: center;
+      padding: 0 6px;
+    }
+    .step .num {
+      font-family: 'Fraunces';
+      font-style: italic;
+      font-size: 32px;
+      font-weight: 500;
+      color: #5ABCB7;
+      margin-bottom: 10px;
+      font-variation-settings: 'opsz' 144;
+    }
+    .step .label {
+      font-family: 'Inter';
+      font-size: 20px;
+      font-weight: 600;
+      color: #F2EAD8;
+      line-height: 1.35;
+      letter-spacing: 0.2px;
+    }
+    .step .label b { color: #E8C58A; font-weight: 700; }
+    .step-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-arrow svg {
+      width: 28px; height: 28px;
+      stroke: rgba(90,188,183,0.7);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ══════════════ FOOTER ══════════════ */
+    .footer {
+      position: absolute;
+      bottom: 28px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 4;
+    }
+    .footer .cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Inter';
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 5px;
+      color: #6e6450;
+      text-transform: uppercase;
+    }
+    .footer .cue svg {
+      width: 14px; height: 14px;
+      stroke: #6e6450;
+      fill: none;
+      stroke-width: 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <div class="photo">
+      <img src="hero-couple-night.jpg" alt="Casal no Castellinhos">
+    </div>
+
+    <div class="lockup">
+      <img class="cs" src="../../../assets/logo-castellinhos.png" alt="Castellinhos">
+      <span class="x">×</span>
+      <img class="mc" src="../../../assets/logo.png" alt="Maccari Store">
+    </div>
+
+    <div class="pill-row">
+      <div class="pill">
+        <svg class="heart" viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-9C1 9 2.5 5 6 5c2 0 3.5 1 6 3.5C14.5 6 16 5 18 5c3.5 0 5 4 3.5 7-2.5 4.65-9.5 9-9.5 9z"/></svg>
+        <span>SORTEIO DIA DOS NAMORADOS</span>
+        <span class="sep"></span>
+        <span>11.06</span>
+      </div>
+    </div>
+
+    <div class="headline-block">
+      <div class="headline">
+        Uma noite <em>inesquecível</em><br>
+        pra dois.
+      </div>
+    </div>
+
+    <div class="prizes-eyebrow">
+      <span class="txt">O CASAL VAI GANHAR</span>
+    </div>
+
+    <div class="prizes">
+      <div class="prize">
+        <div class="img-wrap"><img src="prize-dinner.jpg" alt="Jantar"></div>
+        <div class="label">Jantar</div>
+        <div class="name">no <em>Castellinhos</em></div>
+      </div>
+      <div class="vsep"></div>
+      <div class="prize">
+        <div class="img-wrap"><img src="prize-wine.jpg" alt="Vinho"></div>
+        <div class="label">Vinho</div>
+        <div class="name"><em>Angélica</em> Zapata</div>
+      </div>
+      <div class="vsep"></div>
+      <div class="prize">
+        <div class="img-wrap"><img src="prize-gift.jpg" alt="Presente"></div>
+        <div class="label">Presente</div>
+        <div class="name"><em>Surpresa</em> pra ela</div>
+      </div>
+    </div>
+
+    <div class="howto-eyebrow">
+      <span class="txt">COMO PARTICIPAR</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <div class="label"><b>Compre</b> na Maccari ou <b>consuma</b> no Castellinhos</div>
+      </div>
+      <div class="step-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12 h14 M13 6 l6 6 -6 6"/></svg>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <div class="label">Receba seu <b>cupom</b> no balcão</div>
+      </div>
+      <div class="step-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12 h14 M13 6 l6 6 -6 6"/></svg>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <div class="label"><b>Sorteio</b> dia <b>11.06</b></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cue">
+        <svg viewBox="0 0 24 24"><path d="M5 12 h14 M13 6 l6 6 -6 6"/></svg>
+        REGULAMENTO COMPLETO NA LEGENDA
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposta, Dra. Patrícia Tessone | Criativvo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'AVEstiana';
+      src: url('../marca/AVEstiana-Black.otf') format('opentype');
+      font-weight: 900;
+      font-style: normal;
+      font-display: block;
+    }
+
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f7f7f8;
+      --ink: #0a0a0a;
+      --ink-soft: #1d1d1f;
+      --gray: #6e6e73;
+      --gray-light: #a1a1a6;
+      --line: #e5e5e7;
+      --orange: #FF5501;
+    }
+
+    @page { size: A4 portrait; margin: 0; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--bg); }
+    body {
+      color: var(--ink);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.005em;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      padding: 22mm 20mm 20mm;
+      margin: 0 auto;
+      position: relative;
+      page-break-after: always;
+      page-break-inside: avoid;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+    }
+    .page.center { justify-content: center; align-items: center; text-align: center; }
+    .page.between { justify-content: space-between; }
+    .page.orange { background: var(--orange); color: #fff; }
+    .page:last-child { page-break-after: auto; }
+    .container { width: 100%; max-width: 170mm; margin: 0 auto; }
+
+    .brand-tag {
+      position: absolute; top: 12mm; left: 20mm;
+      font-family: 'AVEstiana', cursive; font-size: 20px;
+      color: var(--orange); line-height: 1;
+      letter-spacing: -0.025em; text-transform: lowercase;
+    }
+    .page.orange .brand-tag { color: #fff; }
+
+    .page-num {
+      position: absolute; top: 13mm; right: 20mm;
+      font-size: 10px; font-weight: 600; letter-spacing: 2.5px; color: var(--gray-light);
+    }
+    .page.orange .page-num { color: rgba(255,255,255,0.65); }
+
+    .eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: 3.5px;
+      text-transform: uppercase; color: var(--orange);
+      display: block; margin-bottom: 16mm;
+    }
+    .page.orange .eyebrow { color: rgba(255,255,255,0.9); }
+
+    h1 { font-weight: 800; letter-spacing: -0.035em; line-height: 1.02; color: var(--ink); }
+    h2 { font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; color: var(--ink); }
+    h3 { font-weight: 800; letter-spacing: -0.025em; color: var(--ink); }
+    .page.orange h1, .page.orange h2, .page.orange h3 { color: #fff; }
+    p { font-size: 14px; color: var(--gray); line-height: 1.65; }
+    .page.orange p { color: rgba(255,255,255,0.92); }
+    .accent { color: var(--orange); }
+    .page.orange .accent { background: rgba(0,0,0,0.15); padding: 2px 14px; border-radius: 8px; color: #fff; }
+
+    /* COVER */
+    .cover .logo-main {
+      font-family: 'AVEstiana', cursive; font-size: 60px;
+      color: var(--orange); line-height: 1; margin-bottom: 10mm;
+      letter-spacing: -0.03em; text-transform: lowercase;
+    }
+    .cover .tagline {
+      font-size: 10px; font-weight: 600; letter-spacing: 4.5px;
+      text-transform: uppercase; color: var(--gray-light); margin-bottom: 40mm;
+    }
+    .cover .for-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 4.5px;
+      text-transform: uppercase; color: var(--orange); margin-bottom: 14mm;
+    }
+    .cover h1 { font-size: 56px; margin-bottom: 4mm; }
+    .cover .client-script {
+      font-family: 'Great Vibes', cursive; font-size: 68px;
+      color: var(--orange); line-height: 1; margin-bottom: 40mm; font-weight: 400;
+    }
+    .cover .date-block {
+      display: inline-block; padding: 10px 26px;
+      border: 1px solid var(--line); border-radius: 100px;
+      font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--ink-soft);
+    }
+
+    /* PAGE 2 */
+    .big-stat-page { justify-content: center; }
+    .big-stat {
+      font-size: 160px; font-weight: 900; line-height: 0.85;
+      letter-spacing: -0.06em; color: #fff; margin-bottom: 14mm;
+    }
+    .stat-label { font-size: 22px; font-weight: 600; line-height: 1.3; max-width: 140mm; color: #fff; margin-bottom: 10mm; }
+    .stat-sub { font-size: 13.5px; color: rgba(255,255,255,0.78); max-width: 130mm; line-height: 1.65; }
+
+    /* PAGE 3 PILLARS */
+    .h2-main { font-size: 42px; margin-bottom: 6mm; }
+    .lead {
+      font-size: 16px; color: var(--ink-soft); line-height: 1.55;
+      max-width: 150mm; font-weight: 500; margin-bottom: 14mm;
+    }
+    .page.orange .lead { color: #fff; opacity: 0.95; }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .pillar {
+      padding: 28px 24px; border: 1px solid var(--line);
+      border-radius: 16px; background: var(--bg);
+    }
+    .pillar .pillar-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: var(--orange); margin-bottom: 14px; display: block;
+    }
+    .pillar h3 { font-size: 20px; line-height: 1.15; margin-bottom: 10px; }
+    .pillar p { font-size: 12.5px; color: var(--gray); line-height: 1.55; }
+
+    /* SCOPE PAGES */
+    .scope-page { justify-content: flex-start; }
+    .scope-num {
+      font-size: 180px; font-weight: 900; line-height: 0.85;
+      color: var(--orange); letter-spacing: -0.07em; margin-bottom: 4mm;
+    }
+    .page.orange .scope-num { color: #fff; }
+    .scope-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--orange); margin-bottom: 8mm;
+    }
+    .page.orange .scope-tag { color: rgba(255,255,255,0.92); }
+    .scope-title {
+      font-size: 44px; font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1; margin-bottom: 12mm; color: var(--ink);
+    }
+    .page.orange .scope-title { color: #fff; }
+    .scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10mm; }
+    .feature {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; background: var(--bg-alt);
+      border-radius: 10px; font-size: 12.5px;
+      color: var(--ink-soft); font-weight: 500; line-height: 1.35;
+    }
+    .page.orange .feature { background: rgba(255,255,255,0.13); color: #fff; }
+    .feature .check {
+      width: 18px; height: 18px; background: var(--orange); color: #fff;
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0;
+    }
+    .page.orange .feature .check { background: #fff; color: var(--orange); }
+
+    .price-strip {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 24px; background: var(--ink); color: #fff; border-radius: 14px;
+    }
+    .page.orange .price-strip { background: #fff; color: var(--ink); }
+    .price-strip .old { font-size: 15px; font-weight: 500; text-decoration: line-through; opacity: 0.45; }
+    .price-strip .new { font-size: 28px; font-weight: 800; letter-spacing: -0.025em; color: var(--orange); }
+    .price-strip .unit { font-size: 13px; font-weight: 500; opacity: 0.7; }
+    .price-strip .save {
+      margin-left: auto; font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      background: var(--orange); color: #fff; padding: 6px 12px; border-radius: 100px;
+    }
+    .page.orange .price-strip .save { background: var(--orange); color: #fff; }
+
+    .price-strip-included {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 24px; background: var(--ink); color: #fff; border-radius: 14px;
+    }
+    .price-strip-included .incl-label {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7);
+    }
+    .price-strip-included .incl-val {
+      font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #fff;
+    }
+    .price-strip-included .incl-badge {
+      margin-left: auto; font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      background: var(--orange); color: #fff; padding: 6px 12px; border-radius: 100px;
+    }
+
+    /* DIFFERENTIALS */
+    .diff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10mm; }
+    .diff-card {
+      padding: 26px 24px; border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px; background: rgba(255,255,255,0.08);
+    }
+    .diff-card .num {
+      font-size: 42px; font-weight: 900; color: #fff;
+      line-height: 0.9; margin-bottom: 14px; letter-spacing: -0.04em; display: block;
+    }
+    .diff-card h4 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: -0.015em; line-height: 1.2; }
+    .diff-card p { font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.55; margin: 0; }
+
+    /* ANCHOR */
+    .anchor-page { justify-content: center; text-align: center; }
+    .anchor-page h2 { font-size: 36px; margin-bottom: 18mm; }
+    .anchor-block { display: flex; flex-direction: column; align-items: center; gap: 12mm; }
+    .anchor-line { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .anchor-label { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gray); }
+    .anchor-label.hot { color: var(--orange); }
+    .anchor-old {
+      font-size: 96px; font-weight: 900; letter-spacing: -0.05em;
+      color: var(--gray-light); text-decoration: line-through;
+      text-decoration-thickness: 5px; line-height: 1;
+    }
+    .anchor-arrow { font-size: 32px; color: var(--orange); font-weight: 300; line-height: 1; }
+    .anchor-new { font-size: 140px; font-weight: 900; letter-spacing: -0.05em; color: var(--orange); line-height: 1; }
+    .save-pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--ink); color: #fff; padding: 14px 28px;
+      border-radius: 100px; font-size: 12px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; margin-top: 10mm;
+    }
+    .save-pill b { color: var(--orange); font-size: 15px; }
+
+    /* BREAKDOWN */
+    .breakdown-page { justify-content: flex-start; }
+    .breakdown-title { font-size: 36px; margin-bottom: 8mm; }
+
+    .pay-grid {
+      display: grid; grid-template-columns: 1fr 20px 1fr;
+      gap: 0; align-items: center; margin-bottom: 8mm;
+    }
+    .pay-block {
+      padding: 22px 22px 24px;
+      border-radius: 18px;
+    }
+    .pay-block.start { background: var(--ink); }
+    .pay-block.monthly { background: var(--bg-alt); border: 1px solid var(--line); }
+    .pay-arrow {
+      text-align: center; font-size: 22px; color: var(--gray-light); font-weight: 300;
+    }
+    .pay-block .pay-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; display: block; margin-bottom: 10px;
+    }
+    .pay-block.start .pay-tag { color: rgba(255,255,255,0.55); }
+    .pay-block.monthly .pay-tag { color: var(--gray); }
+    .pay-block .pay-price {
+      font-size: 46px; font-weight: 900; line-height: 1; letter-spacing: -0.04em; display: block; margin-bottom: 6px;
+    }
+    .pay-block.start .pay-price { color: var(--orange); }
+    .pay-block.monthly .pay-price { color: var(--ink); }
+    .pay-block .pay-unit {
+      font-size: 11px; font-weight: 600;
+    }
+    .pay-block.start .pay-unit { color: rgba(255,255,255,0.55); }
+    .pay-block.monthly .pay-unit { color: var(--gray); }
+    .pay-block .pay-desc {
+      font-size: 12px; line-height: 1.5; margin-top: 10px;
+    }
+    .pay-block.start .pay-desc { color: rgba(255,255,255,0.7); }
+    .pay-block.monthly .pay-desc { color: var(--gray); }
+
+    .crm-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px; background: var(--bg-alt);
+      border: 1px dashed var(--line); border-radius: 12px; margin-bottom: 8mm;
+    }
+    .crm-row .crm-left { display: flex; align-items: center; gap: 12px; }
+    .crm-row .crm-badge {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      background: var(--bg); color: var(--gray); padding: 4px 10px;
+      border-radius: 100px; border: 1px solid var(--line); white-space: nowrap;
+    }
+    .crm-row .crm-name { font-size: 14px; font-weight: 700; color: var(--ink-soft); }
+    .crm-row .crm-desc { font-size: 11px; color: var(--gray); margin-top: 2px; }
+    .crm-row .crm-price { text-align: right; }
+    .crm-row .crm-price .cp { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+    .crm-row .crm-price .cm { font-size: 11px; color: var(--gray); display: block; margin-top: 2px; }
+
+    .inv-note {
+      padding: 16px 20px; background: var(--bg-alt);
+      border-left: 3px solid var(--orange); border-radius: 4px;
+      font-size: 12px; color: var(--gray); line-height: 1.65;
+    }
+    .optional-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      background: var(--bg-alt); color: var(--gray); padding: 3px 9px;
+      border-radius: 100px; margin-left: 8px; vertical-align: middle;
+    }
+
+    /* CTA */
+    .cta-page { justify-content: center; align-items: center; text-align: center; }
+    .cta-page h1 { font-size: 64px; color: #fff; margin-bottom: 6mm; line-height: 1; }
+    .cta-page > .container > p { font-size: 15px; color: rgba(255,255,255,0.92); max-width: 130mm; margin: 0 auto 10mm; font-weight: 500; }
+    .pix-card {
+      background: #fff; border-radius: 18px; padding: 26px 28px;
+      max-width: 145mm; margin: 0 auto 8mm; text-align: left;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .pix-card .pix-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .pix-card .pix-label { font-size: 10px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); }
+    .pix-card .pix-type { font-size: 11px; font-weight: 600; color: var(--gray); background: var(--bg-alt); padding: 4px 10px; border-radius: 100px; }
+    .pix-card .pix-key {
+      font-family: 'Courier New', monospace; font-size: 26px; font-weight: 700;
+      color: var(--ink); letter-spacing: 1px; padding: 18px 20px;
+      background: var(--bg-alt); border-radius: 12px; border: 1px dashed var(--line);
+      user-select: all; -webkit-user-select: all; text-align: center; word-break: break-all;
+    }
+    .pix-card .pix-instruction { font-size: 12px; color: var(--gray); margin-top: 12px; text-align: center; font-weight: 500; }
+    .pix-card .pix-instruction strong { color: var(--ink); font-weight: 700; }
+    .pix-card .pix-amount { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; margin-top: 14px; border-top: 1px solid var(--line); }
+    .pix-card .pix-amount .lbl { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); }
+    .pix-card .pix-amount .val { font-size: 22px; font-weight: 900; color: var(--ink); letter-spacing: -0.025em; }
+    .btn { display: inline-block; background: #fff; color: var(--orange); font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; padding: 18px 42px; border-radius: 100px; text-decoration: none; }
+
+    /* ABOUT */
+    .about-page { justify-content: center; text-align: center; }
+    .about-page h2 { font-size: 36px; margin-bottom: 6mm; }
+    .about-page > .container > p { font-size: 14.5px; color: var(--gray); max-width: 140mm; margin: 0 auto 14mm; line-height: 1.7; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 14mm; }
+    .about-stat { text-align: center; padding: 24px 16px; border: 1px solid var(--line); border-radius: 14px; }
+    .about-stat .big { font-size: 52px; font-weight: 900; color: var(--orange); letter-spacing: -0.04em; line-height: 1; margin-bottom: 8px; }
+    .about-stat .lbl { font-size: 12px; color: var(--gray); font-weight: 500; line-height: 1.5; }
+    .case-pill { display: inline-block; background: var(--ink); color: #fff; padding: 12px 26px; border-radius: 100px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.4px; }
+    .case-pill b { color: var(--orange); }
+    .footer-strip { margin-top: auto; padding-top: 12mm; text-align: center; border-top: 1px solid var(--line); }
+    .footer-strip .footer-logo { font-family: 'AVEstiana', cursive; font-size: 28px; color: var(--orange); line-height: 1; margin-bottom: 8px; display: block; letter-spacing: -0.025em; text-transform: lowercase; }
+    .footer-strip .footer-info { font-size: 12px; color: var(--gray); margin-bottom: 4px; }
+    .footer-strip .footer-info a { color: var(--orange); text-decoration: none; font-weight: 600; }
+    .footer-strip .validity { font-size: 10px; color: var(--gray-light); letter-spacing: 0.5px; margin-top: 6px; }
+
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== PAGE 1, COVER ========== -->
+  <section class="page cover center">
+    <div class="container">
+      <div class="logo-main">Criativvo</div>
+      <div class="tagline">Seu Negócio Vira Marca</div>
+
+      <div class="for-label">Proposta exclusiva para</div>
+      <h1>Dra. Patrícia</h1>
+      <div class="client-script">Tessone</div>
+
+      <div class="date-block">Junho 2026 · Ribeirão Preto SP</div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 2, BIG STAT ========== -->
+  <section class="page orange big-stat-page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">02 / 12</span>
+    <div class="container" style="text-align:center;">
+      <span class="eyebrow">A Oportunidade</span>
+      <div class="big-stat">R$ 1.000</div>
+      <div class="stat-label" style="margin: 0 auto;">é o que cada limpeza com o seu equipamento suíço vai gerar em Ribeirão.</div>
+      <p class="stat-sub" style="margin: 8mm auto 0;">Com o posicionamento certo, 3 pacientes novos cobrem o investimento do primeiro mês inteiro. O site entra no ar antes do treinamento do dia 18, e na semana que você estreia o equipamento, os anúncios já estão rodando.</p>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 3, SOLUCAO ========== -->
+  <section class="page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">03 / 12</span>
+    <div class="container" style="margin-top: 10mm;">
+      <span class="eyebrow">A Solução</span>
+      <h2 class="h2-main">Três pilares.<br/>Uma única agência.</h2>
+      <p class="lead">Sem fragmentar entre web designer, social media, editor e gestor de tráfego. Tudo conectado, uma única reunião por mês, um único grupo no WhatsApp.</p>
+
+      <div class="three-col">
+        <div class="pillar">
+          <span class="pillar-num">01</span>
+          <h3>Site</h3>
+          <p>Premium e profissional, pronto em 48 horas para ranquear no Google e receber anúncios imediatamente.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">02</span>
+          <h3>Conteúdo</h3>
+          <p>Roteiros, edição de vídeo, posts e estratégia de Instagram para o seu novo posicionamento premium.</p>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">03</span>
+          <h3>Tráfego</h3>
+          <p>Anúncios no Meta direcionados ao público de classe alta de Ribeirão Preto, gerenciados todo mês.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 4, ESCOPO SITE ========== -->
+  <section class="page scope-page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">04 / 12</span>
+    <div class="container" style="margin-top: 8mm;">
+      <div class="scope-num">01</div>
+      <div class="scope-tag">Setup · pronto em 48 horas</div>
+      <h2 class="scope-title">Site<br/>Profissional.</h2>
+
+      <div class="scope-grid">
+        <div class="feature"><div class="check">✓</div>Design exclusivo para clínica premium</div>
+        <div class="feature"><div class="check">✓</div>SSL ativo e LGPD</div>
+        <div class="feature"><div class="check">✓</div>Hospedagem com 99,9% uptime</div>
+        <div class="feature"><div class="check">✓</div>Domínio .com.br incluído</div>
+        <div class="feature"><div class="check">✓</div>SEO para Ribeirão Preto</div>
+        <div class="feature"><div class="check">✓</div>100% responsivo</div>
+        <div class="feature"><div class="check">✓</div>Integração direta com WhatsApp</div>
+        <div class="feature"><div class="check">✓</div>Google Analytics configurado</div>
+        <div class="feature"><div class="check">✓</div>Google Meu Negócio otimizado</div>
+        <div class="feature"><div class="check">✓</div>Página do equipamento suíço</div>
+      </div>
+
+      <div class="price-strip-included">
+        <div>
+          <div class="incl-label">Implementação + setup completo</div>
+          <div class="incl-val">Incluído no 1º mês</div>
+        </div>
+        <span class="incl-badge">Vale R$ 5.000</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 5, ESCOPO CONTEUDO (ORANGE) ========== -->
+  <section class="page orange scope-page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">05 / 12</span>
+    <div class="container" style="margin-top: 8mm;">
+      <div class="scope-num">02</div>
+      <div class="scope-tag">Mensal · começa no mês 1</div>
+      <h2 class="scope-title">Conteúdo<br/>e Vídeo.</h2>
+
+      <div class="scope-grid">
+        <div class="feature"><div class="check">✓</div>Estratégia mensal personalizada</div>
+        <div class="feature"><div class="check">✓</div>4 a 6 roteiros de Reels prontos</div>
+        <div class="feature"><div class="check">✓</div>Edição profissional dos vídeos</div>
+        <div class="feature"><div class="check">✓</div>Feed do Instagram planejado</div>
+        <div class="feature"><div class="check">✓</div>Fotos tratadas com IA</div>
+        <div class="feature"><div class="check">✓</div>Publicação e agendamento</div>
+        <div class="feature"><div class="check">✓</div>Stories e Reels otimizados</div>
+        <div class="feature"><div class="check">✓</div>Legendas com copywriting</div>
+        <div class="feature"><div class="check">✓</div>Conteúdo para ortodontia</div>
+        <div class="feature"><div class="check">✓</div>Relatório e reunião mensais</div>
+      </div>
+
+      <div class="price-strip">
+        <span class="old">R$ 4.000</span>
+        <span class="new">R$ 2.000</span>
+        <span class="unit">por mês</span>
+        <span class="save">Gestão completa</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 6, ESCOPO TRAFEGO ========== -->
+  <section class="page scope-page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">06 / 12</span>
+    <div class="container" style="margin-top: 8mm;">
+      <div class="scope-num">03</div>
+      <div class="scope-tag">Incluso na mensalidade · começa no mês 1</div>
+      <h2 class="scope-title">Gestão de<br/>Tráfego.</h2>
+
+      <div class="scope-grid">
+        <div class="feature"><div class="check">✓</div>Campanhas no Meta Ads</div>
+        <div class="feature"><div class="check">✓</div>Segmentação premium Ribeirão</div>
+        <div class="feature"><div class="check">✓</div>Anúncios para o equipamento suíço</div>
+        <div class="feature"><div class="check">✓</div>Remarketing para visitantes do site</div>
+        <div class="feature"><div class="check">✓</div>Otimização semanal das campanhas</div>
+        <div class="feature"><div class="check">✓</div>Relatório de performance mensal</div>
+        <div class="feature"><div class="check">✓</div>Criativos e copies dos anúncios</div>
+        <div class="feature"><div class="check">✓</div>Pixel do Facebook instalado</div>
+        <div class="feature"><div class="check">✓</div>Públicos personalizados</div>
+        <div class="feature"><div class="check">✓</div>Verba definida em conjunto</div>
+      </div>
+
+      <div class="price-strip-included">
+        <div>
+          <div class="incl-label">Gestão de tráfego pago</div>
+          <div class="incl-val">Incluído na mensalidade</div>
+        </div>
+        <span class="incl-badge">Sem custo extra</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 7, CRM (ORANGE) — SERVIÇO SEPARADO ========== -->
+  <section class="page orange scope-page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">07 / 12</span>
+    <div class="container" style="margin-top: 8mm;">
+      <div class="scope-num" style="font-size:120px;">CRM</div>
+      <div class="scope-tag">Serviço separado · opcional</div>
+      <h2 class="scope-title">Sistema de<br/>Gestão de Pacientes.</h2>
+
+      <div class="scope-grid">
+        <div class="feature"><div class="check">✓</div>100% personalizado para sua clínica</div>
+        <div class="feature"><div class="check">✓</div>Login para secretária e dentistas</div>
+        <div class="feature"><div class="check">✓</div>Calendário de consultas completo</div>
+        <div class="feature"><div class="check">✓</div>Kanban de pacientes por etapa</div>
+        <div class="feature"><div class="check">✓</div>Histórico de cada paciente</div>
+        <div class="feature"><div class="check">✓</div>Alertas automáticos de retorno</div>
+        <div class="feature"><div class="check">✓</div>Lembrete 1 dia e 1 hora antes</div>
+        <div class="feature"><div class="check">✓</div>Controle das salas da clínica</div>
+        <div class="feature"><div class="check">✓</div>Integração com WhatsApp</div>
+        <div class="feature"><div class="check">✓</div>Suporte e atualizações mensais</div>
+      </div>
+
+      <div class="price-strip">
+        <span style="font-size:13px;font-weight:600;">Implementação</span>
+        <span class="new" style="font-size:24px;">R$ 1.500</span>
+        <span class="unit" style="font-size:12px;">único</span>
+        <span class="save" style="font-size:9px;">+ R$ 350/mês</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 8, DIFERENCIAIS ========== -->
+  <section class="page orange">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">08 / 12</span>
+    <div class="container" style="margin-top: 10mm;">
+      <span class="eyebrow">Por que com a Criativvo</span>
+      <h2 class="h2-main">Quatro diferenciais<br/>que importam.</h2>
+
+      <div class="diff-grid">
+        <div class="diff-card">
+          <span class="num">01</span>
+          <h4>Sem fidelidade.</h4>
+          <p>Mês a mês. A maioria das agências prende em contrato de 6 meses para esconder a falta de resultado. Se não entregar, você sai sem multa.</p>
+        </div>
+        <div class="diff-card">
+          <span class="num">02</span>
+          <h4>360 em uma.</h4>
+          <p>Site, conteúdo, vídeo e tráfego em uma única agência, um único grupo de WhatsApp. Sem você ficar no meio coordenando três fornecedores.</p>
+        </div>
+        <div class="diff-card">
+          <span class="num">03</span>
+          <h4>Vocês já nos conhecem.</h4>
+          <p>O João cresceu aqui. Ele sabe como a gente trabalha, sabe que entregamos de verdade. Esse nível de confiança não se compra.</p>
+        </div>
+        <div class="diff-card">
+          <span class="num">04</span>
+          <h4>Resultado em dias.</h4>
+          <p>Site pronto em 48 horas, anúncios rodando na semana do seu treinamento. Sem esperar meses para ver o retorno.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 9, ANCORA ========== -->
+  <section class="page anchor-page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">09 / 12</span>
+    <div class="container">
+      <span class="eyebrow">Investimento</span>
+      <h2>Esse pacote vale<br/><span class="accent">muito mais.</span></h2>
+
+      <div class="anchor-block">
+        <div class="anchor-line">
+          <span class="anchor-label">Normalmente custaria no 1º mês</span>
+          <div class="anchor-old">R$ 5.000</div>
+        </div>
+
+        <div class="anchor-arrow">↓</div>
+
+        <div class="anchor-line">
+          <span class="anchor-label hot">Fechando hoje — tudo incluso</span>
+          <div class="anchor-new">R$ 3.000</div>
+        </div>
+
+        <div class="save-pill">Economia de <b>R$ 2.000</b> no primeiro mês</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 10, BREAKDOWN ========== -->
+  <section class="page breakdown-page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">10 / 12</span>
+    <div class="container" style="margin-top: 10mm;">
+      <span class="eyebrow">Investimento</span>
+      <h2 class="breakdown-title">Simples assim.</h2>
+
+      <div class="pay-grid">
+        <div class="pay-block start">
+          <span class="pay-tag">Para começar</span>
+          <span class="pay-price">R$ 3.000</span>
+          <span class="pay-unit">pagamento único</span>
+          <p class="pay-desc">Site profissional + implementação completa + primeiro mês de gestão, conteúdo e tráfego.</p>
+        </div>
+        <div class="pay-arrow">→</div>
+        <div class="pay-block monthly">
+          <span class="pay-tag">A partir do 2º mês</span>
+          <span class="pay-price">R$ 2.000</span>
+          <span class="pay-unit">por mês, sem fidelidade</span>
+          <p class="pay-desc">Conteúdo, vídeo, tráfego pago e estratégia. Sai quando quiser, sem multa.</p>
+        </div>
+      </div>
+
+      <div class="crm-row">
+        <div class="crm-left">
+          <span class="crm-badge">Opcional</span>
+          <div>
+            <div class="crm-name">CRM de Pacientes</div>
+            <div class="crm-desc">Calendário, histórico, lembretes automáticos e multi-login para toda a equipe.</div>
+          </div>
+        </div>
+        <div class="crm-price">
+          <span class="cp">R$ 1.500</span>
+          <span class="cm">implementação + R$ 350/mês</span>
+        </div>
+      </div>
+
+      <div class="inv-note">
+        Pagamento via Pix ou parcelado no cartão como preferir. Parcelamento no cartão embute as taxas da operadora. Verba de anúncios definida em conjunto e paga à parte, diretamente ao Meta.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 11, CTA + PIX ========== -->
+  <section class="page orange cta-page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">11 / 12</span>
+    <div class="container">
+      <span class="eyebrow">Vamos fechar</span>
+      <h1>Hora de<br/>começar.</h1>
+      <p>Pague via Pix ou parcele no cartão como preferir. Confirma e a Criativvo inicia o site em até 48 horas. Quando o equipamento suíço chegar na quarta, você já tem presença digital no ar.</p>
+
+      <div class="pix-card">
+        <div class="pix-header">
+          <span class="pix-label">Chave PIX</span>
+          <span class="pix-type">CNPJ</span>
+        </div>
+        <div class="pix-key">59931598000185</div>
+        <p class="pix-instruction"><strong>Toque e segure</strong> sobre a chave acima para selecionar e copiar.</p>
+        <div class="pix-amount">
+          <span class="lbl">Valor do 1º mês</span>
+          <span class="val">R$ 3.000</span>
+        </div>
+      </div>
+
+      <a href="https://wa.me/5516993396988" class="btn">Enviar Comprovante</a>
+    </div>
+  </section>
+
+  <!-- ========== PAGE 12, ABOUT + FOOTER ========== -->
+  <section class="page between about-page">
+    <span class="brand-tag">Criativvo</span>
+    <span class="page-num">12 / 12</span>
+    <div class="container" style="margin-top: 10mm;">
+      <span class="eyebrow">Sobre a Criativvo</span>
+      <h2>Agência 360 com<br/>IA aplicada.</h2>
+      <p>Branding, sites, tráfego, conteúdo e automações em uma única solução. Transformamos negócios em marcas com presença real e resultado mensurável. O João trabalhou aqui e sabe como a gente funciona.</p>
+
+      <div class="about-grid">
+        <div class="about-stat">
+          <div class="big">+15M</div>
+          <div class="lbl">em vendas geradas para clientes</div>
+        </div>
+        <div class="about-stat">
+          <div class="big">48h</div>
+          <div class="lbl">para o site estar no ar e pronto</div>
+        </div>
+        <div class="about-stat">
+          <div class="big">2x</div>
+          <div class="lbl">novas unidades da Gilson Car em 2 meses</div>
+        </div>
+      </div>
+
+      <span class="case-pill">Case <b>Gilson Car</b> · maior faturamento da história em 2 meses de Criativvo</span>
+    </div>
+
+    <div class="footer-strip">
+      <span class="footer-logo">Criativvo</span>
+      <div class="footer-info">criativvo.com.br &nbsp;·&nbsp; <a href="https://instagram.com/sejacriativvo">@sejacriativvo</a></div>
+      <div class="validity">Preço especial válido até 12/06/2026 · equipamento chega quarta-feira</div>
+    </div>
+  </section>
+
+</body>
+</html>

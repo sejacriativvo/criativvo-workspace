@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook Produção (Anderson + Luis) - Agência na Hora</title>
+<style>
+  :root{ --cor:#7c3aed; --tinta:#15171c; --suave:#71757e; --linha:#e9e5f7; --leve:#f5f3ff; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--tinta);background:#ebe8f2;line-height:1.5;}
+  .page{max-width:800px;margin:20px auto;background:#fff;}
+
+  .hero{background:var(--cor);color:#fff;padding:46px 52px 40px;}
+  .hero .kicker{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;opacity:.85;}
+  .hero h1{font-size:54px;font-weight:800;letter-spacing:-1.6px;line-height:1;margin:8px 0 6px;}
+  .hero .role{font-size:19px;font-weight:600;opacity:.95;}
+  .hero .missao{margin-top:18px;font-size:16px;line-height:1.5;max-width:92%;opacity:.97;border-left:3px solid rgba(255,255,255,.55);padding-left:14px;}
+
+  .body{padding:34px 52px 46px;}
+
+  .oferta{background:var(--leve);border-radius:14px;padding:18px 22px;margin-bottom:30px;}
+  .oferta .t{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cor);margin-bottom:10px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{background:#fff;border:1px solid var(--linha);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;}
+  .oferta .preco{margin-top:10px;font-size:13px;color:var(--suave);}
+
+  .secao{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cor);margin:0 0 18px;}
+
+  .step{display:flex;gap:20px;align-items:flex-start;padding:0 0 22px;}
+  .step .num{flex:none;width:46px;height:46px;border-radius:14px;background:var(--cor);color:#fff;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .step .txt h3{font-size:19px;font-weight:800;letter-spacing:-.3px;margin-bottom:3px;}
+  .step .txt p{font-size:14.5px;color:var(--suave);line-height:1.5;}
+  .step .txt b{color:var(--tinta);}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .card{border:2px solid var(--linha);border-radius:16px;padding:18px 20px;}
+  .card .lbl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--suave);margin-bottom:6px;}
+  .card .val{font-size:16px;font-weight:700;line-height:1.35;}
+  .card.entrega{border-color:var(--cor);background:var(--leve);}
+  .card.entrega .val{color:var(--cor);}
+
+  .foot{margin-top:30px;padding-top:16px;border-top:1px solid var(--linha);font-size:12.5px;color:var(--suave);display:flex;justify-content:space-between;}
+  .logo{font-weight:800;color:var(--tinta);}
+
+  @media print{
+    body{background:#fff;}
+    .page{margin:0;max-width:100%;}
+    .step,.cards,.oferta{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="kicker">Agência na Hora · Playbook</div>
+    <h1>Produção</h1>
+    <div class="role">Anderson + Luis · site, carrossel e Google</div>
+    <div class="missao">Sua missão: vocês são a fábrica. Pegam o bastão do Victor e devolvem tudo montado e no ar, no padrão que o Matheus definiu. Sem depender dele pra cada entrega.</div>
+  </div>
+
+  <div class="body">
+
+    <div class="oferta">
+      <div class="t">O que vocês montam (a entrega visível)</div>
+      <div class="chips">
+        <span class="chip">🌐 Site profissional</span>
+        <span class="chip">🎠 Carrosséis</span>
+        <span class="chip">📍 Google Meu Negócio</span>
+        <span class="chip">🤝 Tráfego: com o Alisson</span>
+      </div>
+      <div class="preco">Oferta única · ~R$ 2.000 · qualquer nicho · ferramenta: MazyOS</div>
+    </div>
+
+    <div class="secao">Passo a passo</div>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div class="txt"><h3>Receber o bastão</h3><p>Pega do <b>Victor</b>: transcrição da call + logo + fotos + WhatsApp + endereço. Confere que veio tudo antes de começar.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="txt"><h3>Rodar /onboarding-agencia</h3><p>Joga a transcrição no Claude (MazyOS). A skill organiza o que montar e na ordem certa. Vocês não precisam decorar nada.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="txt"><h3>Montar o site</h3><p>Repositório MazyOS do zero. Interface simples pro cliente <b>adicionar e remover item</b>, página com WhatsApp e endereço. Segue o padrão de design do Matheus. Nunca clonar de outro cliente.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div class="txt"><h3>Carrosséis + Google Meu Negócio</h3><p>Carrosséis com base no <b>design do site</b> (mesma cara). Configura/otimiza o Google Meu Negócio: endereço e telefone certos, fotos, categorias.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="txt"><h3>Entregar e avisar</h3><p>Publica, ensina o cliente a usar o site, e <b>avisa o Alisson</b> que está pronto pra subir o tráfego.</p></div>
+    </div>
+
+    <div class="cards">
+      <div class="card entrega">
+        <div class="lbl">Vocês entregam</div>
+        <div class="val">Site no ar + carrosséis + Google Meu Negócio</div>
+      </div>
+      <div class="card">
+        <div class="lbl">Passa pra</div>
+        <div class="val">Alisson → sobe o tráfego</div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span><span class="logo">criativvo</span> · Agência na Hora</span>
+      <span>Playbook da Produção · 29/05/2026</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

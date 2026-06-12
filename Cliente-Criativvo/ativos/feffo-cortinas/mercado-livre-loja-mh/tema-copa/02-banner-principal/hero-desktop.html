@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Jost:wght@400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:640px;overflow:hidden;font-family:'Jost',sans-serif}
+.hero{position:relative;width:1920px;height:640px;overflow:hidden;background:#0A1826}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center}
+.scrim{position:absolute;inset:0;background:linear-gradient(93deg,rgba(8,18,30,.96) 0%,rgba(8,18,30,.9) 24%,rgba(8,18,30,.74) 40%,rgba(8,18,30,.5) 55%,rgba(8,18,30,.26) 70%,rgba(8,18,30,.08) 85%,rgba(8,18,30,0) 100%)}
+.ball{position:absolute;right:96px;bottom:-70px;width:430px;filter:drop-shadow(0 30px 36px rgba(0,0,0,.5))}
+.content{position:absolute;left:96px;top:50%;transform:translateY(-50%);width:820px;color:#fff;z-index:5}
+.kicker{display:inline-block;font-size:14px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#0A1826;background:#FFDF00;padding:7px 16px;border-radius:3px;margin-bottom:22px}
+h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:66px;line-height:1;color:#fff;text-shadow:0 2px 22px rgba(0,0,0,.45)}
+h1 em{font-style:italic;color:#FFDF00}
+.sub{margin-top:22px;display:flex;align-items:center;gap:16px;font-size:15px;letter-spacing:1.5px;text-transform:uppercase;color:#EEF4EF;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.sub .sep{width:5px;height:5px;transform:rotate(45deg);background:#FFDF00}
+.ship{margin-top:22px;display:flex;align-items:center;gap:15px}
+.full{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#00A650;font-weight:800;font-size:23px;letter-spacing:.3px;padding:9px 18px 9px 13px;border-radius:9px;box-shadow:0 10px 24px rgba(0,0,0,.4);line-height:1}
+.full svg{width:25px;height:25px;display:block}
+.ship-txt{font-size:14px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:#EEF4EF;text-shadow:0 1px 10px rgba(0,0,0,.55);line-height:1.25}
+.ship-txt b{color:#FFDF00;font-weight:700}
+.flag{margin-top:24px;width:120px;height:7px;border-radius:4px;background:linear-gradient(90deg,#1FAE4E 0 40%,#FFDF00 40% 75%,#F88800 75% 100%)}
+/* bordas copa */
+.borda-h{position:absolute;left:0;right:0;height:14px;z-index:10;
+  background:repeating-linear-gradient(90deg,
+    #1FAE4E 0 26px,#E9D9A0 26px 31px,#FFDF00 31px 57px,
+    #0A1826 57px 70px,#FFDF00 70px 96px,#E9D9A0 96px 101px,
+    #1FAE4E 101px 127px,#0A1826 127px 168px)}
+.borda-v{position:absolute;top:0;bottom:0;width:14px;z-index:10;
+  background:repeating-linear-gradient(0deg,
+    #1FAE4E 0 26px,#E9D9A0 26px 31px,#FFDF00 31px 57px,
+    #0A1826 57px 70px,#FFDF00 70px 96px,#E9D9A0 96px 101px,
+    #1FAE4E 101px 127px,#0A1826 127px 168px)}
+</style></head><body>
+<div class="hero">
+  <div class="borda-h" style="top:0"></div>
+  <div class="borda-h" style="bottom:0"></div>
+  <div class="borda-v" style="left:0"></div>
+  <div class="borda-v" style="right:0"></div>
+  <img class="bg" src="file:///Users/matheusvareschi/CLAUDE%20CODE/Cliente-Criativvo/ativos/feffo-cortinas/mercado-livre-loja-mh/_geradas/hero-cortina.png">
+  <div class="scrim"></div>
+  <div class="content">
+    <div class="kicker">É tempo de torcer</div>
+    <h1>O hexa começa<br><em>em casa</em></h1>
+    <div class="sub">Fabricação própria<span class="sep"></span>Cortinas, enxoval e decoração</div>
+    <div class="ship">
+      <span class="full"><svg viewBox="0 0 24 24" fill="#00A650"><path d="M13.5 2 4 13.6h6.1L9 22l9.5-11.6h-6.1L13.5 2z"/></svg>Full</span>
+      <span class="ship-txt">Envio <b>todo dia</b><br>sábado, domingo e feriado</span>
+    </div>
+    <div class="flag"></div>
+  </div>
+</div></body></html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:100px;overflow:hidden}
+.scarf{position:relative;width:1920px;height:100px;background:#0A1826;
+  font-family:'Jost',sans-serif;overflow:hidden}
+/* malha do cachecol */
+.scarf:before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 4px),
+   repeating-linear-gradient(0deg,rgba(0,0,0,.10) 0 2px,transparent 2px 5px)}
+/* remates de cachecol nas DUAS pontas */
+.end{position:absolute;top:0;bottom:0;width:300px;z-index:1;
+  background:repeating-linear-gradient(90deg,#1FAE4E 0 16px,#FFDF00 16px 32px,#0A1826 32px 40px,#FFDF00 40px 56px,#1FAE4E 56px 72px,#0A1826 72px 92px)}
+.end.l{left:54px}.end.r{right:54px;transform:scaleX(-1)}
+.fringe{position:absolute;top:0;bottom:0;width:54px;z-index:1;
+  background:repeating-linear-gradient(0deg,#E9D9A0 0 7px,transparent 7px 13px)}
+.fringe.l{left:0}.fringe.r{right:0}
+/* mensagem central, com halo navy pra destacar das listras (sem logo) */
+.center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+  padding:0 64px;background:#0A1826;box-shadow:0 0 70px 58px #0A1826}
+.head{font-size:29px;font-weight:800;letter-spacing:6px;text-transform:uppercase;color:#FFDF00;white-space:nowrap;line-height:1}
+.sub{font-size:14px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F4EFE6;white-space:nowrap;line-height:1;opacity:.92}
+.sub b{color:#1FAE4E;font-weight:700}
+.sub i{color:#1FAE4E;font-style:normal;margin:0 5px}
+</style></head>
+<body>
+<div class="scarf">
+  <div class="end l"></div><div class="fringe l"></div>
+  <div class="end r"></div><div class="fringe r"></div>
+  <div class="center">
+    <span class="head">Receba a tempo de torcer</span>
+    <span class="sub">Envio em <b>1 dia útil</b> <i>&#9670;</i> Fabrica&ccedil;&atilde;o pr&oacute;pria</span>
+  </div>
+</div>
+</body></html>

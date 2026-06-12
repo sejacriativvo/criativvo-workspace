@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório Abril 2026 — GilsonCar Ibitinga</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:   #CC0000;
+      --grn:   #16a34a;
+      --yel:   #d97706;
+      --tx:    #111827;
+      --mu:    #6b7280;
+      --lt:    #9ca3af;
+      --bg:    #f0f2f5;
+      --card:  #ffffff;
+      --bd:    rgba(0,0,0,0.07);
+      --sh:    0 1px 3px rgba(0,0,0,0.08), 0 6px 24px rgba(0,0,0,0.05);
+      --sh-lg: 0 4px 16px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.07);
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    body { background: var(--bg); color: var(--tx); font-family: 'Montserrat', sans-serif; -webkit-font-smoothing: antialiased; }
+
+    #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, var(--red), #ff5555); z-index: 9999; transition: width .08s; pointer-events: none; box-shadow: 0 0 8px rgba(204,0,0,0.5); }
+
+    nav {
+      background: var(--card); border-bottom: 1px solid var(--bd);
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 56px;
+    }
+    nav img { height: 28px; }
+    .nav-info { display: flex; align-items: center; gap: 12px; }
+    .nav-badge { font-size: .60rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); }
+    .nav-sep { width: 1px; height: 18px; background: var(--bd); }
+    .nav-criativvo { font-size: .60rem; font-weight: 800; color: var(--red); letter-spacing: 2px; text-transform: uppercase; }
+
+    .page { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+    /* HERO */
+    .hero { background: var(--card); border-radius: 20px; box-shadow: var(--sh-lg); overflow: hidden; margin-bottom: 16px; }
+    .hero-top { background: var(--red); padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    @media(max-width:600px){ .hero-top { flex-direction: column; align-items: flex-start; } }
+    .hero-tag   { font-size: .60rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 6px; }
+    .hero-title { font-size: 1.5rem; font-weight: 900; color: #fff; line-height: 1.2; }
+    .hero-sub   { font-size: .78rem; color: rgba(255,255,255,0.70); margin-top: 6px; }
+    .hero-logo  { height: 40px; width: auto; filter: brightness(0) invert(1); opacity: .90; flex-shrink: 0; }
+    .hero-metrics { display: grid; grid-template-columns: repeat(4,1fr); }
+    @media(max-width:600px){ .hero-metrics { grid-template-columns:1fr 1fr; } }
+    .hm {
+      padding: 22px 20px; border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd);
+      position: relative;
+    }
+    @media(min-width:601px){ .hm:nth-child(4n) { border-right: none; } }
+    @media(max-width:600px){ .hm:nth-child(2n) { border-right: none; } }
+    .hm.good::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:var(--grn); }
+    .hm.red::before  { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:var(--red); }
+    .hm-lbl { font-size: .58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 8px; }
+    .hm-val { font-size: 2.4rem; font-weight: 900; line-height: 1; color: var(--tx); }
+    .hm-val.accent { color: var(--red); }
+    .hm-delta { display: inline-flex; align-items: center; gap: 3px; margin-top: 8px; font-size: .64rem; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+    .delta-g { background: rgba(22,163,74,0.10); color: var(--grn); }
+    .delta-r { background: rgba(220,38,38,0.10); color: #dc2626; }
+    .delta-n { background: rgba(0,0,0,0.05); color: var(--mu); }
+
+    .sec { margin-bottom: 16px; }
+    .sec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .sec-label { font-size: .58rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); white-space: nowrap; }
+    .sec-rule { flex: 1; height: 1px; background: var(--bd); }
+
+    .card { background: var(--card); border-radius: 16px; box-shadow: var(--sh); }
+    .card-p { padding: 24px; }
+
+    .summary-text { font-size: .85rem; color: var(--mu); line-height: 1.85; }
+    .summary-text strong { color: var(--tx); }
+
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    @media(max-width:520px){ .compare-grid { grid-template-columns: 1fr; } }
+    .cmp-card { background: var(--card); border-radius: 14px; padding: 20px; box-shadow: var(--sh); border: 2px solid transparent; }
+    .cmp-card.active { border-color: var(--red); box-shadow: 0 6px 28px rgba(204,0,0,0.14); }
+    .cmp-mo { font-size: .60rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--mu); margin-bottom: 14px; }
+    .cmp-card.active .cmp-mo { color: var(--red); }
+    .cmp-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--bd); }
+    .cmp-row:last-child { border-bottom: none; }
+    .cmp-l { font-size: .76rem; color: var(--mu); }
+    .cmp-v { font-size: .86rem; font-weight: 800; color: var(--tx); }
+
+    .chart-card { background: var(--card); border-radius: 16px; padding: 24px; box-shadow: var(--sh); }
+    .chart-lbl { font-size: .60rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 16px; }
+    .charts-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    @media(max-width:560px){ .charts-2 { grid-template-columns: 1fr; } }
+
+    /* WEEKS */
+    .weeks-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(175px,1fr)); gap: 10px; margin-bottom: 12px; }
+    .wk { background: var(--card); border-radius: 12px; padding: 16px; box-shadow: var(--sh); }
+    .wk.best { outline: 2px solid rgba(204,0,0,0.20); box-shadow: 0 6px 24px rgba(204,0,0,0.12); }
+    .wk-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .wk-lbl { font-size: .60rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); }
+    .wk-best { font-size: .58rem; font-weight: 700; color: var(--grn); }
+    .wk-row { display: flex; justify-content: space-between; font-size: .76rem; padding: 5px 0; border-bottom: 1px solid var(--bd); }
+    .wk-row:last-child { border-bottom: none; }
+    .wk-l { color: var(--mu); }
+    .wk-v { font-weight: 700; color: var(--tx); }
+    .wk-v.g { color: var(--grn); }
+
+    .insight-item { background: var(--card); border-radius: 12px; padding: 16px 18px; display: flex; gap: 12px; box-shadow: var(--sh); border-left: 3px solid var(--bd); margin-bottom: 10px; }
+    .insight-item.good { border-left-color: var(--grn); }
+    .insight-item.info { border-left-color: var(--red); }
+    .ii-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .ii-text { font-size: .82rem; color: var(--mu); line-height: 1.65; }
+    .ii-text strong { color: var(--tx); }
+
+    .table-card { background: var(--card); border-radius: 16px; box-shadow: var(--sh); overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { background: var(--bg); font-size: .60rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--mu); padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--bd); }
+    tbody tr { border-bottom: 1px solid var(--bd); transition: background .12s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--bg); }
+    tbody tr.me { background: rgba(204,0,0,0.04); }
+    tbody td { padding: 11px 16px; font-size: .78rem; color: var(--mu); }
+    tbody tr.me td { color: var(--tx); font-weight: 700; }
+    .badge-you { background: var(--red); color: #fff; font-size: .48rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 5px; vertical-align: middle; }
+
+    .rank-list { display: flex; flex-direction: column; gap: 8px; }
+    .rank-row { background: var(--card); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; box-shadow: var(--sh); }
+    .rank-row.me { outline: 2px solid rgba(204,0,0,0.20); box-shadow: 0 4px 20px rgba(204,0,0,0.12); }
+    .rn { width: 26px; height: 26px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: .66rem; font-weight: 900; color: var(--mu); flex-shrink: 0; }
+    .rn.top { background: var(--red); color: #fff; box-shadow: 0 0 12px rgba(204,0,0,0.45); }
+    .rn-name { flex: 1; font-size: .80rem; color: var(--mu); }
+    .rank-row.me .rn-name { color: var(--tx); font-weight: 700; }
+    .rn-bar { width: 48px; height: 3px; background: var(--bd); border-radius: 2px; overflow: hidden; }
+    .rn-bar div { height: 100%; border-radius: 2px; }
+    .rn-pct { font-size: .82rem; font-weight: 800; min-width: 52px; text-align: right; }
+
+    .skpi-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 10px; margin-bottom: 16px; }
+    .skpi { background: var(--card); border-radius: 12px; padding: 16px; box-shadow: var(--sh); }
+    .skpi-lbl { font-size: .58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--mu); margin-bottom: 6px; }
+    .skpi-val { font-size: 1.6rem; font-weight: 900; color: var(--tx); line-height: 1; }
+    .skpi-val.accent { color: var(--red); }
+    .skpi-badge { display: inline-flex; margin-top: 7px; font-size: .60rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+    .bg { background: rgba(22,163,74,0.10); color: var(--grn); }
+    .br { background: rgba(220,38,38,0.10); color: #dc2626; }
+    .bn { background: rgba(0,0,0,0.05); color: var(--mu); }
+
+    .analysis-grid { display: grid; gap: 10px; }
+    .analysis-item { background: var(--card); border-radius: 12px; padding: 18px 20px; box-shadow: var(--sh); display: flex; gap: 14px; align-items: flex-start; }
+    .analysis-item.ok   { border-left: 4px solid var(--grn); }
+    .analysis-item.warn { border-left: 4px solid var(--yel); }
+    .analysis-item.tgt  { border-left: 4px solid var(--red); }
+    .ai-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .ai-body h4 { font-size: .80rem; font-weight: 800; margin-bottom: 4px; }
+    .analysis-item.ok h4   { color: var(--grn); }
+    .analysis-item.warn h4 { color: var(--yel); }
+    .analysis-item.tgt h4  { color: var(--red); }
+    .ai-body p { font-size: .76rem; color: var(--mu); line-height: 1.65; }
+    .ai-body p strong { color: var(--tx); }
+
+    .info-row { background: var(--bg); border-radius: 10px; padding: 10px 14px; font-size: .74rem; color: var(--mu); margin-top: 10px; }
+
+    footer { background: var(--card); border-top: 1px solid var(--bd); padding: 28px 20px; text-align: center; margin-top: 32px; }
+    .footer-brand { font-weight: 900; font-size: 1.4rem; color: var(--red); display: block; letter-spacing: -1px; margin-bottom: 4px; }
+    footer p { font-size: .64rem; color: var(--lt); letter-spacing: .5px; }
+
+    .anim { opacity: 0; transform: translateY(14px); transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out); }
+    .anim.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: 60ms; } .d2 { transition-delay: 110ms; }
+    .d3 { transition-delay: 160ms; } .d4 { transition-delay: 210ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { transform: none; transition: opacity 200ms ease; }
+    }
+
+    /* TILT CARD */
+    .tilt-spotlight {
+      pointer-events: none; position: absolute; inset: 0; z-index: 10;
+      overflow: hidden; opacity: 0; transition: opacity 0.3s; border-radius: inherit;
+    }
+    .tilt-spotlight-inner {
+      position: absolute; width: 200%; height: 200%; border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 40%);
+    }
+  </style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav>
+  <img src="../gilsoncar/assets/LOGO GILSONCAR.png" alt="GilsonCar Veículos">
+  <div class="nav-info">
+    <span class="nav-badge">Unidade Ibitinga</span>
+    <div class="nav-sep"></div>
+    <span class="nav-badge">Abril 2026</span>
+    <div class="nav-sep"></div>
+    <span class="nav-criativvo">Criativvo</span>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero anim">
+    <div class="hero-top">
+      <div>
+        <div class="hero-tag">Relatório Mensal</div>
+        <div class="hero-title">GilsonCar Ibitinga<br>— Abril 2026</div>
+        <div class="hero-sub">@gilsoncarveiculos &nbsp;·&nbsp; Gestão Criativvo</div>
+      </div>
+      <img class="hero-logo" src="../gilsoncar/assets/LOGO GILSONCAR.png" alt="GilsonCar">
+    </div>
+    <div class="hero-metrics">
+      <div class="hm good d1">
+        <div class="hm-lbl">Conversas</div>
+        <div class="hm-val accent">602</div>
+        <div class="hm-delta delta-g">↑ 40% vs março</div>
+      </div>
+      <div class="hm d2">
+        <div class="hm-lbl">Investido</div>
+        <div class="hm-val">R$2.921</div>
+        <div class="hm-delta delta-g">↓ 8% vs março</div>
+      </div>
+      <div class="hm red d3">
+        <div class="hm-lbl">Custo por lead</div>
+        <div class="hm-val accent">R$4,62</div>
+        <div class="hm-delta delta-g">↓ 41% vs março</div>
+      </div>
+      <div class="hm d4">
+        <div class="hm-lbl">Vendas</div>
+        <div class="hm-val">22</div>
+        <div class="hm-delta delta-n">≈ mesmo que março</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMO -->
+  <div class="sec anim">
+    <div class="card card-p">
+      <div class="sec-header">
+        <span class="sec-label">Resumo</span>
+        <div class="sec-rule"></div>
+      </div>
+      <p class="summary-text">
+        Abril foi o mês da <strong>eficiência</strong>: com R$271 a menos investido que março, a GilsonCar Ibitinga gerou <strong>173 conversas a mais</strong> e manteve praticamente o mesmo volume de vendas. O custo por lead caiu 41% — cada cliente que chegou ao WhatsApp custou R$4,62, contra R$7,79 em março. O engajamento nas redes sociais segue <strong>acima da média de todos os concorrentes locais.</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- TRÁFEGO PAGO -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Meta Ads</span>
+      <div class="sec-rule"></div>
+    </div>
+
+    <div class="compare-grid">
+      <div class="cmp-card">
+        <div class="cmp-mo">Março 2026</div>
+        <div class="cmp-row"><span class="cmp-l">Conversas</span><span class="cmp-v">429</span></div>
+        <div class="cmp-row"><span class="cmp-l">Investimento</span><span class="cmp-v">R$3.192</span></div>
+        <div class="cmp-row"><span class="cmp-l">CPL</span><span class="cmp-v">R$7,79</span></div>
+        <div class="cmp-row"><span class="cmp-l">Vendas</span><span class="cmp-v">23</span></div>
+      </div>
+      <div class="cmp-card active">
+        <div class="cmp-mo">Abril 2026 ←</div>
+        <div class="cmp-row"><span class="cmp-l">Conversas</span><span class="cmp-v" style="color:var(--grn)">602</span></div>
+        <div class="cmp-row"><span class="cmp-l">Investimento</span><span class="cmp-v">R$2.921</span></div>
+        <div class="cmp-row"><span class="cmp-l">CPL</span><span class="cmp-v" style="color:var(--grn)">R$4,62</span></div>
+        <div class="cmp-row"><span class="cmp-l">Vendas</span><span class="cmp-v">22</span></div>
+      </div>
+    </div>
+
+    <div class="charts-2">
+      <div class="chart-card">
+        <div class="chart-lbl">Conversas — Março vs Abril</div>
+        <canvas id="chartConversas" height="200"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-lbl">Evolução do CPL — semana a semana</div>
+        <canvas id="chartCPL" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:12px;">
+      <div class="chart-lbl">Investimento × Conversas por semana</div>
+      <canvas id="chartSemanal" height="160"></canvas>
+    </div>
+
+    <div class="sec-header" style="margin-bottom:10px;">
+      <span class="sec-label" style="font-size:.56rem;">Semana a semana</span>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="weeks-grid" style="margin-bottom:16px;">
+      <div class="wk">
+        <div class="wk-header"><span class="wk-lbl">01–07/04</span></div>
+        <div class="wk-row"><span class="wk-l">Investido</span><span class="wk-v">R$633,95</span></div>
+        <div class="wk-row"><span class="wk-l">Conversas</span><span class="wk-v">106</span></div>
+        <div class="wk-row"><span class="wk-l">Vendas</span><span class="wk-v">4</span></div>
+        <div class="wk-row"><span class="wk-l">CPL</span><span class="wk-v">R$5,35</span></div>
+        <div class="wk-row"><span class="wk-l">Custo/venda</span><span class="wk-v">R$158,49</span></div>
+      </div>
+      <div class="wk">
+        <div class="wk-header"><span class="wk-lbl">08–14/04</span></div>
+        <div class="wk-row"><span class="wk-l">Investido</span><span class="wk-v">R$583,50</span></div>
+        <div class="wk-row"><span class="wk-l">Conversas</span><span class="wk-v">143</span></div>
+        <div class="wk-row"><span class="wk-l">Vendas</span><span class="wk-v">2</span></div>
+        <div class="wk-row"><span class="wk-l">CPL</span><span class="wk-v">R$3,94</span></div>
+        <div class="wk-row"><span class="wk-l">Custo/venda</span><span class="wk-v">R$291,75</span></div>
+      </div>
+      <div class="wk best">
+        <div class="wk-header"><span class="wk-lbl">15–21/04</span><span class="wk-best">🏆 melhor</span></div>
+        <div class="wk-row"><span class="wk-l">Investido</span><span class="wk-v">R$720,88</span></div>
+        <div class="wk-row"><span class="wk-l">Conversas</span><span class="wk-v g">111</span></div>
+        <div class="wk-row"><span class="wk-l">Vendas</span><span class="wk-v">9</span></div>
+        <div class="wk-row"><span class="wk-l">CPL</span><span class="wk-v">R$5,50</span></div>
+        <div class="wk-row"><span class="wk-l">Custo/venda</span><span class="wk-v g">R$80,10</span></div>
+      </div>
+      <div class="wk">
+        <div class="wk-header"><span class="wk-lbl">22–30/04</span></div>
+        <div class="wk-row"><span class="wk-l">Investido</span><span class="wk-v">R$983,05</span></div>
+        <div class="wk-row"><span class="wk-l">Conversas</span><span class="wk-v g">242</span></div>
+        <div class="wk-row"><span class="wk-l">Vendas</span><span class="wk-v">7</span></div>
+        <div class="wk-row"><span class="wk-l">CPL</span><span class="wk-v g">R$3,69</span></div>
+        <div class="wk-row"><span class="wk-l">Custo/venda</span><span class="wk-v">R$140,44</span></div>
+      </div>
+    </div>
+
+    <div class="insight-item good">
+      <div class="ii-icon">⚡</div>
+      <div class="ii-text"><strong>CPL caiu 41% — de R$7,79 para R$4,62.</strong> Última semana registrou R$3,69 — o menor custo por lead da história. Os anúncios estão cada vez mais afiados.</div>
+    </div>
+    <div class="insight-item info">
+      <div class="ii-icon">🎯</div>
+      <div class="ii-text"><strong>602 conversas com menos verba.</strong> 173 leads a mais que março gastando R$271 a menos. Cada real investido está rendendo mais.</div>
+    </div>
+  </div>
+
+  <!-- INSTAGRAM -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Instagram</span>
+      <div class="sec-rule"></div>
+    </div>
+
+    <div class="skpi-row">
+      <div class="skpi">
+        <div class="skpi-lbl">Engajamento</div>
+        <div class="skpi-val accent">0,17%</div>
+        <div class="skpi-badge bg">↑ 1º lugar da região</div>
+      </div>
+      <div class="skpi">
+        <div class="skpi-lbl">Crescimento</div>
+        <div class="skpi-val" style="color:#dc2626">−0,20%</div>
+        <div class="skpi-badge br">3º lugar</div>
+      </div>
+      <div class="skpi">
+        <div class="skpi-lbl">Inter./post</div>
+        <div class="skpi-val">20,07</div>
+        <div class="skpi-badge bg">2x Furlan</div>
+      </div>
+      <div class="skpi">
+        <div class="skpi-lbl">Posts</div>
+        <div class="skpi-val">15</div>
+        <div class="skpi-badge bn">média: 15,2</div>
+      </div>
+    </div>
+
+    <div class="charts-2">
+      <div class="chart-card">
+        <div class="chart-lbl">Engajamento — vs concorrentes</div>
+        <canvas id="chartEngajamento" height="220"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-lbl">Visualizações médias de Reels</div>
+        <canvas id="chartReels" height="220"></canvas>
+      </div>
+    </div>
+
+    <div class="table-card" style="margin-bottom:16px;overflow-x:auto;">
+      <table>
+        <thead>
+          <tr><th>Perfil</th><th>Engaj.</th><th>Posts</th><th>Curtidas</th><th>Inter./post</th><th>Reels</th></tr>
+        </thead>
+        <tbody>
+          <tr class="me"><td>@gilsoncarveiculos <span class="badge-you">você</span></td><td>0,17%</td><td>15</td><td>276</td><td>20,07</td><td>1.200</td></tr>
+          <tr><td>@_premier_autos</td><td>0,12%</td><td>30</td><td>104</td><td>3,5</td><td>886</td></tr>
+          <tr><td>@furlanveiculos</td><td>0,10%</td><td>21</td><td>181</td><td>8,71</td><td>2.300</td></tr>
+          <tr><td>@belavista_veiculos</td><td>0,09%</td><td>12</td><td>24</td><td>2,0</td><td>—</td></tr>
+          <tr><td>@pinguimmotors</td><td>0,06%</td><td>13</td><td>141</td><td>11,08</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-bottom:8px;font-size:.60rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mu);">Crescimento de seguidores</div>
+    <div class="rank-list" style="margin-bottom:10px;">
+      <div class="rank-row"><div class="rn top">1</div><div class="rn-name">@_premier_autos (~21k)</div><div class="rn-bar"><div style="width:100%;background:var(--grn)"></div></div><div class="rn-pct" style="color:var(--grn)">+0,25%</div></div>
+      <div class="rank-row"><div class="rn">2</div><div class="rn-name">@furlanveiculos (~10k)</div><div class="rn-bar"><div style="width:24%;background:var(--grn)"></div></div><div class="rn-pct" style="color:var(--grn)">+0,06%</div></div>
+      <div class="rank-row me"><div class="rn">3</div><div class="rn-name">@gilsoncarveiculos (~12,5k)</div><div class="rn-bar"><div style="width:0;background:#dc2626"></div></div><div class="rn-pct" style="color:#dc2626">−0,20%</div></div>
+      <div class="rank-row"><div class="rn">4</div><div class="rn-name">@ibivelveiculos</div><div class="rn-bar"><div style="width:0;background:#dc2626"></div></div><div class="rn-pct" style="color:#dc2626">−0,33%</div></div>
+      <div class="rank-row"><div class="rn">5</div><div class="rn-name">@belavista_veiculos</div><div class="rn-bar"><div style="width:0;background:#dc2626"></div></div><div class="rn-pct" style="color:#dc2626">−0,39%</div></div>
+      <div class="rank-row"><div class="rn">6</div><div class="rn-name">@pinguimmotors</div><div class="rn-bar"><div style="width:0;background:#dc2626"></div></div><div class="rn-pct" style="color:#dc2626">−0,81%</div></div>
+    </div>
+    <div class="info-row">Seguidores atuais: <strong style="color:var(--tx)">~12.500</strong> &nbsp;·&nbsp; Premier: ~21.000 &nbsp;·&nbsp; Furlan: ~10.000</div>
+  </div>
+
+  <!-- ANÁLISE -->
+  <div class="sec anim">
+    <div class="sec-header">
+      <span class="sec-label">Avaliação</span>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="analysis-grid">
+      <div class="analysis-item ok">
+        <div class="ai-icon">✅</div>
+        <div class="ai-body"><h4>CPL 41% mais barato que março</h4><p>De R$7,79 para R$4,62 — chegando nas pessoas certas com menos desperdício. <strong>Última semana: R$3,69.</strong></p></div>
+      </div>
+      <div class="analysis-item ok">
+        <div class="ai-icon">✅</div>
+        <div class="ai-body"><h4>Engajamento líder da região</h4><p>0,17% — à frente de todos os 5 concorrentes. <strong>Cada post gera 20 interações em média.</strong></p></div>
+      </div>
+      <div class="analysis-item ok">
+        <div class="ai-icon">✅</div>
+        <div class="ai-body"><h4>602 conversas — recorde mensal</h4><p>173 a mais que março com menos verba. <strong>Tendência de queda do CPL é um ótimo sinal para maio.</strong></p></div>
+      </div>
+      <div class="analysis-item warn">
+        <div class="ai-icon">⚠️</div>
+        <div class="ai-body"><h4>Seguidores em queda leve (−0,20%)</h4><p>Premier e Furlan cresceram. <strong>Reels frequentes, especialmente aos sábados, devem reverter isso.</strong></p></div>
+      </div>
+      <div class="analysis-item warn">
+        <div class="ai-icon">⚠️</div>
+        <div class="ai-body"><h4>Reels com menos alcance que Furlan</h4><p>Furlan: 2.300 visualizações vs GilsonCar: 1.200. <strong>Aumentar frequência e explorar sábados pode ampliar esse número.</strong></p></div>
+      </div>
+      <div class="analysis-item tgt">
+        <div class="ai-icon">🎯</div>
+        <div class="ai-body"><h4>Foco de maio: CPL baixo + crescimento orgânico</h4><p>Manter CPL entre R$3,50–R$4,50 e aumentar produção de Reels para <strong>crescer seguidores e gerar mais conversas sem depender só de verba.</strong></p></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span class="footer-brand">criativvo</span>
+  <p>Relatório produzido pela Criativvo &nbsp;·&nbsp; criativvo.com.br &nbsp;·&nbsp; Maio de 2026</p>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    document.getElementById('progress').style.width = (Math.min(pct,1)*100)+'%';
+  }, { passive:true });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:0.06, rootMargin:'0px 0px -24px 0px' });
+  document.querySelectorAll('.anim').forEach(el => io.observe(el));
+
+  const logo = new Image();
+  logo.src = '../gilsoncar/assets/LOGO GILSONCAR.png';
+
+  Chart.register({
+    id:'barLogo',
+    afterDraw(chart){
+      if(!chart.config.options?.plugins?.barLogo) return;
+      if(!logo.complete || !logo.naturalWidth) return;
+      const idx = chart.config.options.plugins.barLogo.index ?? 0;
+      const {ctx} = chart;
+      const bar = chart.getDatasetMeta(0).data[idx];
+      if(!bar) return;
+      const w=52, h=w*(logo.naturalHeight/logo.naturalWidth);
+      ctx.save();
+      ctx.drawImage(logo, bar.x-w/2, Math.min(bar.y, bar.base??bar.y)-h-5, w, h);
+      ctx.restore();
+    }
+  });
+
+  Chart.register({
+    id:'pulsePoints',
+    afterDraw(chart){
+      if(!chart.config.options?.plugins?.pulsePoints) return;
+      if(chart._dead) return;
+      const {ctx} = chart, t=(Date.now()%1400)/1400;
+      chart.data.datasets.forEach((_,di)=>{
+        chart.getDatasetMeta(di).data.forEach(pt=>{
+          ctx.save(); ctx.beginPath(); ctx.arc(pt.x,pt.y,7+11*t,0,Math.PI*2);
+          ctx.strokeStyle=`rgba(204,0,0,${(1-t)*0.45})`; ctx.lineWidth=2; ctx.stroke(); ctx.restore();
+        });
+      });
+      cancelAnimationFrame(chart._raf);
+      chart._raf = requestAnimationFrame(()=>{ if(!chart._dead) chart.draw(); });
+    },
+    destroy(chart){ chart._dead=true; cancelAnimationFrame(chart._raf); }
+  });
+
+  Chart.defaults.color = 'rgba(107,114,128,0.85)';
+  Chart.defaults.font  = { family:'Montserrat', size:11 };
+  const RED='#CC0000', REDF='rgba(204,0,0,0.18)', NEU='rgba(156,163,175,0.30)';
+  const AX={ grid:{color:'rgba(0,0,0,0.05)',drawBorder:false}, ticks:{color:'rgba(107,114,128,0.70)',padding:6} };
+  const TIP={ backgroundColor:'rgba(17,24,39,0.94)', titleColor:'#fff', bodyColor:'rgba(156,163,175,0.90)', borderColor:'rgba(0,0,0,0.08)', borderWidth:1, padding:11, cornerRadius:8, titleFont:{family:'Montserrat',weight:'800',size:12}, bodyFont:{family:'Montserrat',size:11} };
+  const ANIM={ duration:700, easing:'easeOutQuart', delay(c){ return c.type==='data'?c.dataIndex*80:0; } };
+
+  function grad(id,c1,c2){
+    const cv=document.getElementById(id), g=cv.getContext('2d').createLinearGradient(0,0,0,cv.parentElement.clientHeight||200);
+    g.addColorStop(0,c1); g.addColorStop(1,c2); return g;
+  }
+  function areaGrad(id,c0,c1){
+    const cv=document.getElementById(id), g=cv.getContext('2d').createLinearGradient(0,0,0,cv.parentElement.clientHeight||200);
+    g.addColorStop(0,c0); g.addColorStop(1,c1); return g;
+  }
+
+  new Chart('chartConversas',{type:'bar',data:{
+    labels:['Março','Abril'],
+    datasets:[{data:[429,602],backgroundColor:[NEU,grad('chartConversas','#ff4444','#990000')],borderRadius:10,borderSkipped:false,borderWidth:0}]
+  },options:{animation:ANIM,plugins:{legend:{display:false},tooltip:TIP,barLogo:{index:1}},layout:{padding:{top:34}},scales:{x:AX,y:{...AX,beginAtZero:true,ticks:{display:false},grid:{display:false}}}}});
+
+  new Chart('chartCPL',{type:'line',data:{
+    labels:['01–07/04','08–14/04','15–21/04','22–30/04'],
+    datasets:[{label:'CPL (R$)',data:[5.35,3.94,5.50,3.69],borderColor:RED,backgroundColor:areaGrad('chartCPL','rgba(204,0,0,0.12)','rgba(204,0,0,0.00)'),fill:true,tension:0.45,borderWidth:2.5,pointBackgroundColor:'#fff',pointBorderColor:RED,pointBorderWidth:2.5,pointRadius:5,pointHoverRadius:9}]
+  },options:{animation:{duration:900,easing:'easeInOutQuart'},plugins:{legend:{display:false},pulsePoints:true,tooltip:{...TIP,callbacks:{label(c){return ` R$${c.raw.toFixed(2).replace('.',',')} por lead`;} }}},scales:{x:AX,y:{...AX,beginAtZero:false}}}});
+
+  new Chart('chartSemanal',{type:'bar',data:{
+    labels:['01–07/04','08–14/04','15–21/04','22–30/04'],
+    datasets:[
+      {label:'Investimento (R$)',data:[633.95,583.50,720.88,983.05],backgroundColor:REDF,borderColor:RED,borderWidth:1.5,borderRadius:6,borderSkipped:false,yAxisID:'y'},
+      {label:'Conversas',data:[106,143,111,242],backgroundColor:NEU,borderRadius:6,borderSkipped:false,yAxisID:'y1'}
+    ]
+  },options:{animation:ANIM,plugins:{legend:{labels:{font:{family:'Montserrat',size:10},color:'rgba(107,114,128,0.80)'}},tooltip:TIP},scales:{x:AX,y:{...AX,beginAtZero:true},y1:{grid:{display:false},ticks:{color:'rgba(107,114,128,0.60)',padding:4},beginAtZero:true,position:'right'}}}});
+
+  new Chart('chartEngajamento',{type:'bar',data:{
+    labels:['você','Premier','Furlan','Bela Vista','Pinguim'],
+    datasets:[{data:[0.17,0.12,0.10,0.09,0.06],backgroundColor:[grad('chartEngajamento','#ff4444','#990000'),NEU,NEU,NEU,NEU],borderRadius:10,borderSkipped:false,borderWidth:0}]
+  },options:{animation:ANIM,plugins:{legend:{display:false},tooltip:TIP,barLogo:{index:0}},layout:{padding:{top:34}},scales:{x:{...AX,ticks:{...AX.ticks,maxRotation:30}},y:{...AX,beginAtZero:true,ticks:{display:false},grid:{display:false}}}}});
+
+  new Chart('chartReels',{type:'bar',data:{
+    labels:['Furlan','você','Premier'],
+    datasets:[{data:[2300,1200,886],backgroundColor:[NEU,grad('chartReels','#ff4444','#990000'),NEU],borderRadius:10,borderSkipped:false,borderWidth:0}]
+  },options:{animation:ANIM,plugins:{legend:{display:false},tooltip:TIP,barLogo:{index:1}},layout:{padding:{top:34}},scales:{x:AX,y:{...AX,beginAtZero:true,ticks:{display:false},grid:{display:false}}}}});
+</script>
+
+<script>
+(function () {
+  var TILT_LIMIT = 15, SCALE = 1.05, PERSPECTIVE = 1200, DIR = -1;
+
+  function initTilt(el) {
+    el.style.willChange = 'transform';
+    el.style.transformStyle = 'preserve-3d';
+    el.style.transition = 'transform 0.2s ease-out';
+    el.style.position = 'relative';
+    el.style.overflow = 'hidden';
+
+    var spotlight = document.createElement('div');
+    spotlight.className = 'tilt-spotlight';
+    var inner = document.createElement('div');
+    inner.className = 'tilt-spotlight-inner';
+    spotlight.appendChild(inner);
+    el.appendChild(spotlight);
+
+    el.addEventListener('pointermove', function (e) {
+      var rect = el.getBoundingClientRect();
+      var px = (e.clientX - rect.left) / rect.width;
+      var py = (e.clientY - rect.top) / rect.height;
+      var xRot = (py - 0.5) * (TILT_LIMIT * 2) * DIR;
+      var yRot = (px - 0.5) * -(TILT_LIMIT * 2) * DIR;
+      el.style.transform = 'perspective(' + PERSPECTIVE + 'px) rotateX(' + xRot + 'deg) rotateY(' + yRot + 'deg) scale3d(' + SCALE + ',' + SCALE + ',' + SCALE + ')';
+      spotlight.style.opacity = '1';
+      inner.style.left = (px * 100) + '%';
+      inner.style.top = (py * 100) + '%';
+    });
+
+    el.addEventListener('pointerleave', function () {
+      el.style.transform = 'perspective(' + PERSPECTIVE + 'px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+      spotlight.style.opacity = '0';
+    });
+  }
+
+  document.querySelectorAll('.card, .cmp-card, .chart-card, .wk, .insight-item').forEach(initTilt);
+})();
+</script>
+</body>
+</html>

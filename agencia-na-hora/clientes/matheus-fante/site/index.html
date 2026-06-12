@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Matheus Fante — Advogado | Querência-MT</title>
+<meta name="description" content="Matheus Fante, advogado e professor em Querência-MT. Soluções jurídicas com transparência. Carvalho e Damásio Advogados." />
+<meta property="og:title" content="Matheus Fante — Advogado | Querência-MT" />
+<meta property="og:description" content="Soluções jurídicas com transparência. Advocacia e docência em Querência-MT." />
+<meta property="og:type" content="website" />
+
+<!-- Favicon SVG (monograma MF azul) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23061229'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-style='italic' font-weight='400' fill='%2360A5FA' text-anchor='middle'%3EMF%3C/text%3E%3C/svg%3E" />
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23061229'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-style='italic' font-weight='400' fill='%2360A5FA' text-anchor='middle'%3EMF%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============ RESET & BASE ============ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy-deep: #061229;
+  --navy: #0A1F44;
+  --royal: #1D4ED8;
+  --sky: #60A5FA;
+  --ice: #BFDBFE;
+  --black: #050505;
+  --ink: #0A0A0A;
+  --white: #FAFAFA;
+  --paper: #F4F6FB;
+  --line: rgba(255,255,255,0.08);
+  --line-dark: rgba(10,31,68,0.10);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+html { scroll-behavior: auto; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--sans);
+  background: var(--ink);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: none; border: none; background: none; color: inherit; }
+
+/* ============ CUSTOM CURSOR ============ */
+.cursor {
+  position: fixed; top: 0; left: 0;
+  width: 12px; height: 12px;
+  background: var(--sky);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.18s cubic-bezier(.2,.9,.3,1);
+  transform: translate(-50%,-50%);
+}
+.cursor-ring {
+  position: fixed; top: 0; left: 0;
+  width: 40px; height: 40px;
+  border: 1px solid var(--sky);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: difference;
+  transition: transform 0.4s cubic-bezier(.2,.9,.3,1), width 0.3s, height 0.3s;
+  transform: translate(-50%,-50%);
+}
+.cursor.hover { transform: translate(-50%,-50%) scale(0.5); }
+.cursor-ring.hover { width: 64px; height: 64px; }
+@media (max-width: 900px) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } button, a { cursor: pointer; } }
+
+/* ============ PRELOADER ============ */
+.preloader {
+  position: fixed; inset: 0;
+  background: var(--black);
+  z-index: 10000;
+  display: grid; place-items: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.preloader.hidden { opacity: 0; visibility: hidden; }
+.preloader-inner { text-align: center; }
+.preloader-mark {
+  font-family: var(--serif);
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  font-style: italic;
+}
+.preloader-mark span { color: var(--sky); }
+.preloader-bar {
+  width: 240px; height: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 28px auto 0;
+  position: relative; overflow: hidden;
+}
+.preloader-bar::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, var(--sky), transparent);
+  animation: load 1.4s linear infinite;
+}
+@keyframes load { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+
+/* ============ NAV ============ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 22px clamp(20px, 5vw, 60px);
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all 0.4s ease;
+}
+nav.scrolled {
+  background: rgba(6,18,41,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  padding: 16px clamp(20px, 5vw, 60px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-brand {
+  font-family: var(--serif);
+  font-size: 22px; font-weight: 400; font-style: italic;
+  letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-brand .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sky); }
+.nav-links { display: flex; gap: 36px; align-items: center; }
+.nav-links a {
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  position: relative; transition: color 0.3s;
+}
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: -6px;
+  width: 0; height: 1px; background: var(--sky);
+  transition: width 0.4s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 12px 22px;
+  border: 1px solid var(--sky);
+  border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.04em;
+  background: transparent;
+  position: relative; overflow: hidden;
+  transition: all 0.4s ease;
+}
+.nav-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--sky);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s cubic-bezier(.2,.9,.3,1);
+  z-index: -1;
+}
+.nav-cta:hover { color: var(--navy-deep); }
+.nav-cta:hover::before { transform: scaleX(1); }
+@media (max-width: 800px) {
+  nav { padding: 16px 18px; }
+  nav.scrolled { padding: 12px 18px; }
+  .nav-brand { font-size: 18px; }
+  .nav-links { gap: 0; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .nav-cta { padding: 9px 16px; font-size: 12px; }
+}
+
+/* ============ HERO ============ */
+.hero {
+  min-height: 100vh;
+  padding: 140px clamp(20px, 5vw, 60px) 80px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: center;
+  position: relative;
+  background:
+    radial-gradient(ellipse at top right, rgba(29,78,216,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(96,165,250,0.12) 0%, transparent 50%),
+    var(--ink);
+  overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+.hero-text { position: relative; z-index: 2; min-width: 0; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 16px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 32px;
+  background: rgba(255,255,255,0.02);
+  backdrop-filter: blur(10px);
+}
+.hero-eyebrow .pulse {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sky);
+  box-shadow: 0 0 0 0 rgba(96,165,250,0.7);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(96,165,250,0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(96,165,250,0); }
+  100% { box-shadow: 0 0 0 0 rgba(96,165,250,0); }
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(48px, 8vw, 120px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 32px;
+}
+.hero-title .italic { font-style: italic; font-weight: 400; color: var(--sky); }
+.hero-title .line { display: block; overflow: hidden; }
+.hero-title .line span {
+  display: inline-block;
+  animation: heroIn 1s cubic-bezier(.2,.9,.3,1) both;
+}
+.hero-title .line:nth-child(1) span { animation-delay: 0.2s; }
+.hero-title .line:nth-child(2) span { animation-delay: 0.35s; }
+.hero-title .line:nth-child(3) span { animation-delay: 0.5s; }
+@keyframes heroIn {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+.hero-sub {
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 300;
+  line-height: 1.65;
+  max-width: 520px;
+  width: 100%;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 44px;
+  overflow-wrap: break-word;
+}
+.hero-meta {
+  display: flex; gap: 24px 32px; flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+.hero-meta div { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1 1 140px; }
+.hero-meta .label {
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.hero-meta .value {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-style: italic;
+  color: var(--white);
+  word-break: break-word;
+}
+.hero-actions { display: flex; gap: 16px; margin-top: 44px; flex-wrap: wrap; }
+.btn-primary, .btn-ghost {
+  padding: 16px 28px;
+  border-radius: 100px;
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 0.04em;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: all 0.4s cubic-bezier(.2,.9,.3,1);
+  position: relative; overflow: hidden;
+  min-height: 50px;
+  line-height: 1;
+}
+.btn-ico { width: 18px; height: 18px; flex-shrink: 0; }
+.btn-primary {
+  background: var(--white);
+  color: var(--navy-deep);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(96,165,250,0.3); }
+.btn-primary .arrow { transition: transform 0.4s; }
+.btn-primary:hover .arrow { transform: translateX(4px); }
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--white);
+}
+.btn-ghost:hover { border-color: var(--sky); background: rgba(96,165,250,0.05); }
+
+/* hero image */
+.hero-image-wrap {
+  position: relative;
+  aspect-ratio: 4/5;
+  width: 100%;
+  max-width: 520px;
+  justify-self: end;
+}
+.hero-image-frame {
+  position: absolute; inset: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--royal), var(--navy));
+}
+.hero-image-frame img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 8s ease;
+}
+.hero-image-frame:hover img { transform: scale(1.05); }
+.hero-image-frame::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(6,18,41,0.7) 100%);
+  pointer-events: none;
+}
+.hero-image-tag {
+  position: absolute;
+  bottom: -24px; left: -24px;
+  background: var(--white);
+  color: var(--navy-deep);
+  padding: 16px 24px;
+  border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
+  z-index: 3;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.hero-image-tag::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--royal);
+}
+.hero-image-stat {
+  position: absolute;
+  top: -18px; right: -18px;
+  background: rgba(6,18,41,0.92);
+  border: 1px solid var(--royal);
+  padding: 12px 16px;
+  border-radius: 100px;
+  z-index: 3;
+  backdrop-filter: blur(20px);
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.hero-image-stat svg { width: 14px; height: 14px; color: var(--sky); flex-shrink: 0; }
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 100px 20px 56px;
+    gap: 40px;
+  }
+  .hero-text { order: 2; }
+  .hero-image-wrap { order: 1; max-width: 320px; margin: 0 auto; justify-self: center; }
+  .hero-image-stat { top: -12px; right: -8px; padding: 10px 14px; font-size: 10px; }
+  .hero-image-tag { bottom: -14px; left: -8px; padding: 10px 16px; font-size: 11px; }
+  .hero-title { font-size: clamp(40px, 11vw, 60px); }
+  .hero-sub { font-size: 14.5px; line-height: 1.6; margin-bottom: 32px; }
+  .hero-eyebrow { font-size: 11px; padding: 7px 14px; margin-bottom: 24px; }
+  .hero-meta { gap: 18px 24px; padding-top: 24px; }
+  .hero-meta div { flex: 1 1 calc(50% - 12px); }
+  .hero-meta .value { font-size: 15px; }
+  .hero-meta .label { font-size: 10px; }
+  .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+  .hero-actions .btn-primary, .hero-actions .btn-ghost { justify-content: center; width: 100%; }
+}
+@media (max-width: 400px) {
+  .hero-meta div { flex: 1 1 100%; }
+}
+
+/* ============ MARQUEE ============ */
+.marquee {
+  background: var(--royal);
+  color: var(--white);
+  padding: 20px 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.marquee-track {
+  display: flex; gap: 40px;
+  animation: marquee 35s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+.marquee-item {
+  font-family: var(--serif);
+  font-size: clamp(20px, 3.8vw, 48px);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  display: inline-flex; align-items: center; gap: 40px;
+}
+.marquee-item::after {
+  content: '✦';
+  font-size: 18px; font-style: normal;
+  color: var(--sky);
+}
+@media (max-width: 600px) {
+  .marquee { padding: 14px 0; }
+  .marquee-item { font-size: 20px; gap: 28px; }
+  .marquee-track { gap: 28px; animation-duration: 25s; }
+  .marquee-item::after { font-size: 14px; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============ SECTIONS BASE ============ */
+section {
+  padding: clamp(64px, 12vw, 160px) clamp(20px, 5vw, 60px);
+  position: relative;
+}
+@media (max-width: 600px) {
+  section { padding: 64px 20px; }
+}
+.section-tag {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--sky);
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-bottom: 24px;
+}
+.section-tag::before {
+  content: ''; width: 32px; height: 1px; background: var(--sky);
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(30px, 5vw, 72px);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  max-width: 900px;
+}
+@media (max-width: 600px) {
+  .section-tag { font-size: 11px; margin-bottom: 18px; }
+  .section-tag::before { width: 24px; }
+  .section-title { font-size: clamp(28px, 8vw, 38px); }
+}
+.section-title .italic { font-style: italic; color: var(--sky); }
+
+/* ============ SOBRE ============ */
+.sobre {
+  background: var(--ink);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 8vw, 120px);
+  align-items: center;
+}
+.sobre-text { max-width: 560px; }
+.sobre-text p {
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.75;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+.sobre-text p:first-of-type {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2vw, 28px);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--white);
+}
+.sobre-credentials {
+  margin-top: 40px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+.sobre-cred { display: flex; flex-direction: column; gap: 6px; }
+.sobre-cred .lbl {
+  font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.sobre-cred .val {
+  font-family: var(--serif);
+  font-size: 20px; font-style: italic;
+  font-weight: 400;
+}
+.sobre-image {
+  position: relative;
+  aspect-ratio: 1/1;
+  max-width: 560px;
+  justify-self: end;
+}
+.sobre-image img {
+  width: 100%; height: 100%; object-fit: cover;
+  border-radius: 4px;
+  filter: brightness(0.85) contrast(1.1);
+}
+.sobre-image::before {
+  content: ''; position: absolute;
+  inset: -20px; border: 1px solid var(--royal);
+  border-radius: 4px;
+  pointer-events: none;
+}
+.sobre-image-quote {
+  position: absolute;
+  bottom: 32px; left: 32px; right: 32px;
+  background: rgba(6,18,41,0.85);
+  backdrop-filter: blur(20px);
+  padding: 24px;
+  border-left: 2px solid var(--sky);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.5;
+}
+@media (max-width: 900px) {
+  .sobre { grid-template-columns: 1fr; gap: 40px; }
+  .sobre-image { max-width: 320px; margin: 0 auto; justify-self: center; aspect-ratio: 4/5; }
+  .sobre-image::before { inset: -12px; }
+  .sobre-image-quote { bottom: 16px; left: 16px; right: 16px; padding: 16px; font-size: 14px; }
+  .sobre-text p:first-of-type { font-size: 18px; }
+  .sobre-text p { font-size: 14.5px; line-height: 1.7; }
+  .sobre-credentials { grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 32px; }
+  .sobre-cred .val { font-size: 17px; }
+}
+
+/* ============ ÁREAS (BENTO) ============ */
+.areas {
+  background: var(--paper);
+  color: var(--navy-deep);
+}
+.areas-header {
+  display: flex; justify-content: space-between; align-items: end;
+  margin-bottom: 64px; gap: 40px; flex-wrap: wrap;
+}
+.areas-header .section-tag { color: var(--royal); }
+.areas-header .section-tag::before { background: var(--royal); }
+.areas-intro {
+  max-width: 380px;
+  font-size: 15px; line-height: 1.7;
+  color: rgba(10,31,68,0.7);
+  font-weight: 400;
+}
+.areas-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(220px, auto);
+  gap: 16px;
+}
+.area-card {
+  background: var(--white);
+  border-radius: 4px;
+  padding: 32px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+  transition: all 0.5s cubic-bezier(.2,.9,.3,1);
+  border: 1px solid transparent;
+}
+.area-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--royal), var(--sky));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.6s cubic-bezier(.2,.9,.3,1);
+}
+.area-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(10,31,68,0.12);
+  border-color: rgba(29,78,216,0.15);
+}
+.area-card:hover::before { transform: scaleX(1); }
+.area-card.featured {
+  grid-column: span 2; grid-row: span 2;
+  background: var(--navy-deep);
+  color: var(--white);
+}
+.area-card.featured::before {
+  background: linear-gradient(90deg, var(--sky), var(--white));
+}
+.area-card.featured::after {
+  content: ''; position: absolute;
+  bottom: -40%; right: -20%;
+  width: 80%; aspect-ratio: 1/1;
+  background: radial-gradient(circle, rgba(96,165,250,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+.area-card.wide { grid-column: span 2; }
+.area-num {
+  font-family: var(--serif);
+  font-size: 14px; font-style: italic;
+  color: rgba(10,31,68,0.4);
+  letter-spacing: 0.04em;
+}
+.area-card.featured .area-num { color: rgba(255,255,255,0.4); }
+.area-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 1.8vw, 30px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-top: 24px;
+}
+.area-card.featured .area-title {
+  font-size: clamp(32px, 3vw, 48px);
+}
+.area-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(10,31,68,0.65);
+  margin-top: 12px;
+}
+.area-card.featured .area-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+}
+.area-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(29,78,216,0.08);
+  display: grid; place-items: center;
+  color: var(--royal);
+  align-self: flex-start;
+}
+.area-card.featured .area-icon {
+  background: rgba(96,165,250,0.15);
+  color: var(--sky);
+}
+@media (max-width: 1100px) { .areas-grid { grid-template-columns: repeat(2, 1fr); } .area-card.featured, .area-card.wide { grid-column: span 2; } .area-card.featured { grid-row: auto; } .area-card.featured .area-title { font-size: clamp(24px, 3vw, 36px); } }
+@media (max-width: 600px) {
+  .areas-grid { grid-template-columns: 1fr; gap: 12px; }
+  .area-card, .area-card.featured, .area-card.wide { grid-column: span 1; padding: 24px; min-height: auto; }
+  .area-card.featured .area-title { font-size: 24px; }
+  .area-title { font-size: 20px; margin-top: 16px; }
+  .area-desc { font-size: 13px; }
+  .areas-header { margin-bottom: 36px; gap: 20px; }
+}
+
+/* ============ DUPLA ATUAÇÃO ============ */
+.dupla {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.dupla::before {
+  content: 'M.F.';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif);
+  font-size: clamp(180px, 30vw, 460px);
+  font-weight: 300; font-style: italic;
+  color: rgba(29,78,216,0.05);
+  pointer-events: none;
+  letter-spacing: -0.08em;
+  white-space: nowrap;
+}
+.dupla-inner { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; }
+.dupla-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 80px;
+}
+.dupla-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: clamp(32px, 4vw, 56px);
+  position: relative; overflow: hidden;
+  backdrop-filter: blur(20px);
+  transition: all 0.5s cubic-bezier(.2,.9,.3,1);
+}
+.dupla-card:hover {
+  border-color: var(--royal);
+  background: linear-gradient(180deg, rgba(29,78,216,0.1), rgba(29,78,216,0.02));
+  transform: translateY(-4px);
+}
+.dupla-card .num {
+  font-family: var(--serif);
+  font-size: 80px; font-weight: 300; font-style: italic;
+  line-height: 1;
+  color: var(--royal);
+  opacity: 0.6;
+}
+.dupla-card h3 {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-top: 24px;
+}
+.dupla-card h3 .italic { font-style: italic; color: var(--sky); }
+.dupla-card p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.65);
+  margin-top: 20px;
+  max-width: 480px;
+  font-weight: 300;
+}
+.dupla-link {
+  margin-top: 36px;
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--sky);
+}
+.dupla-card .arrow {
+  width: 44px; height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--sky);
+  transition: all 0.4s;
+}
+.dupla-card .arrow svg { width: 18px; height: 18px; }
+.dupla-card:hover .arrow {
+  background: var(--royal);
+  border-color: var(--royal);
+  color: var(--white);
+  transform: rotate(-45deg);
+}
+@media (max-width: 800px) {
+  .dupla-grid { grid-template-columns: 1fr; gap: 14px; }
+  .dupla-card { padding: 32px 24px; }
+  .dupla-card h3 { font-size: 24px; }
+  .dupla-card .num { font-size: 56px; }
+  .dupla-card p { font-size: 14px; }
+}
+
+/* ============ TRAJETÓRIA TIMELINE ============ */
+.trajetoria {
+  background: var(--navy-deep);
+  position: relative;
+}
+.trajetoria::after {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--royal), transparent);
+}
+.timeline {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  position: relative;
+}
+.timeline::before {
+  content: ''; position: absolute;
+  top: 36px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--royal) 0%, var(--sky) 50%, transparent 100%);
+}
+.timeline-item {
+  position: relative;
+  padding-top: 80px;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: 0;
+  width: 17px; height: 17px;
+  border-radius: 50%;
+  background: var(--navy-deep);
+  border: 2px solid var(--sky);
+  transition: all 0.4s;
+}
+.timeline-item:hover::before {
+  background: var(--sky);
+  transform: scale(1.3);
+  box-shadow: 0 0 0 8px rgba(96,165,250,0.15);
+}
+.timeline-year {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--sky);
+  margin-bottom: 12px;
+}
+.timeline-title {
+  font-family: var(--serif);
+  font-size: clamp(20px, 1.6vw, 26px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.timeline-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.6);
+  margin-top: 12px;
+  font-weight: 300;
+}
+@media (max-width: 900px) {
+  .timeline { grid-template-columns: 1fr; gap: 28px; margin-top: 48px; }
+  .timeline::before {
+    top: 8px; bottom: 8px; left: 8px; width: 1px; height: auto; right: auto;
+    background: linear-gradient(180deg, var(--royal), var(--sky), transparent);
+  }
+  .timeline-item { padding-top: 0; padding-left: 36px; }
+  .timeline-item::before { top: 0; left: 0; width: 16px; height: 16px; }
+  .timeline-year { font-size: 15px; margin-bottom: 6px; }
+  .timeline-title { font-size: 18px; }
+  .timeline-desc { font-size: 13px; margin-top: 8px; }
+}
+
+/* ============ COMPROMISSO / VALORES ============ */
+.valores {
+  background: var(--white);
+  color: var(--navy-deep);
+}
+.valores-grid {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line-dark);
+  border: 1px solid var(--line-dark);
+}
+.valor-card {
+  background: var(--white);
+  padding: clamp(32px, 4vw, 56px) clamp(24px, 3vw, 40px);
+  transition: all 0.4s;
+  position: relative;
+}
+.valor-card:hover {
+  background: var(--paper);
+}
+.valor-num {
+  font-family: var(--serif);
+  font-size: 56px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--royal);
+  line-height: 1;
+}
+.valor-title {
+  font-family: var(--serif);
+  font-size: clamp(24px, 2vw, 32px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-top: 24px;
+}
+.valor-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: rgba(10,31,68,0.65);
+  margin-top: 16px;
+}
+@media (max-width: 900px) {
+  .valores-grid { grid-template-columns: 1fr; margin-top: 40px; }
+  .valor-card { padding: 28px 24px; }
+  .valor-num { font-size: 40px; }
+  .valor-title { font-size: 22px; margin-top: 16px; }
+  .valor-desc { font-size: 13.5px; margin-top: 12px; }
+}
+
+/* ============ CONTATO CTA ============ */
+.contato {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.contato::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 1400px; height: 1400px;
+  background: radial-gradient(circle, rgba(29,78,216,0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+.contato-inner {
+  position: relative; z-index: 2;
+  text-align: center;
+  max-width: 980px; margin: 0 auto;
+}
+.contato-title {
+  font-family: var(--serif);
+  font-size: clamp(40px, 7vw, 110px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+.contato-title .italic { font-style: italic; color: var(--sky); }
+.contato-sub {
+  font-size: clamp(15px, 1.3vw, 19px);
+  line-height: 1.65;
+  color: rgba(255,255,255,0.7);
+  margin: 32px auto 48px;
+  max-width: 560px;
+  font-weight: 300;
+}
+.contato-actions {
+  display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+}
+@media (max-width: 600px) {
+  .contato-actions { display: flex; flex-direction: column; width: 100%; gap: 12px; }
+  .contato-actions .btn-primary, .contato-actions .btn-ghost { justify-content: center; width: 100%; }
+  .contato-title { font-size: clamp(34px, 9vw, 50px); }
+  .contato-sub { font-size: 14.5px; margin: 22px auto 32px; }
+  .contato-info { margin-top: 56px; }
+  .contato-info-card { padding: 22px; }
+  .contato-info-card .val { font-size: 18px; }
+}
+.contato-info {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.contato-info-card {
+  background: rgba(6,18,41,0.6);
+  padding: 32px;
+  text-align: left;
+}
+.contato-info-card.link { display: block; transition: background 0.3s; }
+.contato-info-card.link:hover { background: rgba(29,78,216,0.18); }
+.contato-info-card .lbl {
+  font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.contato-info-card .lbl svg {
+  width: 16px; height: 16px;
+  color: var(--sky);
+  flex-shrink: 0;
+}
+.contato-info-card .val {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  font-style: italic;
+}
+@media (max-width: 700px) { .contato-info { grid-template-columns: 1fr; } }
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--black);
+  padding: 60px clamp(20px, 5vw, 60px) 40px;
+  border-top: 1px solid var(--line);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+.footer-brand {
+  font-family: var(--serif);
+  font-size: 36px; font-style: italic; font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.footer-brand span { color: var(--sky); }
+.footer-tag {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+  max-width: 320px;
+}
+.footer-col h4 {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--sky);
+  margin-bottom: 20px;
+}
+.footer-col a, .footer-col p {
+  display: block;
+  font-size: 14px; line-height: 1.8;
+  color: rgba(255,255,255,0.7);
+  transition: color 0.3s;
+}
+.footer-col a:hover { color: var(--white); }
+.footer-col a.footer-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 0;
+  line-height: 1.4;
+  min-height: 32px;
+}
+.footer-col a.footer-link svg {
+  width: 16px; height: 16px;
+  color: var(--sky);
+  flex-shrink: 0;
+}
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-bottom p {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.04em;
+}
+.footer-bottom .credit { color: var(--sky); }
+@media (max-width: 800px) {
+  footer { padding: 48px 20px 32px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; margin-bottom: 36px; }
+  .footer-brand { font-size: 28px; }
+  .footer-col h4 { margin-bottom: 14px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .footer-bottom p { font-size: 11px; }
+}
+
+/* ============ FLOATING WHATSAPP ============ */
+.fab-wa {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 90;
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 22px 14px 16px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 100px;
+  font-weight: 600; font-size: 14px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 12px 32px rgba(37,211,102,0.35), 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.4s cubic-bezier(.2,.9,.3,1);
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+.fab-wa.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.fab-wa:hover {
+  background: #1ebe5d;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(37,211,102,0.45);
+}
+.fab-wa-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: grid; place-items: center;
+}
+.fab-wa-icon svg { width: 18px; height: 18px; }
+.fab-wa-pulse {
+  position: absolute;
+  top: 50%; left: 28px;
+  transform: translate(-50%, -50%);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #25D366;
+  z-index: -1;
+  animation: waPulse 2.2s ease-out infinite;
+}
+@keyframes waPulse {
+  0% { transform: translate(-50%,-50%) scale(1); opacity: 0.55; }
+  100% { transform: translate(-50%,-50%) scale(2.4); opacity: 0; }
+}
+@media (max-width: 600px) {
+  .fab-wa { bottom: 16px; right: 16px; padding: 12px 18px 12px 14px; font-size: 13px; }
+  .fab-wa-label { display: none; }
+  .fab-wa { padding: 14px; }
+  .fab-wa-icon { width: 24px; height: 24px; }
+  .fab-wa-icon svg { width: 16px; height: 16px; }
+}
+
+/* ============ MOTION UTILS ============ */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s cubic-bezier(.2,.9,.3,1), transform 1s cubic-bezier(.2,.9,.3,1); }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+.reveal-d5 { transition-delay: 0.5s; }
+
+.fade-in { opacity: 0; transition: opacity 1.4s ease; }
+.fade-in.in { opacity: 1; }
+
+.slide-r { opacity: 0; transform: translateX(-40px); transition: opacity 1s cubic-bezier(.2,.9,.3,1), transform 1s cubic-bezier(.2,.9,.3,1); }
+.slide-r.in { opacity: 1; transform: translateX(0); }
+
+.scale-in { opacity: 0; transform: scale(0.95); transition: opacity 1s, transform 1s cubic-bezier(.2,.9,.3,1); }
+.scale-in.in { opacity: 1; transform: scale(1); }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/5566999999999?text=Ol%C3%A1%20Matheus%2C%20vim%20pelo%20seu%20site%20e%20gostaria%20de%20conversar."
+   target="_blank" rel="noopener"
+   class="fab-wa" id="fabWa" aria-label="Falar no WhatsApp">
+  <span class="fab-wa-pulse"></span>
+  <span class="fab-wa-icon">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.94.51 3.74 1.4 5.31L2 22l4.92-1.5a9.86 9.86 0 005.12 1.4c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.16c-1.51 0-2.98-.4-4.27-1.17l-.31-.18-3.2.98 1-3.13-.2-.32a8.18 8.18 0 01-1.27-4.39c0-4.54 3.69-8.23 8.23-8.23 4.54 0 8.23 3.69 8.23 8.23 0 4.54-3.69 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13s-.64.81-.79.97c-.15.17-.29.19-.54.06-.25-.12-1.06-.39-2.01-1.24-.74-.66-1.24-1.48-1.39-1.73-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+  </span>
+  <span class="fab-wa-label">Fale comigo</span>
+</a>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand">
+    <span class="dot"></span>
+    Matheus Fante
+  </div>
+  <div class="nav-links">
+    <a href="#sobre">Sobre</a>
+    <a href="#areas">Áreas</a>
+    <a href="#atuacao">Atuação</a>
+    <a href="#trajetoria">Trajetória</a>
+    <a href="#contato" class="nav-cta">Agendar consulta</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow reveal">
+      <span class="pulse"></span>
+      Querência-MT · OAB-MT
+    </div>
+    <h1 class="hero-title">
+      <span class="line"><span>Soluções</span></span>
+      <span class="line"><span>jurídicas com</span></span>
+      <span class="line"><span class="italic">transparência.</span></span>
+    </h1>
+    <p class="hero-sub reveal reveal-d2">
+      Advocacia técnica e próxima em Querência-MT. Cada caso recebe atenção integral, do diagnóstico à resolução.
+    </p>
+    <div class="hero-actions reveal reveal-d3">
+      <a href="https://wa.me/5566999999999?text=Ol%C3%A1%20Matheus%2C%20vim%20pelo%20seu%20site%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener" class="btn-primary">
+        <svg class="btn-ico" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.94.51 3.74 1.4 5.31L2 22l4.92-1.5a9.86 9.86 0 005.12 1.4c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm4.52 12.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13s-.64.81-.79.97c-.15.17-.29.19-.54.06-.25-.12-1.06-.39-2.01-1.24-.74-.66-1.24-1.48-1.39-1.73-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.51.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+        Falar no WhatsApp
+        <span class="arrow">→</span>
+      </a>
+      <a href="#sobre" class="btn-ghost">Conhecer mais</a>
+    </div>
+    <div class="hero-meta reveal reveal-d4">
+      <div>
+        <span class="label">Escritório</span>
+        <span class="value">Carvalho & Damásio</span>
+      </div>
+      <div>
+        <span class="label">Docência</span>
+        <span class="value">Faculdade de Querência</span>
+      </div>
+      <div>
+        <span class="label">Atendimento</span>
+        <span class="value">Presencial · Online</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-image-wrap scale-in">
+    <div class="hero-image-frame">
+      <img src="assets/fotos/matheus-portrait-02.jpg" alt="Matheus Fante — Advogado" />
+    </div>
+    <div class="hero-image-stat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+      OAB-MT
+    </div>
+    <div class="hero-image-tag">Advogado · Professor</div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Transparência</span>
+    <span class="marquee-item">Técnica jurídica</span>
+    <span class="marquee-item">Compromisso</span>
+    <span class="marquee-item">Atenção integral</span>
+    <span class="marquee-item">Querência-MT</span>
+    <span class="marquee-item">Transparência</span>
+    <span class="marquee-item">Técnica jurídica</span>
+    <span class="marquee-item">Compromisso</span>
+    <span class="marquee-item">Atenção integral</span>
+    <span class="marquee-item">Querência-MT</span>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="sobre-text">
+    <div class="section-tag reveal">Sobre</div>
+    <h2 class="section-title reveal reveal-d1">
+      Direito feito com <span class="italic">clareza</span> e responsabilidade.
+    </h2>
+    <div style="margin-top: 40px;">
+      <p class="reveal reveal-d2">
+        Matheus Fante é advogado inscrito na OAB-MT, atuante no escritório
+        Carvalho & Damásio Advogados em Querência-MT, e professor de Direito
+        na Faculdade de Querência.
+      </p>
+      <p class="reveal reveal-d3">
+        Sua prática une rigor técnico, comunicação direta e ética inegociável.
+        Acredita que o cliente merece entender o próprio processo, e que
+        transparência é mais que valor de marketing, é método de trabalho.
+      </p>
+      <p class="reveal reveal-d3">
+        Atende causas cíveis, trabalhistas, agrárias, empresariais e de
+        família com a mesma atenção dedicada a docência: estruturando,
+        explicando e construindo a melhor estratégia com o cliente.
+      </p>
+    </div>
+    <div class="sobre-credentials reveal reveal-d4">
+      <div class="sobre-cred">
+        <span class="lbl">Inscrição</span>
+        <span class="val">OAB-MT</span>
+      </div>
+      <div class="sobre-cred">
+        <span class="lbl">Atuação</span>
+        <span class="val">Querência e região</span>
+      </div>
+      <div class="sobre-cred">
+        <span class="lbl">Escritório</span>
+        <span class="val">Carvalho & Damásio</span>
+      </div>
+      <div class="sobre-cred">
+        <span class="lbl">Docência</span>
+        <span class="val">Direito · FAQ</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sobre-image scale-in">
+    <img src="assets/fotos/matheus-portrait-03.jpg" alt="Matheus Fante" />
+    <div class="sobre-image-quote">
+      "Transparência não é discurso. É o jeito que eu trabalho cada caso, do
+      primeiro contato à sentença."
+    </div>
+  </div>
+</section>
+
+<!-- ÁREAS -->
+<section class="areas" id="areas">
+  <div class="areas-header">
+    <div>
+      <div class="section-tag reveal">Áreas de atuação</div>
+      <h2 class="section-title reveal reveal-d1">
+        Atendimento <span class="italic" style="color:var(--royal)">técnico</span>
+        em múltiplas frentes do Direito.
+      </h2>
+    </div>
+    <p class="areas-intro reveal reveal-d2">
+      Cada área é conduzida com a mesma atenção integral. Você fala diretamente
+      comigo, entende cada movimento, decide cada passo com clareza.
+    </p>
+  </div>
+
+  <div class="areas-grid">
+    <div class="area-card featured reveal">
+      <div>
+        <div class="area-num">01 / Destaque</div>
+        <h3 class="area-title">
+          Direito Agrário & Empresarial
+        </h3>
+        <p class="area-desc">
+          Atuação especializada para produtores, propriedades rurais e
+          empresas do agronegócio em Querência e região. Contratos,
+          regularização fundiária, sucessão patrimonial e estruturação societária.
+        </p>
+      </div>
+      <div class="area-icon" style="width:48px;height:48px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="area-card reveal reveal-d1">
+      <div>
+        <div class="area-num">02</div>
+        <h3 class="area-title">Direito Civil</h3>
+        <p class="area-desc">Contratos, indenizações, sucessões.</p>
+      </div>
+      <div class="area-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h12"/></svg>
+      </div>
+    </div>
+
+    <div class="area-card reveal reveal-d2">
+      <div>
+        <div class="area-num">03</div>
+        <h3 class="area-title">Direito Trabalhista</h3>
+        <p class="area-desc">Defesa de empregados e empregadores.</p>
+      </div>
+      <div class="area-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+      </div>
+    </div>
+
+    <div class="area-card wide reveal reveal-d3">
+      <div>
+        <div class="area-num">04</div>
+        <h3 class="area-title">Direito de Família</h3>
+        <p class="area-desc">Divórcio, guarda, pensão, inventário. Atendimento sensível, sem julgamento, com técnica.</p>
+      </div>
+      <div class="area-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="7" r="4"/><circle cx="17" cy="9" r="3"/><path d="M2 21v-2a6 6 0 0114 0v2M16 14a5 5 0 016 5v2"/></svg>
+      </div>
+    </div>
+
+    <div class="area-card reveal reveal-d2">
+      <div>
+        <div class="area-num">05</div>
+        <h3 class="area-title">Direito do Consumidor</h3>
+        <p class="area-desc">Cobranças indevidas, vícios de produto, planos de saúde.</p>
+      </div>
+      <div class="area-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h2l2 13h11l2-9H6"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>
+      </div>
+    </div>
+
+    <div class="area-card reveal reveal-d3">
+      <div>
+        <div class="area-num">06</div>
+        <h3 class="area-title">Consultoria Jurídica</h3>
+        <p class="area-desc">Pareceres, prevenção de litígios, due diligence.</p>
+      </div>
+      <div class="area-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DUPLA ATUAÇÃO -->
+<section class="dupla" id="atuacao">
+  <div class="dupla-inner">
+    <div class="section-tag reveal">Dupla vocação</div>
+    <h2 class="section-title reveal reveal-d1">
+      Advocacia e <span class="italic">docência</span>, duas faces do mesmo compromisso.
+    </h2>
+
+    <div class="dupla-grid">
+      <a href="https://www.instagram.com/carvalhoedamasio/" target="_blank" rel="noopener" class="dupla-card reveal reveal-d2">
+        <div class="num">01</div>
+        <h3>
+          Advocacia em <span class="italic">Querência</span>
+        </h3>
+        <p>
+          No escritório Carvalho & Damásio, conduzo causas cíveis,
+          trabalhistas, agrárias e empresariais. Cada cliente é atendido
+          pessoalmente, com diagnóstico claro a cada etapa do processo.
+        </p>
+        <div class="dupla-link">
+          <span>Ver no Instagram</span>
+          <div class="arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/faculdadedequerencia/" target="_blank" rel="noopener" class="dupla-card reveal reveal-d3">
+        <div class="num">02</div>
+        <h3>
+          Professor de <span class="italic">Direito</span>
+        </h3>
+        <p>
+          Na Faculdade de Querência, leciono e formo a próxima geração
+          de profissionais do Direito. Ensinar mantém o pensamento
+          afiado, a doutrina viva e a prática sempre conectada.
+        </p>
+        <div class="dupla-link">
+          <span>Ver a faculdade</span>
+          <div class="arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TRAJETÓRIA -->
+<section class="trajetoria" id="trajetoria">
+  <div class="section-tag reveal">Trajetória</div>
+  <h2 class="section-title reveal reveal-d1">
+    Formação contínua, prática <span class="italic">consistente</span>.
+  </h2>
+
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-year">Formação</div>
+      <h4 class="timeline-title">Bacharel em Direito</h4>
+      <p class="timeline-desc">Graduação e aprovação no Exame da OAB.</p>
+    </div>
+    <div class="timeline-item reveal reveal-d1">
+      <div class="timeline-year">OAB-MT</div>
+      <h4 class="timeline-title">Advogado inscrito</h4>
+      <p class="timeline-desc">Habilitação plena pra atuar em todo o país.</p>
+    </div>
+    <div class="timeline-item reveal reveal-d2">
+      <div class="timeline-year">Escritório</div>
+      <h4 class="timeline-title">Carvalho &amp; Damásio</h4>
+      <p class="timeline-desc">Atuação em equipe técnica de referência em Querência.</p>
+    </div>
+    <div class="timeline-item reveal reveal-d3">
+      <div class="timeline-year">Hoje</div>
+      <h4 class="timeline-title">Professor &amp; Advogado</h4>
+      <p class="timeline-desc">Docência na Faculdade de Querência + advocacia ativa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section class="valores">
+  <div class="section-tag reveal" style="color:var(--royal);">Compromissos</div>
+  <h2 class="section-title reveal reveal-d1">
+    O que você pode esperar de <span class="italic" style="color:var(--royal)">cada atendimento</span>.
+  </h2>
+
+  <div class="valores-grid">
+    <div class="valor-card reveal">
+      <div class="valor-num">01</div>
+      <h3 class="valor-title">Linguagem clara</h3>
+      <p class="valor-desc">
+        Sem juridiquês desnecessário. Você entende cada etapa, cada
+        prazo, cada decisão tomada no seu processo.
+      </p>
+    </div>
+    <div class="valor-card reveal reveal-d1">
+      <div class="valor-num">02</div>
+      <h3 class="valor-title">Atendimento próximo</h3>
+      <p class="valor-desc">
+        Você fala diretamente comigo. Sem intermediários, sem repassar
+        seu caso pra estagiário, sem perder o contexto.
+      </p>
+    </div>
+    <div class="valor-card reveal reveal-d2">
+      <div class="valor-num">03</div>
+      <h3 class="valor-title">Postura ética</h3>
+      <p class="valor-desc">
+        Sem promessas de resultado, sem expectativa inflada. Apenas
+        diagnóstico honesto e estratégia tecnicamente fundamentada.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <div class="contato-inner">
+    <div class="section-tag reveal">Vamos conversar</div>
+    <h2 class="contato-title reveal reveal-d1">
+      Seu caso merece <span class="italic">análise séria</span>.
+    </h2>
+    <p class="contato-sub reveal reveal-d2">
+      Agende uma consulta inicial. Você apresenta o caso, eu apresento o
+      diagnóstico honesto e os próximos passos possíveis. Sem compromisso
+      antes de você ter clareza.
+    </p>
+    <div class="contato-actions reveal reveal-d3">
+      <a href="https://wa.me/5566999999999?text=Ol%C3%A1%20Matheus%2C%20gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener" class="btn-primary">
+        Falar no WhatsApp
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://www.instagram.com/matheusfanteadv/" target="_blank" rel="noopener" class="btn-ghost">
+        Instagram @matheusfanteadv
+      </a>
+    </div>
+
+    <div class="contato-info">
+      <div class="contato-info-card reveal reveal-d3">
+        <div class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Localização
+        </div>
+        <div class="val">Querência · MT</div>
+      </div>
+      <a href="https://www.instagram.com/carvalhoedamasio/" target="_blank" rel="noopener" class="contato-info-card link reveal reveal-d4">
+        <div class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+          Escritório
+        </div>
+        <div class="val">Carvalho &amp; Damásio</div>
+      </a>
+      <a href="https://www.instagram.com/matheusfanteadv/" target="_blank" rel="noopener" class="contato-info-card link reveal reveal-d5">
+        <div class="lbl">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          Instagram
+        </div>
+        <div class="val">@matheusfanteadv</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Matheus <span>Fante</span></div>
+      <p class="footer-tag">
+        Advogado em Querência-MT. Soluções jurídicas com transparência,
+        técnica e responsabilidade.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Atendimento</h4>
+      <a href="#sobre">Sobre</a>
+      <a href="#areas">Áreas de atuação</a>
+      <a href="#trajetoria">Trajetória</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <div class="footer-col">
+      <h4>Onde me encontrar</h4>
+      <a href="https://www.instagram.com/matheusfanteadv/" target="_blank" rel="noopener" class="footer-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        @matheusfanteadv
+      </a>
+      <a href="https://www.instagram.com/carvalhoedamasio/" target="_blank" rel="noopener" class="footer-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+        Carvalho &amp; Damásio
+      </a>
+      <a href="https://www.instagram.com/faculdadedequerencia/" target="_blank" rel="noopener" class="footer-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Faculdade de Querência
+      </a>
+      <a href="https://wa.me/5566999999999" target="_blank" rel="noopener" class="footer-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.94.51 3.74 1.4 5.31L2 22l4.92-1.5a9.86 9.86 0 005.12 1.4c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Matheus Fante · OAB-MT · Todos os direitos reservados.</p>
+    <p>Site desenvolvido por <span class="credit">Criativvo</span></p>
+  </div>
+</footer>
+
+<script>
+/* ============ CUSTOM CURSOR ============ */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+window.addEventListener('mousemove', (e) => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animateRing() {
+  rx += (mx - rx) * 0.18;
+  ry += (my - ry) * 0.18;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.classList.add('hover');
+    ring.classList.add('hover');
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.classList.remove('hover');
+    ring.classList.remove('hover');
+  });
+});
+
+/* ============ NAV + FAB WA ON SCROLL ============ */
+const nav = document.getElementById('nav');
+const fabWa = document.getElementById('fabWa');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y > 80) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+  if (y > 300) fabWa.classList.add('show');
+  else fabWa.classList.remove('show');
+}, { passive: true });
+
+/* ============ REVEAL ON SCROLL ============ */
+const revealEls = document.querySelectorAll('.reveal, .fade-in, .slide-r, .scale-in');
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+revealEls.forEach(el => io.observe(el));
+
+/* Initial check + fallback: marca elementos já visíveis no primeiro paint */
+function activateInView() {
+  revealEls.forEach(el => {
+    if (el.classList.contains('in')) return;
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) {
+      el.classList.add('in');
+    }
+  });
+}
+requestAnimationFrame(activateInView);
+setTimeout(activateInView, 400);
+
+/* Headless render flags */
+const params = new URLSearchParams(location.search);
+if (params.get('showall') === '1') {
+  revealEls.forEach(el => el.classList.add('in'));
+}
+const scrollTo = params.get('scroll');
+if (scrollTo) {
+  window.scrollTo(0, parseInt(scrollTo));
+}
+
+/* hero title stagger handled via CSS keyframes (heroIn) */
+
+/* ============ SMOOTH ANCHOR SCROLL ============ */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+/* ============ HERO IMAGE PARALLAX (sutil) ============ */
+const heroImg = document.querySelector('.hero-image-frame img');
+if (heroImg) {
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y < window.innerHeight) {
+      heroImg.style.transform = `scale(1.05) translateY(${y * 0.06}px)`;
+    }
+  }, { passive: true });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+'use client';
+
+import { motion } from 'motion/react';
+
+// Transição suave a cada troca de página (o template remonta na navegação).
+// Leve de propósito: só um fade + leve subida, 0.22s.
+export default function Template({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}

@@ -1,0 +1,3051 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d0f12">
+<title>Belloni Motors — Painel interno</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --red:#CC0000;
+    --red-light:#ff5555;
+    --red-dark:#990000;
+    --grn:#16a34a;
+    --grn-soft:rgba(22,163,74,0.10);
+    --yel:#d97706;
+    --yel-soft:rgba(217,119,6,0.10);
+    --blu:#2563eb;
+    --blu-soft:rgba(37,99,235,0.10);
+    --pur:#7c3aed;
+    --pur-soft:rgba(124,58,237,0.10);
+    --org:#ea580c;
+    --org-soft:rgba(234,88,12,0.10);
+
+    --tx:#111827;
+    --mu:#6b7280;
+    --lt:#9ca3af;
+    --xlt:#d1d5db;
+    --bg:#f0f2f5;
+    --card:#ffffff;
+    --bd:rgba(0,0,0,0.07);
+    --bd-strong:rgba(0,0,0,0.12);
+
+    --sh:0 1px 3px rgba(0,0,0,0.08), 0 6px 24px rgba(0,0,0,0.05);
+    --sh-lg:0 4px 16px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.07);
+    --sh-xl:0 20px 60px rgba(0,0,0,0.12);
+    --ease-out:cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  html,body{height:100%;font-family:'Inter',system-ui,sans-serif;color:var(--tx);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.55}
+  body{background:var(--bg);min-height:100vh;overflow-x:hidden}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,select,textarea{font-family:inherit;color:var(--tx)}
+
+  .screen{display:none}
+  .screen.active{display:block}
+
+  /* ================================================================
+     LOGIN
+     ================================================================ */
+  #login.active{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:32px;z-index:100;
+    background:var(--bg)
+  }
+  .login-card{
+    width:100%;max-width:460px;background:var(--card);border-radius:20px;
+    border:1px solid var(--bd);
+    padding:44px 40px;text-align:center;position:relative;overflow:hidden;
+    box-shadow:var(--sh-lg)
+  }
+  .login-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg, var(--red), var(--red-light))
+  }
+  .login-logo{background:var(--bg);border-radius:14px;padding:14px 24px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:28px}
+  .login-logo img{height:42px;width:auto;display:block}
+  .login-title{font-size:1.5rem;font-weight:900;letter-spacing:-.5px;margin-bottom:8px;color:var(--tx);line-height:1.2}
+  .login-sub{font-size:.82rem;color:var(--mu);margin-bottom:32px;line-height:1.6;font-weight:500}
+
+  .role-card{width:100%;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;transition:all .2s var(--ease-out);display:flex;align-items:center;gap:14px;text-align:left;box-shadow:var(--sh)}
+  .role-card:hover{border-color:var(--red);transform:translateY(-2px);box-shadow:0 8px 28px rgba(204,0,0,0.14)}
+  .role-icon{width:44px;height:44px;border-radius:12px;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .role-icon svg{width:20px;height:20px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .role-info h3{font-size:.92rem;font-weight:800;margin-bottom:2px;color:var(--tx)}
+  .role-info p{font-size:.74rem;color:var(--mu);line-height:1.4;font-weight:500}
+  .role-arrow{margin-left:auto;color:var(--lt)}
+  .role-arrow svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+  .role-card:hover .role-arrow{color:var(--red)}
+  .login-hint{margin-top:26px;font-size:.62rem;font-weight:700;color:var(--mu);letter-spacing:1.5px;text-transform:uppercase}
+
+  /* ================================================================
+     APP LAYOUT
+     ================================================================ */
+  #app.active{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+
+  .sidebar{
+    background:var(--card);
+    border-right:1px solid var(--bd);
+    padding:20px 14px;
+    display:flex;flex-direction:column;
+    position:sticky;top:0;height:100vh
+  }
+  .sidebar-logo{display:flex;align-items:center;padding:8px 12px 22px;border-bottom:1px solid var(--bd);margin-bottom:16px;cursor:pointer;transition:opacity .15s}
+  .sidebar-logo:hover{opacity:.7}
+  .sidebar-logo img{height:32px;width:auto}
+  .topbar-logo{cursor:pointer;transition:opacity .15s}
+  .topbar-logo:hover{opacity:.7}
+
+  .nav-section{font-size:.58rem;text-transform:uppercase;letter-spacing:2px;font-weight:700;color:var(--mu);padding:18px 14px 8px}
+  .nav-link{
+    display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;
+    color:var(--tx);font-size:.85rem;font-weight:600;cursor:pointer;
+    transition:all .15s;text-decoration:none;margin-bottom:2px
+  }
+  .nav-link:hover{background:var(--bg);color:var(--red)}
+  .nav-link.active{background:var(--red);color:white;box-shadow:0 4px 14px rgba(204,0,0,0.25)}
+  .nav-link.active svg{stroke:white}
+  .nav-link svg{width:18px;height:18px;stroke:var(--mu);fill:none;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  .nav-link:hover svg{stroke:var(--red)}
+  .nav-link.active svg{stroke:white}
+  .nav-badge{margin-left:auto;background:var(--bg);color:var(--tx);font-size:.62rem;padding:2px 9px;border-radius:999px;font-weight:800}
+  .nav-link.active .nav-badge{background:rgba(255,255,255,0.22);color:white}
+
+  .sidebar-footer{margin-top:auto;padding-top:14px;border-top:1px solid var(--bd)}
+  .sidebar-user{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all .15s}
+  .sidebar-user:hover{background:var(--bg)}
+  .sidebar-avatar{width:38px;height:38px;border-radius:50%;background:var(--red);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.76rem;flex-shrink:0;box-shadow:0 0 12px rgba(204,0,0,0.25)}
+  .sidebar-avatar.admin{background:var(--tx);box-shadow:none}
+  .sidebar-user-info{min-width:0;flex:1}
+  .sidebar-user-name{font-size:.82rem;font-weight:700;letter-spacing:-.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tx)}
+  .sidebar-user-role{font-size:.62rem;color:var(--mu);font-weight:600;letter-spacing:.3px;text-transform:uppercase;margin-top:2px}
+  .sidebar-user svg{width:16px;height:16px;stroke:var(--lt);fill:none;stroke-width:2}
+
+  .main{padding:0;min-width:0;display:flex;flex-direction:column;background:var(--bg)}
+
+  /* MOBILE TOPBAR */
+  .topbar{display:none;padding:12px 18px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bd);background:var(--card);position:sticky;top:0;z-index:20}
+  .topbar-logo img{height:28px}
+  .topbar-avatar{width:36px;height:36px;border-radius:50%;background:var(--red);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.74rem}
+  .topbar-avatar.admin{background:var(--tx)}
+
+  .page{display:none;flex-direction:column;flex:1}
+  .page.show{display:flex}
+
+  /* PAGE HEADER */
+  .page-header{
+    background:var(--card);
+    border-bottom:1px solid var(--bd);
+    padding:24px 36px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:18px
+  }
+  .page-title{font-size:1.5rem;font-weight:900;letter-spacing:-.5px;line-height:1.2;color:var(--tx)}
+  .page-sub{font-size:.78rem;color:var(--mu);margin-top:5px;font-weight:600;letter-spacing:.1px}
+  .page-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+  /* SEARCH */
+  .search-box{background:var(--bg);border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:11px;min-width:300px;border:1px solid transparent;transition:all .15s}
+  .search-box:focus-within{background:var(--card);border-color:var(--red);box-shadow:0 0 0 4px rgba(204,0,0,0.10)}
+  .search-box svg{width:16px;height:16px;stroke:var(--mu);fill:none;stroke-width:2;flex-shrink:0}
+  .search-box input{flex:1;background:none;border:none;outline:none;font-size:.82rem;color:var(--tx);min-width:0;font-weight:500}
+  .search-box input::placeholder{color:var(--lt)}
+
+  .content{flex:1;padding:28px 36px 80px;max-width:1400px;width:100%;margin:0 auto}
+
+  /* ================================================================
+     HERO CARD — like report
+     ================================================================ */
+  .hero-card{background:var(--card);border-radius:20px;box-shadow:var(--sh-lg);overflow:hidden;margin-bottom:18px}
+  .hero-top{
+    background:var(--red);padding:26px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+    position:relative;overflow:hidden
+  }
+  .hero-top::after{
+    content:'';position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,0.10) 0%,transparent 70%);pointer-events:none
+  }
+  .hero-info{position:relative;z-index:1}
+  .hero-tag{font-size:.60rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:6px}
+  .hero-title{font-size:1.5rem;font-weight:900;color:#fff;line-height:1.2;letter-spacing:-.3px}
+  .hero-sub{font-size:.76rem;color:rgba(255,255,255,0.70);margin-top:7px;font-weight:600}
+  .hero-logo{height:36px;width:auto;filter:brightness(0) invert(1);opacity:.9;flex-shrink:0;position:relative;z-index:1}
+  .hero-metrics{display:grid;grid-template-columns:repeat(4,1fr)}
+  .hm{
+    padding:22px 22px;border-right:1px solid var(--bd);position:relative;background:var(--card)
+  }
+  .hm:last-child{border-right:none}
+  .hm.good::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--grn)}
+  .hm.red::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--red)}
+  .hm.yel::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--yel)}
+  .hm.neu::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--lt)}
+  .hm-lbl{font-size:.58rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);margin-bottom:8px}
+  .hm-val{font-size:2.2rem;font-weight:900;line-height:1;color:var(--tx);letter-spacing:-.5px}
+  .hm-val.accent{color:var(--red)}
+  .hm-val.grn{color:var(--grn)}
+  .hm-val.yel{color:var(--yel)}
+  .hm-delta{display:inline-flex;align-items:center;gap:3px;margin-top:8px;font-size:.64rem;font-weight:700;padding:3px 8px;border-radius:20px}
+  .delta-g{background:var(--grn-soft);color:var(--grn)}
+  .delta-r{background:rgba(220,38,38,0.10);color:#dc2626}
+  .delta-n{background:rgba(0,0,0,0.05);color:var(--mu)}
+  .delta-y{background:var(--yel-soft);color:var(--yel)}
+
+  /* ================================================================
+     SECTION HEADER
+     ================================================================ */
+  .sec-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;margin-top:28px}
+  .sec-header:first-child{margin-top:0}
+  .sec-label{font-size:.58rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);white-space:nowrap}
+  .sec-label.mu{color:var(--mu)}
+  .sec-rule{flex:1;height:1px;background:var(--bd)}
+  .sec-action{font-size:.70rem;color:var(--mu);cursor:pointer;font-weight:700;transition:color .15s}
+  .sec-action:hover{color:var(--red)}
+
+  /* ================================================================
+     METRIC CARDS (4 col like report)
+     ================================================================ */
+  .metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+  .metric-card{background:var(--card);border-radius:14px;padding:20px;box-shadow:var(--sh);cursor:pointer;transition:all .2s var(--ease-out);position:relative;overflow:hidden;border:2px solid transparent}
+  .metric-card:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}
+  .metric-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--lt)}
+  .metric-card.new::before{background:var(--yel)}
+  .metric-card.margin::before{background:var(--grn)}
+  .metric-card.stopped::before{background:var(--red)}
+  .metric-card.prep::before{background:var(--lt)}
+  .metric-card.active{border-color:var(--red);box-shadow:0 6px 28px rgba(204,0,0,0.14)}
+  .metric-card.new.active{border-color:var(--yel);box-shadow:0 6px 28px rgba(217,119,6,0.14)}
+  .metric-card.margin.active{border-color:var(--grn);box-shadow:0 6px 28px rgba(22,163,74,0.14)}
+  .metric-card.stopped.active{border-color:var(--red);box-shadow:0 6px 28px rgba(220,38,38,0.14)}
+  .metric-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .metric-lbl{font-size:.58rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
+  .metric-icon-wrap{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center}
+  .metric-card.new .metric-icon-wrap{background:var(--yel-soft)}
+  .metric-card.margin .metric-icon-wrap{background:var(--grn-soft)}
+  .metric-card.stopped .metric-icon-wrap{background:rgba(220,38,38,0.10)}
+  .metric-card.prep .metric-icon-wrap{background:rgba(0,0,0,0.05)}
+  .metric-icon-wrap svg{width:16px;height:16px;fill:none;stroke-width:2}
+  .metric-card.new .metric-icon-wrap svg{stroke:var(--yel)}
+  .metric-card.margin .metric-icon-wrap svg{stroke:var(--grn)}
+  .metric-card.stopped .metric-icon-wrap svg{stroke:#dc2626}
+  .metric-card.prep .metric-icon-wrap svg{stroke:var(--mu)}
+  .metric-number{font-size:2.4rem;font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--tx)}
+  .metric-card.new .metric-number{color:var(--yel)}
+  .metric-card.margin .metric-number{color:var(--grn)}
+  .metric-card.stopped .metric-number{color:#dc2626}
+  .metric-sub{font-size:.66rem;color:var(--mu);font-weight:600;line-height:1.4;margin-top:7px;letter-spacing:.2px}
+
+  /* ================================================================
+     CHIPS
+     ================================================================ */
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:14px 0 10px;scrollbar-width:none;margin-bottom:14px;flex-wrap:wrap;position:sticky;top:0;background:var(--bg);z-index:8;border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
+  .chips.stuck{border-bottom-color:var(--bd);box-shadow:0 4px 16px rgba(0,0,0,0.05)}
+  .chips::-webkit-scrollbar{display:none}
+  .filters-clear{font-size:.66rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:1px;cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid rgba(204,0,0,0.25);background:rgba(204,0,0,0.06);display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+  .filters-clear:hover{background:var(--red);color:#fff;border-color:var(--red)}
+  .filters-clear svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.4}
+  .chip{
+    padding:8px 14px;border-radius:999px;background:var(--card);font-size:.74rem;font-weight:700;
+    color:var(--tx);white-space:nowrap;cursor:pointer;border:1px solid var(--bd);transition:all .15s;
+    display:inline-flex;align-items:center;gap:7px;box-shadow:var(--sh)
+  }
+  .chip:hover{border-color:var(--lt)}
+  .chip.active{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 4px 14px rgba(204,0,0,0.25)}
+  .chip-dot{display:inline-block;width:8px;height:8px;border-radius:50%}
+  .chip-dot.green{background:var(--grn)} .chip-dot.yellow{background:var(--yel)} .chip-dot.red{background:#dc2626}
+  .chip-count{background:rgba(0,0,0,0.06);color:var(--tx);padding:1px 8px;border-radius:999px;font-size:.62rem;font-weight:800}
+  .chip.active .chip-count{background:rgba(255,255,255,0.22);color:#fff}
+  .chip.cat-stale{background:rgba(220,38,38,0.06);color:#dc2626;border-color:rgba(220,38,38,0.20)}
+  .chip.cat-new{background:var(--yel-soft);color:var(--yel);border-color:rgba(217,119,6,0.20)}
+
+  /* ================================================================
+     SECTION DIVIDER (between ready/prep groups)
+     ================================================================ */
+  .section-divider{display:flex;align-items:center;gap:12px;margin:28px 0 16px;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--red)}
+  .section-divider:first-child{margin-top:0}
+  .section-divider.prep{color:var(--yel)}
+  .section-divider-count{background:var(--bg);color:var(--tx);padding:2px 10px;border-radius:999px;font-size:.62rem;font-weight:800;border:1px solid var(--bd)}
+  .section-divider.prep .section-divider-count{background:var(--yel-soft);color:var(--yel);border-color:rgba(217,119,6,0.20)}
+  .section-divider::after{content:'';flex:1;height:1px;background:var(--bd)}
+
+  /* ================================================================
+     VEHICLE GRID
+     ================================================================ */
+  .vehicle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+  .vehicle-card{
+    background:var(--card);border-radius:16px;overflow:hidden;
+    box-shadow:var(--sh);cursor:pointer;transition:all .25s var(--ease-out);
+    display:flex;flex-direction:column;position:relative;border:1px solid var(--bd)
+  }
+  .vehicle-card:hover{transform:translateY(-2px);box-shadow:var(--sh-lg);border-color:rgba(204,0,0,0.18)}
+  .vehicle-card:hover .vehicle-image{transform:scale(1.04)}
+  .vehicle-card.stale{border-color:rgba(220,38,38,0.20)}
+  .vehicle-card.stale::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:#dc2626;z-index:3}
+  .vehicle-card.preparing{background:linear-gradient(180deg,#fffbeb 0%,var(--card) 100%);border-color:rgba(217,119,6,0.18)}
+
+  .vehicle-image-wrap{aspect-ratio:16/10;overflow:hidden;position:relative;background:var(--bg)}
+  .vehicle-image{width:100%;height:100%;background-size:cover;background-position:center;transition:transform .4s var(--ease-out)}
+
+  .days-badge{position:absolute;top:10px;left:10px;font-size:.66rem;padding:5px 11px;border-radius:7px;backdrop-filter:blur(8px);font-weight:800;letter-spacing:.4px;text-transform:uppercase;z-index:2;border:1px solid;display:inline-flex;align-items:center;gap:5px}
+  .days-badge::before{content:'';width:6px;height:6px;border-radius:50%}
+  .days-badge.fresh{background:rgba(22,163,74,0.95);color:#fff;border-color:transparent}
+  .days-badge.fresh::before{background:#86efac}
+  .days-badge.medium{background:rgba(217,119,6,0.95);color:#fff;border-color:transparent}
+  .days-badge.medium::before{background:#fbbf24}
+  .days-badge.urgent{background:rgba(220,38,38,0.95);color:#fff;border-color:transparent;box-shadow:0 0 0 2px rgba(220,38,38,0.18)}
+  .days-badge.urgent::before{background:#fca5a5;animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .days-badge.prep{background:rgba(107,114,128,0.92);color:#fff;border-color:transparent}
+  .days-badge.prep::before{background:#d1d5db}
+
+  .vehicle-fav{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.94);display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(8px);transition:all .2s;z-index:2;box-shadow:var(--sh)}
+  .vehicle-fav:hover{transform:scale(1.1)}
+  .vehicle-fav svg{width:15px;height:15px;stroke:var(--mu);fill:none;stroke-width:2.2}
+  .vehicle-fav.active svg{stroke:var(--red);fill:var(--red)}
+
+  .vehicle-content{padding:16px 18px 18px;display:flex;flex-direction:column;gap:11px}
+  .vehicle-title{font-size:.92rem;font-weight:800;color:var(--tx);line-height:1.3;letter-spacing:-.2px}
+  .vehicle-meta{display:flex;gap:8px;font-size:.70rem;color:var(--mu);font-weight:600;flex-wrap:wrap;align-items:center;letter-spacing:.2px}
+  .vehicle-meta-dot{color:var(--xlt)}
+  .vehicle-price-row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:auto;gap:10px}
+  .vehicle-price{font-size:1.5rem;font-weight:900;letter-spacing:-.5px;color:var(--tx);line-height:1}
+
+  .margin-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:7px;font-size:.62rem;font-weight:800;white-space:nowrap;text-transform:uppercase;letter-spacing:.4px;border:1px solid}
+  .margin-badge.green{background:var(--grn-soft);color:var(--grn);border-color:rgba(22,163,74,0.20)}
+  .margin-badge.yellow{background:var(--yel-soft);color:var(--yel);border-color:rgba(217,119,6,0.20)}
+  .margin-badge.red{background:rgba(220,38,38,0.08);color:#dc2626;border-color:rgba(220,38,38,0.20)}
+  .margin-badge.prep{background:rgba(107,114,128,0.08);color:var(--mu);border-color:var(--bd)}
+  .margin-dot{width:7px;height:7px;border-radius:50%}
+  .margin-dot.green{background:var(--grn)} .margin-dot.yellow{background:var(--yel)} .margin-dot.red{background:#dc2626}
+
+  .vehicle-footer{padding-top:10px;border-top:1px solid var(--bd);font-size:.70rem;color:var(--mu);display:flex;justify-content:space-between;align-items:center;font-weight:600;letter-spacing:.2px}
+  .vehicle-footer-value{font-weight:900;color:var(--red);font-size:.82rem;letter-spacing:-.2px}
+
+  .admin-car-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--bd);background:var(--bg)}
+  .admin-metric{padding:10px 12px;text-align:center;border-right:1px solid var(--bd)}
+  .admin-metric:last-child{border-right:none}
+  .admin-metric-label{font-size:.54rem;color:var(--mu);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:3px}
+  .admin-metric-value{font-size:.80rem;font-weight:800;color:var(--tx);letter-spacing:-.2px}
+  .admin-metric-value.green{color:var(--grn)} .admin-metric-value.yellow{color:var(--yel)} .admin-metric-value.red{color:#dc2626}
+
+  /* EMPTY STATE */
+  .empty-state{text-align:center;padding:60px 20px;background:var(--card);border-radius:16px;border:1px dashed var(--xlt)}
+  .empty-state-icon{width:60px;height:60px;border-radius:16px;background:var(--bg);display:inline-flex;align-items:center;justify-content:center;margin-bottom:18px}
+  .empty-state-icon svg{width:26px;height:26px;stroke:var(--lt);fill:none;stroke-width:1.8}
+  .empty-state h3{font-size:1rem;font-weight:800;color:var(--tx);margin-bottom:8px}
+  .empty-state p{font-size:.78rem;color:var(--mu);line-height:1.55;max-width:380px;margin:0 auto;font-weight:500}
+
+  /* ================================================================
+     DETAIL
+     ================================================================ */
+  .detail-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:28px;align-items:start;max-width:1300px;margin:0 auto}
+  .detail-hero{aspect-ratio:16/10;border-radius:18px;background-size:cover;background-position:center;background-color:var(--bg);position:relative;overflow:hidden;box-shadow:var(--sh-lg)}
+  .detail-hero-pills{position:absolute;top:14px;left:14px;display:flex;gap:8px;flex-wrap:wrap}
+  .detail-pill{background:rgba(17,24,39,0.85);color:#fff;font-size:.66rem;padding:6px 11px;border-radius:7px;backdrop-filter:blur(8px);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+  .detail-pill.prep{background:rgba(107,114,128,0.92)}
+  .detail-pill.fresh{background:rgba(22,163,74,0.95)}
+  .detail-pill.medium{background:rgba(217,119,6,0.95)}
+  .detail-pill.urgent{background:rgba(220,38,38,0.95)}
+
+  .detail-side{display:flex;flex-direction:column;gap:14px;position:sticky;top:24px}
+  .detail-title{font-size:1.6rem;font-weight:900;letter-spacing:-.6px;line-height:1.2;margin-bottom:6px;color:var(--tx)}
+  .detail-meta{font-size:.78rem;color:var(--mu);font-weight:600;letter-spacing:.2px}
+  .detail-price-block{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;box-shadow:var(--sh)}
+  .detail-price-label{font-size:.58rem;color:var(--mu);text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:8px}
+  .detail-price-value{font-size:2rem;font-weight:900;letter-spacing:-.8px;color:var(--tx);line-height:1}
+
+  .margin-panel{border-radius:14px;padding:22px;background:var(--card);box-shadow:var(--sh);position:relative;overflow:hidden;border:1px solid var(--bd)}
+  .margin-panel::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px}
+  .margin-panel.green::before{background:var(--grn)}
+  .margin-panel.yellow::before{background:var(--yel)}
+  .margin-panel.red::before{background:#dc2626}
+  .margin-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;margin-top:6px}
+  .margin-head-dot{width:9px;height:9px;border-radius:50%}
+  .margin-head-label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px}
+  .green .margin-head-dot{background:var(--grn)} .green .margin-head-label{color:var(--grn)}
+  .yellow .margin-head-dot{background:var(--yel)} .yellow .margin-head-label{color:var(--yel)}
+  .red .margin-head-dot{background:#dc2626} .red .margin-head-label{color:#dc2626}
+  .margin-value{font-size:2.4rem;font-weight:900;letter-spacing:-.7px;line-height:1;margin-bottom:10px;color:var(--tx)}
+  .green .margin-value{color:var(--grn)}
+  .yellow .margin-value{color:var(--yel)}
+  .red .margin-value{color:#dc2626}
+  .margin-hint{font-size:.78rem;line-height:1.6;font-weight:500;color:var(--mu)}
+  .margin-hint b{color:var(--tx);font-weight:800}
+
+  .detail-cta{display:flex;gap:8px}
+
+  .specs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;max-width:1300px;margin:0 auto}
+  .spec{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;box-shadow:var(--sh)}
+  .spec-label{font-size:.58rem;color:var(--mu);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:5px}
+  .spec-value{font-size:.85rem;font-weight:800;color:var(--tx);letter-spacing:-.2px}
+  .opcionais{display:flex;flex-wrap:wrap;gap:7px;max-width:1300px;margin:0 auto}
+  .opcional{background:var(--card);border:1px solid var(--bd);font-size:.72rem;padding:7px 12px;border-radius:8px;color:var(--tx);font-weight:600;box-shadow:var(--sh)}
+
+  /* ================================================================
+     BUTTONS
+     ================================================================ */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:10px 18px;font-size:.78rem;font-weight:800;transition:all .2s var(--ease-out);cursor:pointer;border:1px solid transparent;white-space:nowrap;letter-spacing:.1px;text-transform:uppercase}
+  .btn-primary{background:var(--red);color:#fff;box-shadow:0 4px 14px rgba(204,0,0,0.28)}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(204,0,0,0.36);background:var(--red-dark)}
+  .btn-secondary{background:var(--card);color:var(--tx);border-color:var(--bd);box-shadow:var(--sh)}
+  .btn-secondary:hover{border-color:var(--red);color:var(--red)}
+  .btn-dark{background:var(--tx);color:#fff;box-shadow:0 4px 14px rgba(17,24,39,0.20)}
+  .btn-dark:hover{background:#000}
+  .btn-whatsapp{background:#25D366;color:#fff;box-shadow:0 4px 14px rgba(37,211,102,0.28)}
+  .btn-whatsapp:hover{background:#128C7E;transform:translateY(-1px);box-shadow:0 8px 22px rgba(37,211,102,0.36)}
+  .btn-ghost{background:transparent;color:var(--mu)}
+  .btn-ghost:hover{background:var(--bg);color:var(--tx)}
+  .btn-flex{flex:1}
+  .btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+  .detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--mu);font-size:.68rem;font-weight:800;padding:7px 12px;border-radius:8px;cursor:pointer;margin-bottom:10px;background:var(--card);border:1px solid var(--bd);transition:all .15s;text-transform:uppercase;letter-spacing:1px;box-shadow:var(--sh)}
+  .detail-back:hover{color:var(--red);border-color:var(--red)}
+  .detail-back svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5}
+  .detail-nav{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+  .detail-nav-btn{display:inline-flex;align-items:center;gap:6px;font-size:.68rem;font-weight:800;padding:7px 12px;border-radius:8px;cursor:pointer;background:var(--card);border:1px solid var(--bd);transition:all .15s;text-transform:uppercase;letter-spacing:.6px;color:var(--mu);box-shadow:var(--sh)}
+  .detail-nav-btn:hover{color:var(--red);border-color:var(--red)}
+  .detail-nav-btn:disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
+  .detail-nav-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5}
+  .detail-nav-counter{font-size:.66rem;color:var(--mu);font-weight:700;letter-spacing:.5px;padding:0 8px}
+
+  /* ================================================================
+     KPI ROW (reports/history)
+     ================================================================ */
+  .skpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:18px}
+  .skpi{background:var(--card);border-radius:14px;padding:18px 20px;box-shadow:var(--sh);position:relative;overflow:hidden;border:1px solid var(--bd)}
+  .skpi-lbl{font-size:.58rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);margin-bottom:8px}
+  .skpi-val{font-size:1.6rem;font-weight:900;color:var(--tx);line-height:1;letter-spacing:-.3px}
+  .skpi-val.accent{color:var(--red)}
+  .skpi-val.grn{color:var(--grn)}
+  .skpi-val.yel{color:var(--yel)}
+  .skpi-val.danger{color:#dc2626}
+  .skpi-badge{display:inline-flex;margin-top:8px;font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.3px}
+  .skpi-badge.bg{background:var(--grn-soft);color:var(--grn)}
+  .skpi-badge.br{background:rgba(220,38,38,0.10);color:#dc2626}
+  .skpi-badge.bn{background:rgba(0,0,0,0.05);color:var(--mu)}
+  .skpi-badge.by{background:var(--yel-soft);color:var(--yel)}
+
+  /* ================================================================
+     CLIENTS PAGE
+     ================================================================ */
+  .clients-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  .client-card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;transition:all .2s var(--ease-out);cursor:pointer;display:flex;flex-direction:column;gap:12px;position:relative;box-shadow:var(--sh)}
+  .client-card:hover{border-color:rgba(204,0,0,0.25);transform:translateY(-2px);box-shadow:var(--sh-lg)}
+  .client-head{display:flex;align-items:flex-start;gap:11px}
+  .client-avatar{width:42px;height:42px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;flex-shrink:0;box-shadow:0 0 10px rgba(204,0,0,0.18)}
+  .client-info{flex:1;min-width:0}
+  .client-name{font-size:.88rem;font-weight:800;letter-spacing:-.2px;margin-bottom:2px;color:var(--tx)}
+  .client-phone{font-size:.70rem;color:var(--mu);font-weight:600}
+  .client-status{display:inline-flex;align-items:center;gap:4px;font-size:.56rem;font-weight:700;padding:4px 9px;border-radius:6px;text-transform:uppercase;letter-spacing:1px;border:1px solid;white-space:nowrap}
+  .client-status.lead{background:var(--blu-soft);color:var(--blu);border-color:rgba(37,99,235,0.20)}
+  .client-status.visit{background:var(--pur-soft);color:var(--pur);border-color:rgba(124,58,237,0.20)}
+  .client-status.negotiating{background:var(--yel-soft);color:var(--yel);border-color:rgba(217,119,6,0.20)}
+  .client-status.followup{background:var(--org-soft);color:var(--org);border-color:rgba(234,88,12,0.20)}
+  .client-status.sold{background:var(--grn-soft);color:var(--grn);border-color:rgba(22,163,74,0.20)}
+  .client-status.lost{background:rgba(220,38,38,0.08);color:#dc2626;border-color:rgba(220,38,38,0.20)}
+
+  .client-car{display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg);border-radius:10px}
+  .client-car-thumb{width:46px;height:46px;border-radius:9px;background-size:cover;background-position:center;background-color:var(--card);flex-shrink:0;border:1px solid var(--bd)}
+  .client-car-info{flex:1;min-width:0}
+  .client-car-name{font-size:.72rem;font-weight:800;line-height:1.2;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .client-car-price{font-size:.66rem;color:var(--mu);font-weight:600;margin-top:2px}
+
+  .client-next{font-size:.72rem;color:var(--tx);font-weight:700;display:flex;align-items:center;gap:7px;background:rgba(204,0,0,0.06);padding:8px 11px;border-radius:9px;border:1px solid rgba(204,0,0,0.18);letter-spacing:.1px}
+  .client-next svg{width:13px;height:13px;stroke:var(--red);fill:none;stroke-width:2.2}
+
+  .client-note{background:var(--bg);border-radius:10px;padding:10px 12px;font-size:.72rem;color:var(--mu);line-height:1.55;font-weight:500;border-left:3px solid var(--bd)}
+  .client-note.danger{background:rgba(220,38,38,0.05);color:#dc2626;border-left-color:#dc2626}
+  .client-note.success{background:var(--grn-soft);color:var(--grn);border-left-color:var(--grn)}
+  .client-note b{color:var(--tx);font-weight:800}
+  .client-note.danger b,.client-note.success b{color:inherit;font-weight:800}
+
+  .client-actions{display:flex;gap:6px;margin-top:auto}
+  .client-actions .btn{flex:1;padding:9px 12px;font-size:.66rem}
+
+  .icon-btn{width:32px;height:32px;border-radius:8px;background:var(--card);border:1px solid var(--bd);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--mu);transition:all .15s;box-shadow:var(--sh)}
+  .icon-btn:hover{color:var(--red);border-color:var(--red)}
+  .icon-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+
+  /* ================================================================
+     HISTORY TIMELINE
+     ================================================================ */
+  .timeline{position:relative;padding-left:26px;margin-top:6px}
+  .timeline::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--bd)}
+  .timeline-item{position:relative;margin-bottom:10px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 18px;transition:all .15s;cursor:pointer;box-shadow:var(--sh);border-left:3px solid var(--bd)}
+  .timeline-item:hover{transform:translateX(2px);box-shadow:var(--sh-lg)}
+  .timeline-item::before{content:'';position:absolute;left:-22px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--card);border:2px solid var(--lt);z-index:1}
+  .timeline-item.view{border-left-color:var(--blu)}
+  .timeline-item.view::before{border-color:var(--blu)}
+  .timeline-item.sale{border-left-color:var(--grn)}
+  .timeline-item.sale::before{border-color:var(--grn);background:var(--grn)}
+  .timeline-item.request{border-left-color:var(--yel)}
+  .timeline-item.request::before{border-color:var(--yel)}
+  .timeline-item.note{border-left-color:var(--pur)}
+  .timeline-item.note::before{border-color:var(--pur)}
+  .ti-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:10px;flex-wrap:wrap}
+  .ti-type{display:inline-flex;align-items:center;gap:5px;font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 9px;border-radius:6px;border:1px solid}
+  .ti-type.view{background:var(--blu-soft);color:var(--blu);border-color:rgba(37,99,235,0.20)}
+  .ti-type.sale{background:var(--grn-soft);color:var(--grn);border-color:rgba(22,163,74,0.20)}
+  .ti-type.request{background:var(--yel-soft);color:var(--yel);border-color:rgba(217,119,6,0.20)}
+  .ti-type.note{background:var(--pur-soft);color:var(--pur);border-color:rgba(124,58,237,0.20)}
+  .ti-time{font-size:.66rem;color:var(--mu);font-weight:600}
+  .ti-title{font-size:.82rem;font-weight:800;letter-spacing:-.1px;margin-bottom:4px;color:var(--tx)}
+  .ti-sub{font-size:.72rem;color:var(--mu);font-weight:500;line-height:1.55}
+  .ti-sub b{color:var(--tx);font-weight:800}
+
+  /* ================================================================
+     REPORTS
+     ================================================================ */
+  .report-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-bottom:14px}
+  .report-card{background:var(--card);border-radius:16px;padding:22px;box-shadow:var(--sh);border:1px solid var(--bd)}
+  .report-card.large{grid-column:span 8}
+  .report-card.small{grid-column:span 4}
+  .report-card.full{grid-column:span 12}
+  .report-card-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:14px}
+  .report-card-title{font-size:.60rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:1.5px}
+  .report-card-action{font-size:.70rem;color:var(--mu);cursor:pointer;font-weight:700;transition:color .15s}
+  .report-card-action:hover{color:var(--red)}
+
+  .chart-headline{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+  .chart-headline-value{font-size:2.2rem;font-weight:900;letter-spacing:-.6px;color:var(--tx);line-height:1}
+  .chart-headline-trend{font-size:.74rem;color:var(--grn);font-weight:800}
+
+  .line-chart{width:100%;height:180px;display:block}
+  .line-chart-grid line{stroke:var(--bd);stroke-width:1}
+  .line-chart-path{fill:none;stroke:var(--red);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+  .line-chart-area{fill:url(#chartAreaGrad);opacity:.4}
+  .line-chart-marker{stroke:var(--red);stroke-width:1;stroke-dasharray:4 6;opacity:.4}
+  .line-chart-dot{fill:#fff;stroke:var(--red);stroke-width:2.5}
+  .line-chart-badge{fill:var(--red)}
+  .line-chart-badge-text{fill:#fff;font-size:10px;font-weight:800;font-family:'Inter',sans-serif}
+  .line-chart-xlabel{fill:var(--mu);font-size:10px;font-weight:600;font-family:'Inter',sans-serif}
+
+  /* Ranking */
+  .ranking{display:flex;flex-direction:column;gap:6px}
+  .rank-row{background:var(--card);border-radius:11px;padding:11px 14px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:all .15s;border:1px solid transparent}
+  .rank-row:hover{background:var(--bg)}
+  .rn{width:26px;height:26px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:900;color:var(--mu);flex-shrink:0;border:1px solid var(--bd)}
+  .rn.top{background:var(--red);color:#fff;box-shadow:0 0 12px rgba(204,0,0,0.40);border-color:transparent}
+  .rn.silver{background:#9ca3af;color:#fff;border-color:transparent}
+  .rn.bronze{background:#cd7f32;color:#fff;border-color:transparent}
+  .rn-avatar{width:36px;height:36px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.72rem;flex-shrink:0}
+  .rn-name{flex:1;min-width:0;font-size:.78rem;color:var(--tx);font-weight:700}
+  .rn-sub{font-size:.66rem;color:var(--mu);font-weight:600;margin-top:2px}
+  .rn-value{font-size:.84rem;font-weight:900;color:var(--tx);text-align:right;letter-spacing:-.2px}
+  .rn-value-sub{font-size:.62rem;color:var(--mu);font-weight:600;text-align:right;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+
+  /* Stale alert */
+  .alert-list{display:flex;flex-direction:column;gap:8px}
+  .alert-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(220,38,38,0.04);border:1px solid rgba(220,38,38,0.18);border-left:3px solid #dc2626;border-radius:12px;cursor:pointer;transition:all .15s}
+  .alert-item:hover{transform:translateX(2px);background:rgba(220,38,38,0.08)}
+  .alert-thumb{width:46px;height:46px;border-radius:9px;background-size:cover;background-position:center;background-color:var(--card);flex-shrink:0;border:1px solid var(--bd)}
+  .alert-info{flex:1;min-width:0}
+  .alert-title{font-size:.78rem;font-weight:800;color:var(--tx);letter-spacing:-.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .alert-sub{font-size:.68rem;color:#dc2626;font-weight:700;margin-top:3px}
+  .alert-cta{font-size:.62rem;font-weight:800;color:#fff;background:var(--red);padding:6px 11px;border-radius:7px;flex-shrink:0;text-transform:uppercase;letter-spacing:.5px}
+
+  /* ================================================================
+     SELLERS
+     ================================================================ */
+  .sellers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+  .seller-card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:22px;transition:all .2s var(--ease-out);cursor:pointer;box-shadow:var(--sh)}
+  .seller-card:hover{border-color:var(--red);transform:translateY(-2px);box-shadow:var(--sh-lg)}
+  .seller-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+  .seller-avatar{width:50px;height:50px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0;box-shadow:0 0 12px rgba(204,0,0,0.25)}
+  .seller-avatar.off{background:var(--lt);box-shadow:none}
+  .seller-info{flex:1;min-width:0}
+  .seller-name{font-size:.92rem;font-weight:800;letter-spacing:-.2px;margin-bottom:4px;color:var(--tx)}
+  .seller-meta{display:flex;align-items:center;gap:8px;font-size:.62rem;color:var(--mu);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+  .seller-status{display:inline-flex;align-items:center;gap:5px}
+  .seller-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--grn)}
+  .seller-status.off::before{background:var(--lt)}
+  .seller-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:14px;border-top:1px solid var(--bd)}
+  .seller-stat{text-align:center}
+  .seller-stat-label{font-size:.54rem;color:var(--mu);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px}
+  .seller-stat-value{font-size:1.2rem;font-weight:900;letter-spacing:-.3px;color:var(--tx)}
+
+  /* ================================================================
+     SETTINGS
+     ================================================================ */
+  .settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
+  .settings-card{background:var(--card);border-radius:16px;padding:26px;box-shadow:var(--sh);border:1px solid var(--bd);position:relative;overflow:hidden}
+  .settings-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--red)}
+  .settings-icon{width:42px;height:42px;border-radius:11px;background:rgba(204,0,0,0.08);display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;margin-top:8px}
+  .settings-icon svg{width:20px;height:20px;stroke:var(--red);fill:none;stroke-width:2}
+  .settings-title{font-size:1rem;font-weight:900;letter-spacing:-.3px;margin-bottom:5px;color:var(--tx)}
+  .settings-sub{font-size:.76rem;color:var(--mu);margin-bottom:20px;line-height:1.6;font-weight:500}
+
+  .form-row{margin-bottom:16px}
+  .form-label{display:block;font-size:.58rem;color:var(--mu);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:8px}
+  .form-input,.form-textarea,.form-select{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:11px 14px;font-size:.82rem;color:var(--tx);transition:all .15s;outline:none;font-family:inherit;font-weight:500}
+  .form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--red);background:var(--card);box-shadow:0 0 0 3px rgba(204,0,0,0.10)}
+  .form-input[readonly]{opacity:.7;cursor:not-allowed}
+  .form-textarea{min-height:78px;resize:vertical}
+  .form-inputs-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .form-help{font-size:.68rem;color:var(--mu);margin-top:6px;line-height:1.5;font-weight:500}
+
+  .status-row{display:flex;align-items:center;gap:11px;padding:12px 14px;background:var(--grn-soft);border-radius:12px;margin-bottom:14px;border:1px solid rgba(22,163,74,0.20)}
+  .status-dot{width:9px;height:9px;border-radius:50%;background:var(--grn);box-shadow:0 0 0 3px rgba(22,163,74,0.20);flex-shrink:0}
+  .status-row.warn{background:var(--yel-soft);border-color:rgba(217,119,6,0.20)}
+  .status-row.warn .status-dot{background:var(--yel);box-shadow:0 0 0 3px rgba(217,119,6,0.20)}
+  .status-info{flex:1;min-width:0}
+  .status-title{font-size:.76rem;font-weight:800;color:var(--grn)}
+  .status-row.warn .status-title{color:var(--yel)}
+  .status-sub{font-size:.66rem;color:var(--grn);opacity:.8;margin-top:2px;font-weight:600}
+  .status-row.warn .status-sub{color:var(--yel);opacity:.8}
+
+  .range-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--bg);border-radius:10px;margin-bottom:8px}
+  .range-info{display:flex;align-items:center;gap:10px}
+  .range-dot{width:9px;height:9px;border-radius:50%}
+  .range-name{font-size:.76rem;font-weight:700;color:var(--tx)}
+  .range-input{width:70px;text-align:center;font-weight:800;font-size:.76rem;background:var(--card);border:1px solid var(--bd);border-radius:7px;padding:6px;outline:none;color:var(--tx)}
+  .range-input:focus{border-color:var(--red)}
+
+  input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:5px;background:var(--bg);border-radius:999px;outline:none;border:1px solid var(--bd)}
+  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--red);cursor:pointer;border:3px solid #fff;box-shadow:0 0 10px rgba(204,0,0,0.45)}
+
+  /* ================================================================
+     MODAL
+     ================================================================ */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(17,24,39,0.55);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-backdrop.show{display:flex}
+  .modal{background:var(--card);border-radius:20px;width:100%;max-width:540px;max-height:92vh;overflow-y:auto;box-shadow:var(--sh-xl);display:flex;flex-direction:column;border:1px solid var(--bd)}
+  .modal-head{padding:22px 26px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0}
+  .modal-title{font-size:1.08rem;font-weight:900;letter-spacing:-.3px;color:var(--tx)}
+  .modal-close{width:34px;height:34px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:1px solid var(--bd)}
+  .modal-close:hover{background:var(--xlt);border-color:var(--lt)}
+  .modal-close svg{width:15px;height:15px;stroke:var(--tx);fill:none;stroke-width:2.4}
+  .modal-body{padding:24px 26px;flex:1}
+  .modal-foot{padding:16px 26px;border-top:1px solid var(--bd);display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;background:var(--bg)}
+
+  .status-pills{display:flex;gap:7px;flex-wrap:wrap}
+  .status-pill{padding:8px 12px;border-radius:9px;border:1px solid var(--bd);background:var(--card);font-size:.72rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .15s;color:var(--mu);text-transform:uppercase;letter-spacing:.5px}
+  .status-pill:hover{border-color:var(--lt);color:var(--tx)}
+  .status-pill.lead.active{background:var(--blu-soft);border-color:var(--blu);color:var(--blu)}
+  .status-pill.visit.active{background:var(--pur-soft);border-color:var(--pur);color:var(--pur)}
+  .status-pill.negotiating.active{background:var(--yel-soft);border-color:var(--yel);color:var(--yel)}
+  .status-pill.followup.active{background:var(--org-soft);border-color:var(--org);color:var(--org)}
+  .status-pill.sold.active{background:var(--grn-soft);border-color:var(--grn);color:var(--grn)}
+  .status-pill.lost.active{background:rgba(220,38,38,0.08);border-color:#dc2626;color:#dc2626}
+
+  .conditional{display:none}
+  .conditional.show{display:block}
+
+  .car-select{padding:13px;background:var(--bg);border:1px solid var(--bd);border-radius:12px;display:flex;align-items:center;gap:12px}
+  .car-select-thumb{width:52px;height:52px;border-radius:10px;background-size:cover;background-position:center;background-color:var(--card);flex-shrink:0;border:1px solid var(--bd)}
+  .car-select-info{flex:1;min-width:0}
+  .car-select-name{font-size:.82rem;font-weight:800;line-height:1.2;color:var(--tx)}
+  .car-select-meta{font-size:.70rem;color:var(--mu);margin-top:4px;font-weight:600}
+
+  /* ================================================================
+     FAB & BOTTOM NAV
+     ================================================================ */
+  .fab{position:fixed;bottom:96px;right:22px;width:54px;height:54px;border-radius:50%;background:var(--red);color:#fff;display:none;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(204,0,0,0.35);cursor:pointer;z-index:40}
+  .fab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+  @media (max-width:1023px){.fab.show{display:flex}}
+
+  .bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--bd);padding:7px 0 calc(7px + env(safe-area-inset-bottom));z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,0.04)}
+  .bottom-nav-inner{display:flex;justify-content:space-around;max-width:600px;margin:0 auto}
+  .bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px;color:var(--mu);cursor:pointer}
+  .bn-item.active{color:var(--red)}
+  .bn-item.active svg{stroke:var(--red)}
+  .bn-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .bn-label{font-size:.58rem;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:120px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--tx);color:#fff;padding:12px 22px;border-radius:11px;font-size:.78rem;font-weight:700;box-shadow:0 18px 50px rgba(0,0,0,0.25);opacity:0;transition:all .25s;z-index:1000;pointer-events:none;letter-spacing:.2px}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* RESPONSIVE */
+  @media (max-width:1023px){
+    #app.active{grid-template-columns:1fr}
+    .sidebar{display:none}
+    .topbar{display:flex}
+    .page-header{padding:18px 20px;flex-direction:column;align-items:stretch;gap:12px}
+    .page-title{font-size:1.25rem}
+    .search-box{min-width:0;width:100%}
+    .content{padding:20px 16px 120px}
+    .bottom-nav{display:block}
+    .detail-grid{grid-template-columns:1fr;gap:16px}
+    .detail-side{position:static}
+    .hero-top{padding:20px;flex-direction:row;align-items:center;gap:14px}
+    .hero-logo{height:28px}
+    .hero-title{font-size:1.15rem}
+    .hero-sub{font-size:.72rem}
+    .hero-metrics{grid-template-columns:1fr 1fr}
+    .hm{padding:16px 14px;border-right:none;border-bottom:1px solid var(--bd)}
+    .hm:nth-child(2n){border-right:none}
+    .hm-val{font-size:1.7rem}
+    .metric-row{grid-template-columns:repeat(2,1fr);gap:10px}
+    .metric-card{padding:16px}
+    .metric-number{font-size:1.9rem}
+    .vehicle-grid{grid-template-columns:1fr;gap:12px}
+    .vehicle-card{flex-direction:row;min-height:auto}
+    .vehicle-card .vehicle-image-wrap{aspect-ratio:1/1;width:120px;min-width:120px;flex-shrink:0}
+    .vehicle-card .vehicle-content{padding:14px 16px;gap:8px}
+    .vehicle-card .vehicle-title{font-size:.85rem}
+    .vehicle-card .vehicle-meta{font-size:.66rem}
+    .vehicle-card .vehicle-price{font-size:1.15rem}
+    .vehicle-card .days-badge{font-size:.54rem;padding:4px 8px}
+    .vehicle-card.admin{flex-direction:column}
+    .vehicle-card.admin .vehicle-image-wrap{width:100%;aspect-ratio:16/10}
+    .vehicle-card.admin .vehicle-content{padding:16px 18px}
+    .vehicle-card.admin .vehicle-title{font-size:.92rem}
+    .vehicle-card.admin .vehicle-price{font-size:1.4rem}
+    .sellers-grid,.clients-grid{grid-template-columns:1fr}
+    .detail-title{font-size:1.3rem}
+    .detail-price-value{font-size:1.6rem}
+    .margin-value{font-size:2rem}
+    .report-card.large,.report-card.small{grid-column:span 12}
+    .client-head{flex-wrap:wrap}
+    .client-status{font-size:.52rem;padding:3px 8px}
+  }
+  @media (max-width:480px){
+    .form-inputs-row{grid-template-columns:1fr}
+    .modal{border-radius:18px;max-height:96vh}
+    .modal-head,.modal-body,.modal-foot{padding-left:18px;padding-right:18px}
+    .modal-body{padding-bottom:32px}
+    .hero-metrics{grid-template-columns:1fr 1fr}
+    .hero-logo{height:24px}
+    .hero-title{font-size:1.05rem}
+    .hm-val{font-size:1.5rem}
+    .hm-delta{font-size:.58rem;padding:2px 7px}
+    .metric-row{grid-template-columns:1fr 1fr;gap:8px}
+    .metric-card{padding:14px;min-height:120px}
+    .metric-number{font-size:1.7rem}
+    .vehicle-card .vehicle-image-wrap{width:110px;min-width:110px}
+    .page-title{font-size:1.15rem}
+    .page-sub{font-size:.72rem}
+  }
+
+  /* ================================================================
+     BELLONI MOTORS — corpo claro + header/sidebar escuro premium
+     Paleta: preto premium + tricolore italiano (verde/branco/vermelho)
+     ================================================================ */
+  :root{
+    --red:#CD212A;        /* vermelho do escudo italiano */
+    --red-light:#e84855;
+    --red-dark:#a01820;
+    --ita-grn:#157f4e;    /* verde italiano (acento) */
+    --ink:#0d0f12;        /* preto premium */
+    --ink-2:#1c2026;
+  }
+
+  /* SIDEBAR escura */
+  .sidebar{background:linear-gradient(180deg,#0d0f12 0%,#16191f 100%);border-right:1px solid rgba(255,255,255,.08)}
+  .sidebar-logo{border-bottom:1px solid rgba(255,255,255,.10)}
+  .sidebar-logo img{height:36px}
+  .sidebar-logo:hover{opacity:.8}
+  .nav-section{color:rgba(255,255,255,.42)}
+  .nav-link{color:#d6d9de}
+  .nav-link svg{stroke:rgba(255,255,255,.55)}
+  .nav-link:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav-link:hover svg{stroke:var(--red-light)}
+  .nav-link.active{background:var(--red);color:#fff;box-shadow:0 4px 14px rgba(205,33,42,.35)}
+  .nav-link.active svg{stroke:#fff}
+  .nav-badge{background:rgba(255,255,255,.12);color:#fff}
+  .sidebar-footer{border-top:1px solid rgba(255,255,255,.10)}
+  .sidebar-user:hover{background:rgba(255,255,255,.06)}
+  .sidebar-user-name{color:#fff}
+  .sidebar-user-role{color:rgba(255,255,255,.50)}
+  .sidebar-user svg{stroke:rgba(255,255,255,.45)}
+  .sidebar-avatar.admin{background:#fff;color:#0d0f12}
+
+  /* TOPBAR mobile escura */
+  .topbar{background:#0d0f12;border-bottom:1px solid rgba(255,255,255,.08)}
+  .topbar-logo img{height:30px}
+
+  /* HERO escuro premium com faixa tricolore embaixo */
+  .hero-top{background:linear-gradient(120deg,#0d0f12 0%,#1c2026 100%)}
+  .hero-top::before{content:'';position:absolute;left:0;bottom:0;width:100%;height:3px;background:linear-gradient(90deg,var(--ita-grn) 0 33.33%,#fff 33.33% 66.66%,var(--red) 66.66% 100%);z-index:2}
+  .hero-top::after{background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%)}
+  .hero-logo{filter:none;opacity:1}
+
+  /* LOGIN — pílula escura pra logo branca + topo tricolore */
+  .login-logo{background:#0d0f12}
+  .login-logo img{height:38px}
+  .login-card::before{background:linear-gradient(90deg,var(--ita-grn) 0 33.33%,#fff 33.33% 66.66%,var(--red) 66.66% 100%)}
+
+  /* ================================================================
+     COMPONENTES DO APP REAL (painel, relatórios, metas, agenda,
+     kanban, financeiras) + modo privacidade
+     ================================================================ */
+  /* Modo privacidade: olhinho borra dados pessoais/financeiros */
+  body.privacy-on [data-private]{filter:blur(7px);user-select:none;pointer-events:none}
+  .hdr-icon-btn{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;transition:all .15s}
+  .hdr-icon-btn:hover{background:rgba(255,255,255,.16)}
+  .hdr-icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+  .hdr-icon-btn.on{background:var(--red);border-color:var(--red)}
+  .sidebar-tools{display:flex;gap:8px;padding:0 4px 10px}
+
+  /* Cartão escuro premium (headline de relatório/metas) */
+  .ink-card{background:linear-gradient(120deg,#0d0f12 0%,#1c2026 100%);color:#fff;border-radius:18px;padding:22px;position:relative;overflow:hidden}
+  .ink-card::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:3px;background:linear-gradient(90deg,var(--ita-grn) 0 33.33%,#fff 33.33% 66.66%,var(--red) 66.66% 100%)}
+  .ink-lbl{font-size:.72rem;color:rgba(255,255,255,.55);font-weight:600}
+  .ink-big{font-size:2.4rem;font-weight:900;letter-spacing:-.5px;margin-top:4px;line-height:1}
+  .ink-sub{font-size:.8rem;color:rgba(255,255,255,.7);margin-top:8px;line-height:1.55}
+  .ink-sub b{color:#fff;font-weight:800}
+
+  /* Navegação por mês (‹ Junho 2026 ›) */
+  .month-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0}
+  .month-nav .nav-arrow{width:38px;height:38px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--bd);background:var(--card);cursor:pointer;font-size:1.1rem;color:var(--tx);transition:all .15s}
+  .month-nav .nav-arrow:hover{border-color:var(--red);color:var(--red)}
+  .month-nav .month-label{font-weight:800;min-width:170px;text-align:center;text-transform:capitalize;color:var(--tx)}
+
+  /* Tabela de relatório (estilo planilha) */
+  .rep-wrap{overflow-x:auto;-mx:1}
+  .rep-table{width:100%;border-collapse:collapse;font-size:.78rem;min-width:680px}
+  .rep-table th{font-size:.62rem;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;font-weight:700;padding:8px 10px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
+  .rep-table th:first-child{text-align:left}
+  .rep-table td{padding:9px 10px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;border-bottom:1px solid var(--bd)}
+  .rep-table td:first-child{text-align:left;color:var(--tx);font-weight:600}
+  .rep-table .col-blue{color:#0369a1}
+  .rep-table .col-green{color:var(--grn);font-weight:700}
+  .rep-table tfoot td{font-weight:900;color:var(--tx);border-top:2px solid var(--xlt);border-bottom:none;background:var(--bg)}
+  .rep-input{width:60px;border:1px solid rgba(22,163,74,.4);background:rgba(22,163,74,.06);border-radius:7px;padding:5px 6px;text-align:right;font-weight:700;color:var(--grn);font-size:.78rem;outline:none}
+  .rep-input:focus{border-color:var(--grn)}
+
+  /* Cartões de métrica compactos coloridos (relatório) */
+  .mc-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media(min-width:900px){.mc-row{grid-template-columns:repeat(4,1fr)}}
+  .mc{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;box-shadow:var(--sh)}
+  .mc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .mc-lbl{font-size:.6rem;color:var(--mu);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+  .mc-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center}
+  .mc-ic svg{width:16px;height:16px;fill:none;stroke-width:2}
+  .mc-val{font-size:1.6rem;font-weight:900;letter-spacing:-.4px;color:var(--tx)}
+
+  /* Lançamento de relatório (form de semanas) */
+  .entry-card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;box-shadow:var(--sh)}
+  .entry-table{width:100%;border-collapse:collapse;font-size:.82rem}
+  .entry-table th{font-size:.62rem;text-transform:uppercase;letter-spacing:.5px;font-weight:700;text-align:left;padding:4px 6px;color:var(--mu)}
+  .entry-table td{padding:6px 6px}
+  .entry-in{width:96px;border:1px solid var(--bd);border-radius:9px;padding:7px 9px;font-size:.82rem;outline:none}
+  .entry-in.blue{border-color:rgba(2,132,199,.35);background:rgba(2,132,199,.05)}
+  .entry-in.blue:focus{border-color:#0284c7}
+  .entry-in.green{border-color:rgba(22,163,74,.35);background:rgba(22,163,74,.05)}
+  .entry-in.green:focus{border-color:var(--grn)}
+  .th-blue{color:#0284c7!important}.th-green{color:var(--grn)!important}
+
+  /* Painel: charts simples */
+  .panel-grid2{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+  @media(min-width:900px){.panel-grid2{grid-template-columns:1fr 1fr}}
+  .funnel-step{display:flex;flex-direction:column;align-items:center;justify-content:center;height:54px;color:#fff;line-height:1.1}
+  .funnel-step .fs-lbl{font-size:.66rem;font-weight:600;opacity:.9}
+  .funnel-step .fs-val{font-size:1.1rem;font-weight:900}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .bar-row .bar-lbl{width:90px;font-size:.72rem;color:var(--mu);flex-shrink:0}
+  .bar-track{flex:1;background:var(--bg);border-radius:999px;height:20px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:999px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-size:.68rem;font-weight:800}
+  .stale-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bd);cursor:pointer}
+  .stale-row:hover{background:var(--bg)}
+  .stale-row:last-child{border-bottom:none}
+
+  /* Metas: cartão escuro com +/- */
+  .goal-counter{display:flex;align-items:center;gap:10px;margin-top:14px}
+  .goal-btn{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.6rem;font-weight:800;color:#fff;cursor:pointer;border:none;transition:transform .1s}
+  .goal-btn:active{transform:scale(.9)}
+  .goal-btn.minus{background:#ef4444}.goal-btn.plus{background:#22c55e}
+  .goal-bar{margin-top:14px;height:12px;background:rgba(255,255,255,.15);border-radius:999px;overflow:hidden}
+  .goal-bar-fill{height:100%;border-radius:999px;background:#fff;transition:width .3s}
+  .goal-bar-fill.done{background:#34d399}
+
+  /* Agenda / Calendário */
+  .cal-card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px;box-shadow:var(--sh)}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+  .cal-dow{text-align:center;font-size:.62rem;font-weight:700;color:var(--mu);padding:4px 0}
+  .cal-cell{min-height:62px;border:1px solid var(--bd);border-radius:9px;padding:5px;cursor:pointer;text-align:left;transition:all .12s;background:var(--card)}
+  .cal-cell:hover{border-color:var(--xlt)}
+  .cal-cell.today{border-color:var(--lt);background:var(--bg)}
+  .cal-cell.sel{border-color:var(--red);box-shadow:0 0 0 2px rgba(205,33,42,.18)}
+  .cal-daynum{font-size:.7rem;font-weight:700;color:var(--mu)}
+  .cal-cell.today .cal-daynum,.cal-cell.sel .cal-daynum{color:var(--tx)}
+  .cal-ev{font-size:.6rem;border-radius:5px;padding:2px 5px;margin-top:3px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cal-ev.visit{background:#dbeafe;color:#1d4ed8}
+  .cal-ev.followup{background:#ffedd5;color:#c2410c}
+  .day-detail{background:var(--card);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--sh)}
+  .day-ev{padding:14px 16px;border-bottom:1px solid var(--bd)}
+  .day-ev:last-child{border-bottom:none}
+  .ev-tag{font-size:.62rem;font-weight:800;text-transform:uppercase;padding:3px 8px;border-radius:7px}
+  .ev-tag.visit{background:#dbeafe;color:#1d4ed8}
+  .ev-tag.followup{background:#ffedd5;color:#c2410c}
+
+  /* Kanban (CRM) */
+  .kanban{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px}
+  .kan-col{flex:1;min-width:240px}
+  .kan-head{display:flex;align-items:center;justify-content:space-between;border-radius:9px;padding:7px 12px;margin-bottom:8px;font-size:.72rem;font-weight:800}
+  .kan-list{display:flex;flex-direction:column;gap:8px;min-height:60px;border-radius:12px;padding:2px;transition:background .15s}
+  .kan-list.dragover{background:rgba(205,33,42,.06);outline:2px dashed rgba(205,33,42,.3)}
+  .kan-card{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--lt);border-radius:12px;padding:12px;box-shadow:var(--sh);cursor:grab}
+  .kan-card:active{cursor:grabbing}
+  .kan-card.dragging{opacity:.4}
+  .kan-name{font-weight:800;color:var(--tx);font-size:.86rem}
+  .kan-phone{font-size:.72rem;color:var(--mu)}
+  .kan-car{font-size:.74rem;color:var(--tx);margin-top:5px}
+  .kan-note{font-size:.74rem;color:var(--mu);margin-top:6px;line-height:1.4}
+  .kan-chip{display:inline-block;font-size:.64rem;font-weight:600;border-radius:6px;padding:2px 7px;margin-top:6px;margin-right:5px}
+  .kan-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .kan-mini{font-size:.66rem;font-weight:700;border:1px solid var(--bd);border-radius:8px;padding:6px 9px;background:var(--card);color:var(--tx);cursor:pointer}
+  .kan-mini.wa{background:#25D366;color:#fff;border-color:#25D366}
+  .kan-mini.del{color:#dc2626;border-color:rgba(220,38,38,.3)}
+  .kan-move{width:100%;margin-top:8px;border:1px solid var(--bd);border-radius:8px;padding:7px;font-size:.72rem;font-weight:600;color:var(--mu);background:var(--card)}
+  .stage-lead{background:#dbeafe;color:#1d4ed8} .card-lead{border-left-color:#3b82f6;background:#eff6ff}
+  .stage-visit{background:#ffedd5;color:#c2410c} .card-visit{border-left-color:#fb923c;background:#fff7ed}
+  .stage-negotiating{background:#fef9c3;color:#854d0e} .card-negotiating{border-left-color:#facc15;background:#fefce8}
+  .stage-followup{background:#ffe4e6;color:#be123c} .card-followup{border-left-color:#fb7185;background:#fff1f2}
+  .stage-sold{background:#d1fae5;color:#047857} .card-sold{border-left-color:#34d399;background:#ecfdf5}
+  .stage-lost{background:#e5e7eb;color:#4b5563} .card-lost{border-left-color:#d1d5db;background:#f9fafb}
+
+  /* Financeiras (cofre de bancos) */
+  .bank-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:700px){.bank-grid{grid-template-columns:1fr 1fr}}
+  @media(min-width:1100px){.bank-grid{grid-template-columns:1fr 1fr 1fr}}
+  .bank-card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;box-shadow:var(--sh)}
+  .bank-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .bank-avatar{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:.85rem;flex-shrink:0}
+  .bank-field{display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:11px;padding:9px 12px;margin-bottom:8px}
+  .bank-field .bf-info{flex:1;min-width:0}
+  .bank-field .bf-lbl{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu)}
+  .bank-field .bf-val{font-family:ui-monospace,monospace;font-size:.82rem;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bank-copy{width:34px;height:34px;border-radius:8px;border:1px solid var(--bd);background:var(--card);display:grid;place-items:center;cursor:pointer;color:var(--mu);flex-shrink:0}
+  .bank-copy:hover{color:var(--tx)}
+  .bank-copy svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}
+
+  /* ================================================================
+     REFINO (menos cara de IA) + ajustes mobile
+     ================================================================ */
+  /* sem brilho radial no hero */
+  .hero-top::after{display:none}
+  /* labels sem CAIXA ALTA */
+  .hero-tag,.hm-lbl,.metric-lbl,.mc-lbl,.sec-label,.report-card-title,.skpi-lbl,.detail-price-label,.spec-label,.ink-lbl{text-transform:none;letter-spacing:.1px}
+  /* KPI cards monocromáticos (sem arco-íris) */
+  .mc-ic{background:rgba(0,0,0,.05)}
+  .mc-val{color:var(--tx)}
+
+  /* destaque do estoque: faixa leve e clean (sem bloco escuro) */
+  .stock-summary{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;box-shadow:var(--sh)}
+  .ss-greet{font-size:1.02rem;font-weight:800;color:var(--tx)}
+  .ss-stats{display:flex}
+  .ss-stat{padding:0 18px;border-left:1px solid var(--bd);display:flex;flex-direction:column;gap:3px}
+  .ss-stat:first-child{border-left:none;padding-left:0}
+  .ss-num{font-size:1.35rem;font-weight:800;color:var(--tx);line-height:1}
+  .ss-lbl{font-size:.7rem;color:var(--mu)}
+
+  /* balãozinho (+) só no desktop, no canto inferior direito */
+  .fab{bottom:24px;right:24px}
+  @media (max-width:1023px){ .fab.show{display:none} }
+  @media (min-width:1024px){ .fab.show{display:flex} }
+
+  /* respiro entre os cards do kanban e a barra de rolagem */
+  .kanban{padding-bottom:22px}
+
+  @media (max-width:1023px){
+    /* header com respiro + logo centralizada e maior */
+    .topbar{padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));position:relative;justify-content:space-between}
+    .topbar-logo{position:absolute;left:50%;transform:translateX(-50%);margin:0}
+    .topbar-logo img{height:36px}
+    /* destaque do estoque some no celular (resumo fica no Painel) */
+    #stock-hero-container{display:none}
+  }
+
+  /* cards animam conforme o scroll — o usuário controla (só no celular) */
+  @keyframes cardReveal{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @media (max-width:1023px){
+    @supports (animation-timeline:view()){
+      .vehicle-card,.metric-card,.mc,.kan-card,.report-card,.ink-card,.cal-card,.day-detail{
+        animation:cardReveal linear both;
+        animation-timeline:view();
+        animation-range:entry 0% entry 40%;
+      }
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====================== LOGIN ====================== -->
+<section id="login" class="screen active">
+  <div class="login-card">
+    <div class="login-logo"><img src="assets/logo-belloni.png" alt="Belloni Motors"></div>
+    <div class="login-title">Painel de Vendas</div>
+    <div class="login-sub">Estoque, clientes e negociação<br>num só lugar.</div>
+
+    <div class="role-card" onclick="enterAs('vendor')">
+      <div class="role-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div class="role-info"><h3>Entrar como Vendedor</h3><p>Estoque + clientes + margem de negociação</p></div>
+      <div class="role-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+
+    <div class="role-card" onclick="enterAs('admin')">
+      <div class="role-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="role-info"><h3>Entrar como Admin</h3><p>Custos, margens e gestão completa</p></div>
+      <div class="role-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+
+    <div class="role-card" onclick="enterAs('traffic')">
+      <div class="role-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 9l-5 5-3-3-4 4"/></svg></div>
+      <div class="role-info"><h3>Entrar como Tráfego</h3><p>Acessa só os relatórios de tráfego</p></div>
+      <div class="role-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+
+    <div class="login-hint">Demo navegável · Escolha um perfil acima</div>
+  </div>
+</section>
+
+<!-- ====================== APP ====================== -->
+<div id="app" class="screen">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo" onclick="goto('stock')" title="Voltar ao estoque">
+      <img src="assets/logo-belloni.png" alt="Belloni Motors">
+    </div>
+
+    <div class="sidebar-tools">
+      <button class="hdr-icon-btn" id="privacy-side" onclick="togglePrivacy()" title="Modo privacidade (borra dados pessoais)">
+        <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+
+    <div class="nav-section">Navegação</div>
+    <a class="nav-link" data-route="dashboard" data-roles="admin" onclick="goto('dashboard')">
+      <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+      Painel
+    </a>
+    <a class="nav-link active" data-route="stock" data-roles="admin vendor" onclick="goto('stock')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Estoque <span class="nav-badge" id="nav-count">47</span>
+    </a>
+    <a class="nav-link" data-route="clients" data-roles="admin vendor" onclick="goto('clients')">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Clientes <span class="nav-badge" id="nav-clients">10</span>
+    </a>
+    <a class="nav-link" data-route="agenda" data-roles="admin vendor" onclick="goto('agenda')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Agenda
+    </a>
+    <a class="nav-link" data-route="metas" data-roles="admin vendor" onclick="goto('metas')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+      Metas
+    </a>
+    <a class="nav-link" data-route="reports" data-roles="admin traffic" onclick="goto('reports')">
+      <svg viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 17v-3M12 17v-5M15 17v-2"/></svg>
+      Relatórios
+    </a>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user" onclick="enterAs(null)">
+        <div class="sidebar-avatar" id="user-avatar">JS</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="user-name">João Silva</div>
+          <div class="sidebar-user-role" id="user-role">Vendedor</div>
+        </div>
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <button class="hdr-icon-btn" id="privacy-top" onclick="togglePrivacy()" title="Modo privacidade">
+        <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+      <div class="topbar-logo" onclick="goto('stock')" title="Voltar ao estoque"><img src="assets/logo-belloni.png" alt="Belloni Motors"></div>
+      <div class="topbar-avatar" id="topbar-avatar" onclick="enterAs(null)">JS</div>
+    </header>
+
+    <!-- ============ STOCK ============ -->
+    <section id="page-stock" class="page show">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Estoque</div>
+          <div class="page-sub" id="stock-sub">47 veículos disponíveis · sincronizado agora</div>
+        </div>
+        <div class="page-actions">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="search-input" placeholder="Buscar modelo, ano, cor..." oninput="onSearch(this.value)">
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div id="stock-hero-container"></div>
+
+        <div class="sec-header">
+          <span class="sec-label">Visão geral</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div id="metric-grid-container"></div>
+
+        <div class="sec-header">
+          <span class="sec-label">Filtros</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="chips" id="stock-chips">
+          <div class="chip active" onclick="applyChip(this,'all')">Todos <span class="chip-count" id="ct-all">47</span></div>
+          <div class="chip" onclick="applyChip(this,'ready')">Prontos <span class="chip-count" id="ct-ready">37</span></div>
+          <div class="chip" onclick="applyChip(this,'prep')">Em preparação <span class="chip-count" id="ct-prep">10</span></div>
+          <div class="chip" onclick="applyChip(this,'green')"><span class="chip-dot green"></span>Alta margem</div>
+          <div class="chip" onclick="applyChip(this,'yellow')"><span class="chip-dot yellow"></span>Média</div>
+          <div class="chip" onclick="applyChip(this,'red')"><span class="chip-dot red"></span>Baixa</div>
+          <div class="chip cat-new" onclick="applyChip(this,'hot')">Recém-chegados</div>
+          <div class="chip cat-stale" onclick="applyChip(this,'stale')">+30d no pátio</div>
+          <div class="chip" onclick="applyChip(this,'fav')"><svg viewBox="0 0 24 24" width="13" height="13" style="vertical-align:-2px;fill:currentColor;stroke:none"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.7 7L12 18.3 5.7 21.2l1.7-7L2 9.5l7.1-.6z"/></svg> Favoritos</div>
+          <span class="filters-clear" id="filter-clear-btn" onclick="clearFilters()" style="display:none;margin-left:auto">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Limpar filtros
+          </span>
+        </div>
+
+        <div id="car-grid-container"></div>
+      </div>
+    </section>
+
+    <!-- ============ DETAIL ============ -->
+    <section id="page-detail" class="page">
+      <div class="page-header">
+        <div style="width:100%">
+          <div class="detail-nav">
+            <div class="detail-back" onclick="goto('stock')">
+              <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Voltar
+            </div>
+            <button class="detail-nav-btn" id="d-prev" onclick="navDetail(-1)">
+              <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> Anterior
+            </button>
+            <button class="detail-nav-btn" id="d-next" onclick="navDetail(1)">
+              Próximo <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <span class="detail-nav-counter" id="d-counter">— de —</span>
+          </div>
+          <div class="page-title">Detalhes do veículo</div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="detail-grid">
+          <div class="detail-hero" id="d-hero">
+            <div class="detail-hero-pills">
+              <div class="detail-pill" id="d-days">12 dias no pátio</div>
+            </div>
+          </div>
+          <div class="detail-side">
+            <div>
+              <div class="detail-title" id="d-title">—</div>
+              <div class="detail-meta" id="d-meta">—</div>
+            </div>
+            <div class="detail-price-block">
+              <div class="detail-price-label">Preço de venda</div>
+              <div class="detail-price-value" id="d-price">—</div>
+            </div>
+            <div class="margin-panel" id="d-panel">
+              <div class="margin-head">
+                <div class="margin-head-dot"></div>
+                <div class="margin-head-label" id="d-mlabel">—</div>
+              </div>
+              <div class="margin-value" id="d-mvalue">—</div>
+              <div class="margin-hint" id="d-mhint">—</div>
+            </div>
+            <div class="detail-cta">
+              <button class="btn btn-secondary btn-flex" onclick="openClientModal(null, state.detailId)">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Anotar lead
+              </button>
+              <button class="btn btn-primary btn-flex" onclick="openSaleModal(state.detailId)">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Registrar venda
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec-header" style="max-width:1300px;margin:32px auto 12px">
+          <span class="sec-label">Especificações</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="specs-grid" id="d-specs"></div>
+
+        <div class="sec-header" style="max-width:1300px;margin:32px auto 12px">
+          <span class="sec-label">Opcionais</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="opcionais" id="d-opc"></div>
+      </div>
+    </section>
+
+    <!-- ============ CLIENTS ============ -->
+    <section id="page-clients" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Clientes</div>
+          <div class="page-sub" id="clients-sub">Seu pipeline de leads, visitas e vendas</div>
+        </div>
+        <div class="page-actions">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Buscar cliente..." oninput="onClientSearch(this.value)">
+          </div>
+          <button class="btn btn-primary" onclick="openClientModal()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo cliente
+          </button>
+        </div>
+      </div>
+      <div class="content">
+        <div id="clients-hero-container"></div>
+
+        <div class="sec-header">
+          <span class="sec-label">Status do pipeline</span>
+          <div class="sec-rule"></div>
+        </div>
+        <div class="chips" id="client-chips">
+          <div class="chip active" onclick="applyClientChip(this,'all')">Todos <span class="chip-count" id="cc-all">10</span></div>
+          <div class="chip" onclick="applyClientChip(this,'lead')">Leads <span class="chip-count" id="cc-lead">0</span></div>
+          <div class="chip" onclick="applyClientChip(this,'visit')">Visita marcada <span class="chip-count" id="cc-visit">0</span></div>
+          <div class="chip" onclick="applyClientChip(this,'negotiating')">Negociando <span class="chip-count" id="cc-negotiating">0</span></div>
+          <div class="chip" onclick="applyClientChip(this,'followup')">Ligar <span class="chip-count" id="cc-followup">0</span></div>
+          <div class="chip" onclick="applyClientChip(this,'sold')">Vendido <span class="chip-count" id="cc-sold">0</span></div>
+          <div class="chip" onclick="applyClientChip(this,'lost')">Não comprou <span class="chip-count" id="cc-lost">0</span></div>
+        </div>
+        <div id="clients-grid-container"></div>
+      </div>
+    </section>
+
+    <!-- ============ HISTORY ============ -->
+    <section id="page-history" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Histórico</div>
+          <div class="page-sub">Suas consultas, vendas e autorizações</div>
+        </div>
+      </div>
+      <div class="content" id="history-content"></div>
+    </section>
+
+    <!-- ============ REPORTS ============ -->
+    <section id="page-reports" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Relatórios</div>
+          <div class="page-sub">Performance da equipe e saúde do estoque</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary" onclick="toast('Exportando relatório em PDF...')">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exportar
+          </button>
+        </div>
+      </div>
+      <div class="content" id="reports-content"></div>
+    </section>
+
+    <!-- ============ SELLERS ============ -->
+    <section id="page-sellers" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Vendedores</div>
+          <div class="page-sub">Gerencie sua equipe e permissões de acesso</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" onclick="toast('Convite por e-mail enviado em breve')">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Adicionar vendedor
+          </button>
+        </div>
+      </div>
+      <div class="content" id="sellers-content"></div>
+    </section>
+
+    <!-- ============ SETTINGS ============ -->
+    <section id="page-settings" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Configurações</div>
+          <div class="page-sub">Regras de margem, integrações e notificações</div>
+        </div>
+      </div>
+      <div class="content" id="settings-content"></div>
+    </section>
+
+    <!-- ============ PAINEL (DASHBOARD) ============ -->
+    <section id="page-dashboard" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Painel</div>
+          <div class="page-sub">Visão geral do estoque e das vendas</div>
+        </div>
+      </div>
+      <div class="content" id="dashboard-content"></div>
+    </section>
+
+    <!-- ============ AGENDA ============ -->
+    <section id="page-agenda" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Agenda</div>
+          <div class="page-sub">Visitas marcadas e retornos a fazer</div>
+        </div>
+      </div>
+      <div class="content" id="agenda-content"></div>
+    </section>
+
+    <!-- ============ METAS ============ -->
+    <section id="page-metas" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Metas</div>
+          <div class="page-sub">Registre cada venda no + da loja. Zera sozinho ao virar o mês.</div>
+        </div>
+      </div>
+      <div class="content" id="metas-content"></div>
+    </section>
+
+  </main>
+
+</div>
+
+<div class="fab" id="fab" onclick="openClientModal()">
+  <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+</div>
+
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <div class="bn-item" data-bn="dashboard" data-roles="admin" onclick="goto('dashboard')">
+      <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+      <span class="bn-label">Painel</span>
+    </div>
+    <div class="bn-item active" data-bn="stock" data-roles="admin vendor" onclick="goto('stock')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span class="bn-label">Estoque</span>
+    </div>
+    <div class="bn-item" data-bn="clients" data-roles="admin vendor" onclick="goto('clients')">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      <span class="bn-label">Clientes</span>
+    </div>
+    <div class="bn-item" data-bn="agenda" data-roles="admin vendor" onclick="goto('agenda')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <span class="bn-label">Agenda</span>
+    </div>
+    <div class="bn-item" data-bn="metas" data-roles="admin vendor" onclick="goto('metas')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+      <span class="bn-label">Metas</span>
+    </div>
+    <div class="bn-item" data-bn="reports" data-roles="admin traffic" onclick="goto('reports')">
+      <svg viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 17v-3M12 17v-5M15 17v-2"/></svg>
+      <span class="bn-label">Relatórios</span>
+    </div>
+    <div class="bn-item" data-roles="admin vendor traffic" onclick="enterAs(null)">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span class="bn-label">Sair</span>
+    </div>
+  </div>
+</nav>
+
+<!-- CLIENT MODAL -->
+<div class="modal-backdrop" id="modal-client">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="client-modal-title">Novo cliente</div>
+      <div class="modal-close" onclick="closeModal('modal-client')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+    </div>
+    <div class="modal-body">
+      <div class="form-row"><label class="form-label">Nome do cliente</label><input type="text" class="form-input" id="cl-name" placeholder="Ex: Maria Souza"></div>
+      <div class="form-row"><label class="form-label">Telefone (WhatsApp)</label><input type="text" class="form-input" id="cl-phone" placeholder="(16) 99999-0000"></div>
+      <div class="form-row">
+        <label class="form-label">Status do cliente</label>
+        <div class="status-pills" id="cl-status-pills">
+          <div class="status-pill lead active" data-status="lead" onclick="selectStatus(this)">Lead novo</div>
+          <div class="status-pill visit" data-status="visit" onclick="selectStatus(this)">Visita marcada</div>
+          <div class="status-pill negotiating" data-status="negotiating" onclick="selectStatus(this)">Negociando</div>
+          <div class="status-pill followup" data-status="followup" onclick="selectStatus(this)">Ligar depois</div>
+          <div class="status-pill sold" data-status="sold" onclick="selectStatus(this)">Vendeu</div>
+          <div class="status-pill lost" data-status="lost" onclick="selectStatus(this)">Não comprou</div>
+        </div>
+      </div>
+      <div class="form-row"><label class="form-label">Carro de interesse</label><select class="form-select" id="cl-car"><option value="">Sem carro vinculado</option></select></div>
+      <div class="form-row conditional" id="cl-cond-visit">
+        <label class="form-label">Data da visita</label>
+        <div class="form-inputs-row"><input type="date" class="form-input" id="cl-visit-date"><input type="time" class="form-input" id="cl-visit-time" value="14:00"></div>
+      </div>
+      <div class="form-row conditional" id="cl-cond-followup">
+        <label class="form-label">Ligar de volta no dia</label>
+        <input type="date" class="form-input" id="cl-followup-date">
+        <div class="form-help">Você vai ver esse cliente em destaque no dia marcado.</div>
+      </div>
+      <div class="form-row conditional" id="cl-cond-sold">
+        <label class="form-label">Valor final da venda</label>
+        <input type="text" class="form-input" id="cl-sold-value" placeholder="R$ 0,00">
+      </div>
+      <div class="form-row conditional" id="cl-cond-lost">
+        <label class="form-label">Motivo da não-compra</label>
+        <select class="form-select" id="cl-lost-reason">
+          <option>Preço acima do orçamento</option>
+          <option>Encontrou outro veículo mais barato</option>
+          <option>Não aprovou financiamento</option>
+          <option>Não gostou após ver pessoalmente</option>
+          <option>Quer aguardar / pensar mais</option>
+          <option>Sumiu / não respondeu mais</option>
+          <option>Outro motivo</option>
+        </select>
+      </div>
+      <div class="form-row"><label class="form-label">Observações</label><textarea class="form-textarea" id="cl-notes" placeholder="Ex: Vai trazer o pai pra ver, quer financiamento em 60x..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="cl-delete" onclick="deleteClient()" style="display:none;color:#dc2626;margin-right:auto">Excluir</button>
+      <button class="btn btn-secondary" onclick="closeModal('modal-client')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveClient()">Salvar cliente</button>
+    </div>
+  </div>
+</div>
+
+<!-- SALE MODAL -->
+<div class="modal-backdrop" id="modal-sale">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">Registrar venda</div>
+      <div class="modal-close" onclick="closeModal('modal-sale')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+    </div>
+    <div class="modal-body">
+      <div class="form-row"><label class="form-label">Veículo vendido</label><div class="car-select" id="sale-car-preview"></div></div>
+      <div class="form-row"><label class="form-label">Cliente comprador</label><input type="text" class="form-input" id="sale-client-name" placeholder="Nome completo"></div>
+      <div class="form-row"><label class="form-label">Telefone (WhatsApp)</label><input type="text" class="form-input" id="sale-client-phone" placeholder="(16) 99999-0000"></div>
+      <div class="form-inputs-row">
+        <div class="form-row"><label class="form-label">Valor final</label><input type="text" class="form-input" id="sale-final" placeholder="R$ 0,00"><div class="form-help">Quanto o cliente pagou.</div></div>
+        <div class="form-row"><label class="form-label">Desconto aplicado</label><input type="text" class="form-input" id="sale-discount" placeholder="R$ 0,00"><div class="form-help">Quanto você abateu.</div></div>
+      </div>
+      <div class="form-row"><label class="form-label">Forma de pagamento</label><select class="form-select" id="sale-payment"><option>À vista (dinheiro/PIX)</option><option>Financiamento bancário</option><option>Entrada + financiamento</option><option>Cartão de crédito (parcelado)</option><option>Troca + valor</option><option>Consórcio</option></select></div>
+      <div class="form-row"><label class="form-label">Observações</label><textarea class="form-textarea" id="sale-notes" placeholder="Ex: Cliente vai retirar quinta, falta levar laudo cautelar..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary" onclick="closeModal('modal-sale')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveSale()">Confirmar venda</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">—</div>
+
+<script>
+const IMG_BASE = 'https://gilsoncarveiculos.com.br/cdn/shop/files/';
+const IMG_PREP = 'https://gilsoncarveiculos.com.br/cdn/shop/files/veiculoempreparacao_b76415da-f21a-4b30-ad6a-15d055ec419f.jpg';
+
+const cars = [
+  // PRONTOS (com foto real)
+  {id:1,name:'Chevrolet Onix Hatch LTZ 1.4 Automático',year:'2017/2018',km:'85.000 km',cor:'Branco',cambio:'Automático',combustivel:'Flex',price:66000,cost:58500,days:18,opcionais:['MyLink','Câmera ré','Ar digital','Bancos couro','Faróis LED','Rodas de liga'],img:'qPkRx6fATBuPtHpreJ6uV5qYlFxKr36j1k.jpg'},
+  {id:2,name:'Fiat Mobi Like 1.0',year:'2019/2020',km:'58.000 km',cor:'Prata',cambio:'Manual',combustivel:'Flex',price:50000,cost:46500,days:42,opcionais:['Ar','Direção elétrica','Vidros elétricos','Trava elétrica'],img:'BDM3G04_3.jpg'},
+  {id:3,name:'Ford Ecosport Freestyle 1.5',year:'2018/2019',km:'78.000 km',cor:'Branco',cambio:'Automático',combustivel:'Flex',price:70000,cost:60000,days:9,opcionais:['SYNC','Câmera ré','Sensor estac.','Bancos couro','Ar digital','Rodas 17"'],img:'GFC0A623.jpg'},
+  {id:4,name:'Volkswagen Fox Xtreme 1.6',year:'2018/2019',km:'67.000 km',cor:'Vermelho',cambio:'Manual',combustivel:'Flex',price:67000,cost:62500,days:24,opcionais:['Composition Media','Ar digital','Faróis LED','Rodas de liga'],img:'FCX0B133.jpg'},
+  {id:5,name:'Fiat Toro Volcano Diesel 2.0 4WD',year:'2020/2021',km:'65.000 km',cor:'Cinza',cambio:'Automática',combustivel:'Diesel',price:100000,cost:84000,days:6,opcionais:['Multimídia 8.4"','Câmera ré','4WD','Bancos couro','Capota','Rodas 17"','Faróis LED'],img:'FRS7D73_3.jpg'},
+  {id:6,name:'Chevrolet Onix Hatch LT 1.0',year:'2018/2019',km:'92.000 km',cor:'Prata',cambio:'Manual',combustivel:'Flex',price:57000,cost:53800,days:38,opcionais:['Ar','MyLink','Direção elétrica','Vidros elétricos'],img:'OHP2G811.jpg'},
+  {id:7,name:'Volkswagen Golf Sportline 1.6',year:'2010/2011',km:'145.000 km',cor:'Preto',cambio:'Manual',combustivel:'Flex',price:62000,cost:59500,days:67,opcionais:['Som','Ar','Rodas de liga','Vidros elétricos'],img:'FFP6G371_00635a70-04e2-4b13-8533-b963f9ade21a.jpg'},
+  {id:8,name:'Chevrolet Onix LTZ 1.4',year:'2015/2016',km:'110.000 km',cor:'Branco',cambio:'Manual',combustivel:'Flex',price:52000,cost:48000,days:31,opcionais:['MyLink','Ar digital','Rodas de liga','Piloto automático'],img:'FMP1J701.jpg'},
+  {id:9,name:'Renault Duster Iconic 1.3 Turbo',year:'2022/2023',km:'38.000 km',cor:'Preto',cambio:'Automática CVT',combustivel:'Turbo Flex',price:109000,cost:91500,days:4,opcionais:['Multimídia 8"','Câmera 360','Bancos couro','Teto solar','Faróis LED','ACC'],img:'FRQ0B851.jpg'},
+  {id:10,name:'Chevrolet Cruze LT 1.4 Turbo',year:'2018/2019',km:'73.000 km',cor:'Prata',cambio:'Automático',combustivel:'Turbo Flex',price:82000,cost:74500,days:15,opcionais:['MyLink','Câmera ré','Ar digital','Faróis LED','Rodas 16"'],img:'EDL6E461.jpg'},
+  {id:11,name:'Renault Captur Intense 2.0 Automática CVT',year:'2017/2018',km:'74.000 km',cor:'Preto',cambio:'Automática CVT',combustivel:'Flex',price:73000,cost:64500,days:11,opcionais:['Multimídia','Câmera ré','Bancos couro','Teto solar','Faróis LED'],img:'GIF1I841.jpg'},
+  {id:12,name:'Toyota Corolla XEi 2.0 Automático',year:'2010/2011',km:'142.000 km',cor:'Preto',cambio:'Automático',combustivel:'Flex',price:64000,cost:60500,days:39,opcionais:['Multimídia','Câmera ré','Bancos couro','Faróis xenônio'],img:'EQG8I361.jpg'},
+  {id:13,name:'Volkswagen Fox Comfortline 1.6',year:'2017/2017',km:'107.000 km',cor:'Preto',cambio:'Manual',combustivel:'Flex',price:54000,cost:50500,days:33,opcionais:['Ar','Direção elétrica','Vidros elétricos','Som','Rodas de liga'],img:'GDE0E961.jpg'},
+  {id:14,name:'Fiat Strada Freedom 1.3 Cabine Dupla',year:'2024/2025',km:'22.000 km',cor:'Cinza',cambio:'Manual',combustivel:'Flex',price:113000,cost:94000,days:7,opcionais:['Multimídia 7"','Câmera ré','Capota','Rodas 16"','Faróis LED','Bancos couro'],img:'STL9G371.jpg'},
+  {id:15,name:'Jeep Compass Longitude 4X4 2.0 Automático',year:'2020/2021',km:'69.000 km',cor:'Preto',cambio:'Automático',combustivel:'Diesel',price:117000,cost:98500,days:13,opcionais:['Multimídia 8.4"','Câmera 360','Bancos couro','Teto solar','4WD','Faróis LED','ACC'],img:'FIX8E761.jpg'},
+  {id:16,name:'Chevrolet Montana LS 1.4 Cabine Simples',year:'2014/2014',km:'193.000 km',cor:'Branca',cambio:'Manual',combustivel:'Flex',price:45000,cost:43000,days:62,opcionais:['Ar','Direção hidráulica','Vidros elétricos'],img:'FHE-81161.jpg'},
+  {id:17,name:'Chevrolet Onix Plus LTZ 1.0 Turbo Automático',year:'2024/2024',km:'10.000 km',cor:'Branco',cambio:'Automático',combustivel:'Turbo Flex',price:86000,cost:71500,days:3,opcionais:['MyLink 11"','Câmera ré','Bancos couro','Faróis LED','Ar digital','OnStar'],img:'SVW7B691.jpg'},
+  {id:18,name:'Honda City EX 1.5 Automático',year:'2013/2013',km:'152.000 km',cor:'Cinza',cambio:'Automático',combustivel:'Flex',price:59000,cost:56000,days:46,opcionais:['Multimídia','Câmera ré','Bancos couro','Rodas de liga'],img:'ETA-65761.jpg'},
+  {id:19,name:'Fiat Siena EX 1.3',year:'2003/2003',km:'245.000 km',cor:'Cinza',cambio:'Manual',combustivel:'Gasolina',price:20000,cost:19000,days:83,opcionais:['Ar','Direção hidráulica'],img:'HAY5C011.jpg'},
+  {id:20,name:'Volkswagen SpaceFox Comfortline 1.6',year:'2007/2007',km:'140.000 km',cor:'Preto',cambio:'Manual',combustivel:'Flex',price:34000,cost:32500,days:54,opcionais:['Ar','Direção hidráulica','Vidros elétricos','Rodas de liga'],img:'DVO-40001.jpg'},
+  {id:21,name:'Chevrolet Spin Premier 7 Lugares 1.8 Automática',year:'2021/2022',km:'90.000 km',cor:'Prata',cambio:'Automática',combustivel:'Flex',price:84000,cost:74000,days:17,opcionais:['MyLink','Câmera ré','7 lugares','Bancos couro','Ar digital duplo','Faróis LED'],img:'RNA6I781.jpg'},
+  {id:22,name:'Fiat Argo 1.0',year:'2018/2019',km:'68.000 km',cor:'Prata',cambio:'Manual',combustivel:'Flex',price:64000,cost:56500,days:21,opcionais:['Multimídia','Câmera ré','Ar digital','Direção elétrica'],img:'SHS8I031.jpg'},
+  {id:23,name:'Citroën C3 Tendance 1.5',year:'2018/2019',km:'89.000 km',cor:'Branco',cambio:'Manual',combustivel:'Flex',price:39000,cost:37000,days:54,opcionais:['Ar','Direção elétrica','Vidros elétricos','Som'],img:'FIP0I171.jpg'},
+  {id:24,name:'Renault Captur Life 1.6 Automática',year:'2019/2020',km:'72.000 km',cor:'Vermelho',cambio:'Automática',combustivel:'Flex',price:74000,cost:64500,days:19,opcionais:['Multimídia','Câmera ré','Bancos couro','Rodas 17"','Faróis LED'],img:'ENZ7A971.jpg'},
+  {id:25,name:'Renault Captur Life 1.6 Automática',year:'2020/2021',km:'58.000 km',cor:'Cinza',cambio:'Automática',combustivel:'Flex',price:74000,cost:65000,days:14,opcionais:['Multimídia','Câmera ré','Bancos couro','Rodas 17"'],img:'FNJ1D311.jpg'},
+  {id:26,name:'Honda CB300R',year:'2019/2020',km:'24.500 km',cor:'Preta',cambio:'Manual',combustivel:'Gasolina',price:14900,cost:13800,days:28,opcionais:['ABS','Painel digital','Faróis LED'],img:'FRB2F501.jpg'},
+  {id:27,name:'Chevrolet Celta LT 1.0',year:'2012/2013',km:'112.000 km',cor:'Branco',cambio:'Manual',combustivel:'Flex',price:32000,cost:30000,days:48,opcionais:['Ar','Direção hidráulica','Som'],img:'FKZ3B181.jpg'},
+  {id:28,name:'Chevrolet Celta LT 1.0',year:'2013/2014',km:'98.000 km',cor:'Prata',cambio:'Manual',combustivel:'Flex',price:38000,cost:35000,days:22,opcionais:['Ar','Direção elétrica','Vidros elétricos','Som'],img:'PVX0E011.jpg'},
+  {id:29,name:'Chevrolet Celta Spirit 1.4',year:'2010/2010',km:'168.000 km',cor:'Cinza',cambio:'Manual',combustivel:'Flex',price:26000,cost:24800,days:73,opcionais:['Ar','Direção hidráulica'],img:'DNW7B971.jpg'},
+  {id:30,name:'Honda City Personal 1.5 Automático',year:'2021/2022',km:'45.000 km',cor:'Prata',cambio:'Automático',combustivel:'Flex',price:82000,cost:71000,days:9,opcionais:['Multimídia 8"','Câmera ré','Bancos couro','Faróis LED','LaneWatch'],img:'BRY1D431.jpg'},
+  {id:31,name:'Honda Civic EXL 2.0 Automático CVT',year:'2018/2019',km:'62.000 km',cor:'Preto',cambio:'Automático CVT',combustivel:'Flex',price:125000,cost:104000,days:8,opcionais:['Multimídia','Câmera ré','Bancos couro','Teto solar','LaneWatch','Rodas 17"'],img:'FYW2G831.jpg'},
+  {id:32,name:'Honda Civic LXS 1.8 Automático',year:'2015/2016',km:'95.000 km',cor:'Branco',cambio:'Automático',combustivel:'Flex',price:74000,cost:65500,days:25,opcionais:['Multimídia','Câmera ré','Bancos couro','Rodas de liga'],img:'FNS2J291.jpg'},
+  {id:33,name:'Chevrolet Classic LS 1.0',year:'2014/2014',km:'118.000 km',cor:'Branco',cambio:'Manual',combustivel:'Flex',price:25000,cost:23800,days:51,opcionais:['Ar','Direção hidráulica'],img:'EQJ7F161.jpg'},
+  {id:34,name:'Chevrolet Classic LS 1.0',year:'2015/2015',km:'92.000 km',cor:'Prata',cambio:'Manual',combustivel:'Flex',price:28000,cost:26500,days:34,opcionais:['Ar','Direção elétrica','Vidros elétricos'],img:'ETF-41331.jpg'},
+  {id:35,name:'Chevrolet Cobalt Elite 1.8 Automático',year:'2017/2018',km:'78.000 km',cor:'Prata',cambio:'Automático',combustivel:'Flex',price:59000,cost:53000,days:16,opcionais:['MyLink','Câmera ré','Bancos couro','Rodas 16"','Faróis LED'],img:'GGO3A401.jpg'},
+  {id:36,name:'Jeep Compass Longitude 2.0 4X4 Automático',year:'2018/2019',km:'82.000 km',cor:'Branco',cambio:'Automático',combustivel:'Diesel',price:102000,cost:88500,days:31,opcionais:['Multimídia','Câmera 360','4WD','Bancos couro','Teto solar','Faróis LED'],img:'FKF-14071.jpg'},
+  {id:37,name:'Toyota Corolla GLI 1.8 Automático CVT',year:'2017/2018',km:'86.000 km',cor:'Branco Pérola',cambio:'Automático CVT',combustivel:'Flex',price:89000,cost:77500,days:11,opcionais:['Multimídia','Câmera ré','Bancos couro','Faróis LED','TSS'],img:'FGA5F251.jpg'},
+  // EM PREPARAÇÃO (foto placeholder)
+  {id:38,name:'Fiat Toro Endurance 1.3 Turbo Automática',year:'2021/2022',km:'72.000 km',cor:'Cinza',cambio:'Automática',combustivel:'Turbo Flex',price:103000,cost:86500,days:22,opcionais:['Multimídia 7"','Câmera ré','Bancos couro','Capota','Faróis LED'],img:'',inPrep:true},
+  {id:39,name:'Hyundai HB20 Comfort 1.0',year:'2017/2018',km:'95.000 km',cor:'Prata',cambio:'Manual',combustivel:'Flex',price:55000,cost:51000,days:48,opcionais:['Ar','Direção elétrica','Vidros elétricos','Som'],img:'',inPrep:true},
+  {id:40,name:'Citroën C3 Aircross GLX 1.6 Automático',year:'2012/2013',km:'128.000 km',cor:'Prata',cambio:'Automático',combustivel:'Flex',price:42000,cost:39800,days:71,opcionais:['Ar','Multimídia','Vidros elétricos','Rodas de liga'],img:'',inPrep:true},
+  {id:41,name:'Volkswagen Gol G5 Power 1.6',year:'2011/2011',km:'132.000 km',cor:'Prata',cambio:'Manual',combustivel:'Flex',price:35000,cost:33500,days:56,opcionais:['Ar','Direção hidráulica','Vidros elétricos','Trava elétrica'],img:'',inPrep:true},
+  {id:42,name:'Chevrolet Onix Hatch Joy 1.0',year:'2019/2019',km:'119.000 km',cor:'Prata',cambio:'Manual',combustivel:'Flex',price:52000,cost:48800,days:44,opcionais:['Ar','MyLink','Direção elétrica'],img:'',inPrep:true},
+  {id:43,name:'Chevrolet Onix Hatch Joy 1.0',year:'2017/2018',km:'108.000 km',cor:'Branco',cambio:'Manual',combustivel:'Flex',price:49000,cost:46500,days:41,opcionais:['Ar','MyLink','Direção elétrica'],img:'',inPrep:true},
+  {id:44,name:'Honda CG Fan 160',year:'2021/2022',km:'18.000 km',cor:'Azul',cambio:'Manual',combustivel:'Flex',price:17000,cost:16000,days:36,opcionais:['Painel digital','Freio CBS'],img:'',inPrep:true},
+  {id:45,name:'Chevrolet Corsa Classic 1.0',year:'2003/2003',km:'192.000 km',cor:'Cinza',cambio:'Manual',combustivel:'Gasolina',price:17000,cost:16200,days:89,opcionais:['Ar','Direção hidráulica'],img:'',inPrep:true},
+  {id:46,name:'Chevrolet Cruze LTZ 1.8 Automático',year:'2014/2014',km:'128.000 km',cor:'Preto',cambio:'Automático',combustivel:'Flex',price:66000,cost:60500,days:38,opcionais:['MyLink','Câmera ré','Bancos couro'],img:'',inPrep:true},
+  {id:47,name:'Ford Fiesta Sedan 1.6',year:'2011/2011',km:'168.000 km',cor:'Prata',cambio:'Manual',combustivel:'Flex',price:34000,cost:32500,days:59,opcionais:['Ar','Direção hidráulica','Som'],img:'',inPrep:true}
+];
+cars.forEach(c=>{ if(!c.img) c.inPrep = true; });
+
+let clients = [
+  {id:1,name:'Maria Souza',phone:'(16) 99812-3344',status:'negotiating',carId:22,notes:'Quer trocar o HB20 dela 2017. Já viu duas vezes. Preocupada com prestações.',createdAt:'há 2 dias'},
+  {id:2,name:'Roberto Lima',phone:'(16) 99744-5566',status:'sold',carId:5,soldValue:97000,discount:3000,payment:'Financiamento bancário',notes:'Vai retirar sexta. Já levou laudo cautelar.',createdAt:'há 4 dias'},
+  {id:3,name:'Família Andrade',phone:'(16) 99655-7788',status:'visit',carId:18,visitDate:'2026-05-24',visitTime:'14:00',notes:'Vem com filhos ver a Strada cabine dupla. Confirmou ontem por WhatsApp.',createdAt:'há 1 dia'},
+  {id:4,name:'Pedro Oliveira',phone:'(16) 99422-1100',status:'sold',carId:4,soldValue:65200,discount:1800,payment:'À vista (dinheiro/PIX)',notes:'Cliente recorrente, segundo carro comprado aqui.',createdAt:'há 6 dias'},
+  {id:5,name:'Ana Costa',phone:'(16) 99888-1122',status:'lost',carId:15,lostReason:'Preço acima do orçamento',notes:'Achou o Captur ótimo mas só tinha R$ 65K. Indicou prima Beatriz que está procurando.',createdAt:'há 8 dias'},
+  {id:6,name:'José Ferreira',phone:'(16) 99555-3344',status:'followup',carId:8,followupDate:'2026-05-23',notes:'Pediu pra ligar quarta às 14h. Aposentado, quer pagar à vista.',createdAt:'há 3 dias'},
+  {id:7,name:'Carlos Ribeiro',phone:'(16) 99333-2211',status:'negotiating',carId:20,notes:'Quer financiar 60x. Aguardando aprovação do banco. Já deu de entrada 30 mil.',createdAt:'há 5 dias'},
+  {id:8,name:'Luciana Mendes',phone:'(16) 99211-7766',status:'lead',carId:2,notes:'Mandou DM no Instagram ontem perguntando do Mobi. Primeira moto carro próprio.',createdAt:'hoje'},
+  {id:9,name:'Bruno Tavares',phone:'(16) 99100-4455',status:'lost',carId:10,lostReason:'Encontrou outro veículo mais barato',notes:'Achou Cruze parecido em SP por 5 mil a menos. Sem retorno após nova proposta.',createdAt:'há 12 dias'},
+  {id:10,name:'Fernanda Almeida',phone:'(16) 99077-8899',status:'visit',carId:26,visitDate:'2026-05-23',visitTime:'10:00',notes:'Família de 5 pessoas, quer ver Spin. Marido vem junto.',createdAt:'há 1 dia'}
+];
+let clientIdSeq = 11;
+let editingClientId = null;
+let saleForCarId = null;
+
+const sellers = [
+  {name:'João Silva', initials:'JS', active:true, sales:8, revenue:412000},
+  {name:'Pedro Almeida', initials:'PA', active:true, sales:6, revenue:298000},
+  {name:'Marcos Pereira', initials:'MP', active:true, sales:4, revenue:215000},
+  {name:'Carlos Mendes', initials:'CM', active:false, sales:2, revenue:84000}
+];
+
+let favorites = {};
+
+function fmt(n){return n.toLocaleString('pt-BR')}
+function brl(n){return 'R$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function imgUrl(c){return c.inPrep ? IMG_PREP : (c.img ? IMG_BASE + c.img : '')}
+function statusLabel(s){return {lead:'Lead novo',visit:'Visita marcada',negotiating:'Negociando',followup:'Ligar de volta',sold:'Vendeu',lost:'Não comprou'}[s]||s}
+
+function daysBadgeClass(days, inPrep){
+  if(inPrep) return 'prep';
+  if(days <= 15) return 'fresh';     // VERDE — tranquilo, recente
+  if(days <= 30) return 'medium';    // AMARELO — atenção, no ritmo
+  return 'urgent';                   // VERMELHO — urgente, precisa girar
+}
+function daysBadgeLabel(days, inPrep){
+  if(inPrep) return 'Em preparação';
+  if(days <= 15) return `${days}d · Recente`;
+  if(days <= 30) return `${days}d · Atenção`;
+  return `${days}d · Girar`;
+}
+
+function enrich(c){
+  const margin = c.price - c.cost;
+  const marginPct = margin / c.price;
+  const maxDiscount = Math.floor(margin * 0.4 / 100) * 100;
+  let level, label, hint;
+  if(marginPct >= 0.13){
+    level = 'green';
+    label = 'Margem alta · negocie com tranquilidade';
+    hint = `Você pode oferecer até <b>${brl(maxDiscount)}</b> de desconto sem precisar autorizar com o gestor.`;
+  } else if(marginPct >= 0.07){
+    level = 'yellow';
+    label = 'Margem média · cuidado na negociação';
+    hint = `Limite seguro: <b>${brl(maxDiscount)}</b>. Acima disso, peça aprovação no botão "Pedir +".`;
+  } else {
+    level = 'red';
+    label = 'Margem baixa · pouco espaço';
+    hint = `Margem apertada. Desconto máximo: <b>${brl(maxDiscount)}</b>. Foque nos diferenciais do veículo.`;
+  }
+  return {...c, margin, marginPct, maxDiscount, level, label, hint};
+}
+const data = cars.map(enrich);
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window.__toastT);
+  window.__toastT = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+let state = { role:'vendor', page:'stock', filter:'all', query:'', detailId:null, clientFilter:'all', clientQuery:'' };
+
+function enterAs(role){
+  if(role === null){
+    document.getElementById('app').classList.remove('active');
+    document.getElementById('login').classList.add('active');
+    state = { role:'vendor', page:'stock', filter:'all', query:'', detailId:null, clientFilter:'all', clientQuery:'' };
+    return;
+  }
+  state.role = role;
+  document.getElementById('login').classList.remove('active');
+  document.getElementById('app').classList.add('active');
+
+  const isAdmin = role==='admin';
+  document.querySelectorAll('.admin-only').forEach(el=>el.style.display = isAdmin?'flex':'none');
+  document.querySelectorAll('.vendor-only').forEach(el=>el.style.display = isAdmin?'none':'flex');
+  document.getElementById('fab').classList.toggle('show', !isAdmin);
+
+  const name = isAdmin ? 'Sr. Belloni' : 'João Silva';
+  const initials = isAdmin ? 'SB' : 'JS';
+  const subtitle = isAdmin ? 'Administrador' : 'Vendedor';
+  document.getElementById('user-name').textContent = name;
+  document.getElementById('user-role').textContent = subtitle;
+  document.getElementById('user-avatar').textContent = initials;
+  document.getElementById('user-avatar').classList.toggle('admin', isAdmin);
+  document.getElementById('topbar-avatar').textContent = initials;
+  document.getElementById('topbar-avatar').classList.toggle('admin', isAdmin);
+
+  goto('stock');
+}
+
+function goto(page){
+  state.page = page;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  const el = document.getElementById('page-'+page);
+  if(el) el.classList.add('show');
+  document.querySelectorAll('.nav-link').forEach(n=>{
+    const route = n.dataset.route;
+    n.classList.toggle('active', route===page || (page==='detail' && route==='stock'));
+  });
+  document.querySelectorAll('.bn-item').forEach(n=>{
+    const route = n.dataset.bn;
+    n.classList.toggle('active', route===page || (page==='detail' && route==='stock'));
+  });
+  if(page==='stock') renderGrid();
+  if(page==='clients') renderClients();
+  if(page==='history') renderHistory();
+  if(page==='reports') renderReports();
+  if(page==='sellers') renderSellers();
+  if(page==='settings') renderSettings();
+  requestAnimationFrame(()=>{ window.scrollTo({top:0, behavior:'instant'}); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; });
+}
+
+function onSearch(q){ state.query = q; renderGrid(); }
+function applyChip(el, filter){
+  el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  state.filter = filter;
+  renderGrid();
+}
+
+function filterData(){
+  return data.filter(c=>{
+    if(state.filter==='ready' && c.inPrep) return false;
+    if(state.filter==='prep' && !c.inPrep) return false;
+    if(state.filter==='green' && c.level!=='green') return false;
+    if(state.filter==='yellow' && c.level!=='yellow') return false;
+    if(state.filter==='red' && c.level!=='red') return false;
+    if(state.filter==='hot' && c.days > 10) return false;
+    if(state.filter==='stale' && c.days <= 30) return false;
+    if(state.filter==='fav' && !favorites[c.id]) return false;
+    if(state.query){
+      const q = state.query.toLowerCase();
+      if(!c.name.toLowerCase().includes(q) && !c.year.includes(q) && !c.cor.toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function updateChipCounts(){
+  document.getElementById('ct-all').textContent = data.length;
+  document.getElementById('ct-ready').textContent = data.filter(c=>!c.inPrep).length;
+  document.getElementById('ct-prep').textContent = data.filter(c=>c.inPrep).length;
+}
+
+function renderStockHero(){
+  const isAdmin = state.role==='admin';
+  const totalMargin = data.reduce((s,c)=>s+c.margin,0);
+  const totalValue = data.reduce((s,c)=>s+c.price,0);
+  const ready = data.filter(c=>!c.inPrep).length;
+  const stale = data.filter(c=>c.days>30).length;
+  const high = data.filter(c=>c.level==='green' && !c.inPrep).length;
+
+  if(isAdmin){
+    document.getElementById('stock-hero-container').innerHTML = `
+      <div class="stock-summary">
+        <div class="ss-greet">Bom dia, Sr. Belloni 👋</div>
+        <div class="ss-stats">
+          <div class="ss-stat"><span class="ss-num">${data.length}</span><span class="ss-lbl">Em estoque</span></div>
+          <div class="ss-stat"><span class="ss-num" data-private>${brl(totalValue)}</span><span class="ss-lbl">Valor de mercado</span></div>
+          <div class="ss-stat"><span class="ss-num" data-private>${brl(totalMargin)}</span><span class="ss-lbl">Margem potencial</span></div>
+          <div class="ss-stat"><span class="ss-num" style="color:#dc2626">${stale}</span><span class="ss-lbl">Parados +30d</span></div>
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('stock-hero-container').innerHTML = `
+      <div class="stock-summary">
+        <div class="ss-greet">Olá, João 👋</div>
+        <div class="ss-stats">
+          <div class="ss-stat"><span class="ss-num">${ready}</span><span class="ss-lbl">Disponíveis</span></div>
+          <div class="ss-stat"><span class="ss-num">${data.length}</span><span class="ss-lbl">No catálogo</span></div>
+          <div class="ss-stat"><span class="ss-num">${high}</span><span class="ss-lbl">Margem alta</span></div>
+          <div class="ss-stat"><span class="ss-num" style="color:#dc2626">${stale}</span><span class="ss-lbl">Parados +30d</span></div>
+        </div>
+      </div>`;
+  }
+}
+
+function renderMetricGrid(){
+  const hot = data.filter(c=>c.days<=10 && !c.inPrep).length;
+  const stale = data.filter(c=>c.days>30).length;
+  const prep = data.filter(c=>c.inPrep).length;
+  const high = data.filter(c=>c.level==='green' && !c.inPrep).length;
+
+  document.getElementById('metric-grid-container').innerHTML = `
+    <div class="metric-row">
+      <div class="metric-card new ${state.filter==='hot'?'active':''}" onclick="quickFilter('hot')">
+        <div class="metric-card-head">
+          <span class="metric-lbl">Recém-chegados</span>
+          <div class="metric-icon-wrap"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        </div>
+        <div class="metric-number">${hot}</div>
+        <div class="metric-sub">≤ 10 dias no pátio</div>
+      </div>
+      <div class="metric-card margin ${state.filter==='green'?'active':''}" onclick="quickFilter('green')">
+        <div class="metric-card-head">
+          <span class="metric-lbl">Alta margem</span>
+          <div class="metric-icon-wrap"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        </div>
+        <div class="metric-number">${high}</div>
+        <div class="metric-sub">margem ≥ 13%</div>
+      </div>
+      <div class="metric-card stopped ${state.filter==='stale'?'active':''}" onclick="quickFilter('stale')">
+        <div class="metric-card-head">
+          <span class="metric-lbl">Parados</span>
+          <div class="metric-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        </div>
+        <div class="metric-number">${stale}</div>
+        <div class="metric-sub">+30 dias · rever preço</div>
+      </div>
+      <div class="metric-card prep ${state.filter==='prep'?'active':''}" onclick="quickFilter('prep')">
+        <div class="metric-card-head">
+          <span class="metric-lbl">Em preparação</span>
+          <div class="metric-icon-wrap"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        </div>
+        <div class="metric-number">${prep}</div>
+        <div class="metric-sub">aguardando estoque</div>
+      </div>
+    </div>`;
+}
+
+function quickFilter(filter){
+  state.filter = filter;
+  document.querySelectorAll('#stock-chips .chip').forEach(c=>c.classList.remove('active'));
+  const map = {hot:'Recém-chegados', green:'Alta margem', stale:'+30d', prep:'Em preparação'};
+  const search = map[filter];
+  const match = Array.from(document.querySelectorAll('#stock-chips .chip')).find(c=>c.textContent.includes(search));
+  if(match) match.classList.add('active');
+  else document.querySelector('#stock-chips .chip').classList.add('active');
+  renderGrid();
+}
+
+function renderVehicleCard(c, isAdmin){
+  const imgStyle = `background-image:url('${imgUrl(c)}')`;
+  const dayClass = daysBadgeClass(c.days, c.inPrep);
+  const dayLabel = daysBadgeLabel(c.days, c.inPrep);
+  const daysBadgeHtml = `<div class="days-badge ${dayClass}">${dayLabel}</div>`;
+  const favBtn = `<div class="vehicle-fav ${favorites[c.id]?'active':''}" onclick="event.stopPropagation();toggleFav(${c.id})"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>`;
+  const cardClass = c.inPrep ? 'preparing' : c.days > 30 ? 'stale' : '';
+
+  if(isAdmin){
+    return `
+      <div class="vehicle-card admin ${cardClass}" onclick="openDetail(${c.id})">
+        <div class="vehicle-image-wrap"><div class="vehicle-image" style="${imgStyle}"></div>${daysBadgeHtml}${favBtn}</div>
+        <div class="vehicle-content">
+          <div class="vehicle-title">${c.name}</div>
+          <div class="vehicle-meta">
+            <span>${c.year}</span><span class="vehicle-meta-dot">·</span>
+            <span>${c.km}</span><span class="vehicle-meta-dot">·</span>
+            <span>${c.cambio}</span>
+          </div>
+          <div class="vehicle-price-row">
+            <div class="vehicle-price">${brl(c.price)}</div>
+            <div class="margin-badge ${c.level}"><div class="margin-dot ${c.level}"></div>${(c.marginPct*100).toFixed(1)}%</div>
+          </div>
+        </div>
+        <div class="admin-car-metrics">
+          <div class="admin-metric"><div class="admin-metric-label">Custo</div><div class="admin-metric-value">${brl(c.cost)}</div></div>
+          <div class="admin-metric"><div class="admin-metric-label">Lucro</div><div class="admin-metric-value ${c.level}">${brl(c.margin)}</div></div>
+          <div class="admin-metric"><div class="admin-metric-label">Vendedor até</div><div class="admin-metric-value">${brl(c.maxDiscount)}</div></div>
+        </div>
+      </div>`;
+  }
+  return `
+    <div class="vehicle-card ${cardClass}" onclick="openDetail(${c.id})">
+      <div class="vehicle-image-wrap"><div class="vehicle-image" style="${imgStyle}"></div>${daysBadgeHtml}${favBtn}</div>
+      <div class="vehicle-content">
+        <div class="vehicle-title">${c.name}</div>
+        <div class="vehicle-meta">
+          <span>${c.year}</span><span class="vehicle-meta-dot">·</span>
+          <span>${c.km}</span><span class="vehicle-meta-dot">·</span>
+          <span>${c.cambio}</span>
+        </div>
+        <div class="vehicle-price-row">
+          <div class="vehicle-price">${brl(c.price)}</div>
+          <div class="margin-badge ${c.inPrep?'prep':c.level}">${c.inPrep?'Em prep.':'<div class="margin-dot '+c.level+'"></div>'+(c.level==='green'?'Alta':c.level==='yellow'?'Média':'Baixa')}</div>
+        </div>
+        ${c.inPrep ? '' : `<div class="vehicle-footer"><span>Desconto máximo</span><span class="vehicle-footer-value">${brl(c.maxDiscount)}</span></div>`}
+      </div>
+    </div>`;
+}
+
+function renderGrid(){
+  updateChipCounts();
+  renderStockHero();
+  renderMetricGrid();
+  // Mostra/esconde botão "Limpar filtros"
+  const clearBtn = document.getElementById('filter-clear-btn');
+  if(clearBtn) clearBtn.style.display = (state.filter !== 'all' || state.query) ? 'inline-flex' : 'none';
+  const container = document.getElementById('car-grid-container');
+  const filtered = filterData();
+  const isAdmin = state.role==='admin';
+
+  document.getElementById('nav-count').textContent = data.length;
+  document.getElementById('stock-sub').textContent =
+    isAdmin ? `${filtered.length} de ${data.length} veículos · ${brl(data.reduce((s,c)=>s+c.margin,0))} de margem total no estoque` :
+              `${filtered.length} de ${data.length} veículos · estoque atualizado`;
+
+  if(filtered.length === 0){
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <h3>Nenhum veículo encontrado</h3>
+        <p>Ajuste os filtros ou a busca pra encontrar o veículo que procura.</p>
+      </div>`;
+    return;
+  }
+
+  if(state.filter==='all' && !state.query){
+    const ready = filtered.filter(c=>!c.inPrep);
+    const prep = filtered.filter(c=>c.inPrep);
+    container.innerHTML = `
+      ${ready.length ? `
+        <div class="section-divider">Prontos para venda <span class="section-divider-count">${ready.length}</span></div>
+        <div class="vehicle-grid">${ready.map(c=>renderVehicleCard(c,isAdmin)).join('')}</div>
+      ` : ''}
+      ${prep.length ? `
+        <div class="section-divider prep">Em preparação <span class="section-divider-count">${prep.length}</span></div>
+        <div class="vehicle-grid">${prep.map(c=>renderVehicleCard(c,isAdmin)).join('')}</div>
+      ` : ''}`;
+  } else {
+    container.innerHTML = `<div class="vehicle-grid">${filtered.map(c=>renderVehicleCard(c,isAdmin)).join('')}</div>`;
+  }
+}
+
+function toggleFav(id){
+  if(favorites[id]) delete favorites[id]; else favorites[id] = true;
+  toast(favorites[id] ? 'Adicionado aos favoritos' : 'Removido dos favoritos');
+  renderGrid();
+}
+
+function openDetail(id){
+  state.detailId = id;
+  const c = data.find(x=>x.id===id);
+  if(!c) return;
+
+  // Update prev/next nav counter based on current filtered list
+  const filtered = filterData();
+  const idx = filtered.findIndex(x=>x.id===id);
+  document.getElementById('d-counter').textContent = idx >= 0 ? `${idx+1} de ${filtered.length}` : '';
+  document.getElementById('d-prev').disabled = idx <= 0;
+  document.getElementById('d-next').disabled = idx === -1 || idx >= filtered.length - 1;
+
+  const hero = document.getElementById('d-hero');
+  hero.style.background = `url('${imgUrl(c)}') center/cover`;
+
+  let pillsHtml = '';
+  if(c.inPrep) pillsHtml += '<div class="detail-pill prep">Em preparação</div>';
+  if(!c.inPrep){
+    const dayClass = daysBadgeClass(c.days, c.inPrep);
+    pillsHtml += `<div class="detail-pill ${dayClass}">${daysBadgeLabel(c.days, c.inPrep)}</div>`;
+  }
+  document.querySelector('#d-hero .detail-hero-pills').innerHTML = pillsHtml;
+
+  document.getElementById('d-title').textContent = c.name;
+  document.getElementById('d-meta').textContent = `${c.year} · ${c.km} · ${c.cor}`;
+  document.getElementById('d-price').textContent = brl(c.price);
+
+  const panel = document.getElementById('d-panel');
+  panel.className = 'margin-panel '+c.level;
+  document.getElementById('d-mlabel').textContent = c.label;
+  document.getElementById('d-mvalue').textContent = `até ${brl(c.maxDiscount)}`;
+  document.getElementById('d-mhint').innerHTML = c.hint;
+
+  document.getElementById('d-specs').innerHTML = `
+    <div class="spec"><div class="spec-label">Ano</div><div class="spec-value">${c.year}</div></div>
+    <div class="spec"><div class="spec-label">Quilometragem</div><div class="spec-value">${c.km}</div></div>
+    <div class="spec"><div class="spec-label">Câmbio</div><div class="spec-value">${c.cambio}</div></div>
+    <div class="spec"><div class="spec-label">Combustível</div><div class="spec-value">${c.combustivel}</div></div>
+    <div class="spec"><div class="spec-label">Cor</div><div class="spec-value">${c.cor}</div></div>
+    <div class="spec"><div class="spec-label">Tempo no pátio</div><div class="spec-value">${c.days} dias</div></div>
+    ${state.role==='admin' ? `
+      <div class="spec" style="background:rgba(220,38,38,0.04);border-color:rgba(220,38,38,0.25)"><div class="spec-label" style="color:#dc2626">Custo (admin)</div><div class="spec-value" style="color:#dc2626">${brl(c.cost)}</div></div>
+      <div class="spec" style="background:rgba(22,163,74,0.04);border-color:rgba(22,163,74,0.25)"><div class="spec-label" style="color:var(--grn)">Lucro (admin)</div><div class="spec-value" style="color:var(--grn)">${brl(c.margin)}</div></div>
+    ` : ''}
+  `;
+  document.getElementById('d-opc').innerHTML = c.opcionais.map(o=>`<div class="opcional">${o}</div>`).join('');
+  goto('detail');
+}
+
+function navDetail(direction){
+  const filtered = filterData();
+  const idx = filtered.findIndex(x=>x.id===state.detailId);
+  const newIdx = idx + direction;
+  if(newIdx < 0 || newIdx >= filtered.length) return;
+  openDetail(filtered[newIdx].id);
+}
+
+function openWhatsApp(phone, name){
+  const cleanPhone = String(phone).replace(/\D/g,'');
+  const msg = encodeURIComponent(`Olá ${name}! Tudo bem? Sou da Belloni Motors.`);
+  toast(`Abrindo WhatsApp para ${name}...`);
+  window.open(`https://wa.me/55${cleanPhone}?text=${msg}`, '_blank');
+}
+
+function clearFilters(){
+  state.filter='all'; state.query='';
+  document.getElementById('search-input').value = '';
+  document.querySelectorAll('#stock-chips .chip').forEach(c=>c.classList.remove('active'));
+  document.querySelector('#stock-chips .chip').classList.add('active');
+  renderGrid();
+  toast('Filtros limpos');
+}
+
+function onClientSearch(q){ state.clientQuery=q; renderClients(); }
+function applyClientChip(el, filter){
+  el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  state.clientFilter = filter;
+  renderClients();
+}
+
+function updateClientChipCounts(){
+  document.getElementById('cc-all').textContent = clients.length;
+  ['lead','visit','negotiating','followup','sold','lost'].forEach(s=>{
+    document.getElementById('cc-'+s).textContent = clients.filter(c=>c.status===s).length;
+  });
+}
+
+function renderClientsHero(){
+  const sold = clients.filter(c=>c.status==='sold');
+  const totalRevenue = sold.reduce((s,c)=>s+(c.soldValue||0),0);
+  const pipeline = clients.filter(c=>['lead','visit','negotiating','followup'].includes(c.status)).length;
+  const visits = clients.filter(c=>c.status==='visit').length;
+  document.getElementById('clients-hero-container').innerHTML = `
+    <div class="hero-card" style="margin-bottom:22px">
+      <div class="hero-top">
+        <div class="hero-info">
+          <div class="hero-tag">Pipeline do mês</div>
+          <div class="hero-title">${clients.length} clientes no funil</div>
+          <div class="hero-sub">${sold.length} fechados · ${pipeline} em andamento</div>
+        </div>
+        <img class="hero-logo" src="assets/logo-belloni.png" alt="Belloni Motors">
+      </div>
+      <div class="hero-metrics">
+        <div class="hm good">
+          <div class="hm-lbl">Vendas</div>
+          <div class="hm-val grn">${sold.length}</div>
+          <div class="hm-delta delta-g">${brl(totalRevenue)}</div>
+        </div>
+        <div class="hm">
+          <div class="hm-lbl">Visitas</div>
+          <div class="hm-val">${visits}</div>
+          <div class="hm-delta delta-n">agendadas</div>
+        </div>
+        <div class="hm yel">
+          <div class="hm-lbl">Em negociação</div>
+          <div class="hm-val yel">${clients.filter(c=>c.status==='negotiating').length}</div>
+          <div class="hm-delta delta-y">acompanhar</div>
+        </div>
+        <div class="hm red">
+          <div class="hm-lbl">Perdidos</div>
+          <div class="hm-val" style="color:#dc2626">${clients.filter(c=>c.status==='lost').length}</div>
+          <div class="hm-delta delta-r">verificar motivo</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function clientCard(cl){
+  const car = data.find(c=>c.id===cl.carId);
+  const carThumb = car ? `<div class="client-car-thumb" style="background-image:url('${imgUrl(car)}')"></div>` : '';
+  const carInfo = car ? `<div class="client-car-info"><div class="client-car-name">${car.name}</div><div class="client-car-price">${brl(car.price)} · ${car.year}</div></div>` : '<div class="client-car-info"><div class="client-car-name" style="color:var(--mu);font-weight:600">Sem carro vinculado</div></div>';
+
+  let nextAction = '';
+  if(cl.status==='visit' && cl.visitDate){
+    const d = new Date(cl.visitDate); const day=String(d.getDate()).padStart(2,'0'); const mo=String(d.getMonth()+1).padStart(2,'0');
+    nextAction = `<div class="client-next"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Visita ${day}/${mo}${cl.visitTime?' às '+cl.visitTime:''}</div>`;
+  } else if(cl.status==='followup' && cl.followupDate){
+    const d = new Date(cl.followupDate); const day=String(d.getDate()).padStart(2,'0'); const mo=String(d.getMonth()+1).padStart(2,'0');
+    nextAction = `<div class="client-next"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Ligar ${day}/${mo}</div>`;
+  }
+
+  let noteHtml = '';
+  if(cl.notes){
+    let cls = '';
+    if(cl.status==='sold') cls='success';
+    else if(cl.status==='lost') cls='danger';
+    noteHtml = `<div class="client-note ${cls}">${cl.status==='lost'&&cl.lostReason?`<b>Motivo:</b> ${cl.lostReason}<br>`:''}${cl.status==='sold'?`<b>Vendido por ${brl(cl.soldValue)}</b> (desconto ${brl(cl.discount)})<br>`:''}${cl.notes}</div>`;
+  }
+
+  return `
+    <div class="client-card" onclick="openClientModal(${cl.id})">
+      <div class="client-head">
+        <div class="client-avatar">${cl.name.split(' ').map(p=>p[0]).slice(0,2).join('').toUpperCase()}</div>
+        <div class="client-info">
+          <div class="client-name">${cl.name}</div>
+          <div class="client-phone">${cl.phone}</div>
+        </div>
+        <div class="client-status ${cl.status}">${statusLabel(cl.status)}</div>
+      </div>
+      ${car ? `<div class="client-car">${carThumb}${carInfo}</div>` : ''}
+      ${nextAction}
+      ${noteHtml}
+      <div class="client-actions">
+        <button class="btn btn-whatsapp" onclick="event.stopPropagation();openWhatsApp('${cl.phone}','${cl.name.replace(/'/g,"")}')">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          WhatsApp
+        </button>
+        <button class="btn btn-secondary" onclick="event.stopPropagation();openClientModal(${cl.id})">
+          <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Editar
+        </button>
+      </div>
+    </div>`;
+}
+
+function renderClients(){
+  updateClientChipCounts();
+  renderClientsHero();
+  document.getElementById('nav-clients').textContent = clients.length;
+  const filtered = clients.filter(cl=>{
+    if(state.clientFilter!=='all' && cl.status!==state.clientFilter) return false;
+    if(state.clientQuery){
+      const q = state.clientQuery.toLowerCase();
+      if(!cl.name.toLowerCase().includes(q) && !cl.phone.includes(q)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('clients-sub').textContent =
+    filtered.length === 0 ? 'Nenhum cliente encontrado' :
+    `${filtered.length} ${filtered.length===1?'cliente':'clientes'} · ${clients.filter(c=>c.status==='sold').length} vendas fechadas`;
+
+  const ct = document.getElementById('clients-grid-container');
+  if(filtered.length===0){
+    ct.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <h3>Nenhum cliente nesse filtro</h3>
+        <p>Use o botão "Novo cliente" pra cadastrar leads, marcar visitas, registrar vendas ou anotar motivos de não-compra.</p>
+        <button class="btn btn-primary" onclick="openClientModal()" style="margin-top:18px">Cadastrar primeiro cliente</button>
+      </div>`;
+    return;
+  }
+  ct.innerHTML = `<div class="clients-grid">${filtered.map(clientCard).join('')}</div>`;
+}
+
+let modalStatus = 'lead';
+function selectStatus(el){
+  el.parentElement.querySelectorAll('.status-pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  modalStatus = el.dataset.status;
+  ['visit','followup','sold','lost'].forEach(s=>{
+    document.getElementById('cl-cond-'+s).classList.toggle('show', modalStatus===s);
+  });
+}
+
+function openClientModal(clientId, prefillCarId){
+  editingClientId = clientId || null;
+  document.getElementById('client-modal-title').textContent = clientId ? 'Editar cliente' : 'Novo cliente';
+  document.getElementById('cl-delete').style.display = clientId ? 'inline-flex' : 'none';
+
+  const sel = document.getElementById('cl-car');
+  sel.innerHTML = '<option value="">Sem carro vinculado</option>' +
+    data.map(c=>`<option value="${c.id}">${c.name} · ${brl(c.price)}</option>`).join('');
+
+  if(clientId){
+    const cl = clients.find(c=>c.id===clientId);
+    document.getElementById('cl-name').value = cl.name || '';
+    document.getElementById('cl-phone').value = cl.phone || '';
+    document.getElementById('cl-car').value = cl.carId || '';
+    document.getElementById('cl-notes').value = cl.notes || '';
+    document.getElementById('cl-visit-date').value = cl.visitDate || '';
+    document.getElementById('cl-visit-time').value = cl.visitTime || '14:00';
+    document.getElementById('cl-followup-date').value = cl.followupDate || '';
+    document.getElementById('cl-sold-value').value = cl.soldValue ? brl(cl.soldValue) : '';
+    document.getElementById('cl-lost-reason').value = cl.lostReason || '';
+    document.querySelectorAll('#cl-status-pills .status-pill').forEach(p=>{
+      p.classList.toggle('active', p.dataset.status===cl.status);
+    });
+    selectStatus(document.querySelector(`#cl-status-pills .status-pill[data-status="${cl.status}"]`));
+  } else {
+    document.getElementById('cl-name').value = '';
+    document.getElementById('cl-phone').value = '';
+    document.getElementById('cl-car').value = prefillCarId || '';
+    document.getElementById('cl-notes').value = '';
+    document.getElementById('cl-visit-date').value = '';
+    document.getElementById('cl-followup-date').value = '';
+    document.getElementById('cl-sold-value').value = '';
+    selectStatus(document.querySelector('#cl-status-pills .status-pill[data-status="lead"]'));
+  }
+  document.getElementById('modal-client').classList.add('show');
+}
+
+function saveClient(){
+  const name = document.getElementById('cl-name').value.trim();
+  if(!name){ toast('Informe o nome do cliente'); return; }
+  const newData = {
+    name,
+    phone: document.getElementById('cl-phone').value.trim() || '(sem telefone)',
+    carId: parseInt(document.getElementById('cl-car').value) || null,
+    notes: document.getElementById('cl-notes').value.trim(),
+    status: modalStatus,
+    createdAt: 'agora mesmo'
+  };
+  if(modalStatus==='visit'){
+    newData.visitDate = document.getElementById('cl-visit-date').value;
+    newData.visitTime = document.getElementById('cl-visit-time').value;
+  }
+  if(modalStatus==='followup'){
+    newData.followupDate = document.getElementById('cl-followup-date').value;
+  }
+  if(modalStatus==='sold'){
+    const v = document.getElementById('cl-sold-value').value.replace(/\D/g,'');
+    newData.soldValue = parseInt(v) || 0;
+  }
+  if(modalStatus==='lost'){
+    newData.lostReason = document.getElementById('cl-lost-reason').value;
+  }
+
+  if(editingClientId){
+    const idx = clients.findIndex(c=>c.id===editingClientId);
+    clients[idx] = {...clients[idx], ...newData};
+    toast('Cliente atualizado');
+  } else {
+    clients.unshift({id:clientIdSeq++, ...newData});
+    toast('Cliente cadastrado · '+statusLabel(modalStatus));
+  }
+  closeModal('modal-client');
+  renderClients();
+  if(state.page!=='clients') goto('clients');
+}
+
+function deleteClient(){
+  if(!editingClientId) return;
+  if(!confirm('Excluir esse cliente do pipeline?')) return;
+  clients = clients.filter(c=>c.id!==editingClientId);
+  toast('Cliente removido');
+  closeModal('modal-client');
+  renderClients();
+}
+
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+function openSaleModal(carId){
+  saleForCarId = carId;
+  const c = data.find(x=>x.id===carId);
+  if(!c) return;
+  document.getElementById('sale-car-preview').innerHTML = `
+    <div class="car-select-thumb" style="background-image:url('${imgUrl(c)}')"></div>
+    <div class="car-select-info">
+      <div class="car-select-name">${c.name}</div>
+      <div class="car-select-meta">${c.year} · ${brl(c.price)} de tabela</div>
+    </div>`;
+  document.getElementById('sale-client-name').value = '';
+  document.getElementById('sale-client-phone').value = '';
+  document.getElementById('sale-final').value = brl(c.price);
+  document.getElementById('sale-discount').value = 'R$ 0';
+  document.getElementById('sale-notes').value = '';
+  document.getElementById('modal-sale').classList.add('show');
+}
+
+function saveSale(){
+  const name = document.getElementById('sale-client-name').value.trim();
+  if(!name){ toast('Informe o nome do cliente'); return; }
+  const finalVal = parseInt(document.getElementById('sale-final').value.replace(/\D/g,'')) || 0;
+  const discount = parseInt(document.getElementById('sale-discount').value.replace(/\D/g,'')) || 0;
+  clients.unshift({
+    id: clientIdSeq++,
+    name,
+    phone: document.getElementById('sale-client-phone').value.trim() || '(sem telefone)',
+    status: 'sold',
+    carId: saleForCarId,
+    soldValue: finalVal,
+    discount,
+    payment: document.getElementById('sale-payment').value,
+    notes: document.getElementById('sale-notes').value.trim(),
+    createdAt: 'agora mesmo'
+  });
+  toast(`Venda registrada · ${brl(finalVal)}`);
+  closeModal('modal-sale');
+  goto('clients');
+}
+
+document.querySelectorAll('.modal-backdrop').forEach(b=>{
+  b.addEventListener('click', e=>{ if(e.target===b) b.classList.remove('show'); });
+});
+
+// ESC fecha qualquer modal aberto · ← → navega entre veículos no detalhe
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){
+    document.querySelectorAll('.modal-backdrop.show').forEach(b=>b.classList.remove('show'));
+  }
+  if(state.page === 'detail' && document.querySelectorAll('.modal-backdrop.show').length === 0){
+    if(e.key === 'ArrowLeft') navDetail(-1);
+    if(e.key === 'ArrowRight') navDetail(1);
+  }
+});
+
+// Sticky chips: adiciona sombra quando "gruda" no topo durante scroll
+function watchStickyChips(){
+  const chips = document.querySelectorAll('#page-stock .chips, #page-clients .chips');
+  chips.forEach(chip=>{
+    const observer = new IntersectionObserver(([e])=>{
+      chip.classList.toggle('stuck', e.intersectionRatio < 1);
+    },{threshold:[1], rootMargin:'-1px 0px 0px 0px'});
+    observer.observe(chip);
+  });
+}
+setTimeout(watchStickyChips, 100);
+
+function renderHistory(){
+  const ct = document.getElementById('history-content');
+  const soldClients = clients.filter(c=>c.status==='sold');
+  const totalRevenue = soldClients.reduce((s,c)=>s+(c.soldValue||0),0);
+  const totalDiscount = soldClients.reduce((s,c)=>s+(c.discount||0),0);
+
+  const events = [];
+  clients.forEach(cl=>{
+    const car = data.find(c=>c.id===cl.carId);
+    const carName = car ? car.name : 'sem carro';
+    if(cl.status==='sold'){
+      events.push({type:'sale',time:cl.createdAt,title:`Venda fechada · ${carName}`,sub:`Cliente <b>${cl.name}</b> · Pago <b>${brl(cl.soldValue||0)}</b> · Desconto <b>${brl(cl.discount||0)}</b> · ${cl.payment||''}`});
+    } else if(cl.status==='lost'){
+      events.push({type:'note',time:cl.createdAt,title:`Lead perdido · ${carName}`,sub:`Cliente <b>${cl.name}</b> · Motivo: ${cl.lostReason||'—'}`});
+    } else if(cl.status==='visit'){
+      const dStr = cl.visitDate ? new Date(cl.visitDate).toLocaleDateString('pt-BR') : '?';
+      events.push({type:'note',time:cl.createdAt,title:`Visita agendada · ${carName}`,sub:`Cliente <b>${cl.name}</b> · ${dStr} ${cl.visitTime||''}`});
+    } else {
+      events.push({type:'view',time:cl.createdAt,title:`${statusLabel(cl.status)} · ${carName}`,sub:`Cliente <b>${cl.name}</b> · ${cl.notes||''}`});
+    }
+  });
+
+  ct.innerHTML = `
+    <div class="skpi-row">
+      <div class="skpi">
+        <div class="skpi-lbl">Vendas este mês</div>
+        <div class="skpi-val accent">${soldClients.length}</div>
+        <div class="skpi-badge bg">↑ 33% vs mês passado</div>
+      </div>
+      <div class="skpi">
+        <div class="skpi-lbl">Faturamento</div>
+        <div class="skpi-val">${brl(totalRevenue)}</div>
+        <div class="skpi-badge bg">↑ R$ 89K</div>
+      </div>
+      <div class="skpi">
+        <div class="skpi-lbl">Desconto médio</div>
+        <div class="skpi-val">${brl(Math.round(totalDiscount/Math.max(1,soldClients.length)))}</div>
+        <div class="skpi-badge bn">por venda</div>
+      </div>
+      <div class="skpi">
+        <div class="skpi-lbl">Pipeline aberto</div>
+        <div class="skpi-val yel">${clients.filter(c=>['lead','visit','negotiating','followup'].includes(c.status)).length}</div>
+        <div class="skpi-badge by">em andamento</div>
+      </div>
+    </div>
+
+    <div class="sec-header">
+      <span class="sec-label">Atividade recente</span>
+      <div class="sec-rule"></div>
+    </div>
+
+    <div class="timeline">
+      ${events.slice(0,20).map(it=>`
+        <div class="timeline-item ${it.type}">
+          <div class="ti-head">
+            <span class="ti-type ${it.type}">${it.type==='view'?'Atualizado':it.type==='sale'?'Venda':it.type==='note'?'Anotação':'Pedido'}</span>
+            <span class="ti-time">${it.time}</span>
+          </div>
+          <div class="ti-title">${it.title}</div>
+          <div class="ti-sub">${it.sub}</div>
+        </div>
+      `).join('') || '<div style="text-align:center;padding:40px;color:var(--mu)">Nenhuma atividade ainda.</div>'}
+    </div>`;
+}
+
+function buildLineChart(salesData, days){
+  const W = 600, H = 180, P = 16;
+  const maxV = Math.max(...salesData);
+  const stepX = (W - P*2) / (salesData.length - 1);
+  const points = salesData.map((v,i)=>({ x: P + i * stepX, y: H - P - (v/maxV) * (H - P*2), v }));
+  const path = points.map((p,i)=>`${i===0?'M':'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+  const peak = points.reduce((a,b)=>a.v>b.v?a:b);
+  const areaPath = path + ` L ${points[points.length-1].x.toFixed(1)} ${H-P} L ${P} ${H-P} Z`;
+
+  return `
+    <svg viewBox="0 0 ${W} ${H+24}" class="line-chart" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="chartAreaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#CC0000" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#CC0000" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="${areaPath}" class="line-chart-area"/>
+      <line x1="${peak.x}" y1="${peak.y-4}" x2="${peak.x}" y2="${H-P}" class="line-chart-marker"/>
+      <path d="${path}" class="line-chart-path"/>
+      <circle cx="${peak.x}" cy="${peak.y}" r="5" class="line-chart-dot"/>
+      <rect x="${peak.x-16}" y="${peak.y-22}" width="32" height="16" rx="4" class="line-chart-badge"/>
+      <text x="${peak.x}" y="${peak.y-10}" text-anchor="middle" class="line-chart-badge-text">${peak.v}</text>
+      ${days.map((d,i)=>`<text x="${points[i].x}" y="${H+12}" text-anchor="middle" class="line-chart-xlabel">${d}</text>`).join('')}
+    </svg>`;
+}
+
+function renderReports(){
+  const ct = document.getElementById('reports-content');
+  const totalMargin = data.reduce((s,c)=>s+c.margin,0);
+  const staleCars = data.filter(c=>c.days>30).sort((a,b)=>b.days-a.days).slice(0,4);
+  const salesData = [3, 5, 2, 6, 4, 8, 7];
+  const days = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+
+  ct.innerHTML = `
+    <div class="hero-card" style="margin-bottom:22px">
+      <div class="hero-top">
+        <div class="hero-info">
+          <div class="hero-tag">Visão geral · 30 dias</div>
+          <div class="hero-title">Performance da loja</div>
+          <div class="hero-sub">Resumo executivo · ${new Date().toLocaleDateString('pt-BR')}</div>
+        </div>
+        <img class="hero-logo" src="assets/logo-belloni.png" alt="Belloni Motors">
+      </div>
+      <div class="hero-metrics">
+        <div class="hm good">
+          <div class="hm-lbl">Vendas</div>
+          <div class="hm-val accent">20</div>
+          <div class="hm-delta delta-g">↑ 33% vs anterior</div>
+        </div>
+        <div class="hm">
+          <div class="hm-lbl">Faturamento</div>
+          <div class="hm-val">R$ 1,21M</div>
+          <div class="hm-delta delta-g">↑ R$ 218K</div>
+        </div>
+        <div class="hm good">
+          <div class="hm-lbl">Lucro realizado</div>
+          <div class="hm-val grn">R$ 136K</div>
+          <div class="hm-delta delta-g">11,2% margem</div>
+        </div>
+        <div class="hm red">
+          <div class="hm-lbl">Parados +30d</div>
+          <div class="hm-val" style="color:#dc2626">${staleCars.length}+</div>
+          <div class="hm-delta delta-r">rever preços</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-header">
+      <span class="sec-label">Análise semanal</span>
+      <div class="sec-rule"></div>
+    </div>
+
+    <div class="report-grid">
+      <div class="report-card large">
+        <div class="report-card-head">
+          <div>
+            <div class="report-card-title">Vendas · últimos 7 dias</div>
+            <div class="chart-headline">
+              <div class="chart-headline-value">35</div>
+              <div class="chart-headline-trend">↑ 12% vs semana anterior</div>
+            </div>
+          </div>
+          <div class="report-card-action" onclick="toast('Em breve: histórico completo')">Ver tudo →</div>
+        </div>
+        ${buildLineChart(salesData, days)}
+      </div>
+
+      <div class="report-card small">
+        <div class="report-card-head">
+          <div class="report-card-title">Top vendedores</div>
+          <div class="report-card-action" onclick="goto('sellers')">Equipe →</div>
+        </div>
+        <div class="ranking">
+          ${sellers.slice().sort((a,b)=>b.revenue-a.revenue).map((s,i)=>`
+            <div class="rank-row" onclick="goto('sellers')">
+              <div class="rn ${i===0?'top':i===1?'silver':i===2?'bronze':''}">${i+1}</div>
+              <div class="rn-avatar">${s.initials}</div>
+              <div class="rn-info" style="flex:1;min-width:0"><div class="rn-name">${s.name}</div><div class="rn-sub">${s.sales} vendas</div></div>
+              <div><div class="rn-value">${brl(s.revenue)}</div><div class="rn-value-sub">faturado</div></div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-header">
+      <span class="sec-label">Alertas do estoque</span>
+      <div class="sec-rule"></div>
+    </div>
+
+    <div class="report-card full">
+      <div class="report-card-head">
+        <div class="report-card-title">Carros parados há mais de 30 dias</div>
+        <div class="report-card-action" onclick="state.filter='stale';goto('stock')">Ver todos →</div>
+      </div>
+      <div class="alert-list">
+        ${staleCars.map(c=>{
+          const imgStyle = `background-image:url('${imgUrl(c)}')`;
+          return `<div class="alert-item" onclick="openDetail(${c.id})">
+            <div class="alert-thumb" style="${imgStyle}"></div>
+            <div class="alert-info"><div class="alert-title">${c.name}</div><div class="alert-sub">${c.days} dias parado · ${brl(c.price)} · margem ${(c.marginPct*100).toFixed(1)}%</div></div>
+            <div class="alert-cta">Rever preço</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+function renderSellers(){
+  const ct = document.getElementById('sellers-content');
+  ct.innerHTML = `
+    <div class="sellers-grid">
+      ${sellers.map(s=>`
+        <div class="seller-card" onclick="toast('Perfil de ${s.name} em breve')">
+          <div class="seller-head">
+            <div class="seller-avatar ${!s.active?'off':''}">${s.initials}</div>
+            <div class="seller-info">
+              <div class="seller-name">${s.name}</div>
+              <div class="seller-meta">
+                <span class="seller-status ${s.active?'':'off'}">${s.active?'Ativo':'Pausado'}</span>
+                <span style="color:var(--xlt)">·</span>
+                <span>desde mai/2024</span>
+              </div>
+            </div>
+            <div class="icon-btn" onclick="event.stopPropagation();toast('Opções do vendedor')">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+            </div>
+          </div>
+          <div class="seller-stats">
+            <div class="seller-stat"><div class="seller-stat-label">Vendas no mês</div><div class="seller-stat-value">${s.sales}</div></div>
+            <div class="seller-stat"><div class="seller-stat-label">Faturamento</div><div class="seller-stat-value">${brl(s.revenue)}</div></div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function renderSettings(){
+  const ct = document.getElementById('settings-content');
+  ct.innerHTML = `
+    <div class="settings-grid">
+      <div class="settings-card">
+        <div class="settings-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="settings-title">Faixas de margem</div>
+        <div class="settings-sub">Defina os percentuais que separam margem alta, média e baixa.</div>
+        <div class="range-row"><div class="range-info"><div class="range-dot" style="background:var(--grn)"></div><div class="range-name">Margem alta acima de</div></div><div><input type="text" class="range-input" value="13"> %</div></div>
+        <div class="range-row"><div class="range-info"><div class="range-dot" style="background:var(--yel)"></div><div class="range-name">Margem média entre</div></div><div><input type="text" class="range-input" value="7-13"> %</div></div>
+        <div class="range-row"><div class="range-info"><div class="range-dot" style="background:#dc2626"></div><div class="range-name">Margem baixa abaixo de</div></div><div><input type="text" class="range-input" value="7"> %</div></div>
+        <div class="form-row" style="margin-top:18px;margin-bottom:0">
+          <div class="form-label">% liberada para o vendedor</div>
+          <div style="display:flex;align-items:center;gap:12px"><input type="range" min="20" max="60" value="40" style="flex:1" oninput="this.nextElementSibling.textContent=this.value+'%'"><span style="font-weight:900;font-size:1rem;min-width:50px;text-align:right;color:var(--red)">40%</span></div>
+          <div class="form-help">Vendedor pode dar até 40% da margem como desconto sem aprovação.</div>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="settings-title">Integração de estoque</div>
+        <div class="settings-sub">Fonte do estoque a definir na implantação (Shopify, planilha ou cadastro manual).</div>
+        <div class="status-row warn"><div class="status-dot"></div><div class="status-info"><div class="status-title">Fonte de estoque a definir</div><div class="status-sub">Por enquanto, estoque de exemplo · 47 veículos</div></div></div>
+        <div class="form-row"><label class="form-label">Fonte do estoque</label><select class="form-select"><option>Definir na implantação</option><option>Shopify (catálogo do site)</option><option>Cadastro manual no painel</option><option>Planilha / outra fonte</option></select></div>
+        <div class="form-row"><label class="form-label">Frequência</label><select class="form-select"><option>A cada 5 minutos (recomendado)</option><option>A cada 15 minutos</option><option>A cada 1 hora</option><option>Manual</option></select></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:6px" onclick="toast('Sincronização de estoque será configurada na implantação')"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Sincronizar agora</button>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <div class="settings-title">Notificações WhatsApp</div>
+        <div class="settings-sub">Para onde enviar pedidos de aprovação e alertas.</div>
+        <div class="form-row"><label class="form-label">Seu WhatsApp (admin)</label><input type="text" class="form-input" value="+55 16 99999-1234"></div>
+        <div class="form-row"><label class="form-label">Notificar também sobre</label><div style="display:flex;flex-direction:column;gap:10px"><label style="display:flex;align-items:center;gap:10px;font-size:.82rem;cursor:pointer;color:var(--tx);font-weight:600"><input type="checkbox" checked> Vendas fechadas pelos vendedores</label><label style="display:flex;align-items:center;gap:10px;font-size:.82rem;cursor:pointer;color:var(--tx);font-weight:600"><input type="checkbox" checked> Carros parados há +30 dias</label><label style="display:flex;align-items:center;gap:10px;font-size:.82rem;cursor:pointer;color:var(--tx);font-weight:600"><input type="checkbox"> Cada nova consulta dos vendedores</label></div></div>
+      </div>
+
+      <div class="settings-card">
+        <div class="settings-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+        <div class="settings-title">Sobre o sistema</div>
+        <div class="settings-sub">Informações da instalação e suporte.</div>
+        <div class="form-row"><label class="form-label">Versão</label><div style="font-size:.92rem;font-weight:800;color:var(--tx)">v0.5.0-prototipo · ${new Date().toLocaleDateString('pt-BR')}</div></div>
+        <div class="form-row"><label class="form-label">Loja</label><div style="font-size:.92rem;font-weight:800;color:var(--tx)">Belloni Motors</div></div>
+        <div class="form-row"><label class="form-label">Vendedores ativos</label><div style="font-size:.92rem;font-weight:800;color:var(--tx)">${sellers.filter(s=>s.active).length} de ${sellers.length}</div></div>
+        <button class="btn btn-secondary" style="width:100%;margin-top:8px" onclick="toast('Abrindo suporte Criativvo...')">Falar com o suporte</button>
+      </div>
+    </div>`;
+}
+
+renderGrid();
+</script>
+
+<!-- ============================================================
+     BELLONI MOTORS — funções do app real (painel, relatórios de
+     tráfego, metas, agenda, CRM kanban, financeiras, 3 papéis,
+     modo privacidade). Dados de exemplo; "depois a gente adapta".
+     ============================================================ -->
+<script>
+const TODAY = { y:2026, m:6, d:10 };
+function todayISO(){ return '2026-06-'+String(TODAY.d).padStart(2,'0'); }
+
+/* ---------- formatação ---------- */
+function brl2(v){ return 'R$ ' + Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:2}); }
+function brlCompact(n){ n=Number(n||0); if(Math.abs(n)>=1e6){ return 'R$ '+(n/1e6).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mi'; } return brl(n); }
+function pctTxt(v){ return v==null?'—':(v*100).toFixed(1).replace('.',',')+'%'; }
+function roiTxt(v){ return v==null?'—':v.toFixed(1).replace('.',',')+'x'; }
+function moneyN(v){ return v==null?'—':brl2(v); }
+function carNameById(id){ const c=data.find(x=>x.id===id); return c?c.name:'—'; }
+const ICON_CAR='<svg viewBox="0 0 24 24" width="13" height="13" style="vertical-align:-2px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M5 17h14M6 17l1-5a2 2 0 0 1 2-1.5h6A2 2 0 0 1 17 12l1 5"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>';
+
+/* ---------- ajustes nos dados de exemplo ---------- */
+clients.forEach(c=>{
+  if(c.visitDate && c.visitDate.startsWith('2026-05')) c.visitDate = c.visitDate.replace('2026-05','2026-06');
+  if(c.followupDate && c.followupDate.startsWith('2026-05')) c.followupDate = c.followupDate.replace('2026-05','2026-06');
+  if((c.status==='sold'||c.status==='lost') && !c.closedAt) c.closedAt = '2026-06-0'+((c.id%9)+1);
+});
+
+/* ================= PRIVACIDADE ================= */
+function togglePrivacy(){
+  const on = document.body.classList.toggle('privacy-on');
+  const a=document.getElementById('privacy-side'), b=document.getElementById('privacy-top');
+  if(a) a.classList.toggle('on', on);
+  if(b) b.classList.toggle('on', on);
+  toast(on ? 'Modo privacidade ligado · dados borrados' : 'Modo privacidade desligado');
+}
+
+/* ================= LOGIN / PAPÉIS (override) ================= */
+function enterAs(role){
+  if(role === null){
+    document.getElementById('app').classList.remove('active');
+    document.getElementById('login').classList.add('active');
+    document.body.classList.remove('privacy-on');
+    document.getElementById('privacy-side')?.classList.remove('on');
+    document.getElementById('privacy-top')?.classList.remove('on');
+    state = { role:'vendor', page:'stock', filter:'all', query:'', detailId:null, clientFilter:'all', clientQuery:'' };
+    return;
+  }
+  state.role = role;
+  document.getElementById('login').classList.remove('active');
+  document.getElementById('app').classList.add('active');
+
+  // Gating por papel (data-roles em cada item de nav)
+  document.querySelectorAll('.nav-link[data-roles], .bn-item[data-roles]').forEach(el=>{
+    const roles = (el.dataset.roles||'').split(' ');
+    el.style.display = roles.includes(role) ? 'flex' : 'none';
+  });
+  document.getElementById('fab').classList.toggle('show', role!=='traffic');
+
+  const P = {
+    admin:   { name:'Sr. Belloni', initials:'SB', sub:'Administrador', landing:'dashboard' },
+    vendor:  { name:'João Silva',  initials:'JS', sub:'Vendedor',      landing:'stock' },
+    traffic: { name:'Alisson',     initials:'AL', sub:'Tráfego',       landing:'reports' },
+  }[role];
+  document.getElementById('user-name').textContent = P.name;
+  document.getElementById('user-role').textContent = P.sub;
+  document.getElementById('user-avatar').textContent = P.initials;
+  document.getElementById('user-avatar').classList.toggle('admin', role==='admin');
+  document.getElementById('topbar-avatar').textContent = P.initials;
+  document.getElementById('topbar-avatar').classList.toggle('admin', role==='admin');
+  goto(P.landing);
+}
+
+/* ================= ROTEAMENTO (override) ================= */
+function goto(page){
+  state.page = page;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+  const el = document.getElementById('page-'+page);
+  if(el) el.classList.add('show');
+  document.querySelectorAll('.nav-link').forEach(n=>{
+    const route = n.dataset.route;
+    n.classList.toggle('active', route===page || (page==='detail' && route==='stock'));
+  });
+  document.querySelectorAll('.bn-item').forEach(n=>{
+    const route = n.dataset.bn;
+    n.classList.toggle('active', route===page || (page==='detail' && route==='stock'));
+  });
+  if(page==='stock') renderGrid();
+  if(page==='clients') renderClients();
+  if(page==='agenda') renderAgenda();
+  if(page==='metas') renderMetas();
+  if(page==='dashboard') renderDashboard();
+  if(page==='reports') renderRelatorios();
+  if(page==='history') renderHistory();
+  requestAnimationFrame(()=>{ window.scrollTo({top:0,behavior:'instant'}); document.documentElement.scrollTop=0; document.body.scrollTop=0; });
+}
+
+/* ================= RELATÓRIOS DE TRÁFEGO ================= */
+const FEE = 1500; // mensalidade Criativvo (placeholder — ajustar na implantação)
+const MESES_REL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MES_ABREV_REL = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+function weeksOfMonth(y,m){
+  const last=new Date(y,m,0).getDate();
+  const cuts=[[1,8],[9,15],[16,22],[23,last]];
+  const mm=String(m).padStart(2,'0');
+  return cuts.map(([a,b],i)=>({pidx:i,label:`${String(a).padStart(2,'0')}/${mm} - ${String(b).padStart(2,'0')}/${mm}`}));
+}
+function weekIndexForDay(d){ if(d<=8)return 0; if(d<=15)return 1; if(d<=22)return 2; return 3; }
+
+const adReports = [];
+function pushMonth(y,m,inv,conv,vend,luc){ adReports.push({year:y,month:m,gran:'month',pidx:0,plabel:null,investimento:inv,conversas:conv,vendidos:vend,lucro:luc}); }
+function pushWeeks(y,m,ws){ const wd=weeksOfMonth(y,m); ws.forEach((w,i)=>adReports.push({year:y,month:m,gran:'week',pidx:i,plabel:wd[i].label,investimento:w[0],conversas:w[1],vendidos:w[2],lucro:w[3]})); }
+pushMonth(2025,11, 8200,160,11,64000);
+pushMonth(2025,12, 9800,210,14,86000);
+pushWeeks(2026,4, [[920,52,3,21000],[1040,61,4,29000],[880,48,2,15500],[1180,66,5,34000]]);
+pushWeeks(2026,5, [[1010,57,3,22000],[1130,63,4,28500],[990,55,3,20500],[1240,70,5,36000]]);
+pushWeeks(2026,6, [[840,49,3,24000],[760,44,2,null],[null,null,null,null],[null,null,null,null]]);
+
+function aggregateRows(rows){
+  let inv=0,conv=0,vend=0,luc=0,has=false;
+  rows.forEach(r=>{ inv+=r.investimento||0; conv+=r.conversas||0; if(r.vendidos!=null||r.lucro!=null)has=true; vend+=r.vendidos||0; luc+=r.lucro||0; });
+  return {investimento:inv,conversas:conv,vendidos:has?vend:null,lucro:has?luc:null,hasResults:has};
+}
+function metricsFrom(t){
+  if(!t) return {custoLead:null,pctConv:null,custoVenda:null,roi:null};
+  const {investimento:inv,conversas:conv,vendidos:vend,lucro:luc}=t;
+  return {
+    custoLead: conv>0?inv/conv:null,
+    pctConv: conv>0&&vend!=null?vend/conv:null,
+    custoVenda: vend!=null&&vend>0?inv/vend:null,
+    roi: inv>0&&luc!=null?luc/inv:null,
+  };
+}
+function relMonthWeeks(y,m){ return adReports.filter(r=>r.year===y&&r.month===m&&r.gran==='week').sort((a,b)=>a.pidx-b.pidx); }
+function relMonthMonthly(y,m){ return adReports.find(r=>r.year===y&&r.month===m&&r.gran==='month'); }
+function relTotals(y,m){ const wk=relMonthWeeks(y,m); if(wk.length)return aggregateRows(wk); const mo=relMonthMonthly(y,m); if(mo)return aggregateRows([mo]); return null; }
+
+let relYm = { y:TODAY.y, m:TODAY.m };
+function relShift(d){ let m=relYm.m+d,y=relYm.y; if(m<1){m=12;y--;} if(m>12){m=1;y++;} relYm={y,m}; renderRelatorios(); }
+
+function editVenda(pidx,gran,val){
+  const v = (val===''||val==null)?null:Math.max(0,Math.round(Number(val)||0));
+  let row = gran==='month' ? relMonthMonthly(relYm.y,relYm.m)
+                           : adReports.find(r=>r.year===relYm.y&&r.month===relYm.m&&r.gran==='week'&&r.pidx===pidx);
+  if(!row && gran==='week'){ const g=weeksOfMonth(relYm.y,relYm.m)[pidx]; row={year:relYm.y,month:relYm.m,gran:'week',pidx,plabel:g.label,investimento:null,conversas:null,vendidos:null,lucro:null}; adReports.push(row); }
+  if(row) row.vendidos=v;
+  renderRelatorios(); toast('Venda atualizada');
+}
+function saveRelEntry(){
+  const role=state.role;
+  const num=id=>{ const e=document.getElementById(id); if(!e)return undefined; let v=e.value.trim(); if(v==='')return null; v=v.replace(/\./g,'').replace(',','.'); return isNaN(Number(v))?null:Number(v); };
+  weeksOfMonth(relYm.y,relYm.m).forEach(g=>{
+    let row=adReports.find(r=>r.year===relYm.y&&r.month===relYm.m&&r.gran==='week'&&r.pidx===g.pidx);
+    if(!row){ row={year:relYm.y,month:relYm.m,gran:'week',pidx:g.pidx,plabel:g.label,investimento:null,conversas:null,vendidos:null,lucro:null}; adReports.push(row); }
+    if(role==='traffic'){ const i=num(`rel-w${g.pidx}-inv`),c=num(`rel-w${g.pidx}-conv`); if(i!==undefined)row.investimento=i; if(c!==undefined)row.conversas=c; }
+    if(role==='admin'){ const l=num(`rel-w${g.pidx}-luc`); if(l!==undefined)row.lucro=l; }
+  });
+  renderRelatorios(); toast('Lançamento salvo');
+}
+function relYearChart(y){
+  const rows=[]; for(let m=1;m<=12;m++){ const t=relTotals(y,m); if(t)rows.push({m,vend:t.vendidos||0,inv:Math.round(t.investimento||0)}); }
+  if(!rows.length) return '<p style="color:var(--mu);font-size:.8rem;text-align:center;padding:20px">Sem dados ainda.</p>';
+  const maxV=Math.max(1,...rows.map(r=>r.vend)), maxI=Math.max(1,...rows.map(r=>r.inv));
+  return `
+    <div style="display:flex;gap:14px;font-size:.68rem;color:var(--mu);margin-bottom:10px">
+      <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#2563eb"></span>Vendas</span>
+      <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:#7dd3fc"></span>Investimento</span>
+    </div>
+    <div style="display:flex;gap:6px;align-items:flex-end;height:150px">
+      ${rows.map(r=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;justify-content:flex-end">
+        <div style="display:flex;gap:3px;align-items:flex-end;height:120px">
+          <div title="${r.vend} vendas" style="width:12px;height:${Math.max(2,(r.vend/maxV)*120)}px;background:#2563eb;border-radius:3px 3px 0 0"></div>
+          <div title="${brl2(r.inv)}" style="width:12px;height:${Math.max(2,(r.inv/maxI)*120)}px;background:#7dd3fc;border-radius:3px 3px 0 0"></div>
+        </div>
+        <div style="font-size:.62rem;color:var(--mu)">${MES_ABREV_REL[r.m-1]}</div>
+      </div>`).join('')}
+    </div>`;
+}
+
+function renderRelatorios(){
+  const ct = document.getElementById('reports-content');
+  const y=relYm.y, m=relYm.m;
+  const isCurrent = (y===TODAY.y && m===TODAY.m);
+  const t = relTotals(y,m);
+  const invMes = t?t.investimento:0;
+  const vendMes = t?t.vendidos:null;
+  const lucroMes = t?t.lucro:null;
+  const custoMkt = invMes + FEE;
+  const custoMes = (vendMes&&vendMes>0)?custoMkt/vendMes:null;
+  const M = metricsFrom(t);
+
+  // tabela
+  const wk = relMonthWeeks(y,m);
+  let tableRows=[], showHistorico=false;
+  if(wk.length){
+    const gen=weeksOfMonth(y,m), byIdx={}; wk.forEach(w=>byIdx[w.pidx]=w);
+    tableRows = gen.map(g=>{ const w=byIdx[g.pidx]; return {label:(w&&w.plabel)||g.label, total:w?aggregateRows([w]):{investimento:0,conversas:0,vendidos:null,lucro:null}, pidx:g.pidx, gran:'week'}; });
+  } else {
+    const mo=relMonthMonthly(y,m);
+    if(mo){ showHistorico=true; tableRows=[{label:MESES_REL[m-1]+' (mês inteiro)', total:aggregateRows([mo]), pidx:0, gran:'month'}]; }
+    else tableRows = weeksOfMonth(y,m).map(g=>({label:g.label,total:{investimento:0,conversas:0,vendidos:null,lucro:null},pidx:g.pidx,gran:'week'}));
+  }
+  const grand = aggregateRows(tableRows.map(r=>r.total));
+  const isAdmin = state.role==='admin';
+
+  // headline
+  let headline;
+  if(isCurrent){
+    const wr = wk.find(w=>w.pidx===weekIndexForDay(TODAY.d));
+    const ci = wr?(wr.investimento||0):0, cv = wr?(wr.vendidos||0):0;
+    const cs = cv>0?ci/cv:null;
+    headline = `
+      <div class="ink-card">
+        <div class="ink-lbl">Custo de tráfego por carro · esta semana${wr?` (${wr.plabel})`:''}</div>
+        <div class="ink-big" data-private>${cs==null?'—':brl2(cs)}</div>
+        <div class="ink-sub">${cv>0?`Tráfego <b>${brl2(ci)}</b> ÷ ${cv} venda(s) desta semana.`:'Nenhuma venda registrada nesta semana ainda.'}<span style="display:block;color:rgba(255,255,255,.5);margin-top:4px">O serviço (${brl2(FEE)}/mês) entra no custo total quando o mês fechar.</span></div>
+      </div>`;
+  } else {
+    headline = `
+      <div class="ink-card">
+        <div class="ink-lbl">Custo pra vender 1 carro · ${MESES_REL[m-1]}</div>
+        <div class="ink-big" data-private>${custoMes==null?'—':brl2(custoMes)}</div>
+        <div class="ink-sub">Tráfego <b>${brl2(invMes)}</b> + serviço Criativvo <b>${brl2(FEE)}</b> = <b>${brl2(custoMkt)}</b>${(vendMes&&vendMes>0)?` ÷ ${vendMes} venda(s)`:' · sem vendas no mês'}</div>
+      </div>`;
+  }
+
+  // tabela HTML
+  const rowHtml = (r,bold)=>{
+    const tot=r.total, mm=metricsFrom(tot);
+    const vendCell = (!bold && isAdmin)
+      ? `<td><input class="rep-input" inputmode="numeric" value="${tot.vendidos==null?'':tot.vendidos}" onchange="editVenda(${r.pidx},'${r.gran}',this.value)"></td>`
+      : `<td>${tot.vendidos==null?'—':tot.vendidos}</td>`;
+    return `<tr${bold?' style="font-weight:800"':''}>
+      <td>${r.label}</td>
+      <td data-private>${moneyN(tot.investimento)}</td>
+      <td>${tot.conversas||0}</td>
+      <td data-private>${moneyN(mm.custoLead)}</td>
+      ${vendCell}
+      <td>${pctTxt(mm.pctConv)}</td>
+      <td data-private>${moneyN(mm.custoVenda)}</td>
+      <td class="col-green" data-private>${moneyN(tot.lucro)}</td>
+      <td data-private>${roiTxt(mm.roi)}</td>
+    </tr>`;
+  };
+  const gm = metricsFrom(grand);
+
+  // comparativo ano anterior
+  const prev = relTotals(y-1,m);
+
+  // lançamento
+  let entry='';
+  if(isAdmin || state.role==='traffic'){
+    const gen=weeksOfMonth(y,m), byIdx={}; wk.forEach(w=>byIdx[w.pidx]=w);
+    const fieldHead = state.role==='traffic'
+      ? '<th class="th-blue">Investimento</th><th class="th-blue">Conversas</th>'
+      : '<th class="th-green">Lucro (R$)</th>';
+    entry = `
+      <h2 style="font-size:.8rem;font-weight:700;color:var(--tx);margin:22px 0 8px">Lançamento — ${state.role==='traffic'?'tráfego (investimento + conversas)':'admin (lucro do período)'}</h2>
+      <div class="entry-card">
+        <p style="font-size:.7rem;color:var(--mu);margin-bottom:8px">${state.role==='traffic'?'Preencha o investimento e as conversas de cada semana e salve.':'As vendas você edita direto na tabela acima. Aqui lance o lucro de cada semana.'}</p>
+        <table class="entry-table"><thead><tr><th>Semana</th>${fieldHead}</tr></thead><tbody>
+        ${gen.map(g=>{ const w=byIdx[g.pidx]; return `<tr>
+          <td style="font-size:.72rem;color:var(--mu)">${g.label}</td>
+          ${state.role==='traffic'
+            ? `<td><input id="rel-w${g.pidx}-inv" class="entry-in blue" inputmode="decimal" value="${w&&w.investimento!=null?w.investimento:''}" placeholder="R$"></td><td><input id="rel-w${g.pidx}-conv" class="entry-in blue" inputmode="numeric" value="${w&&w.conversas!=null?w.conversas:''}" placeholder="0"></td>`
+            : `<td><input id="rel-w${g.pidx}-luc" class="entry-in green" inputmode="decimal" value="${w&&w.lucro!=null?w.lucro:''}" placeholder="R$"></td>`}
+        </tr>`; }).join('')}
+        </tbody></table>
+        <button class="btn btn-dark" style="margin-top:12px" onclick="saveRelEntry()">Salvar lançamento</button>
+      </div>`;
+  }
+
+  ct.innerHTML = `
+    <div class="month-nav">
+      <button class="nav-arrow" onclick="relShift(-1)">‹</button>
+      <span class="month-label">${MESES_REL[m-1]} ${y}</span>
+      <button class="nav-arrow" onclick="relShift(1)">›</button>
+    </div>
+    ${headline}
+    <div class="mc-row" style="margin-top:12px">
+      ${mcCard('Investido no tráfego', moneyN(invMes), '#0369a1', '<path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>', true)}
+      ${mcCard('Carros vendidos', vendMes==null?'—':String(vendMes), '#4f46e5', '<path d="M20 6 9 17l-5-5"/>', false)}
+      ${mcCard('Lucro', moneyN(lucroMes), '#047857', '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>', true)}
+      ${mcCard('ROI', roiTxt(M.roi), '#b45309', '<line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>', true)}
+    </div>
+
+    <div style="margin-top:14px" class="report-card full">
+      <div class="report-card-head"><div class="report-card-title">${showHistorico?'Resultado do mês':'Por semana'} — ${MESES_REL[m-1]} ${y}</div>${isAdmin?'<span style="font-size:.66rem;color:var(--grn);font-weight:600;display:inline-flex;align-items:center;gap:4px"><svg viewBox="0 0 24 24" width="12" height="12" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>vendas editáveis</span>':''}</div>
+      <div class="rep-wrap"><table class="rep-table">
+        <thead><tr><th>Período</th><th>Investido</th><th>Leads</th><th>Custo/lead</th><th>Vendas</th><th>Conversão</th><th>Custo/venda</th><th>Lucro</th><th>ROI</th></tr></thead>
+        <tbody>${tableRows.map(r=>rowHtml(r,false)).join('')}</tbody>
+        <tfoot>${rowHtml({label:'Total do mês',total:grand,pidx:-1,gran:'x'},true)}</tfoot>
+      </table></div>
+    </div>
+
+    ${prev?`<div style="margin-top:14px" class="report-card full">
+      <div class="report-card-head"><div class="report-card-title">Comparativo com ${MESES_REL[m-1]}/${y-1}</div></div>
+      <div class="mc-row">
+        ${cmpCard('Investimento', prev.investimento, invMes, brl2, true)}
+        ${cmpCard('Leads', prev.conversas, grand.conversas, v=>String(v), false)}
+        ${cmpCard('Vendidos', prev.vendidos, vendMes, v=>String(v), false)}
+        ${cmpCard('Lucro', prev.lucro, lucroMes, brl2, true)}
+      </div></div>`:''}
+
+    <div style="margin-top:14px" class="report-card full">
+      <div class="report-card-head"><div class="report-card-title">Vendas e investimento por mês — ${y}</div></div>
+      ${relYearChart(y)}
+    </div>
+    ${entry}`;
+}
+function mcCard(lbl,val,color,icon,priv){
+  return `<div class="mc"><div class="mc-top"><span class="mc-lbl">${lbl}</span><span class="mc-ic"><svg viewBox="0 0 24 24" style="stroke:var(--mu);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round">${icon}</svg></span></div><div class="mc-val"${priv?' data-private':''}>${val}</div></div>`;
+}
+function cmpCard(lbl,prev,now,fmt,priv){
+  const d = (now!=null&&prev!=null&&prev!==0)?((now-prev)/prev):null;
+  const delta = d==null?'':`<span style="font-size:.66rem;font-weight:700;color:${d>=0?'var(--grn)':'#dc2626'}"> ${d>=0?'▲':'▼'} ${Math.abs(d*100).toFixed(0)}%</span>`;
+  return `<div class="mc"><div class="mc-lbl">${lbl}${delta}</div><div style="font-size:.85rem;margin-top:4px"${priv?' data-private':''}><span style="color:var(--mu)">${prev==null?'—':fmt(prev)}</span> <span style="color:var(--xlt)">→</span> <span style="font-weight:800;color:var(--tx)">${now==null?'—':fmt(now)}</span></div></div>`;
+}
+
+/* ================= METAS ================= */
+let metaGoal=12, metaSales=7;
+function metaAdj(d){ metaSales=Math.max(0,metaSales+d); renderMetas(); toast(d>0?'Venda registrada':'Venda removida'); }
+function setMetaGoal(v){ metaGoal=Math.max(0,parseInt(v)||0); renderMetas(); }
+function renderMetas(){
+  const ct=document.getElementById('metas-content');
+  const isAdmin=state.role==='admin';
+  const pct = metaGoal>0?Math.min(100,Math.round(metaSales/metaGoal*100)):0;
+  const faltam=Math.max(0,metaGoal-metaSales), bateu=metaGoal>0&&metaSales>=metaGoal;
+  const followup=clients.filter(c=>c.status==='followup').length;
+  const negotiating=clients.filter(c=>c.status==='negotiating').length;
+  const dicas=[];
+  if(followup>0) dicas.push(`Ligue de volta pros ${followup} cliente(s) que pediram retorno.`);
+  if(negotiating>0) dicas.push(`Dê um empurrão nos ${negotiating} cliente(s) em negociação (mande WhatsApp).`);
+  if(!dicas.length) dicas.push('Cadastre novos clientes e agende visitas pra encher o funil.');
+
+  ct.innerHTML=`
+    <div style="max-width:520px">
+      <div class="ink-card">
+        <div class="ink-lbl">Belloni Motors · ${MESES_REL[TODAY.m-1]}</div>
+        <div class="ink-big">${metaSales}${metaGoal>0?`<span style="font-size:1.1rem;color:rgba(255,255,255,.5)"> / ${metaGoal}</span>`:''}</div>
+        ${metaGoal>0?`<div class="goal-bar"><div class="goal-bar-fill ${bateu?'done':''}" style="width:${pct}%"></div></div>
+          <div style="font-size:.82rem;font-weight:600;margin-top:8px">${bateu?'<svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align:-2px;stroke:#34d399;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round"><path d="M20 6 9 17l-5-5"/></svg> Meta batida':`Faltam ${faltam} venda(s) (${pct}%).`}</div>`:'<p class="ink-sub">Defina a meta da loja abaixo.</p>'}
+        ${isAdmin?`<div class="goal-counter">
+          <button class="goal-btn minus" onclick="metaAdj(-1)">−</button>
+          <button class="goal-btn plus" onclick="metaAdj(1)">+</button>
+          <span style="font-size:.72rem;color:rgba(255,255,255,.5)">registrar venda</span>
+        </div>`:''}
+      </div>
+      ${isAdmin?`<div style="margin-top:12px;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;box-shadow:var(--sh)">
+        <div style="font-size:.72rem;font-weight:700;color:var(--mu);margin-bottom:8px">Meta de vendas do mês</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="number" value="${metaGoal}" min="0" onchange="setMetaGoal(this.value)" class="form-input" style="max-width:120px">
+          <span style="font-size:.78rem;color:var(--mu)">carros/mês</span>
+        </div>
+      </div>`:''}
+    </div>
+    <div style="font-size:.8rem;font-weight:700;color:var(--tx);margin:22px 0 8px">O que fazer agora</div>
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:520px">
+      ${dicas.map(d=>`<div onclick="goto('clients')" style="display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;cursor:pointer">
+        <span style="width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:var(--bg);font-weight:800;flex-shrink:0">›</span>
+        <span style="font-size:.82rem;color:var(--tx)">${d}</span></div>`).join('')}
+    </div>`;
+}
+
+/* ================= AGENDA / CALENDÁRIO ================= */
+let calCursor={ y:TODAY.y, m:TODAY.m-1 }; // m 0-indexed
+let calSel=todayISO();
+const DOW=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+function calShift(d){ let m=calCursor.m+d,y=calCursor.y; if(m<0){m=11;y--;} if(m>11){m=0;y++;} calCursor={y,m}; renderAgenda(); }
+function calSelect(ds){ calSel=ds; renderAgenda(); }
+function calGoToday(){ calCursor={y:TODAY.y,m:TODAY.m-1}; calSel=todayISO(); renderAgenda(); }
+function calEvents(){
+  const evs=[];
+  clients.forEach(c=>{
+    if(c.visitDate) evs.push({date:c.visitDate,type:'visit',label:c.name,time:c.visitTime||null,car:carNameById(c.carId),phone:c.phone,notes:c.notes,id:c.id});
+    if(c.followupDate) evs.push({date:c.followupDate,type:'followup',label:c.name,time:null,car:carNameById(c.carId),phone:c.phone,notes:c.notes,id:c.id});
+  });
+  return evs;
+}
+function renderAgenda(){
+  const ct=document.getElementById('agenda-content');
+  const evs=calEvents();
+  const byDate={}; evs.forEach(e=>{ (byDate[e.date]=byDate[e.date]||[]).push(e); });
+  const y=calCursor.y,m=calCursor.m;
+  const first=new Date(y,m,1).getDay(), dim=new Date(y,m+1,0).getDate();
+  const cells=[]; for(let i=0;i<first;i++)cells.push(null); for(let d=1;d<=dim;d++)cells.push(d);
+  const todayStr=todayISO();
+  const ymd=(yy,mm,dd)=>`${yy}-${String(mm+1).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+
+  // detalhe do dia
+  const selEv=(byDate[calSel]||[]).slice().sort((a,b)=>(a.time||'99').localeCompare(b.time||'99'));
+  const [sy,sm,sd]=calSel.split('-').map(Number);
+  let dh=new Date(sy,sm-1,sd).toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'}); dh=dh.charAt(0).toUpperCase()+dh.slice(1);
+  const detail=`
+    <div style="font-size:.85rem;font-weight:800;color:var(--tx);margin-bottom:8px">${dh}${calSel===todayStr?' <span style="background:var(--xlt);color:var(--tx);font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:6px">hoje</span>':''}</div>
+    ${selEv.length===0?'<div class="day-detail" style="padding:22px;text-align:center;color:var(--mu);font-size:.82rem">Nada agendado nesse dia.</div>':
+      `<div class="day-detail">${selEv.map(e=>`<div class="day-ev">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span class="ev-tag ${e.type}">${e.type==='visit'?'Visita':'Retornar'}</span>
+          ${e.time?`<span style="font-weight:700;color:var(--tx)">${e.time}</span>`:''}
+          <span data-private style="font-weight:700;color:var(--tx)">${e.label}</span>
+        </div>
+        ${e.car&&e.car!=='—'?`<div style="font-size:.78rem;color:var(--mu);margin-top:5px;display:flex;align-items:center;gap:5px">${ICON_CAR} ${e.car}</div>`:''}
+        ${e.notes?`<div data-private style="font-size:.78rem;color:var(--mu);margin-top:4px">${e.notes}</div>`:''}
+        ${e.phone?`<button data-private class="kan-mini wa" style="margin-top:8px" onclick="waClient(${e.id})">WhatsApp</button>`:''}
+      </div>`).join('')}</div>`}`;
+
+  ct.innerHTML=`
+    <div style="margin-bottom:12px">${detail}</div>
+    <div class="cal-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <button class="nav-arrow" onclick="calShift(-1)">‹</button>
+        <div style="text-align:center"><div style="font-weight:800;color:var(--tx)">${MESES_REL[m]} ${y}</div><button onclick="calGoToday()" style="font-size:.7rem;color:var(--red);background:none;cursor:pointer">Hoje</button></div>
+        <button class="nav-arrow" onclick="calShift(1)">›</button>
+      </div>
+      <div class="cal-grid" style="margin-bottom:5px">${DOW.map(d=>`<div class="cal-dow">${d}</div>`).join('')}</div>
+      <div class="cal-grid">
+        ${cells.map(d=>{ if(d===null)return '<div></div>'; const ds=ymd(y,m,d); const de=byDate[ds]||[]; const cls=(ds===calSel?'sel':ds===todayStr?'today':'');
+          return `<button class="cal-cell ${cls}" onclick="calSelect('${ds}')"><div class="cal-daynum">${d}</div>${de.slice(0,3).map(e=>`<div class="cal-ev ${e.type}"><span data-private>${e.time?e.time+' ':''}${e.label.split(' ')[0]}</span></div>`).join('')}${de.length>3?`<div style="font-size:.58rem;color:var(--mu)">+${de.length-3}</div>`:''}</button>`;
+        }).join('')}
+      </div>
+      <div style="display:flex;gap:16px;margin-top:12px;font-size:.68rem;color:var(--mu)">
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:50%;background:#3b82f6"></span>Visita</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:50%;background:#f97316"></span>Retornar</span>
+      </div>
+    </div>`;
+}
+function waClient(id){ const c=clients.find(x=>x.id===id); if(c) openWhatsApp(c.phone,c.name); }
+
+/* ================= CRM KANBAN (override renderClients) ================= */
+const BOARD=['lead','visit','negotiating','followup','sold','lost'];
+let kanCursor={ y:TODAY.y, m:TODAY.m-1 };
+let dragClientId=null;
+function kanShift(d){ let m=kanCursor.m+d,y=kanCursor.y; if(m<0){m=11;y--;} if(m>11){m=0;y++;} kanCursor={y,m}; renderClients(); }
+function kanBuild(){
+  const cols={}; BOARD.forEach(s=>cols[s]=[]);
+  clients.forEach(c=>{
+    if(!cols[c.status])return;
+    if(c.status==='sold'||c.status==='lost'){
+      const d=c.closedAt?new Date(c.closedAt+'T00:00:00'):null;
+      const y=d?d.getFullYear():kanCursor.y, m=d?d.getMonth():kanCursor.m;
+      if(y!==kanCursor.y||m!==kanCursor.m) return;
+    }
+    cols[c.status].push(c);
+  });
+  return cols;
+}
+function kanDragStart(ev,id){ dragClientId=id; ev.dataTransfer.effectAllowed='move'; const el=ev.currentTarget; setTimeout(()=>el.classList.add('dragging'),0); }
+function kanDragEnd(ev){ ev.currentTarget.classList.remove('dragging'); document.querySelectorAll('.kan-list').forEach(l=>l.classList.remove('dragover')); }
+function kanAllow(ev,status){ ev.preventDefault(); const l=document.getElementById('kan-'+status); if(l)l.classList.add('dragover'); }
+function kanLeave(status){ const l=document.getElementById('kan-'+status); if(l)l.classList.remove('dragover'); }
+function kanDrop(ev,status){ ev.preventDefault(); document.querySelectorAll('.kan-list').forEach(l=>l.classList.remove('dragover')); if(dragClientId!=null) moveClientStage(dragClientId,status); dragClientId=null; }
+function moveClientStage(id,status){
+  const c=clients.find(x=>x.id===id); if(!c||c.status===status)return;
+  if(status==='sold'){ openClientModal(id); const p=document.querySelector('#cl-status-pills .status-pill[data-status="sold"]'); if(p)selectStatus(p); return; }
+  c.status=status;
+  if(status==='lost'||status==='sold') c.closedAt=todayISO();
+  renderClients(); toast('Movido para '+statusLabel(status));
+}
+function delClient(id){ if(!confirm('Excluir esse cliente do pipeline?'))return; clients=clients.filter(c=>c.id!==id); renderClients(); toast('Cliente removido'); }
+
+function kanCard(c){
+  const car = c.carId?carNameById(c.carId):null;
+  let chips='';
+  if(c.contactedAt) chips+=`<span class="kan-chip" style="background:var(--bg);color:var(--mu)">Conversa ${c.contactedAt}</span>`;
+  if(c.visitDate){ const [,mm,dd]=c.visitDate.split('-'); chips+=`<span class="kan-chip" style="background:#dbeafe;color:#1d4ed8">Visita ${dd}/${mm}${c.visitTime?' '+c.visitTime:''}</span>`; }
+  if(c.followupDate){ const [,mm,dd]=c.followupDate.split('-'); chips+=`<span class="kan-chip" style="background:#ffedd5;color:#c2410c">Retornar ${dd}/${mm}</span>`; }
+  let extra='';
+  if(c.status==='sold'&&c.soldValue) extra=`<div data-private style="font-size:.76rem;font-weight:600;color:var(--grn);margin-top:5px">Vendido por ${brl(c.soldValue)}${c.payment?' · '+c.payment:''}</div>`;
+  if(c.status==='lost'&&c.lostReason) extra=`<div style="font-size:.76rem;color:var(--mu);margin-top:5px"><span style="color:var(--lt)">Motivo:</span> ${c.lostReason}</div>`;
+  return `<div class="kan-card card-${c.status}" draggable="true" ondragstart="kanDragStart(event,${c.id})" ondragend="kanDragEnd(event)">
+    <div class="kan-name" data-private>${c.name}</div>
+    ${c.phone?`<div class="kan-phone" data-private>${c.phone}</div>`:''}
+    ${car?`<div class="kan-car" style="display:flex;align-items:center;gap:5px">${ICON_CAR} ${car}</div>`:''}
+    ${extra}
+    ${c.notes?`<div class="kan-note" data-private>${c.notes}</div>`:''}
+    ${chips?`<div style="margin-top:4px">${chips}</div>`:''}
+    <div class="kan-actions">
+      ${c.phone?`<button class="kan-mini wa" onclick="waClient(${c.id})">WhatsApp</button>`:''}
+      <button class="kan-mini" onclick="openClientModal(${c.id})">Editar</button>
+      <button class="kan-mini del" onclick="delClient(${c.id})">Excluir</button>
+    </div>
+    <select class="kan-move" onchange="moveClientStage(${c.id},this.value);this.value=''">
+      <option value="" disabled selected>Mover para ▾</option>
+      ${BOARD.filter(s=>s!==c.status).map(s=>`<option value="${s}">${statusLabel(s)}</option>`).join('')}
+    </select>
+  </div>`;
+}
+function renderClients(){
+  document.getElementById('nav-clients').textContent = clients.length;
+  // esconde hero/chips do protótipo antigo; o kanban é o protagonista
+  const hero=document.getElementById('clients-hero-container'); if(hero) hero.innerHTML='';
+  const chips=document.getElementById('client-chips'); if(chips) chips.style.display='none';
+  document.querySelectorAll('#page-clients .sec-header').forEach(s=>s.style.display='none');
+  const sub=document.getElementById('clients-sub'); if(sub) sub.textContent='Arraste os cards pra mudar de etapa, ou use "Mover para".';
+
+  const cols=kanBuild();
+  const ct=document.getElementById('clients-grid-container');
+  ct.innerHTML=`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:.82rem">
+      <span style="color:var(--mu)">Vendeu/perdeu de:</span>
+      <button class="nav-arrow" style="width:30px;height:30px" onclick="kanShift(-1)">‹</button>
+      <span style="font-weight:700;min-width:120px;text-align:center">${MESES_REL[kanCursor.m]} ${kanCursor.y}</span>
+      <button class="nav-arrow" style="width:30px;height:30px" onclick="kanShift(1)">›</button>
+    </div>
+    <div class="kanban">
+      ${BOARD.map(s=>`<div class="kan-col">
+        <div class="kan-head stage-${s}"><span>${statusLabel(s)}</span><span style="opacity:.7">${cols[s].length}</span></div>
+        <div class="kan-list" id="kan-${s}" ondragover="kanAllow(event,'${s}')" ondragleave="kanLeave('${s}')" ondrop="kanDrop(event,'${s}')">
+          ${cols[s].map(kanCard).join('')||'<div style="text-align:center;font-size:.7rem;color:var(--xlt);padding:18px;border:1px dashed var(--bd);border-radius:12px">arraste aqui</div>'}
+        </div>
+      </div>`).join('')}
+    </div>`;
+}
+
+/* ================= PAINEL (DASHBOARD) ================= */
+function renderDashboard(){
+  const ct=document.getElementById('dashboard-content');
+  const avail=data.length;
+  const market=data.reduce((s,c)=>s+c.price,0);
+  const patrimonio=data.reduce((s,c)=>s+c.cost,0);
+  const prep=data.filter(c=>c.inPrep).length;
+  const negotiating=clients.filter(c=>c.status==='negotiating').length;
+  const t=relTotals(TODAY.y,TODAY.m);
+  const invMes=t?t.investimento:0, lucroMes=t?(t.lucro||0):0;
+  const byStatus=s=>clients.filter(c=>c.status===s).length;
+
+  const funnel=[
+    {label:'Lead',value:byStatus('lead'),color:'#cbd5e1'},
+    {label:'Visita',value:byStatus('visit'),color:'#9aa6b4'},
+    {label:'Negociando',value:byStatus('negotiating'),color:'#6b7888'},
+    {label:'Retornar',value:byStatus('followup'),color:'#3f4a57'},
+    {label:'Vendas (mês)',value:metaSales,color:'#157f4e'},
+  ];
+  const comp=[
+    {label:'Alta margem',value:data.filter(c=>!c.inPrep&&c.level==='green').length,color:'#157f4e'},
+    {label:'Média',value:data.filter(c=>!c.inPrep&&c.level==='yellow').length,color:'#b9882e'},
+    {label:'Baixa',value:data.filter(c=>!c.inPrep&&c.level==='red').length,color:'#b3262f'},
+    {label:'Em preparação',value:prep,color:'#aeb6c2'},
+  ];
+  const stale=[...data].sort((a,b)=>b.days-a.days).slice(0,6);
+
+  // funil clip-path
+  const n=funnel.length, TOPW=96, BOTW=34, wAt=i=>TOPW-((TOPW-BOTW)*i)/n;
+  const funnelHtml=funnel.map((d,i)=>{ const tw=wAt(i),bw=wAt(i+1),l1=(100-tw)/2,r1=100-l1,l2=(100-bw)/2,r2=100-l2;
+    return `<div class="funnel-step" style="background:${d.color};clip-path:polygon(${l1}% 0,${r1}% 0,${r2}% 100%,${l2}% 100%)"><span class="fs-lbl">${d.label}</span><span class="fs-val">${d.value}</span></div>`; }).join('');
+  // donut
+  const total=comp.reduce((s,d)=>s+d.value,0)||1, R=42, C=2*Math.PI*R; let off=0;
+  const donutSeg=comp.map(d=>{ const len=d.value/total*C; const seg=`<circle cx="50" cy="50" r="${R}" fill="none" stroke="${d.color}" stroke-width="14" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}"/>`; off+=len; return seg; }).join('');
+
+  ct.innerHTML=`
+    <div class="mc-row">
+      ${mcCard('Carros disponíveis',String(avail),'#0f172a','<path d="M5 17h14M6 17l1-5a2 2 0 0 1 2-1.5h6A2 2 0 0 1 17 12l1 5"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/>',false)}
+      ${mcCard('Valor de mercado',brlCompact(market),'#0369a1','<path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/>',true)}
+      ${mcCard('Patrimônio',brlCompact(patrimonio),'#7c3aed','<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',true)}
+      ${mcCard('Em preparação',String(prep),'#b45309','<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',false)}
+    </div>
+    <div class="mc-row" style="margin-top:10px">
+      ${mcCard('Em negociação',String(negotiating),'#ca8a04','<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>',false)}
+      ${mcCard('Vendas no mês',String(metaSales),'#4f46e5','<path d="M20 6 9 17l-5-5"/>',false)}
+      ${mcCard('Investido no mês',brlCompact(invMes),'#0369a1','<path d="M3 11l18-5v12L3 14v-3z"/>',true)}
+      ${mcCard('Lucro do mês',brlCompact(lucroMes),'#047857','<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',true)}
+    </div>
+    <div class="panel-grid2">
+      <div class="report-card"><div class="report-card-title" style="margin-bottom:10px">Funil de clientes</div>${funnelHtml}</div>
+      <div class="report-card"><div class="report-card-title" style="margin-bottom:10px">Composição do estoque</div>
+        <div style="display:flex;align-items:center;gap:16px">
+          <svg viewBox="0 0 100 100" style="height:120px;width:120px;transform:rotate(-90deg);flex-shrink:0">${donutSeg}<text x="50" y="50" transform="rotate(90 50 50)" text-anchor="middle" dominant-baseline="central" font-size="18" font-weight="800" fill="#171717">${total}</text></svg>
+          <div style="display:flex;flex-direction:column;gap:7px">${comp.map(d=>`<div style="display:flex;align-items:center;gap:8px;font-size:.76rem"><span style="width:10px;height:10px;border-radius:50%;background:${d.color}"></span><span style="color:var(--mu)">${d.label}</span><span style="font-weight:700;color:var(--tx)">${d.value}</span></div>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:.8rem;font-weight:700;color:var(--tx);margin:22px 0 8px">Carros parados há mais tempo</div>
+    <div style="background:var(--card);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--sh)">
+      ${stale.map(c=>`<div class="stale-row" onclick="openDetail(${c.id})">
+        <div style="min-width:0"><div style="font-size:.84rem;font-weight:600;color:var(--tx)">${c.name}</div><div style="font-size:.72rem;color:var(--mu)">${c.year} · ${c.km}</div></div>
+        <div style="text-align:right"><div style="font-size:.84rem;font-weight:700;color:var(--tx)">${brl(c.price)}</div><div style="font-size:.72rem;color:${c.days>90?'#dc2626':'var(--mu)'}">${c.days} dias</div></div>
+      </div>`).join('')}
+    </div>`;
+}
+</script>
+</body>
+</html>
