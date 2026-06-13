@@ -60,9 +60,19 @@ for path in "${!SUBREPOS[@]}"; do
   fi
 done
 
-# 5. Instalar deps da automação
+# 5. Copiar memória acumulada do Claude
 echo ""
-echo "[5/5] Instalando dependências de automacoes/..."
+echo "[5/6] Restaurando memória do Claude (contexto de clientes, feedbacks, projetos)..."
+PROJECT_HASH=$(echo -n "$WORKSPACE_DIR" | tr '/' '-' | sed 's/^-//')
+MEMORY_DEST="$HOME/.claude/projects/$PROJECT_HASH/memory"
+mkdir -p "$MEMORY_DEST"
+cp "$SCRIPT_DIR/memory/"*.md "$MEMORY_DEST/"
+echo "Memória restaurada em: $MEMORY_DEST"
+echo "Arquivos: $(ls $MEMORY_DEST | wc -l | tr -d ' ')"
+
+# 6. Instalar deps da automação
+echo ""
+echo "[6/6] Instalando dependências de automacoes/..."
 if [ -f "$WORKSPACE_DIR/automacoes/package.json" ]; then
   npm install --prefix "$WORKSPACE_DIR/automacoes"
   echo "Deps instaladas."

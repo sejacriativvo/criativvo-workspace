@@ -1,0 +1,45 @@
+# Memory Index
+
+- [CriativvoUI — Painel local (ex-MazyUI)](project_criativvoui_painel.md) — Backup em sejacriativvo/mazyui-criativvo (skill /backup); update via /atualizar-do-diogo (mirror público, sabec-os é privado); cliente novo via /novo-cliente; customizações em local-*
+
+- [MazyOS — Migração do workspace (2026-05-28)](project_mazyos_migracao.md) — Saiu do kit Ratos pro MazyOS; clientes em kebab-case; "Site na Hora" virou "Agência na Hora"; pendências de git/Meta/carrossel
+- [Agência na Hora — Empresa nova (oferta única)](project_agencia_na_hora.md) — Separada da Criativvo, qualquer nicho, site+GMN+tráfego+carrossel; pacotes 2k/10k+; fluxo na skill /onboarding-agencia
+- [Agência na Hora — Logo oficial + limpeza marca](project_agencia_na_hora_logo.md) — Logo em marca/logo-branca.png (branco, fundo transparente); pasta limpa do material antigo Site na Hora em 2026-06-01
+- [Agência na Hora — Design system de carrossel](feedback_agencia_na_hora_carrossel.md) — Padrão fixo editorial tech academy (escuro+verde limão), via skill /carrossel-agencia-na-hora; spec+template em marca/
+- [Prime Motors — Cliente novo, inauguração 30/05/2026](project_prime_motors.md) — Revenda multimarca em Penápolis-SP, sócios Neto Camargo + Leandro Soares, site + 1º mês brinde
+- [Mariana Medeiros — Nutri esportiva + NutriChef](project_mariana_medeiros.md) — Cliente nova (mai/26), receitas sem glúten/lactose/açúcar p/ mulheres, briefing pendente
+- [VR Studio — Samuel Araújo (estética/laser)](project_vr_studio.md) — Atende Curvelo + Corinto MG, laser R$85k, WhatsApp 31 99595-7380, IG @vrstudio.cvo, site vrstudio.com.br
+- [GilsonCar — Logo e paleta de cores](project_gilsoncar_assets.md) — Logo em `gilsoncar/assets/`, paleta: vermelho #CC0000, preto, branco
+- [GilsonCar Vendas — App PUBLICADO](project_gilsoncar_vendas_app.md) — No ar em gilsoncar-vendas.vercel.app (Next16+Supabase+Vercel da GilsonCar); 3 papéis (admin Italo / vendor / traffic Alisson); estoque+CRM Kanban+agenda+RELATÓRIOS tráfego por loja+metas por loja(+/-)+painel; deploy `npx vercel@54.9.1`; 14 migrations; logins/contas/FEEs no arquivo
+- [GitHub Pages — URL dos relatórios](reference_github_pages.md) — Base: `https://sejacriativvo.github.io/criativvo-workspace/` — sempre incluir o link ao publicar
+- [GilsonCar — Planilha de dados](reference_gilsoncar_sheets.md) — Ibitinga tráfego pago: spreadsheet ID `12RtilonmN5_F5-_n5Ds1R-BdB65YNJ55WT6aIFljgRM`, gid=0
+- [Criativvo — Logo (escrita, fonte, spacing)](feedback_criativvo_logo_font.md) — Sempre "criativvo" minúsculo, AVEstiana Black, letter-spacing levemente reduzido
+- [Movisol — Cliente energia solar](project_movisol.md) — @movisol.se | Ibitinga SP | dono: Marcelo (pai do Matheus) | azul #004CF1 | logo branca
+- [Escrita sem travessão](feedback_escrita_sem_travessao.md) — Nunca usar "—" em qualquer copy; substituir por vírgula ou reestruturar a frase
+- [Criativvo — Design padrão de posts](feedback_criativvo_design_padrao.md) — Nova estética: Inter, blobs+blur, glass cards, fundo alternado (preto/creme/laranja inteiro); ref: templates-nova-estetica.html
+- [Movisol — Citar fonte nos posts](feedback_movisol_fonte.md) — Sempre incluir fonte no rodapé quando conteúdo vier de dado/notícia externa
+- [Movisol — Legenda e hashtags](feedback_movisol_legenda_hashtag.md) — Todo post entrega visual + legenda + até 5 hashtags (sempre #movisol/#ibitinga + trending do nicho)
+- [Movisol — Fluxo de entrega](feedback_movisol_entrega.md) — Marcelo posta via Drive; pasta nomeada por data (DD-MM-AAAA); só JPG + legenda.txt, sem HTML
+- [Movisol — Visual de notícia](feedback_movisol_noticia.md) — Pill vermelho #E8232A na capa sempre que o post for notícia
+- [Movisol — Uso de imagens](feedback_movisol_imagens.md) — Educação/dado: Pexels/Unsplash automático. Real/bastidor: upload em assets/fotos-posts/. Nunca repetir imagem.
+- [Movisol — Linguagem e estrutura de posts](feedback_movisol_linguagem.md) — Gancho emocional → número que dói (sem segundo valor) → urgência/prova. Nunca dado técnico abstrato.
+- [Movisol — Caminho das logos](feedback_movisol_logo_path.md) — Logos em `assets/logo/`, não em `assets/`. Relativo do post: `../../../assets/logo/NOME.png`
+- [Posts — Entrega em JPG + logo aparecendo](feedback_post_entrega_jpg_logo.md) — Sempre renderizar HTML→JPG (Brave headless + sips), URL-encodar `+`/espaços no src, verificar visualmente
+- [Clientes — Organização da pasta](feedback_clientes_organizacao.md) — Cliente novo: kebab-case + estrutura do `_modelo-cliente/`. Regra completa em `Cliente-Criativvo/README.md`
+- [Proposta Comercial — Padrão fixo](feedback_proposta_comercial_padrao.md) — 11 páginas A4 alternando branco/laranja, PIX selecionável CNPJ 59931598000185, sem "9 países". Template: `criativvo/propostas/_template-proposta-padrao.html`
+- [Feffo Cortinas — Paleta de cores](project_feffo_cortinas_paleta.md) — Marrom escuro #653E27, médio #86634A, claro #E0B291 (uso pontual), cinza #A7A8AD, branco
+- [Destaques — Organização de arquivos](feedback_destaques_organizacao.md) — Estrutura: `destaques/capas/` + 1 subpasta por destaque. Só JPG, deletar HTML depois de renderizar
+- [Maccari Store — Perfil do dono](project_maccari_store_dono.md) — Empreendedor criativo (eletrônicos premium + carreira do Cesar Borges via FBM Music); tom descontraído/vendedor com emojis, visual premium estilo Apple
+- [Maccari — Roleta da feira (NO AR)](project_maccari_roleta_feira.md) — feira-roleta.vercel.app (Vercel conta GilsonCar); código em maccari-store/feira-roleta/; iPhone raro ~4% = 10% off (R$7.890 + capa/película); trava 1 giro/WhatsApp; QR em qr-feira.png/svg; falta plugar Google Sheet pros leads; redeploy `npx vercel@54.9.1 deploy --prod --yes`
+- [Maccari — Shopify conectado via MCP](reference_maccari_shopify_mcp.md) — MCP local `shopify-maccari` (pacote shopify-mcp), domínio `0ju4im-ta.myshopify.com`, Dev Dashboard + client credentials (token 24h auto-renovado), Client ID no arquivo, secret só no ~/.claude.json, scopes amplos sem financeiro
+- [Dra. Thalita Morelli — Cliente Agência na Hora](project_thalita_morelli.md) — Cirurgiã dentista CRO-SP 177887 em Areiópolis-SP, WhatsApp (14) 99105-0115, paleta esmeralda+dourado
+- [Dr. Matheus Henrique — Cliente Agência na Hora](project_dr_matheus_henrique.md) — Cirurgião dentista CRO-SP 151089 em Ribeirão Preto, IG @drmatheus_henrique, lentes/facetas em resina + mentorias, paleta vinho+preto+ouro
+- [Matheus Fante — Cliente Agência na Hora](project_matheus_fante.md) — Advogado OAB-MT em Querência-MT, @matheusfanteadv, paleta azul+preto+branco, Fraunces+Plus Jakarta, site publicado
+- [Agência na Hora — Cada cliente exige design único](feedback_agencia_na_hora_unico_por_cliente.md) — Nunca clonar/adaptar template de outro cliente; estrutura, fontes, layout e estética sempre inéditos
+- [C-Level Squad — 6 conselheiros executivos G4](reference_c_level_squad.md) — Vision/COO/CMO/CTO/CIO/CAIO instalados em ~/.claude/skills/, originais em agentes/c-level-squad/
+- [Criativvo — Time de 6 pessoas](project_criativvo_time.md) — Matheus(CEO), Victor(comercial), Alisson(tráfego+Head Ops, futuro sócio), Anderson+Luis(posts), Dudu(audiovisual)
+- [Criativvo — Sistema Operacional (SO)](project_criativvo_sistema_operacional.md) — Notion (operação) + Sheets privada (financeiro Matheus+Victor) + skill /so-criativvo (dashboard semanal). Dono: Alisson.
+- [Marcio Albrechete — Advogado previdenciário (Ibitinga)](project_marcio_albrechete.md) — OAB/SP 341.644, IG @marcio.albrechete, marca A·P·A Previdenciário, paleta navy+bege, templates 1080x1350
+- [Marcio A·P·A — Design system completo (v6 aprovado)](project_marcio_apa_design_system.md) — Paleta, tipografia, 11 templates oficiais, site, padrões fixos. Usar como base em TUDO desse cliente.
+- [Marcio A·P·A — Posts sempre usam templates aprovados](feedback_marcio_apa_padrao_posts.md) — Não criar layout novo, sempre puxar um dos 11 templates da library e substituir conteúdo
+- [Marketing jurídico — Regras OAB (Provimento 205/2021)](feedback_marketing_juridico_oab.md) — Sem captação ostensiva, sem garantia de resultado, sem mercantilização, cases anonimizados
