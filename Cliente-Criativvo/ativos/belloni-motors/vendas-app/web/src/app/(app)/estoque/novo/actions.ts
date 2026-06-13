@@ -27,7 +27,8 @@ export async function addCar(_prev: unknown, formData: FormData) {
     .filter(Boolean);
 
   const photos = formData.getAll('photos[]').map(String).filter(Boolean);
-  const img    = photos[0] ?? null;
+  if (photos.length === 0) return { error: 'Adicione pelo menos 1 foto do carro.' };
+  const img    = photos[0];
 
   const { data, error } = await supabase
     .from('cars')

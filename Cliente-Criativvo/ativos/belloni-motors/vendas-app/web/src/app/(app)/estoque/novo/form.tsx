@@ -47,8 +47,8 @@ export function AddCarForm() {
     <form action={formAction} className="space-y-6 bg-white rounded-2xl border border-neutral-200 p-5">
 
       <div>
-        <span className={labelCls}>Fotos do carro</span>
-        <span className={hintCls}>Primeira foto vira a capa. Pode adicionar quantas quiser.</span>
+        <span className={labelCls}>Fotos do carro *</span>
+        <span className={hintCls}>Pelo menos 1 foto. A primeira vira a capa. Pode adicionar quantas quiser.</span>
         <MultiPhotoUpload photos={photos} onChange={setPhotos} />
       </div>
 
@@ -163,9 +163,10 @@ export function AddCarForm() {
       </div>
 
       {state?.error && <p className="text-sm text-rose-600 bg-rose-50 rounded-lg px-3 py-2">{state.error}</p>}
+      {photos.length === 0 && <p className="text-sm text-neutral-500">Adicione pelo menos 1 foto pra liberar o cadastro.</p>}
 
-      <button type="submit" disabled={pending}
-        className="w-full rounded-xl bg-neutral-900 hover:bg-neutral-950 disabled:opacity-60 text-white font-semibold py-3 text-base">
+      <button type="submit" disabled={pending || photos.length === 0}
+        className="w-full rounded-xl bg-neutral-900 hover:bg-neutral-950 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 text-base">
         {pending ? 'Salvando...' : 'Adicionar ao estoque'}
       </button>
     </form>
