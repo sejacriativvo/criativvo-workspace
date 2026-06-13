@@ -124,7 +124,7 @@ export default async function CarDetail({
 
               {vehicle.level === 'pending' ? (
                 <p className="text-sm text-amber-800">
-                  Margem ainda não definida{car.source === 'shopify' ? ' (carro veio da Shopify)' : ''}.
+                  Margem ainda não definida.
                   Enquanto não definir, o vendedor não vê desconto pra esse carro.
                 </p>
               ) : (

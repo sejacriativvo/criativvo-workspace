@@ -49,7 +49,7 @@ export async function proxy(request: NextRequest) {
   }
 
   const path = request.nextUrl.pathname;
-  // /api tem segurança própria (segredo do cron / HMAC da Shopify), não passa
+  // /api tem segurança própria (segredo do cron), não passa
   // pelo redirect de login.
   const isPublic = path === '/login' || path.startsWith('/auth') || path.startsWith('/api');
 

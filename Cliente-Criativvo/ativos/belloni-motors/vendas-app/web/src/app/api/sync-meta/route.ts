@@ -1,5 +1,5 @@
 // Rota chamada automaticamente pelo Vercel Cron (e disponível pra disparo manual).
-// Mesma blindagem do sync da Shopify: exige "Authorization: Bearer <CRON_SECRET>".
+// Blindagem: exige "Authorization: Bearer <CRON_SECRET>".
 // Sem CRON_SECRET, fica FECHADA. O botão manual do app usa um server action.
 import { NextResponse } from 'next/server';
 import { runMetaSync } from '@/lib/meta';

@@ -39,7 +39,7 @@ export default async function DashboardPage() {
   const patrimonio = withCost.reduce((s, c) => s + (c.cost ?? 0), 0); // custo investido
   const pending = available.filter((c) => c.cost == null); // sem custo cadastrado = sem margem
   // Giro real: dias desde a AQUISIÇÃO (quando a Belloni Motors comprou), não desde o
-  // cadastro no app (recente pra todos por causa do sync da Shopify).
+  // cadastro no app.
   const stockDays = (c: CarRow) =>
     Math.floor((Date.now() - new Date(c.acquired_at ?? c.created_at).getTime()) / 86400000);
   const stale = available.filter((c) => stockDays(c) > 90).length;

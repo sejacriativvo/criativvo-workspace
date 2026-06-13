@@ -30,7 +30,7 @@ export default async function DefinirMargemPage({
 
       <h1 className="text-2xl font-bold text-neutral-900 mt-3">Definir margem de negociação</h1>
 
-      {/* Dados do carro (vêm da Shopify, não editáveis aqui) */}
+      {/* Dados do carro (não editáveis aqui) */}
       <div className="mt-3 rounded-2xl border border-neutral-200 bg-white p-4 flex items-center gap-3">
         {car.img && (
           // eslint-disable-next-line @next/next/no-img-element
