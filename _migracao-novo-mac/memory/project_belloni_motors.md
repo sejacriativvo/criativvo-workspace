@@ -13,12 +13,14 @@ Concessionária multimarca premium. Cliente da Criativvo.
 
 ## Status dos projetos
 - **Site:** `Cliente-Criativvo/ativos/belloni-motors/site/` — pasta do site
-- **CRM/Painel de Vendas:** protótipo HTML pronto (Fase 1), sistema real ainda não foi feito (Fase 2 pendente)
+- **CRM/Painel de Vendas:** publicado e no ar
 
-## CRM — Protótipo (Fase 1)
-- **Arquivo:** `Cliente-Criativvo/ativos/belloni-motors/vendas-app/prototipo/index.html` — abrir no navegador, sem servidor
-- **Sem URL pública** — é protótipo local, não foi deployado ainda
-- Ao abrir, escolher o perfil: Vendedor, Admin (Sr. Belloni) ou Tráfego (Alisson)
+## CRM — No ar
+- **URL:** https://belloni-vendas.vercel.app
+- **Projeto Vercel:** `belloni-vendas` (projectId: `prj_ztFXqCJeXYa2XQFN9Uphywju792D`)
+- **Código:** `Cliente-Criativvo/ativos/belloni-motors/vendas-app/web/`
+- **Redeploy:** `cd web && npx vercel@54.9.1 --prod --yes`
+- Ao acessar, escolher o perfil: Vendedor, Admin (Sr. Belloni) ou Tráfego (Alisson)
 
 ## CRM — Telas do protótipo
 - **Painel** (admin): KPIs, funil, donut de estoque, carros parados
