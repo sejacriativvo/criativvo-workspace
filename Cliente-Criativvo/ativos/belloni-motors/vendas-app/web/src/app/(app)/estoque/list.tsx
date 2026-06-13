@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { Vehicle } from '@/lib/types';
 import { brl } from '@/lib/negociacao';
-import { SyncButton } from './sync-button';
 
 function daysChip(days: number, inPrep: boolean) {
   if (inPrep) return { cls: 'bg-neutral-100 text-neutral-500', label: 'Em preparação' };
@@ -73,7 +72,6 @@ export function EstoqueList({
               + Adicionar carro
             </a>
           )}
-          {isAdmin && <SyncButton />}
         </div>
       </div>
 
